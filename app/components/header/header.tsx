@@ -1,10 +1,12 @@
+/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { HeaderProps } from "./header.props"
 import { Button } from "../button/button"
 import { Text } from "../text/text"
 import { Icon } from "../icon/icon"
-import { spacing } from "../../theme"
+import { spacing, color } from "../../theme"
 import { translate } from "../../i18n/"
 
 // static styles
@@ -12,9 +14,8 @@ const ROOT: ViewStyle = {
   flexDirection: "row",
   paddingHorizontal: spacing[4],
   alignItems: "center",
-  paddingTop: spacing[5],
-  paddingBottom: spacing[5],
   justifyContent: "flex-start",
+  height: 60
 }
 const TITLE: TextStyle = { textAlign: "center" }
 const TITLE_MIDDLE: ViewStyle = { flex: 1, justifyContent: "center" }
@@ -38,24 +39,39 @@ export const Header: React.FunctionComponent<HeaderProps> = props => {
   const header = headerText || (headerTx && translate(headerTx)) || ""
 
   return (
-    <View style={{ ...ROOT, ...style }}>
-      {leftIcon ? (
-        <Button preset="link" onPress={onLeftPress}>
-          <Icon icon={leftIcon} />
-        </Button>
-      ) : (
-        <View style={LEFT} />
-      )}
-      <View style={TITLE_MIDDLE}>
-        <Text style={{ ...TITLE, ...titleStyle }} text={header} />
+    <View>
+      <View style={ROOT}>
+        {leftIcon ? (
+          <Button preset="link" onPress={onLeftPress}>
+            <Icon style={{ height: 32, width: 32, tintColor: color.palette.darkText }} icon={leftIcon} />
+          </Button>
+        ) : (
+            <View style={LEFT} />
+          )}
+        <View style={TITLE_MIDDLE}>
+          <Text preset="header" style={{ fontSize: 16, color: color.palette.darkText, marginStart: 15 }} text={header} />
+        </View>
+        {rightIcon ? (
+          <Button preset="link" onPress={onRightPress}>
+            <Icon icon={rightIcon} />
+          </Button>
+        ) : (
+            <View style={RIGHT} />
+          )}
       </View>
-      {rightIcon ? (
-        <Button preset="link" onPress={onRightPress}>
-          <Icon icon={rightIcon} />
-        </Button>
-      ) : (
-        <View style={RIGHT} />
-      )}
+      <View style={{ overflow: 'hidden', paddingBottom: 5 }}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            height: 2,
+            shadowColor: '#000',
+            shadowOffset: { width: 1, height: 1 },
+            shadowOpacity: 0.4,
+            shadowRadius: 3,
+            elevation: 5,
+          }}
+        />
+      </View>
     </View>
   )
 }

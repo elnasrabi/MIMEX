@@ -51,7 +51,6 @@
     "react-native-screens": "^2.5.0",
     "react-native-splash-screen": "3.2.0",
     "reactotron-mst": "^3.1.1",
-    "reactotron-react-native": "^4.0.0-beta.1",
     "validate.js": "0.13.1"
   },
   "devDependencies": {
@@ -91,6 +90,7 @@
     "react-devtools-core": "4.5.0",
     "react-powerplug": "1.0.0",
     "react-test-renderer": "16.9.0",
+    "reactotron-react-native": "^4.0.3",
     "rimraf": "3.0.2",
     "solidarity": "2.3.1",
     "typescript": "3.8.3"

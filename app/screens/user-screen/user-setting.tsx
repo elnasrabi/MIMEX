@@ -7,33 +7,43 @@ import { Screen, Text, Button, TextField } from "../../components"
 import { useStores } from "../../models/root-store"
 import { color, spacing } from "../../theme"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { Header } from "./../../components"
 
-export interface LoginScreenProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
+export interface UserSettingProps {
+    navigation: NativeStackNavigationProp<ParamListBase>
 }
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.white,
-  justifyContent: "center",
-  paddingStart: 20,
-  paddingEnd: 20
+  // justifyContent: "center",
+  // paddingStart: 20,
+  // paddingEnd: 20
 }
 const TEXT: TextStyle = {
   color: color.palette.white,
   fontFamily: "Montserrat",
 }
+const BOLD: TextStyle = { fontWeight: "bold" }
 
 const HEADER: TextStyle = {
   color: color.palette.black,
   alignSelf: "center"
 }
+const HEADER_TITLE: TextStyle = {
+  ...BOLD,
+  fontSize: 12,
+  lineHeight: 15,
+  textAlign: "center",
+  letterSpacing: 1.5,
+  color: "#666666"
+}
+
 const RESET_PASSWORD: TextStyle = {
   color: color.palette.link,
   alignSelf: "center",
   marginTop: 20,
   padding: 10
 }
-const BOLD: TextStyle = { fontWeight: "bold" }
 const USERNAME: TextStyle = { marginTop: 25 }
 const CONTINUE: ViewStyle = {
   borderRadius: 4,
@@ -47,7 +57,7 @@ const CONTINUE_TEXT: TextStyle = {
   letterSpacing: 2,
 }
 
-export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
+export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
   const { authStore } = useStores()
   const onLogin = () => {
     authStore.login()
@@ -55,22 +65,30 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   const onResetPassword = () => {
     props.navigation.navigate("forgotpassword")
   }
+  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
+
   return (
     <Screen style={ROOT} preset="fixed">
-      <Text preset="header" style={HEADER} tx={"loginScreen.title"} />
+      <Header
+        headerTx="userSetting.header"
+        leftIcon="back"
+        onLeftPress={goBack}
+        style={HEADER}
+        titleStyle={HEADER_TITLE}
+      />
+      <Text preset="header" style={HEADER} tx={"userSetting.title"} />
 
-      <TextField style={USERNAME} placeholder={"Enter Username"} />
+      {/* <TextField style={USERNAME} placeholder={"Enter Username"} />
       <TextField placeholder={"Enter Password"} />
 
       <Button
         style={CONTINUE}
         textStyle={CONTINUE_TEXT}
-        tx="loginScreen.login"
-        onPress={onLogin}
+        tx="userSetting.login"
       />
       <TouchableOpacity onPress={onResetPassword}>
-        <Text style={RESET_PASSWORD} tx={"loginScreen.resetPassword"} />
-      </TouchableOpacity>
+        <Text style={RESET_PASSWORD} tx={"userSetting.resetPassword"} />
+      </TouchableOpacity> */}
     </Screen>
   )
 })

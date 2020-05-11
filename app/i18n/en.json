@@ -14,7 +14,18 @@
   },
   "loginScreen": {
     "login": "LOGIN",
-    "header": "LOGIN SCREEN"
+    "header": "LOGIN SCREEN",
+    "title" : "AFS - MOVEIT",
+    "resetPassword" : "Rest Your Password"
+  },
+  "userSetting": {
+    "title": "USER SETTING",
+    "header": "USER SETTING",
+    "resetPassword" : "Rest Your Password"
+  },
+  "forgotpasswordScreen":{
+    "header": "FORGOT PASSWORD",
+    "submit": "SUBMIT"
   },
   "landingScreen": {
     "header": "LANDING SCREEN",

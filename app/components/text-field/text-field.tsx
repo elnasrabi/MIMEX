@@ -11,13 +11,23 @@ const CONTAINER: ViewStyle = {
   paddingVertical: spacing[3],
 }
 
+const BASE_LINE: ViewStyle = {
+  height: 1,
+  backgroundColor: color.palette.darkText
+}
 // the base styling for the TextInput
 const INPUT: TextStyle = {
   fontFamily: typography.primary,
   color: color.text,
-  minHeight: 44,
-  fontSize: 18,
-  backgroundColor: color.palette.white,
+  minHeight: 45,
+  fontSize: 16,
+  paddingStart: 10,
+  paddingEnd: 10,
+  height: 45,
+  backgroundColor: color.palette.light,
+  borderColor: color.palette.lighterGrey,
+  borderWidth: 1,
+  borderRadius: 4,
 }
 
 // currently we have no presets, but that changes quickly when you build your app.
@@ -51,9 +61,14 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
   inputStyle = enhance(inputStyle, inputStyleOverride)
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
+  const LABEL: TextStyle = {
+    color: color.palette.darkText,
+    fontSize: 16
+  }
+
   return (
     <View style={containerStyle}>
-      <Text preset="fieldLabel" tx={labelTx} text={label} />
+      {/* <Text style={LABEL} preset="fieldLabel" tx={labelTx} text={label} /> */}
       <TextInput
         placeholder={actualPlaceholder}
         placeholderTextColor={color.palette.lighterGrey}
@@ -62,6 +77,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
         style={inputStyle}
         ref={forwardedRef}
       />
+      {/* <View style={BASE_LINE} /> */}
     </View>
   )
 }

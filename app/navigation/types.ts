@@ -5,6 +5,7 @@ export type RootParamList = {
 
 export type PrimaryParamList = {
   landing: undefined
+  userSetting: undefined
 }
 export type AuthParamList = {
   login: undefined

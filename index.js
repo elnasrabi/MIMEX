@@ -21,6 +21,9 @@ const APP_NAME = "Moveit"
 const SHOW_STORYBOOK = false
 
 let RootComponent = App
+if (__DEV__) {
+  import('./app/utils/ReactotronConfig').then(() => console.log('Reactotron Configured'))
+}
 if (__DEV__ && SHOW_STORYBOOK) {
   // Only include Storybook if we're in dev mode
   const { StorybookUIRoot } = require("./storybook")
