@@ -17,9 +17,9 @@ const ROOT: ViewStyle = {
   justifyContent: "flex-start",
   height: 60
 }
-const TITLE: TextStyle = { fontSize: 16, color: color.palette.darkText, marginStart: 15 }
+const TITLE: TextStyle = { fontSize: 16, color: color.palette.darkText }
 const TITLE_MIDDLE: ViewStyle = { flex: 1, justifyContent: "center" }
-const LEFT: ViewStyle = { width: 32 }
+const LEFT: ViewStyle = { width: 5 }
 const RIGHT: ViewStyle = { width: 32 }
 const SHADOW: ViewStyle = {
   backgroundColor: '#fff',
@@ -30,12 +30,12 @@ const SHADOW: ViewStyle = {
   shadowRadius: 3,
   elevation: 5,
 }
-const ICON: ImageStyle = { height: 32, width: 32, tintColor: color.palette.darkText }
+const ICON: ImageStyle = { height: 20, width: 20, tintColor: color.palette.darkText }
 
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
  */
-export const Header: React.FunctionComponent<HeaderProps> = props => {
+export const HeaderMenu: React.FunctionComponent<HeaderProps> = props => {
   const {
     onLeftPress,
     onRightPress,
@@ -63,7 +63,7 @@ export const Header: React.FunctionComponent<HeaderProps> = props => {
         </View>
         {rightIcon ? (
           <Button preset="link" onPress={onRightPress}>
-            <Icon icon={rightIcon} />
+            <Icon style={ICON} icon={rightIcon} />
           </Button>
         ) : (
           <View style={RIGHT} />

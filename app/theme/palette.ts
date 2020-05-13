@@ -10,4 +10,5 @@ export const palette = {
   darkText: "#333333",
   light: "#fcfcfc",
   link: "#0000EE",
+  gray: "#e3e3e3",
 }

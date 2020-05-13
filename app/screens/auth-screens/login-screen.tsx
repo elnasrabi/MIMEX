@@ -1,12 +1,11 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle } from "react-native"
+import { ViewStyle, TextStyle, TouchableOpacity, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Button, TextField } from "../../components"
 import { useStores } from "../../models/root-store"
 import { color, spacing } from "../../theme"
-import { TouchableOpacity } from "react-native-gesture-handler"
 
 export interface LoginScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -46,9 +45,10 @@ const CONTINUE_TEXT: TextStyle = {
   fontSize: 13,
   letterSpacing: 2,
 }
-
 export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
   const { authStore } = useStores()
+  let passwordRef: any
+
   const onLogin = () => {
     authStore.login()
   }
@@ -59,8 +59,12 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     <Screen style={ROOT} preset="fixed">
       <Text preset="header" style={HEADER} tx={"loginScreen.title"} />
 
-      <TextField style={USERNAME} placeholder={"Enter Username"} />
-      <TextField placeholder={"Enter Password"} />
+      <TextField returnKeyType={"next"} onSubmitEditing={() => { passwordRef.focus() }}
+        blurOnSubmit={false} style={USERNAME} placeholder={"Enter Username"} />
+
+      <TextField forwardedRef={(input) => { passwordRef = input }}
+        returnKeyType={"done"} onSubmitEditing={onLogin}
+        placeholder={"Enter Password"} secureTextEntry={true} />
 
       <Button
         style={CONTINUE}

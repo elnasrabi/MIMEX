@@ -6,9 +6,11 @@ import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Button, TextField } from "../../components"
 import { useStores } from "../../models/root-store"
 import { color, spacing } from "../../theme"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import { Header } from "./../../components"
 import { HeaderMenu } from "../../components/header/header-menu"
 
-export interface UserSettingProps {
+export interface VehicleSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
@@ -56,7 +58,7 @@ const HEADER_TITLE: TextStyle = {
   color: "#666666"
 }
 
-export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
+export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((props) => {
 
   const renderRow = (label, value) => {
     return (<View style={ROW}>
@@ -72,28 +74,21 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   return (
     <Screen style={ROOT} preset="fixed">
       <HeaderMenu
-        headerTx="userSetting.header"
+        headerTx="vehicleSetting.header"
         rightIcon="menuBar"
         onRightPress={handleDrawer}
         style={HEADER}
         titleStyle={HEADER_TITLE}
       />
       <Screen style={ROOT} preset="scroll">
-        {renderRow("userSetting.email", "username@gmail.com")}
-        {renderRow("userSetting.mobile", "0411 111 111")}
-        {renderRow("userSetting.city", "South Yarra")}
-        {renderRow("userSetting.state", "VIC")}
-        {renderRow("userSetting.licenceType", "Licence Type")}
-        {renderRow("userSetting.licenceNumber", "Licence Number")}
-        {renderRow("userSetting.expiry", "Expiry")}
-        {renderRow("userSetting.vehicleId", "8545154")}
-        {renderRow("userSetting.vehicleName", "Red Van South East")}
-        {renderRow("userSetting.vehicleType", "2 Tan Truck")}
-        {renderRow("userSetting.registration", "XXXX 8845")}
-        {renderRow("userSetting.weightCapacity", "1800 KG")}
-        {renderRow("userSetting.volumeCapacity", "1.00 cbm")}
-        {renderRow("userSetting.jobCapacity", "12")}
-        {renderRow("userSetting.specialFeatures", "Add On Services")}
+        {renderRow("vehicleSetting.vehicleId", "8545154")}
+        {renderRow("vehicleSetting.vehicleName", "Red Van South East")}
+        {renderRow("vehicleSetting.vehicleType", "2 Tan Truck")}
+        {renderRow("vehicleSetting.registration", "XXXX 8845")}
+        {renderRow("vehicleSetting.weightCapacity", "1800 KG")}
+        {renderRow("vehicleSetting.volumeCapacity", "1.00 cbm")}
+        {renderRow("vehicleSetting.jobCapacity", "12")}
+        {renderRow("vehicleSetting.specialFeatures", "Add On Services")}
       </Screen>
     </Screen>
 

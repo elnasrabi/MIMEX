@@ -9,6 +9,9 @@ import { UserSetting } from "../screens/user-screen/user-setting"
 // import { PrimaryParamList } from "./types"
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { AuthParamList } from "./types"
+import { color } from "../theme"
+import { CustomDrawerContent } from "../components/drawer-menu/CustomDrawerContent"
+import { VehicleSetting } from "../screens/vehicle/vehicle-setting"
 
 // const Stack = createNativeStackNavigator<PrimaryParamList>()
 
@@ -19,17 +22,17 @@ export function PrimaryNavigator() {
   return (
     <Drawer.Navigator
       initialRouteName='Home'
-      drawerPosition='left'
+      drawerPosition='right'
       drawerType='slide'
-      overlayColor="transparent"
       keyboardDismissMode="on-drag"
       drawerStyle={{
-        backgroundColor: '#c6cbef',
         width: 240,
       }}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={LandingScreen} />
-      <Drawer.Screen name="User Setting" component={UserSetting} />
+      <Drawer.Screen name="userSetting" component={UserSetting} />
+      <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
     </Drawer.Navigator>
   )
 }

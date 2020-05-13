@@ -5,12 +5,12 @@ import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { RootParamList } from "./types"
 import { PrimaryNavigator } from "./primary-navigator"
 import { AuthNavigator } from "./auth-navigator"
-import { useStores } from "../models/root-store";
+import { useStores } from "../models/root-store"
 
 const Stack = createNativeStackNavigator<RootParamList>()
 
 const RootStack = observer(() => {
-  const { authStore } = useStores();
+  const { authStore } = useStores()
   return (
     <Stack.Navigator
       screenOptions={{
@@ -18,16 +18,15 @@ const RootStack = observer(() => {
         gestureEnabled: true,
       }}
     >
-      {authStore.isLoggedIn ?
-        <Stack.Screen
+      {authStore.isLoggedIn
+        ? <Stack.Screen
           name="primaryStack"
           component={PrimaryNavigator}
           options={{
             headerShown: false,
           }}
         />
-        :
-        <Stack.Screen
+        : <Stack.Screen
           name="authStack"
           component={AuthNavigator}
           options={{
@@ -37,7 +36,7 @@ const RootStack = observer(() => {
 
     </Stack.Navigator>
   )
-});
+})
 
 export const RootNavigator = React.forwardRef<
   NavigationContainerRef,

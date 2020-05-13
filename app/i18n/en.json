@@ -21,13 +21,50 @@
   "userSetting": {
     "title": "USER SETTING",
     "header": "USER SETTING",
-    "resetPassword" : "Rest Your Password"
+    "resetPassword" : "Forgot your Password?",
+    "email" : "Username/Email",
+    "mobile" : "Mobile",
+    "city" : "City",
+    "state" : "State",
+    "licenceType" : "Licence Type",
+    "licenceNumber" : "Licence Number",
+    "expiry" : "Expiry",
+    "vehicleId" : "Vehicle ID",
+    "vehicleType" : "Vehicle Type",
+    "vehicleName" : "Vehicle Name",
+    "registration" : "Registration",
+    "weightCapacity" : "Weight Capacity",
+    "volumeCapacity" : "Volume Capacity",
+    "jobCapacity" : "Job Capacity",
+    "specialFeatures" : "Special Features"
+  },
+  "vehicleSetting": {
+    "title": "VEHICLE SETTING",
+    "header": "VEHICLE SETTING",
+    "resetPassword" : "Forgot your Password?",
+    "email" : "Username/Email",
+    "mobile" : "Mobile",
+    "city" : "City",
+    "state" : "State",
+    "licenceType" : "Licence Type",
+    "licenceNumber" : "Licence Number",
+    "expiry" : "Expiry",
+    "vehicleId" : "Vehicle ID",
+    "vehicleType" : "Vehicle Type",
+    "vehicleName" : "Vehicle Name",
+    "registration" : "Registration",
+    "weightCapacity" : "Weight Capacity",
+    "volumeCapacity" : "Volume Capacity",
+    "jobCapacity" : "Job Capacity",
+    "specialFeatures" : "Special Features"
   },
   "forgotpasswordScreen":{
     "header": "FORGOT PASSWORD",
     "submit": "SUBMIT"
   },
   "landingScreen": {
+    "search": "Search Manifest/Consignment",
+    "searchHere": "Search Here...",
     "header": "LANDING SCREEN",
     "logout": "LOGOUT"
   },

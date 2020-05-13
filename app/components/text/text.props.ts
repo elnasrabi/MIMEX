@@ -32,4 +32,10 @@ export interface TextProps extends TextProperties {
    * One of the different types of text presets.
    */
   preset?: TextPresets
+
+  /**
+ * One of the different types of text presets.
+ */
+  extraText?: string
+
 }

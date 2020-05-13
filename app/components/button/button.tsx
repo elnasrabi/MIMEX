@@ -22,6 +22,7 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props
 
+  let { ref } = props
   const viewStyle = mergeAll(flatten([viewPresets[preset] || viewPresets.primary, styleOverride]))
   const textStyle = mergeAll(
     flatten([textPresets[preset] || textPresets.primary, textStyleOverride]),
@@ -30,7 +31,8 @@ export function Button(props: ButtonProps) {
   const content = children || <Text tx={tx} text={text} style={textStyle} />
 
   return (
-    <TouchableOpacity style={viewStyle} {...rest}>
+    <TouchableOpacity ref={(button) => { ref = button }}
+      style={viewStyle} {...rest}>
       {content}
     </TouchableOpacity>
   )
