@@ -1,50 +1,44 @@
 import React, { FunctionComponent, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, TouchableOpacity, Alert } from "react-native"
+import { ViewStyle, TextStyle, TouchableOpacity, Alert, ImageStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField } from "../../components"
+import { Screen, Text, Button, TextField, Icon } from "../../components"
 import { useStores } from "../../models/root-store"
 import { color, spacing } from "../../theme"
+import { MyButton } from "../../components/button/my-button"
 
 export interface LoginScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
 const ROOT: ViewStyle = {
-  backgroundColor: color.palette.white,
   justifyContent: "center",
-  paddingStart: 20,
-  paddingEnd: 20
+  paddingStart: 25,
+  paddingEnd: 25
 }
 const TEXT: TextStyle = {
   color: color.palette.white,
   fontFamily: "Montserrat",
 }
 
-const HEADER: TextStyle = {
-  color: color.palette.black,
-  alignSelf: "center"
-}
+const BOLD: TextStyle = { fontWeight: "bold" }
 const RESET_PASSWORD: TextStyle = {
-  color: color.palette.link,
+  color: color.palette.red,
   alignSelf: "center",
-  marginTop: 20,
+  marginTop: 25,
+  fontSize: 16,
   padding: 10
 }
-const BOLD: TextStyle = { fontWeight: "bold" }
 const USERNAME: TextStyle = { marginTop: 25 }
 const CONTINUE: ViewStyle = {
-  borderRadius: 4,
-  height: 45,
-  marginTop: 30
+  marginTop: 30,
+  alignSelf: "center"
 }
-const CONTINUE_TEXT: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
+
+const AFS_LOGO: ImageStyle = { height: 120, width: 240, alignSelf: "center" }
+const TRUCK_LOGO: ImageStyle = { height: 140, width: 280, alignSelf: "center", marginTop: 50 }
+
 export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
   const { authStore } = useStores()
   let passwordRef: any
@@ -56,25 +50,27 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     props.navigation.navigate("forgotpassword")
   }
   return (
-    <Screen style={ROOT} preset="fixed">
-      <Text preset="header" style={HEADER} tx={"loginScreen.title"} />
+    <Screen style={ROOT} preset="scroll">
 
-      <TextField returnKeyType={"next"} onSubmitEditing={() => { passwordRef.focus() }}
+      <Icon style={AFS_LOGO} icon={"afsLogo"} />
+      <Icon style={TRUCK_LOGO} icon={"loginLogo"} />
+
+      <TextField labelTx={"loginScreen.username"} returnKeyType={"next"} onSubmitEditing={() => { passwordRef.focus() }}
         blurOnSubmit={false} style={USERNAME} placeholder={"Enter Username"} />
 
-      <TextField forwardedRef={(input) => { passwordRef = input }}
+      <TextField labelTx={"loginScreen.password"} forwardedRef={(input) => { passwordRef = input }}
         returnKeyType={"done"} onSubmitEditing={onLogin}
         placeholder={"Enter Password"} secureTextEntry={true} />
 
-      <Button
-        style={CONTINUE}
-        textStyle={CONTINUE_TEXT}
-        tx="loginScreen.login"
-        onPress={onLogin}
-      />
       <TouchableOpacity onPress={onResetPassword}>
         <Text style={RESET_PASSWORD} tx={"loginScreen.resetPassword"} />
       </TouchableOpacity>
+
+      <MyButton
+        style={CONTINUE}
+        tx="loginScreen.login"
+        onPress={onLogin}
+      />
     </Screen>
   )
 })

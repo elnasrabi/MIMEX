@@ -1,122 +1,108 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity } from "react-native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, TextField } from "../components"
-import { useStores } from "../models/root-store"
+import { Screen, Text, Icon } from "../components"
 import { color } from "../theme"
-import { HeaderMenu } from "../components/header/header-menu"
-import { TextFieldSimple } from "../components/text-field/text-field-simple"
-import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
+import { MenuButton } from "../components/header/menu-button"
+import { SearchView } from "../components/search-view/search-view"
+import { MyButton } from "../components/button/my-button"
+import { icons } from "../components/icon/icons"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const ROOT: ViewStyle = {
-  backgroundColor: color.palette.white,
-  flex: 1
+  justifyContent: "center",
+  flex: 1,
 }
 
 const CONTAINER: ViewStyle = {
+  justifyContent: 'center',
   flex: 1,
-  padding: 20
+  paddingStart: 25,
+  paddingEnd: 25
 }
 
-const SEARCH_HERE: ViewStyle = {
-  borderColor: color.palette.gray,
-  height: 45,
-  borderWidth: 1,
-  marginTop: 25,
-  borderRadius: 5,
-  paddingStart: 15,
-  paddingEnd: 30,
+const FLAT_LIST: ViewStyle = {
+  position: "absolute",
+  bottom: 60,
+  left: 20,
+  right: 20,
   flexDirection: "row"
 }
-
-const SEARCH_INPUT: ViewStyle = {
+const CONTINUE: ViewStyle = {
   alignSelf: "center",
   flex: 1
 }
 
-const SEARCH_ICON: ViewStyle = {
-  alignSelf: "center"
-}
-
-const CAMERA_ICON: ViewStyle = {
+const IMAGE_BACK: ImageStyle = {
   alignSelf: "center",
-  marginTop: 20
-}
-const BOLD: TextStyle = { fontWeight: "bold" }
-
-const HEADER: TextStyle = {
-  color: color.palette.black,
-  alignSelf: "center"
+  height: 100,
+  width: 120,
+  padding: 20
 }
 
-const LIST_ITEM: TextStyle = {
-  color: color.palette.black,
-  alignSelf: "center"
+const SEARCH_VIEW: ViewStyle = {
+
 }
 
-const GRID_VIEW: ViewStyle = {
-  justifyContent: "center",
-  flex: 1,
-  backgroundColor: color.palette.lightGrey,
-  height: 80,
-  width: 60
-}
+const AFS_LOGO: ImageStyle = { height: 120, width: 240, alignSelf: "center" }
 
-const HEADER_TITLE: TextStyle = {
-  ...BOLD,
-  fontSize: 12,
-  lineHeight: 15,
-  textAlign: "center",
-  letterSpacing: 1.5,
-  color: "#666666"
-}
+const CONTAINER_AFS_LOGO: ImageStyle = { position: "absolute", top: 50, alignSelf: "center" }
 
-const dataList = ["MyList", "History", "Rate Calc", "Add to Manifest", "Vehicle Check", "Help"]
+const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer((props) => {
   useEffect(() => {
     console.tron.log('LandingScreen')
   }, [])
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const onSuccess = e => {
+    // Linking.openURL(e.data).catch(err =>
+    //   console.error('An error occured', err)
+    // );
+    Alert.alert(JSON.stringify(e))
+    console.warn(JSON.stringify(e))
+  }
+
+  const onCameraPress = () => {
+    props.navigation.navigate("qrScanner", { onSuccess: onSuccess })
+  }
 
   return (
-    <Screen style={ROOT} preset="fixed">
-      <HeaderMenu
-        headerTx="landingScreen.header"
-        rightIcon="menuBar"
-        onRightPress={handleDrawer}
-        style={HEADER}
-        titleStyle={HEADER_TITLE}
-      />
-      <Screen style={CONTAINER} preset="scroll">
-        <Text preset="header" style={HEADER} tx={"landingScreen.search"} />
-        <View style={SEARCH_HERE}>
-          <EvilIcons style={SEARCH_ICON} color={color.palette.darkText} name="search" size={28} />
-          <TextFieldSimple style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"landingScreen.searchHere"} />
+    <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
+      <MenuButton
+        onPress={handleDrawer} />
+
+      {/* AFS LOGO */}
+      <Icon containerStyle={CONTAINER_AFS_LOGO} style={AFS_LOGO} icon={"afsLightLogo"} />
+
+      <View style={CONTAINER}>
+
+        {/* Search View */}
+        <SearchView
+          containerStyle={SEARCH_VIEW}
+          onCameraPress={onCameraPress} />
+
+        {/* Bottom Option */}
+        <View style={FLAT_LIST}>
+          {dataList.map((data, index) => {
+            return (
+              <MyButton
+                buttonSource={icons.redButton2}
+                key={index}
+                imageBackground={IMAGE_BACK}
+                style={CONTINUE}
+                tx={data}
+              // onPress={onLogin}
+              />
+            )
+          })}
         </View>
 
-        <TouchableOpacity>
-          <EvilIcons style={CAMERA_ICON} color={color.palette.darkText} name="camera" size={200} />
-        </TouchableOpacity>
-
-
-        <FlatList
-          data={dataList}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity style={GRID_VIEW}>
-              <Text preset="bold" style={LIST_ITEM} text={item} />
-            </TouchableOpacity>
-          )}
-          numColumns={3}
-          keyExtractor={(item, index) => index.toString()}
-        />
-
-      </Screen>
+      </View>
     </Screen>
   )
 })

@@ -1,4 +1,4 @@
-import { ViewStyle, TextStyle, TouchableOpacityProps } from "react-native"
+import { ViewStyle, TextStyle, TouchableOpacityProps, ImageStyle, ImageSourcePropType } from "react-native"
 import { ButtonPresetNames } from "./button.presets"
 
 export interface ButtonProps extends TouchableOpacityProps {
@@ -34,6 +34,12 @@ export interface ButtonProps extends TouchableOpacityProps {
   /**
   * One of the different types of reference.
   */
-  ref?: any
+  ref?: any,
+
+  imageBackground?: ImageStyle
+
+  myTextStyle?: TextStyle,
+
+  buttonSource?: ImageSourcePropType
 
 }

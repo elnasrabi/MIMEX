@@ -1,5 +1,6 @@
 import { ViewStyle } from "react-native"
 import { KeyboardOffsets, ScreenPresets } from "./screen.presets"
+import { IconTypes } from "../icon/icons"
 
 export interface ScreenProps {
   /**
@@ -23,6 +24,11 @@ export interface ScreenProps {
   backgroundColor?: string
 
   /**
+   * An optional status color
+   */
+  statusBarColor?: string
+
+  /**
    * An optional status bar setting. Defaults to light-content.
    */
   statusBar?: "light-content" | "dark-content"
@@ -36,4 +42,7 @@ export interface ScreenProps {
    * By how much should we offset the keyboard? Defaults to none.
    */
   keyboardOffset?: KeyboardOffsets
+
+  wall?: IconTypes
+
 }

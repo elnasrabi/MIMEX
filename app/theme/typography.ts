@@ -15,4 +15,5 @@ export const typography = {
    * An alternate font used for perhaps titles and stuff.
    */
   secondary: Platform.select({ ios: "Montserrat", android: "Montserrat" }),
+  myButton: Platform.select({ ios: "ZektonEx-Bold", android: "ZektonEx-Bold" }),
 }

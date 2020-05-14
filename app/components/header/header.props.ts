@@ -22,6 +22,8 @@ export interface HeaderProps {
    */
   onLeftPress?(): void
 
+  onBackPress?(): void
+
   /**
    * Icon that should appear on the right
    */

@@ -6,13 +6,15 @@ import { icons } from "./icons"
 const ROOT: ImageStyle = {
   resizeMode: "contain",
 }
+const CONTAINER: ImageStyle = {
+}
 
 export function Icon(props: IconProps) {
   const { style: styleOverride, icon, containerStyle } = props
   const style: ImageStyle = { ...ROOT, ...styleOverride }
 
   return (
-    <View style={containerStyle}>
+    <View style={[containerStyle, CONTAINER]}>
       <Image style={style} source={icons[icon]} />
     </View>
   )

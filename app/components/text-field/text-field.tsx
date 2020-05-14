@@ -9,6 +9,8 @@ import { mergeAll, flatten } from "ramda"
 // the base styling for the container
 const CONTAINER: ViewStyle = {
   paddingVertical: spacing[3],
+  flexDirection: "row",
+  alignItems: "center",
 }
 
 const BASE_LINE: ViewStyle = {
@@ -17,13 +19,14 @@ const BASE_LINE: ViewStyle = {
 }
 // the base styling for the TextInput
 const INPUT: TextStyle = {
+  flex: 1,
   fontFamily: typography.primary,
   color: color.text,
-  minHeight: 45,
+  minHeight: 40,
   fontSize: 16,
   paddingStart: 10,
   paddingEnd: 10,
-  height: 45,
+  height: 40,
   backgroundColor: color.palette.light,
   borderColor: color.palette.lighterGrey,
   borderWidth: 1,
@@ -33,6 +36,13 @@ const INPUT: TextStyle = {
 // currently we have no presets, but that changes quickly when you build your app.
 const PRESETS: { [name: string]: ViewStyle } = {
   default: {},
+}
+
+const LABEL: TextStyle = {
+  color: color.palette.white,
+  fontSize: 16,
+  fontFamily: typography.myButton,
+  flex: 0.6
 }
 
 const enhance = (style, styleOverride) => {
@@ -51,6 +61,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
     preset = "default",
     style: styleOverride,
     inputStyle: inputStyleOverride,
+    labelStyle: labelStyleOverride,
     forwardedRef,
     ...rest
   } = props
@@ -59,16 +70,15 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
 
   let inputStyle: TextStyle = INPUT
   inputStyle = enhance(inputStyle, inputStyleOverride)
-  const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
-  const LABEL: TextStyle = {
-    color: color.palette.darkText,
-    fontSize: 16
-  }
+  let labelStyle: TextStyle = LABEL
+  labelStyle = enhance(labelStyle, labelStyleOverride)
+
+  const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
   return (
     <View style={containerStyle}>
-      {/* <Text style={LABEL} preset="fieldLabel" tx={labelTx} text={label} /> */}
+      {(label || labelTx) && <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />}
       <TextInput
         placeholder={actualPlaceholder}
         placeholderTextColor={color.palette.lighterGrey}

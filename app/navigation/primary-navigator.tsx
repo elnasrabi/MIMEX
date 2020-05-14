@@ -12,6 +12,7 @@ import { AuthParamList } from "./types"
 import { color } from "../theme"
 import { CustomDrawerContent } from "../components/drawer-menu/CustomDrawerContent"
 import { VehicleSetting } from "../screens/vehicle/vehicle-setting"
+import { QRScanner } from "../components/qr-scanner/qr-scanner"
 
 // const Stack = createNativeStackNavigator<PrimaryParamList>()
 
@@ -33,6 +34,7 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="Home" component={LandingScreen} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
     </Drawer.Navigator>
   )
 }

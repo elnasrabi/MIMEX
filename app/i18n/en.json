@@ -15,8 +15,10 @@
   "loginScreen": {
     "login": "LOGIN",
     "header": "LOGIN SCREEN",
-    "title" : "AFS - MOVEIT",
-    "resetPassword" : "Rest Your Password"
+    "title" : "DriverApp",
+    "resetPassword" : "Forgot Your Password ?",
+    "username": "Username",
+    "password": "Password"
   },
   "userSetting": {
     "title": "USER SETTING",
@@ -60,13 +62,20 @@
   },
   "forgotpasswordScreen":{
     "header": "FORGOT PASSWORD",
-    "submit": "SUBMIT"
+    "title": "Forgot your Password ?",
+    "submit": "SUBMIT",
+    "label": "Enter your Email Address",
+    "desc": "We will send you an email to reset your password"
   },
   "landingScreen": {
     "search": "Search Manifest/Consignment",
     "searchHere": "Search Here...",
     "header": "LANDING SCREEN",
-    "logout": "LOGOUT"
+    "logout": "LOGOUT",
+    "go": "Go",
+    "myList": "My List",
+    "safetyCheck": "Safety Check",
+    "getRate": "Get a Rate"
   },
   "demoScreen": {
     "howTo": "HOW TO",
@@ -79,5 +88,10 @@
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
+  },
+  "searchView": {
+    "go": "Go",
+    "search": "Search",
+    "searchHere": "Search Here..."
   }
 }

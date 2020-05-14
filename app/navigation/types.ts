@@ -10,4 +10,5 @@ export type PrimaryParamList = {
 export type AuthParamList = {
   login: undefined
   forgotpassword: undefined
+  qrScanner: undefined
 }
