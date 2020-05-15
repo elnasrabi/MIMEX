@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Button, TextField } from "../../components"
@@ -35,7 +35,8 @@ const LABEL: TextStyle = {
 const VALUE: TextStyle = {
   color: color.palette.black,
   fontSize: 16,
-  fontWeight: "bold"
+  fontWeight: "bold",
+  textAlign: "right"
 }
 
 const VALUE_CONTAINER: ViewStyle = {
@@ -61,12 +62,15 @@ const HEADER_TITLE: TextStyle = {
 export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((props) => {
 
   const renderRow = (label, value) => {
-    return (<View style={ROW}>
-      <Text extraText={":"} style={LABEL} tx={label} />
-      <View style={VALUE_CONTAINER}>
-        <Text style={VALUE} text={value} />
+    return (
+      <View style={ROW}>
+        {/* <Text extraText={":"} style={LABEL} tx={label} /> */}
+        <Text style={LABEL}>{label}</Text>
+        <View style={VALUE_CONTAINER}>
+          <Text style={VALUE} text={value} />
+        </View>
       </View>
-    </View>)
+    )
   }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
@@ -80,17 +84,16 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
         style={HEADER}
         titleStyle={HEADER_TITLE}
       />
-      <Screen style={ROOT} preset="scroll">
-        {renderRow("vehicleSetting.vehicleId", "8545154")}
-        {renderRow("vehicleSetting.vehicleName", "Red Van South East")}
-        {renderRow("vehicleSetting.vehicleType", "2 Tan Truck")}
-        {renderRow("vehicleSetting.registration", "XXXX 8845")}
-        {renderRow("vehicleSetting.weightCapacity", "1800 KG")}
-        {renderRow("vehicleSetting.volumeCapacity", "1.00 cbm")}
-        {renderRow("vehicleSetting.jobCapacity", "12")}
-        {renderRow("vehicleSetting.specialFeatures", "Add On Services")}
-      </Screen>
+      <ScrollView>
+        {renderRow("Vehicle ID:", "8545154")}
+        {renderRow("Vehicle Name", "Red Van South East")}
+        {renderRow("Vehicle Type", "2 Tan Truck")}
+        {renderRow("Registration", "XXXX 8845")}
+        {renderRow("WeightCapacity", "1800 KG")}
+        {renderRow("VolumeCapacity", "1.00 cbm")}
+        {renderRow("JobCapacity", "12")}
+        {renderRow("SpecialFeatures", "Add On Services")}
+      </ScrollView>
     </Screen>
-
   )
 })
