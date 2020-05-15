@@ -41,7 +41,7 @@ const PRESETS: { [name: string]: ViewStyle } = {
 const LABEL: TextStyle = {
   color: color.palette.white,
   fontSize: 16,
-  fontFamily: typography.myButton,
+  fontFamily: typography.primary,
   flex: 0.6
 }
 

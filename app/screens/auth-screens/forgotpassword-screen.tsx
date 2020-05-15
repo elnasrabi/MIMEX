@@ -24,7 +24,7 @@ const ROOT: ViewStyle = {
 }
 const TEXT: TextStyle = {
   color: color.palette.white,
-  fontFamily: typography.myButton
+  fontFamily: typography.primary
 }
 
 const HEADER: TextStyle = {
@@ -63,6 +63,10 @@ const EMAIL: TextStyle = {
   fontSize: 14
 }
 
+const BACK_BUTTON: ImageStyle = {
+  tintColor: color.palette.white
+}
+
 const AFS_LOGO: ImageStyle = { height: 120, width: 240, alignSelf: "center" }
 
 const CONTAINER_AFS_LOGO: ImageStyle = { position: "absolute", top: 70, alignSelf: "center" }
@@ -76,6 +80,8 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
   return (
     <Screen style={ROOT} preset="fixed">
       <BackButton
+        style={BACK_BUTTON}
+        hasBackground={false}
         onPress={goBack} />
 
       <View style={CONTAINER}>

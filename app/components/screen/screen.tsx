@@ -1,5 +1,5 @@
 import * as React from "react"
-import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, ImageBackground, ViewStyle, ImageStyle } from "react-native"
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, ImageBackground, ViewStyle, ImageStyle, SafeAreaView } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
@@ -16,6 +16,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   const insetStyle: ViewStyle = { paddingTop: props.unsafe ? 0 : insets.top }
   const icon = icons[props.wall] || icons.wall
   const statusBarColor = props.statusBarColor || color.palette.black
+  const SAFE_AREA: ViewStyle = { flex: 1 }
 
   return (
     <KeyboardAvoidingView
@@ -23,12 +24,14 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
-        <View style={[preset.inner, style, insetStyle]}>
-          {props.children}
-        </View>
-      </ImageBackground>
+      <SafeAreaView style={SAFE_AREA}>
+        <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+        <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
+          <View style={[preset.inner, style, insetStyle]}>
+            {props.children}
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   )
 }
@@ -41,23 +44,26 @@ function ScreenWithScrolling(props: ScreenProps) {
   const insetStyle = { paddingTop: props.unsafe ? 0 : insets.top }
   const statusBarColor = props.statusBarColor || color.palette.black
   const wall = props.wall || icons.wall
+  const SAFE_AREA: ViewStyle = { flex: 1 }
   return (
     <KeyboardAvoidingView
       style={[preset.outer, backgroundStyle]}
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
-        <View style={[preset.outer, backgroundStyle, insetStyle]}>
-          <ScrollView
-            style={[preset.outer, backgroundStyle]}
-            contentContainerStyle={[preset.outer, style]}
-          >
-            {props.children}
-          </ScrollView>
-        </View>
-      </ImageBackground>
+      <SafeAreaView style={SAFE_AREA}>
+        <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+        <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
+          <View style={[preset.outer, backgroundStyle, insetStyle]}>
+            <ScrollView
+              style={[preset.outer, backgroundStyle]}
+              contentContainerStyle={[preset.outer, style]}
+            >
+              {props.children}
+            </ScrollView>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   )
 }

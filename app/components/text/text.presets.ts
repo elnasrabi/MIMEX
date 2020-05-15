@@ -5,9 +5,15 @@ import { color, typography } from "../../theme"
  * All text will start off looking like this.
  */
 const BASE: TextStyle = {
-  fontFamily: typography.myButton,
+  fontFamily: typography.primary,
   color: color.text,
   fontSize: 16,
+}
+
+const NORMAL_TEXT: TextStyle = {
+  color: color.text,
+  fontSize: 18,
+  fontFamily: typography.secondary
 }
 
 /**
@@ -20,6 +26,8 @@ export const presets = {
    * The default text styles.
    */
   default: BASE,
+
+  normal: NORMAL_TEXT,
 
   /**
    * A bold version of the default text.

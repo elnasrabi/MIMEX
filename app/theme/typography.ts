@@ -9,11 +9,10 @@ export const typography = {
   /**
    * The primary font.  Used in most places.
    */
-  primary: Platform.select({ ios: "Montserrat", android: "Montserrat" }),
+  primary: Platform.select({ ios: "ZektonExHv-Regular", android: "ZektonExHv-Regular" }),
 
   /**
    * An alternate font used for perhaps titles and stuff.
    */
-  secondary: Platform.select({ ios: "Montserrat", android: "Montserrat" }),
-  myButton: Platform.select({ ios: "ZektonEx-Bold", android: "ZektonEx-Bold" }),
+  secondary: Platform.select({ ios: "Montserrat-SemiBold", android: "Montserrat-SemiBold" }),
 }

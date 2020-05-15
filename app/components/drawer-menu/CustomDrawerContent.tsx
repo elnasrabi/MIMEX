@@ -5,7 +5,7 @@ import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Button, TextField } from "../../components"
 import { useStores } from "../../models/root-store"
-import { color, spacing } from "../../theme"
+import { color, spacing, typography } from "../../theme"
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -16,7 +16,7 @@ export interface CustomDrawerContentProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const LABEL: TextStyle = { fontSize: 16, fontWeight: "bold", color: color.palette.darkText }
+const LABEL: TextStyle = { fontFamily: typography.primary, fontSize: 16, color: color.palette.darkText }
 
 export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = observer((props) => {
   const { authStore } = useStores()
@@ -34,6 +34,11 @@ export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = 
         label="Home"
         labelStyle={LABEL}
         onPress={() => props.navigation.navigate("Home")}
+      />
+      <DrawerItem
+        labelStyle={LABEL}
+        label="My List"
+        onPress={() => props.navigation.navigate("consignmentList")}
       />
       <DrawerItem
         labelStyle={LABEL}

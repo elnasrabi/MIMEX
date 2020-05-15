@@ -11,4 +11,6 @@ export type AuthParamList = {
   login: undefined
   forgotpassword: undefined
   qrScanner: undefined
+  consignmentList: undefined
+  consignmentDetail: undefined
 }

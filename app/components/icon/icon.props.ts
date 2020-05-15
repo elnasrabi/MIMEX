@@ -13,11 +13,14 @@ export interface IconProps {
 
   containerStyle?: ViewStyle
 
+  hasBackground?: boolean
   /**
    * The name of the icon
    */
 
   icon?: IconTypes
+
+  title?: string
 
   onPress?(): void
 }

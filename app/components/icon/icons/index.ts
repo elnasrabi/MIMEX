@@ -10,7 +10,8 @@ export const icons = {
   afsLightLogo: require("./afs_light_logo.png"),
   redButton: require("./red_button.png"),
   blackButton: require("./black_button.jpg"),
-  redButton2: require("./red_button2.png")
+  redButton2: require("./red_button2.png"),
+  fire: require("./fire.png")
 }
 
 export type IconTypes = keyof typeof icons

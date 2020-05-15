@@ -9,6 +9,8 @@ import { MenuButton } from "../components/header/menu-button"
 import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
+import { useStores } from "../models/root-store"
+import { isEmpty } from "../utils/utils"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -54,26 +56,26 @@ const CONTAINER_AFS_LOGO: ImageStyle = { position: "absolute", top: 50, alignSel
 
 const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
 
-export const LandingScreen: FunctionComponent<LandingScreenProps> = observer((props) => {
+export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
+  const { homeStore } = useStores()
+
   useEffect(() => {
-    console.tron.log('LandingScreen')
-  }, [])
+    if (homeStore.barCodeData.data) {
+      Alert.alert(JSON.stringify(homeStore.barCodeData.data))
+      homeStore.onCodeScanned({})
+    }
+  }, [homeStore.barCodeData])
+
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-  const onSuccess = e => {
-    // Linking.openURL(e.data).catch(err =>
-    //   console.error('An error occured', err)
-    // );
-    Alert.alert(JSON.stringify(e))
-    console.warn(JSON.stringify(e))
-  }
 
   const onCameraPress = () => {
-    props.navigation.navigate("qrScanner", { onSuccess: onSuccess })
+    props.navigation.navigate("qrScanner")
   }
 
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
       <MenuButton
+        hasBackground={false}
         onPress={handleDrawer} />
 
       {/* AFS LOGO */}

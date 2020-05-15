@@ -93,5 +93,18 @@
     "go": "Go",
     "search": "Search",
     "searchHere": "Search Here..."
+  },
+  "consignmentList":{
+    "consignments": "Consignments",
+    "items": "Items",
+    "from": "From",
+    "to": "To",
+    "wgt": "Wgt",
+    "vol": "Vol"
+  },
+  "consignmentDetail":{
+    "consignment": "Consignment",
+    "status": "Status",
+    "address": "Address"
   }
 }
