@@ -1,5 +1,5 @@
 import * as React from "react"
-import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, ImageBackground, ViewStyle, ImageStyle } from "react-native"
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, ImageBackground, ViewStyle, ImageStyle, SafeAreaView } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { ScreenProps } from "./screen.props"
 import { isNonScrolling, offsets, presets } from "./screen.presets"
@@ -23,12 +23,14 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
-        <View style={[preset.inner, style, insetStyle]}>
-          {props.children}
-        </View>
-      </ImageBackground>
+      <SafeAreaView style={[preset.outer, backgroundStyle]}>
+        <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+        <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
+          <View style={[preset.inner, style, insetStyle]}>
+            {props.children}
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   )
 }
@@ -47,17 +49,19 @@ function ScreenWithScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
-        <View style={[preset.outer, backgroundStyle, insetStyle]}>
-          <ScrollView
-            style={[preset.outer, backgroundStyle]}
-            contentContainerStyle={[preset.outer, style]}
-          >
-            {props.children}
-          </ScrollView>
-        </View>
-      </ImageBackground>
+      <SafeAreaView style={[preset.outer, backgroundStyle]}>
+        <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+        <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
+          <View style={[preset.outer, backgroundStyle, insetStyle]}>
+            <ScrollView
+              style={[preset.outer, backgroundStyle]}
+              contentContainerStyle={[preset.outer, style]}
+            >
+              {props.children}
+            </ScrollView>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   )
 }
