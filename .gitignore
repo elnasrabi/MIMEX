@@ -64,6 +64,8 @@ buck-out/
 
 # VS Code
 .vscode
+*.lock
+
 
 # Configurations
 app/config/env.*.js

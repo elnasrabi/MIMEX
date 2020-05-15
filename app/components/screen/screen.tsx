@@ -24,7 +24,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <SafeAreaView style={SAFE_AREA}>
+      <SafeAreaView style={[preset.outer, backgroundStyle]}>
         <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
         <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
           <View style={[preset.inner, style, insetStyle]}>
@@ -51,7 +51,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
     >
-      <SafeAreaView style={SAFE_AREA}>
+      <SafeAreaView style={[preset.outer, backgroundStyle]}>
         <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
         <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
           <View style={[preset.outer, backgroundStyle, insetStyle]}>
