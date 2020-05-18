@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef } from "react"
+import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, TouchableOpacity, Alert, ImageStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
@@ -41,10 +41,12 @@ const TRUCK_LOGO: ImageStyle = { height: 140, width: 280, alignSelf: "center", m
 
 export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
   const { authStore } = useStores()
+  const [username, onChangeUsername] = useState("");
+  const [password, onChangePassword] = useState("");
   let passwordRef: any
 
   const onLogin = () => {
-    authStore.login()
+    authStore.login(username, password);
   }
   const onResetPassword = () => {
     props.navigation.navigate("forgotpassword")
@@ -55,17 +57,28 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
       <Icon style={AFS_LOGO} icon={"afsLogo"} />
       <Icon style={TRUCK_LOGO} icon={"loginLogo"} />
 
-      <TextField labelTx={"loginScreen.username"} returnKeyType={"next"} onSubmitEditing={() => { passwordRef.focus() }}
-        blurOnSubmit={false} style={USERNAME} placeholder={"Enter Username"} />
-
-      <TextField labelTx={"loginScreen.password"} forwardedRef={(input) => { passwordRef = input }}
+      <TextField
+        labelTx={"loginScreen.username"}
+        returnKeyType={"next"}
+        onSubmitEditing={() => { passwordRef.focus() }}
+        blurOnSubmit={false}
+        style={USERNAME}
+        placeholder={"Enter Username"}
+        onChangeText={text => onChangeUsername(text)}
+        value={username}
+      />
+      <TextField
+        labelTx={"loginScreen.password"}
+        forwardedRef={(input) => { passwordRef = input }}
         returnKeyType={"done"} onSubmitEditing={onLogin}
-        placeholder={"Enter Password"} secureTextEntry={true} />
-
+        placeholder={"Enter Password"}
+        secureTextEntry={true}
+        onChangeText={text => onChangePassword(text)}
+        value={password}
+      />
       <TouchableOpacity onPress={onResetPassword}>
         <Text style={RESET_PASSWORD} tx={"loginScreen.resetPassword"} />
       </TouchableOpacity>
-
       <MyButton
         style={CONTINUE}
         tx="loginScreen.login"
