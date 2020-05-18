@@ -18,7 +18,11 @@
     "title" : "DriverApp",
     "resetPassword" : "Forgot Your Password ?",
     "username": "Username",
-    "password": "Password"
+    "password": "Password",
+    "errorUsername": "Enter Username",
+    "errorPassword": "Enter Password",
+    "invalidUsernamePassword": "Invalid Username Password"
+
   },
   "userSetting": {
     "title": "USER SETTING",

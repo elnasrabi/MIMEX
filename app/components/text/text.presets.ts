@@ -38,6 +38,9 @@ export const presets = {
    * Large headers.
    */
   header: { ...BASE, fontSize: 24, fontWeight: "bold" } as TextStyle,
+  // Validation error
+
+  error: { color: color.palette.red, fontSize: 16 } as TextStyle,
 
   /**
    * Field labels that appear on forms above the inputs.

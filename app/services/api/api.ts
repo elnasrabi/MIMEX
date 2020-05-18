@@ -2,6 +2,8 @@ import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
+import base64 from 'react-native-base64'
+const parseString = require('react-native-xml2js').parseString
 
 /**
  * Manages all requests to the API.
@@ -39,44 +41,27 @@ export class Api {
       baseURL: this.config.url,
       timeout: this.config.timeout,
       headers: {
-        Accept: "application/json",
+        Accept: "application/xml",
       },
     })
   }
 
-  /**
-   * Gets a list of users.
-   */
-  async getUsers(): Promise<Types.GetUsersResult> {
-    // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/users`)
-
-    // the typical ways to die when calling an api
+  async login(username: string, password: string): Promise<Types.LoginUserResult> {
+    console.tron.log('Basic:', "Basic " + base64.encode(username + ":" + password))
+    const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"
+    const response: ApiResponse<any> = await this.apisauce.post('', xmlData, { headers: { Authorization: "Basic " + base64.encode(username + ":" + password) } })
+    console.tron.log('response', response)
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }
-
-    const convertUser = raw => {
-      return {
-        id: raw.id,
-        name: raw.name,
-      }
-    }
-
-    // transform the data into the format we are expecting
     try {
-      const rawUsers = response.data
-      const resultUsers: Types.User[] = rawUsers.map(convertUser)
-      return { kind: "ok", users: resultUsers }
+      const tokenData = response.data
+      return { kind: "ok", user: tokenData }
     } catch {
       return { kind: "bad-data" }
     }
   }
-
-  /**
-   * Gets a single user by ID
-   */
 
   async getUser(id: string): Promise<Types.GetUserResult> {
     // make the api call

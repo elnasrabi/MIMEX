@@ -20,6 +20,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
 
   return (
     <KeyboardAvoidingView
+      keyboardShouldPersistTaps='handled'
       style={[preset.outer, backgroundStyle]}
       behavior={isIos ? "padding" : null}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
@@ -56,6 +57,7 @@ function ScreenWithScrolling(props: ScreenProps) {
         <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
           <View style={[preset.outer, backgroundStyle, insetStyle]}>
             <ScrollView
+              keyboardShouldPersistTaps='handled'
               style={[preset.outer, backgroundStyle]}
               contentContainerStyle={[preset.outer, style]}
             >

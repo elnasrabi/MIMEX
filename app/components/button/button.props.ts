@@ -40,6 +40,8 @@ export interface ButtonProps extends TouchableOpacityProps {
 
   myTextStyle?: TextStyle,
 
-  buttonSource?: ImageSourcePropType
+  buttonSource?: ImageSourcePropType,
+
+  isLoading?: boolean
 
 }
