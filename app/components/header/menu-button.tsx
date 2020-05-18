@@ -42,7 +42,7 @@ export const MenuButton: React.FunctionComponent<IconProps> = props => {
   } = props
 
   return (
-    <View style={[MAIN_VIEW, { backgroundColor: hasBackground ? color.palette.toolbar : "" }]}>
+    <View style={[MAIN_VIEW, { backgroundColor: hasBackground ? color.palette.toolbar : "", zIndex: 2 }]}>
       {title && <Text style={TITLE} tx={title} />}
       <View style={MENU_BUTTON}>
         <Button preset="link" onPress={onPress}>
