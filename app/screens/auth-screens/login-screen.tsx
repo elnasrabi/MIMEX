@@ -7,6 +7,9 @@ import { Screen, Text, Button, TextField, Icon } from "../../components"
 import { useStores } from "../../models/root-store"
 import { color, spacing } from "../../theme"
 import { MyButton } from "../../components/button/my-button"
+import { isInternetAvailable } from "../../utils/utils"
+import api from "@storybook/addon-storyshots"
+import { Api } from "../../services/api"
 
 export interface LoginScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -43,8 +46,14 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   const { authStore } = useStores()
   let passwordRef: any
 
-  const onLogin = () => {
-    authStore.login()
+  const onLogin = async () => {
+    // authStore.login()
+    const isConnected = await isInternetAvailable()
+    if (isConnected) {
+      const api = new Api()
+      api.setup()
+      api.loginUser()
+    }
   }
   const onResetPassword = () => {
     props.navigation.navigate("forgotpassword")

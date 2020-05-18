@@ -30,7 +30,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/masked-view": "0.1.5",
-    "@react-native-community/netinfo": "^5.8.0",
+    "@react-native-community/netinfo": "^5.8.1",
     "@react-navigation/drawer": "^5.6.4",
     "@react-navigation/native": "^5.1.5",
     "apisauce": "1.1.1",
