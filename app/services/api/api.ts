@@ -3,7 +3,6 @@ import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
 import base64 from 'react-native-base64'
-const parseString = require('react-native-xml2js').parseString
 
 /**
  * Manages all requests to the API.
