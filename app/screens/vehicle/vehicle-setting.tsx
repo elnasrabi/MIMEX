@@ -16,7 +16,6 @@ export interface VehicleSettingProps {
 }
 
 const ROOT: ViewStyle = {
-  backgroundColor: color.palette.white,
   paddingBottom: 10
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
@@ -67,7 +66,7 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   return (
-    <Screen style={ROOT} preset="fixed">
+    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
         title={"vehicleSetting.header"}
         onPress={handleDrawer} />
