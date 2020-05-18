@@ -29,7 +29,6 @@ const TITLE: TextStyle = {
 }
 
 const ROOT: ViewStyle = {
-  backgroundColor: color.palette.white,
   paddingBottom: 10
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
@@ -82,7 +81,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   return (
-    <Screen style={ROOT} preset="fixed">
+    <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
       <MenuButton
         title={"userSetting.header"}
         onPress={handleDrawer} />
