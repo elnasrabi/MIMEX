@@ -8,6 +8,7 @@ import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
+import { isIphoneX } from "react-native-iphone-x-helper";
 
 export interface VehicleSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -37,6 +38,10 @@ const ROW: ViewStyle = {
   marginEnd: 20,
   marginTop: 20
 }
+const SCROLLVIEW_STYLE: ViewStyle = {
+  marginBottom: 10,
+  marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
+}
 
 export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((props) => {
 
@@ -59,7 +64,7 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
         title={"vehicleSetting.header"}
         onPress={handleDrawer} />
 
-      <ScrollView style={{ marginBottom: 10, marginTop: Platform.OS == 'android' ? 40 : 0 }}>
+      <ScrollView style={SCROLLVIEW_STYLE}>
         {renderRow("vehicleSetting.vehicleId", "8545154", true)}
         {renderRow("vehicleSetting.vehicleName", "Red Van South East")}
         {renderRow("vehicleSetting.vehicleType", "2 Tan Truck")}

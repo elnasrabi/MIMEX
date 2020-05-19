@@ -8,6 +8,7 @@ import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons"
 import { BottomButton } from "../../components/bottom-button/bottom-button";
+import { isIphoneX } from 'react-native-iphone-x-helper'
 
 export interface MyListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -34,7 +35,8 @@ const RENDER_CONSIGNMENT_DETAIL_VIEW: ViewStyle = {
 }
 const RENDER_CHECKBOX_VIEW: ViewStyle = {
   justifyContent: "center",
-  alignItems: 'center'
+  alignItems: 'center',
+  marginLeft: 5
 }
 const RENDER_INNER_CONTAINER: ViewStyle = {
   flex: 1,
@@ -56,7 +58,7 @@ const SEPERATOR_LINE: ViewStyle = {
 }
 const SELECTALL_CHECKBOX_VIEW: ViewStyle = {
   margin: 10,
-  marginTop: Platform.OS == "android" ? 60 : 10
+  marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 10 : 33
 }
 const RENDER_ADD: ViewStyle = {
   flex: 1,

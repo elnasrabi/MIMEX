@@ -8,6 +8,7 @@ import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
+import { isIphoneX } from "react-native-iphone-x-helper";
 
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -64,7 +65,7 @@ const ROW: ViewStyle = {
 }
 const SCROLLVIEW_STYLE: ViewStyle = {
   marginBottom: 10,
-  marginTop: Platform.OS == 'android' ? 40 : 0
+  marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
 }
 const EMAIL_VIEW_STYLE: ViewStyle = {
   marginStart: 20,
