@@ -2,6 +2,7 @@ import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
+import base64 from 'react-native-base64'
 
 /**
  * Manages all requests to the API.
@@ -39,11 +40,27 @@ export class Api {
       baseURL: this.config.url,
       timeout: this.config.timeout,
       headers: {
-        Accept: "application/json",
+        Accept: "application/xml",
       },
     })
   }
 
+  async login(username: String, password: String): Promise<Types.LoginUserResult> {
+    console.tron.log('Basic:', "Basic " + base64.encode(username + ":" + password));
+    const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>";
+    const response: ApiResponse<any> = await this.apisauce.post('', xmlData, { headers: { 'Authorization': "Basic " + base64.encode(username + ":" + password) } })
+    console.tron.log('response', response);
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const tokenData = response.data
+      return { kind: "ok", user: tokenData }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
   /**
    * Gets a list of users.
    */

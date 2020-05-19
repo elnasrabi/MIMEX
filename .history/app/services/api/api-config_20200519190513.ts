@@ -1,7 +1,11 @@
 // Use this import if you want to use "env.js" file
 // const { API_URL } = require("../../config/env")
 // Or just specify it directly like this:
+<<<<<<< HEAD
+const API_URL = "http://uat.afs.moveitnetexpress.com.au//moveit/gateway/"
+=======
 const API_URL = "http://uat.afs.moveitnetexpress.com.au/moveit/gateway/"
+>>>>>>> a9a9b65ae04ed1417f3c7a9c78f9104a529dd518
 
 /**
  * The options used to configure the API.

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert } from "react-native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../../components"
@@ -8,7 +8,7 @@ import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button"
 
 export interface ConsignmentListProps {
-    navigation: NativeStackNavigationProp<ParamListBase>
+  navigation: NativeStackNavigationProp<ParamListBase>
 }
 const ROOT: ViewStyle = {
   justifyContent: "center",
@@ -78,7 +78,7 @@ const consignmentList: any[] = [{
 }]
 
 const FLAT_LIST: ViewStyle = { padding: 10, borderColor: color.palette.darkText, borderWidth: 2, margin: 10, borderRadius: 5 }
-const FLAT_LIST_CONTAINER: ViewStyle = { marginTop: 60 }
+const FLAT_LIST_CONTAINER: ViewStyle = { marginTop: Platform.OS == 'android' ? 60 : 10 }
 const FLAT_LIST_VIEW: ViewStyle = { flexDirection: "row" }
 const ID: ViewStyle = { flex: 1 }
 const FROM_TO_VIEW: ViewStyle = { flexDirection: "row" }
@@ -119,7 +119,7 @@ export const ConsignmentList: FunctionComponent<ConsignmentListProps> = observer
 
               <View style={FROM_TO_VIEW}>
                 <Text extraText={":"} tx={"consignmentList.from"} style={FROM_TO_LABEL} preset={"normal"}>From:</Text>
-                <Text extraText={":"}tx={"consignmentList.to"} style={FROM_TO_LABEL} preset={"normal"}>To:</Text>
+                <Text extraText={":"} tx={"consignmentList.to"} style={FROM_TO_LABEL} preset={"normal"}>To:</Text>
               </View>
 
               <View style={FROM_TO_VIEW}>

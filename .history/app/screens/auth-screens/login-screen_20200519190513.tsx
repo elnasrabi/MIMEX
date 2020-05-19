@@ -48,6 +48,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   const [password, onChangePassword] = useState("");
   let passwordRef: any
 
+<<<<<<< HEAD
   const onLogin = async () => {
     // authStore.login()
     const isConnected = await isInternetAvailable()
@@ -56,6 +57,10 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
       api.setup()
       api.loginUser()
     }
+=======
+  const onLogin = () => {
+    authStore.login(username, password);
+>>>>>>> a9a9b65ae04ed1417f3c7a9c78f9104a529dd518
   }
   const onResetPassword = () => {
     props.navigation.navigate("forgotpassword")
