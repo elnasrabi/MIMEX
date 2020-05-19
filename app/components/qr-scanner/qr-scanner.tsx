@@ -1,11 +1,10 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { ImageStyle, ViewStyle, View, TouchableOpacity, ImageBackground, TextStyle } from "react-native"
+import { ImageStyle, ViewStyle } from "react-native"
 
 import { color } from "../../theme"
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { QRProps } from "./qr-props"
 import { Screen } from "../screen/screen"
 import { BackButton } from "../header/back-button"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"

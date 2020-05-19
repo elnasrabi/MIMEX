@@ -17,6 +17,7 @@ const SEARCH_INPUT: ViewStyle = {
   flex: 1
 }
 const MENU_BUTTON: ViewStyle = {
+  marginTop: 20
 }
 
 const BACKGROUND_ICON: ImageStyle = {
@@ -30,14 +31,16 @@ const BACKGROUND_ICON: ImageStyle = {
 
 const CAMERA_ICON: ImageStyle = {
   alignSelf: "center",
-  paddingStart: 15
+  paddingStart: 15,
+  alignItems: "center",
+  marginTop: 10
 }
 
 const HEADER: TextStyle = {
   color: color.palette.darkText,
   alignSelf: "center",
   marginEnd: 55,
-  fontSize: 18
+  fontSize: 22
 }
 
 const GO: TextStyle = {
@@ -47,6 +50,7 @@ const GO: TextStyle = {
 }
 
 const INPUT_STYLE: TextStyle = { borderColor: color.palette.darkText, borderWidth: 1.5 }
+const MAIN_STYLE: ViewStyle = { flex: 1 }
 
 export const SearchView: React.FunctionComponent<SearchProps> = props => {
   const {
@@ -59,14 +63,14 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
     <View style={[MENU_BUTTON, containerStyle]}>
       <Text preset="button" style={HEADER} tx={"searchView.search"} />
       <View style={SEARCH_VIEW}>
-        <TextField inputStyle={INPUT_STYLE} style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"searchView.searchHere"} />
+        <TextField mainStyle={MAIN_STYLE} inputStyle={INPUT_STYLE} style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"searchView.searchHere"} />
         <TouchableOpacity onPress={onCameraPress} style={CAMERA_ICON}>
           <EvilIcons color={color.palette.darkText} name="camera" size={55} />
         </TouchableOpacity>
       </View>
 
       {/* GO */}
-      <TouchableOpacity onPress={onGoPress}>
+      <TouchableOpacity style={MENU_BUTTON} onPress={onGoPress}>
         <ImageBackground style={BACKGROUND_ICON}
           source={icons.blackButton}>
           <Text preset="button" style={GO} tx={"searchView.go"} />

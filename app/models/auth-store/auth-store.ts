@@ -12,9 +12,11 @@ export const AuthStoreModel = types
   .model("AuthStore")
   .props({
     isLoggedIn: false,
-    isLoading: false,
+    isLoginLoading: false,
+    isForgotLoading: false,
     shouldUpdate: false,
-    hasError: types.optional(types.frozen(), false),
+    hasLoginError: types.optional(types.frozen(), false),
+    hasForgotError: types.optional(types.frozen(), false),
     userData: types.optional(types.frozen(), {})
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -24,7 +26,7 @@ export const AuthStoreModel = types
       self.userData = types.optional(types.frozen(), {})
     },
     login: flow(function* login(username: string, password: string) {
-      self.isLoading = true
+      self.isLoginLoading = true
       try {
         const data = yield api.login(username, password)
         if (data.kind === "ok") {
@@ -33,15 +35,37 @@ export const AuthStoreModel = types
             self.isLoggedIn = true
           })
         } else {
-          self.hasError = true
+          self.hasLoginError = true
         }
-        self.isLoading = false
+        self.isLoginLoading = false
       } catch (erro) {
         console.tron.log('erro', erro)
       }
     }),
-    resetAuth() {
-      self.hasError = false
+    forgotPassword: flow(function* forgotPassword(email: string) {
+      self.isForgotLoading = true
+      try {
+        const data = yield api.forgotPassword(email)
+        if (data.kind === "ok") {
+          parseString(data.user, function (_error, result) {
+            self.userData = result.responses.userResponse
+            self.isLoggedIn = true
+          })
+        } else {
+          self.hasForgotError = true
+        }
+        self.isForgotLoading = false
+      } catch (erro) {
+        console.tron.log('erro', erro)
+      }
+    }),
+    resetLoginAuth() {
+      self.hasLoginError = false
+      self.isLoginLoading = false
+    },
+    resetForgotAuth() {
+      self.hasForgotError = false
+      self.isForgotLoading = false
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

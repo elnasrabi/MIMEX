@@ -59,6 +59,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
     labelStyle: labelStyleOverride,
     forwardedRef,
     errorTx,
+    mainStyle,
     ...rest
   } = props
   let containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset] }
@@ -74,7 +75,7 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
 
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
   return (
-    <View style={errorStyle}>
+    <View style={[errorStyle, mainStyle]}>
       <View style={containerStyle}>
         {(label || labelTx) && <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />}
         <TextInput

@@ -38,23 +38,32 @@ const CONTINUE: ViewStyle = {
   alignSelf: "center"
 }
 
-const AFS_LOGO: ImageStyle = { height: 120, width: 240, alignSelf: "center" }
-const TRUCK_LOGO: ImageStyle = { height: 140, width: 280, alignSelf: "center", marginTop: 50 }
+const AFS_LOGO: ImageStyle = {
+  height: 120,
+  width: 240,
+  alignSelf: "center"
+}
+const TRUCK_LOGO: ImageStyle = {
+  height: 140,
+  width: 280,
+  alignSelf: "center",
+  marginTop: 50
+}
 const INPUT_USERNAME = "username"
 const INPUT_PASSWORD = "password"
 export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
   const { authStore } = useStores()
-  const [username, onChangeUsername] = useState("")
-  const [password, onChangePassword] = useState("")
+  // const [username, onChangeUsername] = useState("")
+  // const [password, onChangePassword] = useState("")
   const [isValidUsername, setValidUsername] = useState(true)
   const [isValidPassword, setValidPassword] = useState(true)
 
-  // const [username, onChangeUsername] = useState("cs@ste")
-  // const [password, onChangePassword] = useState("a6a/qNs}Np")
+  const [username, onChangeUsername] = useState("cs@ste")
+  const [password, onChangePassword] = useState("a6a/qNs}Np")
   let passwordRef: any
 
   useEffect(() => {
-    authStore.resetAuth()
+    authStore.resetLoginAuth()
   }, [])
 
   const onLogin = () => {
@@ -86,7 +95,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     <Screen style={ROOT} preset="scroll">
 
       <Icon style={AFS_LOGO} icon={"afsLogo"} />
-      {authStore.hasError ? <Text style={TEXT_INVALID} tx={"loginScreen.invalidUsernamePassword"} />
+      {authStore.hasLoginError ? <Text style={TEXT_INVALID} tx={"loginScreen.invalidUsernamePassword"} />
         : <Icon style={TRUCK_LOGO} icon={"loginLogo"} />}
 
       <TextField
@@ -115,7 +124,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
       </TouchableOpacity>
       <MyButton
         style={CONTINUE}
-        isLoading={authStore.isLoading}
+        isLoading={authStore.isLoginLoading}
         tx="loginScreen.login"
         onPress={onLogin}
       />

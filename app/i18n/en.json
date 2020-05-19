@@ -69,7 +69,9 @@
     "title": "Forgot your Password ?",
     "submit": "SUBMIT",
     "label": "Enter your Email Address",
-    "desc": "We will send you an email to reset your password"
+    "desc": "We will send you an email to reset your password",
+    "invalidError": "Email Address Not Valid",
+    "enterEmail": "Enter Email"
   },
   "landingScreen": {
     "search": "Search Manifest/Consignment",
