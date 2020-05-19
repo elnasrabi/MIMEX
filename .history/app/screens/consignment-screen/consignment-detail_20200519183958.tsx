@@ -6,7 +6,6 @@ import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon, Button } from "../../components"
 import { color } from "../../theme"
 import { BackButton } from "../../components/header/back-button"
-import { callApi } from "../../utils/utils"
 
 export interface ConsignmentDetailProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -47,12 +46,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   }, [])
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
-  const onFirePress = () => {
-
-  }
-  const onPhonePress = () => {
-    callApi("645456456456")
-  }
+  const onFirePress = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="scroll">
@@ -110,7 +104,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
           <Text tx={"consignmentDetail.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
           <Text text={"Line 1 \nLine 2"} preset={"normal"} />
         </View>
-        <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
+        <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
           <Icon icon={"phone"} />
         </Button>
       </View>

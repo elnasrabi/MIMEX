@@ -116,10 +116,7 @@
     "address": "Address",
     "items": "Items",
     "weight": "Weight",
-    "customer": "Customer",
-    "name": "Name",
-    "contact": "Contact",
-    "special": "Special Instruction"
+    "customer": "Customer"
   },
   "MyList": {
     "header": "My List",

@@ -6,7 +6,6 @@ import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon, Button } from "../../components"
 import { color } from "../../theme"
 import { BackButton } from "../../components/header/back-button"
-import { callApi } from "../../utils/utils"
 
 export interface ConsignmentDetailProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -47,12 +46,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   }, [])
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
-  const onFirePress = () => {
-
-  }
-  const onPhonePress = () => {
-    callApi("645456456456")
-  }
+  const onFirePress = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="scroll">
@@ -64,25 +58,25 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"consignmentDetail.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"} text={"ABC545"} />
+            <Text preset={"normal"}>{"ABC545"}</Text>
           </View>
           <View style={DETAIL_VIEW}>
-            <Text tx={"consignmentDetail.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"} text={"Dispatched"} />
+            <Text tx={"consignmentDetail.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
+            <Text preset={"normal"}>{"Dispatched"}</Text>
           </View>
-          <Text tx={"consignmentDetail.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+          <Text tx={"consignmentDetail.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
 
           <View style={DETAIL_VIEW}>
-            <Text style={CONSIGNMENT_VIEW} text={"126454 Red Tree Street South Yarra 24"} preset={"normal"} />
+            <Text style={CONSIGNMENT_VIEW} preset={"normal"}>{"126454 Red Tree Street South Yarra 24"}</Text>
 
             <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
-                <Text tx={"consignmentDetail.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text text={"12"} preset={"normal"} />
+                <Text tx={"consignmentDetail.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
+                <Text preset={"normal"}>{"12"}</Text>
               </View>
               <View style={DETAIL_VIEW}>
-                <Text tx={"consignmentDetail.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text preset={"normal"} text={"24 KG"} />
+                <Text tx={"consignmentDetail.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
+                <Text preset={"normal"}>{"24 KG"}</Text>
               </View>
             </View>
           </View>
@@ -100,18 +94,17 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
       <View style={CUSTOMER_CONTAINER}>
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
-            <Text tx={"consignmentDetail.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"}>{"Mark belo"}</Text>
+            <Text tx={"consignmentDetail.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+            <Text preset={"normal"}>{"ABC545"}</Text>
           </View>
           <View style={DETAIL_VIEW}>
-            <Text tx={"consignmentDetail.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
-            <Text preset={"normal"}>{"856126555"}</Text>
+            <Text tx={"consignmentDetail.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
+            <Text preset={"normal"}>{"Dispatched"}</Text>
           </View>
-          <Text tx={"consignmentDetail.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
-          <Text text={"Line 1 \nLine 2"} preset={"normal"} />
+          <Text tx={"consignmentDetail.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
         </View>
-        <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
-          <Icon icon={"phone"} />
+        <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
+          <Icon icon={"fire"} />
         </Button>
       </View>
 

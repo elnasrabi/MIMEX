@@ -48,6 +48,7 @@
     "react-native-keychain": "5.0.1",
     "react-native-localize": "^1.0.0",
     "react-native-permissions": "^2.1.4",
+    "react-native-phone-call": "^1.0.9",
     "react-native-qrcode-scanner": "^1.4.1",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "0.7.3",

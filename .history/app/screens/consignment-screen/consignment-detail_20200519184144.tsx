@@ -6,7 +6,6 @@ import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon, Button } from "../../components"
 import { color } from "../../theme"
 import { BackButton } from "../../components/header/back-button"
-import { callApi } from "../../utils/utils"
 
 export interface ConsignmentDetailProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -51,7 +50,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
 
   }
   const onPhonePress = () => {
-    callApi("645456456456")
+
   }
 
   return (
