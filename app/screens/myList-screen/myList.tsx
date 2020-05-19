@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useState, useEffect } from "react"
+import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, ScrollView, FlatList, TextStyle, TouchableOpacity } from "react-native"
+import { ViewStyle, View, FlatList, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField, Checkbox } from "../../components"
+import { Screen, Text, Checkbox } from "../../components"
 import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { MyButton } from "../../components/button/my-button"
@@ -16,53 +16,77 @@ export interface MyListProps {
 const ROOT: ViewStyle = {
   paddingBottom: 10
 }
-const BUTTON_TEXT: TextStyle = { color: 'white', fontSize: 20, paddingVertical: 15 }
-const BUTTON: ViewStyle = { alignItems: "center", justifyContent: "center", borderRadius: 10 }
+const CONTINUE: ViewStyle = {
+  flex: 1
+}
+const BOTTOM_VIEW: ViewStyle = {
+  position: "absolute",
+  bottom: 10,
+  flexDirection: "row"
+}
+const FLATLIST_STYLE: ViewStyle = {
+  marginVertical: 10
+}
+const RENDER_CONTAINER: ViewStyle = {
+  flexDirection: 'row',
+  marginBottom: 10
+}
+const RENDER_CONSIGNMENT_DETAIL_VIEW: ViewStyle = {
+  flex: 1,
+  flexDirection: 'row',
+  justifyContent: "space-between",
+  marginVertical: 5
+}
+const RENDER_CHECKBOX_VIEW: ViewStyle = {
+  justifyContent: "center",
+  alignItems: 'center'
+}
+const RENDER_INNER_CONTAINER: ViewStyle = {
+  flex: 1,
+  marginRight: 2,
+  borderWidth: 1,
+  padding: 3
+}
+const CHECKBOX_STYLE: ViewStyle = {
+  height: 25,
+  width: 25,
+  borderColor: color.palette.black
+}
+const SEPERATOR_LINE: ViewStyle = {
+  height: 5,
+  backgroundColor: color.palette.black,
+  width: '95%',
+  marginLeft: 10,
+  borderRadius: 5
+}
+const SELECTALL_CHECKBOX_VIEW: ViewStyle = {
+  margin: 10,
+  marginTop: Platform.OS == "android" ? 60 : 10
+}
+const RENDER_ADD: ViewStyle = {
+  flex: 1,
+  marginVertical: 5
+}
 
-// const Mylist: any[] = [{ check: false }, { check: false }, { check: false }, { check: false }, { check: false }, { check: false }, { check: false }, { check: false }, { check: false }]
 export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   const [toggleAll, useToggleAll] = useState(false)
-  const [Mylist, updateMyList] = useState([{ check: false }, { check: false }, { check: false }])
-
-  const CONTINUE: ViewStyle = {
-    flex: 1
-  }
-  // useEffect(() => {
-  //   let i;
-  //   let newArr = [...Mylist]
-  //   if (toggleAll) {
-  //     for (i = 0; i < newArr.length; i++) {
-  //       newArr[i].check = true
-  //     }
-  //   }
-  //   else {
-  //     for (i = 0; i < newArr.length; i++) {
-  //       newArr[i].check = false
-  //     }
-  //   }
-  //   updateMyList(newArr)
-  // }, [toggleAll])
-
-  // useEffect(() => {
-  //   let i = 0;
-  //   let newArr = [...Mylist]
-  //   let j;
-  //   for (j = 0; j < newArr.length; j++) {
-  //     if (newArr[j].check) {
-  //       i++
-  //     }
-  //   }
-  //   if (i == newArr.length) {
-  //     useToggleAll(true)
-  //   }
-  //   else useToggleAll(false)
-  // }, [Mylist])
+  const [Mylist, updateMyList] = useState([{ id: '1', check: false }, { id: '2', check: false }, { id: '3', check: false }])
 
   const updateCheckBox = (index) => {
     let newArr = [...Mylist]
+    let i = 0, j;
     newArr[index].check = !newArr[index].check
+    for (j = 0; j < newArr.length; j++) {
+      if (newArr[j].check) {
+        i++
+      }
+    }
+    if (i == newArr.length) {
+      useToggleAll(true)
+    }
+    else useToggleAll(false)
     updateMyList(newArr)
   }
   const updateAllCheckBox = (isSelect) => {
@@ -76,28 +100,28 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const renderItem = ({ item, index }) => {
     return (
-      <View key={index} style={{ flexDirection: 'row', marginBottom: 10 }}>
-        <View style={{ justifyContent: "center", alignItems: 'center' }}>
+      <View key={index} style={RENDER_CONTAINER}>
+        <View style={RENDER_CHECKBOX_VIEW}>
           <Checkbox
             tx='MyList.empty'
-            outlineStyle={{ height: 25, width: 25, marginLeft: 5, borderColor: color.palette.black }}
+            outlineStyle={[CHECKBOX_STYLE, { marginLeft: 5 }]}
             value={item.check}
             onToggle={() => { updateCheckBox(index) }}
           />
         </View>
-        <View style={{ flex: 1, marginRight: 2, borderWidth: 1, padding: 3 }}>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between", marginVertical: 5 }}>
-            <View style={{ flex: 0.5 }}>
+        <View style={RENDER_INNER_CONTAINER}>
+          <View style={RENDER_CONSIGNMENT_DETAIL_VIEW}>
+            <View style={CONTINUE}>
               <Text>ABCD123456</Text>
             </View>
-            <View style={{ flex: 0.5, alignItems: "flex-end" }}>
+            <View style={[CONTINUE, { alignItems: "flex-end" }]}>
               <Text style={{}}>Despatched</Text>
             </View>
           </View>
-          <View style={{ flex: 1, marginVertical: 5 }}>
+          <View style={RENDER_ADD}>
             <Text>123 RED TREE STREET</Text>
           </View>
-          <View style={{ flex: 1, marginVertical: 5 }}>
+          <View style={RENDER_ADD}>
             <Text>South Yarra</Text>
           </View>
         </View>
@@ -110,38 +134,30 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       <MenuButton
         title={"MyList.header"}
         onPress={handleDrawer} />
-      <View style={{ margin: 10, marginTop: Platform.OS == "android" ? 60 : 10 }}>
-        <Checkbox tx='MyList.empty' outlineStyle={{ height: 25, width: 25, borderColor: color.palette.black }} value={toggleAll} onToggle={() => updateAllCheckBox(!toggleAll)} />
+      <View style={SELECTALL_CHECKBOX_VIEW}>
+        <Checkbox
+          tx='MyList.empty'
+          outlineStyle={CHECKBOX_STYLE}
+          value={toggleAll}
+          onToggle={() => updateAllCheckBox(!toggleAll)} />
       </View>
-      <View style={{ height: 5, backgroundColor: color.palette.black, width: '95%', marginLeft: 10, borderRadius: 5 }} />
+      <View style={SEPERATOR_LINE} />
       <FlatList
         data={Mylist}
-        style={{ marginTop: 10, marginBottom: 10 }}
+        style={FLATLIST_STYLE}
+        keyExtractor={(item, index) => item.id}
         renderItem={renderItem}
       />
 
-      {/* <View style={{ flexDirection: 'row', justifyContent: "space-around" }}>
-        <TouchableOpacity style={[BUTTON, { backgroundColor: 'black', width: 160 }]}>
-          <Text style={BUTTON_TEXT}>Success</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[BUTTON, { backgroundColor: 'red', width: 130 }]}>
-          <Text style={BUTTON_TEXT}>Fail</Text>
-        </TouchableOpacity>
-      </View> */}
-
-      <View style={{
-        position: "absolute",
-        bottom: 10,
-        flexDirection: "row"
-      }}>
+      <View style={BOTTOM_VIEW}>
         <MyButton
           style={CONTINUE}
-          tx="forgotpasswordScreen.submit"
+          tx="common.success"
         />
         <MyButton
           style={CONTINUE}
           buttonSource={icons.blackButton2}
-          tx="forgotpasswordScreen.submit"
+          tx="common.fail"
         />
       </View>
     </Screen >
