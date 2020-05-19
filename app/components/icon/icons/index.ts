@@ -10,6 +10,7 @@ export const icons = {
   afsLightLogo: require("./afs_light_logo.png"),
   redButton: require("./red_button.png"),
   blackButton: require("./black_button.jpg"),
+  blackButton2: require("./black_button2.png"),
   redButton2: require("./red_button2.png"),
   fire: require("./fire.png")
 }

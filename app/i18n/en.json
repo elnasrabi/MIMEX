@@ -15,8 +15,8 @@
   "loginScreen": {
     "login": "LOGIN",
     "header": "LOGIN SCREEN",
-    "title" : "DriverApp",
-    "resetPassword" : "Forgot Your Password ?",
+    "title": "DriverApp",
+    "resetPassword": "Forgot Your Password ?",
     "username": "Username",
     "password": "Password",
     "errorUsername": "Enter Username",
@@ -27,44 +27,44 @@
   "userSetting": {
     "title": "USER SETTING",
     "header": "USER SETTING",
-    "resetPassword" : "Forgot your Password?",
-    "email" : "Username/Email",
-    "mobile" : "Mobile",
-    "city" : "City",
-    "state" : "State",
-    "licenceType" : "Licence Type",
-    "licenceNumber" : "Licence Number",
-    "expiry" : "Expiry",
-    "vehicleId" : "Vehicle ID",
-    "vehicleType" : "Vehicle Type",
-    "vehicleName" : "Vehicle Name",
-    "registration" : "Registration",
-    "weightCapacity" : "Weight Capacity",
-    "volumeCapacity" : "Volume Capacity",
-    "jobCapacity" : "Job Capacity",
-    "specialFeatures" : "Special Features"
+    "resetPassword": "Forgot your Password?",
+    "email": "Username/Email",
+    "mobile": "Mobile",
+    "city": "City",
+    "state": "State",
+    "licenceType": "Licence Type",
+    "licenceNumber": "Licence Number",
+    "expiry": "Expiry",
+    "vehicleId": "Vehicle ID",
+    "vehicleType": "Vehicle Type",
+    "vehicleName": "Vehicle Name",
+    "registration": "Registration",
+    "weightCapacity": "Weight Capacity",
+    "volumeCapacity": "Volume Capacity",
+    "jobCapacity": "Job Capacity",
+    "specialFeatures": "Special Features"
   },
   "vehicleSetting": {
     "title": "VEHICLE SETTING",
     "header": "VEHICLE SETTING",
-    "resetPassword" : "Forgot your Password?",
-    "email" : "Username/Email",
-    "mobile" : "Mobile",
-    "city" : "City",
-    "state" : "State",
-    "licenceType" : "Licence Type",
-    "licenceNumber" : "Licence Number",
-    "expiry" : "Expiry",
-    "vehicleId" : "Vehicle ID",
-    "vehicleType" : "Vehicle Type",
-    "vehicleName" : "Vehicle Name",
-    "registration" : "Registration",
-    "weightCapacity" : "Weight Capacity",
-    "volumeCapacity" : "Volume Capacity",
-    "jobCapacity" : "Job Capacity",
-    "specialFeatures" : "Special Features"
+    "resetPassword": "Forgot your Password?",
+    "email": "Username/Email",
+    "mobile": "Mobile",
+    "city": "City",
+    "state": "State",
+    "licenceType": "Licence Type",
+    "licenceNumber": "Licence Number",
+    "expiry": "Expiry",
+    "vehicleId": "Vehicle ID",
+    "vehicleType": "Vehicle Type",
+    "vehicleName": "Vehicle Name",
+    "registration": "Registration",
+    "weightCapacity": "Weight Capacity",
+    "volumeCapacity": "Volume Capacity",
+    "jobCapacity": "Job Capacity",
+    "specialFeatures": "Special Features"
   },
-  "forgotpasswordScreen":{
+  "forgotpasswordScreen": {
     "header": "FORGOT PASSWORD",
     "title": "Forgot your Password ?",
     "submit": "SUBMIT",
@@ -100,7 +100,7 @@
     "search": "Search",
     "searchHere": "Search Here..."
   },
-  "consignmentList":{
+  "consignmentList": {
     "consignments": "Consignments",
     "items": "Items",
     "from": "From",
@@ -108,9 +108,13 @@
     "wgt": "Wgt",
     "vol": "Vol"
   },
-  "consignmentDetail":{
+  "consignmentDetail": {
     "consignment": "Consignment",
     "status": "Status",
     "address": "Address"
+  },
+  "MyList": {
+    "header": "My List",
+    "empty": " "
   }
 }

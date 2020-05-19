@@ -81,7 +81,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   return (
-    <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
+    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
         title={"userSetting.header"}
         onPress={handleDrawer} />
