@@ -37,6 +37,7 @@
     "licenceType": "Licence Type",
     "licenceNumber": "Licence Number",
     "expiry": "Expiry",
+    "vehicle": "Vehicle",
     "vehicleId": "Vehicle ID",
     "vehicleType": "Vehicle Type",
     "vehicleName": "Vehicle Name",

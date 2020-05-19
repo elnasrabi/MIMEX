@@ -6,8 +6,8 @@ import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Checkbox } from "../../components"
 import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
-import { MyButton } from "../../components/button/my-button"
 import { icons } from "../../components/icon/icons"
+import { BottomButton } from "../../components/bottom-button/bottom-button";
 
 export interface MyListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -18,11 +18,6 @@ const ROOT: ViewStyle = {
 }
 const CONTINUE: ViewStyle = {
   flex: 1
-}
-const BOTTOM_VIEW: ViewStyle = {
-  position: "absolute",
-  bottom: 10,
-  flexDirection: "row"
 }
 const FLATLIST_STYLE: ViewStyle = {
   marginVertical: 10
@@ -72,7 +67,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   const [toggleAll, useToggleAll] = useState(false)
-  const [Mylist, updateMyList] = useState([{ id: '1', check: false }, { id: '2', check: false }, { id: '3', check: false }])
+  const [Mylist, updateMyList] = useState([{ id: '1', check: false }, { id: '2', check: false }, { id: '3', check: false }, { id: '4', check: false }, { id: '5', check: false }, { id: '6', check: false }, { id: '7', check: false }, { id: '8', check: false }, { id: '9', check: false }])
 
   const updateCheckBox = (index) => {
     let newArr = [...Mylist]
@@ -149,17 +144,12 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         renderItem={renderItem}
       />
 
-      <View style={BOTTOM_VIEW}>
-        <MyButton
-          style={CONTINUE}
-          tx="common.success"
-        />
-        <MyButton
-          style={CONTINUE}
-          buttonSource={icons.blackButton2}
-          tx="common.fail"
-        />
-      </View>
+      <BottomButton
+        leftImage={icons.blackButton2}
+        rightImage={icons.redButton}
+        leftText={"common.success"}
+        rightText={"common.fail"} />
+
     </Screen >
 
   )

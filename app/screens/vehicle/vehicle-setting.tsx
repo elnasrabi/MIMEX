@@ -1,24 +1,20 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField } from "../../components"
-import { useStores } from "../../models/root-store"
-import { color, spacing } from "../../theme"
-import { TouchableOpacity } from "react-native-gesture-handler"
-import { Header } from "./../../components"
-import { HeaderMenu } from "../../components/header/header-menu"
+import { Screen, Text } from "../../components"
+import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
+import { BottomButton } from "../../components/bottom-button/bottom-button";
+import { icons } from "../../components/icon/icons";
 
 export interface VehicleSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const ROOT: ViewStyle = {
-  paddingBottom: 10
-}
-const BOLD: TextStyle = { fontWeight: "bold" }
+const ROOT: ViewStyle = { paddingBottom: 10 }
+const VALUE_CONTAINER: ViewStyle = { flex: 1 }
 
 const LABEL: TextStyle = {
   color: color.palette.red,
@@ -35,10 +31,6 @@ const VALUE: TextStyle = {
   textAlign: "right"
 }
 
-const VALUE_CONTAINER: ViewStyle = {
-  flex: 1
-}
-
 const ROW: ViewStyle = {
   flexDirection: "row",
   marginStart: 20,
@@ -46,16 +38,12 @@ const ROW: ViewStyle = {
   marginTop: 20
 }
 
-const BUTTON_TEXT: TextStyle = { color: 'white', fontSize: 20, paddingVertical: 15 }
-const BUTTON: ViewStyle = { alignItems: "center", justifyContent: "center", borderRadius: 10 }
-
 export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((props) => {
 
-  const renderRow = (label, value) => {
+  const renderRow = (label, value, extratext = false) => {
     return (
       <View style={ROW}>
-        {/* <Text extraText={":"} style={LABEL} tx={label} /> */}
-        <Text style={LABEL}>{label}</Text>
+        <Text extraText={extratext ? ":" : ''} style={LABEL} tx={label} />
         <View style={VALUE_CONTAINER}>
           <Text style={VALUE} text={value} />
         </View>
@@ -72,23 +60,20 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
         onPress={handleDrawer} />
 
       <ScrollView style={{ marginBottom: 10, marginTop: Platform.OS == 'android' ? 40 : 0 }}>
-        {renderRow("Vehicle ID:", "8545154")}
-        {renderRow("Vehicle Name", "Red Van South East")}
-        {renderRow("Vehicle Type", "2 Tan Truck")}
-        {renderRow("Registration", "XXXX 8845")}
-        {renderRow("WeightCapacity", "1800 KG")}
-        {renderRow("VolumeCapacity", "1.00 cbm")}
-        {renderRow("JobCapacity", "12")}
-        {renderRow("SpecialFeatures", "Add On Services")}
+        {renderRow("vehicleSetting.vehicleId", "8545154", true)}
+        {renderRow("vehicleSetting.vehicleName", "Red Van South East")}
+        {renderRow("vehicleSetting.vehicleType", "2 Tan Truck")}
+        {renderRow("vehicleSetting.registration", "XXXX 8845")}
+        {renderRow("vehicleSetting.weightCapacity", "1800 KG")}
+        {renderRow("vehicleSetting.volumeCapacity", "1.00 cbm")}
+        {renderRow("vehicleSetting.jobCapacity", "12")}
+        {renderRow("vehicleSetting.specialFeatures", "Add On Services")}
       </ScrollView>
-      <View style={{ flexDirection: 'row', justifyContent: "space-around" }}>
-        <TouchableOpacity style={[BUTTON, { backgroundColor: 'black', width: 160 }]}>
-          <Text style={BUTTON_TEXT}>Save</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[BUTTON, { backgroundColor: 'red', width: 130 }]}>
-          <Text style={BUTTON_TEXT}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButton
+        leftImage={icons.blackButton2}
+        rightImage={icons.redButton}
+        leftText={"common.save"}
+        rightText={"common.cancel"} />
     </Screen>
   )
 })
