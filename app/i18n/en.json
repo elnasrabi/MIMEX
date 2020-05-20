@@ -2,7 +2,10 @@
   "common": {
     "ok": "OK!",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "success": "Success",
+    "fail": "Fail",
+    "save": "Save"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -22,7 +25,6 @@
     "errorUsername": "Enter Username",
     "errorPassword": "Enter Password",
     "invalidUsernamePassword": "Invalid Username Password"
-
   },
   "userSetting": {
     "title": "USER SETTING",
@@ -35,6 +37,7 @@
     "licenceType": "Licence Type",
     "licenceNumber": "Licence Number",
     "expiry": "Expiry",
+    "vehicle": "Vehicle",
     "vehicleId": "Vehicle ID",
     "vehicleType": "Vehicle Type",
     "vehicleName": "Vehicle Name",
