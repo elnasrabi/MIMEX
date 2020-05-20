@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, TouchableOpacity, Platform } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField } from "../../components"
-import { useStores } from "../../models/root-store"
-import { color, spacing } from "../../theme"
-import { HeaderMenu } from "../../components/header/header-menu"
+import { Screen, Text } from "../../components"
+import { color } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
-import { MyButton } from "../../components/button/my-button";
+import { icons } from "../../components/icon/icons";
+import { BottomButton } from "../../components/bottom-button/bottom-button";
+import { isIphoneX } from "react-native-iphone-x-helper";
 
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -31,7 +31,6 @@ const TITLE: TextStyle = {
 const ROOT: ViewStyle = {
   paddingBottom: 10
 }
-const BOLD: TextStyle = { fontWeight: "bold" }
 
 const LABEL: TextStyle = {
   color: color.palette.red,
@@ -46,9 +45,16 @@ const VALUE: TextStyle = {
   fontSize: 16,
   fontWeight: "bold"
 }
+const EMAIL_TEXT_STYLE: TextStyle = {
+  color: color.palette.red,
+  flex: 1,
+  fontSize: 16,
+  fontWeight: "bold"
+}
 
 const VALUE_CONTAINER: ViewStyle = {
-  flex: 1, alignItems: "flex-end"
+  flex: 1,
+  alignItems: "flex-end"
 }
 
 const ROW: ViewStyle = {
@@ -57,12 +63,14 @@ const ROW: ViewStyle = {
   marginEnd: 20,
   marginTop: 20
 }
-
-const BUTTON_TEXT: TextStyle = {
-  color: 'white', fontSize: 20, paddingVertical: 15
+const SCROLLVIEW_STYLE: ViewStyle = {
+  marginBottom: 10,
+  marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
 }
-const BUTTON: ViewStyle = {
-  alignItems: "center", justifyContent: "center", borderRadius: 10
+const EMAIL_VIEW_STYLE: ViewStyle = {
+  marginStart: 20,
+  marginEnd: 20,
+  marginTop: 20
 }
 
 export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
@@ -86,9 +94,9 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         title={"userSetting.header"}
         onPress={handleDrawer} />
 
-      <ScrollView style={{ marginBottom: 10, marginTop: Platform.OS == 'android' ? 40 : 0 }}>
-        <View style={{ marginStart: 20, marginEnd: 20, marginTop: 20, }}>
-          <Text extraText={":"} style={{ color: color.palette.red, flex: 1, fontSize: 16, fontWeight: "bold" }} tx={"userSetting.email"} />
+      <ScrollView style={SCROLLVIEW_STYLE}>
+        <View style={EMAIL_VIEW_STYLE}>
+          <Text extraText={":"} style={EMAIL_TEXT_STYLE} tx={"userSetting.email"} />
           <View style={{ marginTop: 10 }}>
             <Text style={VALUE} text={"username@gmail.com"} />
           </View>
@@ -102,7 +110,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         {renderRow("userSetting.expiry", "Expiry")}
 
         <View style={MAIN_VIEW}>
-          <Text style={TITLE} >{`Vehicle`}</Text>
+          <Text style={TITLE} tx="userSetting.vehicle" />
         </View>
 
         {renderRow("userSetting.vehicleId", "8545154", true)}
@@ -114,14 +122,11 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         {renderRow("userSetting.jobCapacity", "12")}
         {renderRow("userSetting.specialFeatures", "Add On Services")}
       </ScrollView>
-      <View style={{ flexDirection: 'row', justifyContent: "space-around" }}>
-        <TouchableOpacity style={[BUTTON, { backgroundColor: 'black', width: 160 }]}>
-          <Text style={BUTTON_TEXT}>Save</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[BUTTON, { backgroundColor: 'red', width: 130 }]}>
-          <Text style={BUTTON_TEXT}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButton
+        leftImage={icons.blackButton2}
+        rightImage={icons.redButton}
+        leftText={"common.save"}
+        rightText={"common.cancel"} />
     </Screen>
 
   )
