@@ -13,7 +13,8 @@ export const icons = {
   blackButton2: require("./black_button2.png"),
   redButton2: require("./red_button2.png"),
   fire: require("./fire.png"),
-  phone: require("./phone.png")
+  phone: require("./phone.png"),
+  blueButton: require("./blue_button.png")
 }
 
 export type IconTypes = keyof typeof icons

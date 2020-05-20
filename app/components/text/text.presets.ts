@@ -12,7 +12,7 @@ const BASE: TextStyle = {
 
 const NORMAL_TEXT: TextStyle = {
   color: color.text,
-  fontSize: 18,
+  fontSize: 16,
   fontFamily: typography.secondary
 }
 
