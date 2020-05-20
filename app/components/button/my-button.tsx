@@ -1,5 +1,5 @@
 import * as React from "react"
-import { TouchableOpacity, ImageBackground, ImageStyle, TextStyle } from "react-native"
+import { TouchableOpacity, ImageBackground, ImageStyle, TextStyle, ActivityIndicator } from "react-native"
 import { Text } from "../text/text"
 import { ButtonProps } from "./button.props"
 import { icons } from "../icon/icons"
@@ -19,6 +19,7 @@ export function MyButton(props: ButtonProps) {
     style: styleOverride,
     myTextStyle,
     imageBackground,
+    isLoading = false,
     ...rest
   } = props
 
@@ -32,7 +33,8 @@ export function MyButton(props: ButtonProps) {
     alignSelf: "center",
     justifyContent: 'center',
     height: 45,
-    width: 150
+    width: 150,
+    flexDirection: "row"
   }
   const image = buttonSource || icons.redButton
 
@@ -41,7 +43,9 @@ export function MyButton(props: ButtonProps) {
       style={viewStyle} {...rest}>
       <ImageBackground resizeMode={"contain"} style={[BACKGROUND_ICON, imageBackground]}
         source={image}>
-        <Text style={[TEXT, myTextStyle]} tx={tx} />
+        {isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
+          : <Text style={[TEXT, myTextStyle]} tx={tx} />
+        }
       </ImageBackground>
     </TouchableOpacity>
   )

@@ -39,4 +39,7 @@ export interface TextFieldProps extends TextInputProps {
   preset?: "default"
 
   forwardedRef?: any
+
+  errorTx?: string,
+  mainStyle?: ViewStyle
 }

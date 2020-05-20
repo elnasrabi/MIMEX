@@ -66,7 +66,7 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   return (
-    <Screen style={ROOT} wall={'whiteWall'} statusBar={"dark-content"} preset="fixed">
+    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
         title={"vehicleSetting.header"}
         onPress={handleDrawer} />

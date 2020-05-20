@@ -1,12 +1,14 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ImageStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField, Icon } from "../../components"
-import { color, spacing, typography } from "../../theme"
+import { Screen, Text, TextField, Icon } from "../../components"
+import { color, typography } from "../../theme"
 import { BackButton } from "../../components/header/back-button"
 import { MyButton } from "../../components/button/my-button"
+import { isInternetAvailable } from "../../utils/utils"
+import { useStores } from "../../models/root-store"
 
 export interface ForgotpasswordScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -67,18 +69,46 @@ const BACK_BUTTON: ImageStyle = {
   tintColor: color.palette.white
 }
 
-const AFS_LOGO: ImageStyle = { height: 120, width: 240, alignSelf: "center" }
+const AFS_LOGO: ImageStyle = {
+  height: 120,
+  width: 240,
+  alignSelf: "center"
+}
 
-const CONTAINER_AFS_LOGO: ImageStyle = { position: "absolute", top: 70, alignSelf: "center" }
+const CONTAINER_AFS_LOGO: ImageStyle = {
+  position: "absolute",
+  top: 70,
+  alignSelf: "center"
+}
 
 export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> = observer((props) => {
   // const { someStore } = useStores()
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
-  const onUpdate = () => {
-    // authStore.update()
+  const { authStore } = useStores()
+
+  const [isValidEmail, setValidEmail] = useState(true)
+
+  const [email, onChangeEmail] = useState("")
+
+  useEffect(() => {
+    authStore.resetForgotAuth()
+  }, [])
+
+  const onChangeText = (text) => {
+    onChangeEmail(text)
+    text ? setValidEmail(true) : setValidEmail(false)
   }
+  const onSubmit = () => {
+    const isConnected = isInternetAvailable()
+    if (!email) {
+      setValidEmail(false)
+    } else if (isConnected) {
+      authStore.forgotPassword(email)
+    }
+  }
+
   return (
-    <Screen style={ROOT} preset="fixed">
+    <Screen style={ROOT} preset="scroll">
       <BackButton
         style={BACK_BUTTON}
         hasBackground={false}
@@ -88,16 +118,27 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
 
         <Icon containerStyle={CONTAINER_AFS_LOGO} style={AFS_LOGO} icon={"afsLogo"} />
 
-        <Text style={HEADER} preset="button" tx="forgotpasswordScreen.title" />
+        {authStore.hasForgotError ? <Text style={HEADER} preset="button" tx="forgotpasswordScreen.invalidError" />
+          : <Text style={HEADER} preset="button" tx="forgotpasswordScreen.title" />
+        }
         <Text style={LABEL} preset="button" tx="forgotpasswordScreen.label" />
 
-        <TextField style={EMAIL} placeholder={"Enter Email"} />
+        <TextField
+          onChangeText={text => onChangeText(text)}
+          style={EMAIL}
+          placeholder={"Enter Email"}
+          value={email}
+          returnKeyType={"done"}
+          errorTx={isValidEmail ? undefined : "forgotpasswordScreen.enterEmail"}
+          onSubmitEditing={onSubmit}
+        />
         <Text style={DESC} preset="button" tx="forgotpasswordScreen.desc" />
 
         <MyButton
           style={CONTINUE}
+          isLoading={authStore.isForgotLoading}
           tx="forgotpasswordScreen.submit"
-          onPress={onUpdate}
+          onPress={onSubmit}
         />
       </View>
 

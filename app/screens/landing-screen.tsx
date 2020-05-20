@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert } from "react-native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, ImageBackground } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../components"
@@ -10,7 +10,7 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
-import { isEmpty } from "../utils/utils"
+import { ADMINISTRATION, CARRIER } from "../utils/utils"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -27,22 +27,17 @@ const CONTAINER: ViewStyle = {
   paddingEnd: 25
 }
 
-const FLAT_LIST: ViewStyle = {
+const BOTTOM_LIST: ViewStyle = {
   position: "absolute",
-  bottom: 60,
-  left: 20,
-  right: 20,
-  flexDirection: "row"
+  bottom: 30,
+  alignSelf: "center"
 }
 const CONTINUE: ViewStyle = {
-  alignSelf: "center",
-  flex: 1
+  margin: 5
 }
 
-const IMAGE_BACK: ImageStyle = {
+const IMAGE_RED: ImageStyle = {
   alignSelf: "center",
-  height: 100,
-  width: 120,
   padding: 20
 }
 
@@ -50,15 +45,38 @@ const SEARCH_VIEW: ViewStyle = {
 
 }
 
-const AFS_LOGO: ImageStyle = { height: 120, width: 240, alignSelf: "center" }
+const AFS_LOGO: ImageStyle = {
+  height: 120,
+  width: 240,
+  alignSelf: "center"
+}
 
-const CONTAINER_AFS_LOGO: ImageStyle = { position: "absolute", top: 50, alignSelf: "center" }
+const CONTAINER_AFS_LOGO: ImageStyle = {
+  position: "absolute",
+  top: 50,
+  alignSelf: "center"
+}
+const BACKGROUND_ICON: ImageStyle = {
+  alignSelf: "center",
+  justifyContent: 'center',
+  height: 80,
+  width: "100%"
+}
 
-const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
+const TEXT: TextStyle = {
+  color: color.palette.white,
+  alignSelf: "center",
+  textAlign: "center",
+  width: 100
+}
 
+const adminList = ["landingScreen.addToList", "landingScreen.safetyCheck", "landingScreen.getRate", "landingScreen.help"]
+const carrierList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.help"]
+const customerList = ["landingScreen.getRate", "landingScreen.help"]
+let USER_TYPE = ""
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
-  const { homeStore } = useStores()
-
+  const { homeStore, authStore } = useStores()
+  USER_TYPE = authStore.userData[0].userTypeName[0]
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))
@@ -72,6 +90,15 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     props.navigation.navigate("qrScanner")
   }
 
+  const getOptionList = (): any => {
+    if (USER_TYPE === ADMINISTRATION) {
+      return adminList
+    } else if (USER_TYPE === CARRIER) {
+      return carrierList
+    } else {
+      return customerList
+    }
+  }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
       <MenuButton
@@ -89,21 +116,23 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
           onCameraPress={onCameraPress} />
 
         {/* Bottom Option */}
-        <View style={FLAT_LIST}>
-          {dataList.map((data, index) => {
-            return (
-              <MyButton
-                buttonSource={icons.redButton2}
-                key={index}
-                imageBackground={IMAGE_BACK}
+        <View style={BOTTOM_LIST}>
+          <FlatList
+            data={getOptionList()}
+            numColumns={3}
+            renderItem={({ index, item }) => (
+              <TouchableOpacity
                 style={CONTINUE}
-                tx={data}
-              // onPress={onLogin}
-              />
-            )
-          })}
+                key={index}>
+                <ImageBackground resizeMode={"contain"} style={BACKGROUND_ICON}
+                  source={icons.redButton2}>
+                  <Text style={TEXT} tx={item} />
+                </ImageBackground>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
-
       </View>
     </Screen>
   )

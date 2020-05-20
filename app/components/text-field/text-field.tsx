@@ -1,5 +1,5 @@
 import * as React from "react"
-import { View, TextInput, TextStyle, ViewStyle } from "react-native"
+import { View, TextInput, TextStyle, ViewStyle, Alert } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate } from "../../i18n"
 import { Text } from "../text/text"
@@ -8,15 +8,10 @@ import { mergeAll, flatten } from "ramda"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  paddingVertical: spacing[3],
   flexDirection: "row",
-  alignItems: "center",
+  alignItems: "center"
 }
 
-const BASE_LINE: ViewStyle = {
-  height: 1,
-  backgroundColor: color.palette.darkText
-}
 // the base styling for the TextInput
 const INPUT: TextStyle = {
   flex: 1,
@@ -63,31 +58,37 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
     inputStyle: inputStyleOverride,
     labelStyle: labelStyleOverride,
     forwardedRef,
+    errorTx,
+    mainStyle,
     ...rest
   } = props
   let containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset] }
   containerStyle = enhance(containerStyle, styleOverride)
 
   let inputStyle: TextStyle = INPUT
+  const errorStyle: ViewStyle = { marginTop: 15 }
+  const errorLabel: TextStyle = { textAlign: "right" }
   inputStyle = enhance(inputStyle, inputStyleOverride)
 
   let labelStyle: TextStyle = LABEL
   labelStyle = enhance(labelStyle, labelStyleOverride)
 
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
-
   return (
-    <View style={containerStyle}>
-      {(label || labelTx) && <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />}
-      <TextInput
-        placeholder={actualPlaceholder}
-        placeholderTextColor={color.palette.lighterGrey}
-        underlineColorAndroid={color.transparent}
-        {...rest}
-        style={inputStyle}
-        ref={forwardedRef}
-      />
+    <View style={[errorStyle, mainStyle]}>
+      <View style={containerStyle}>
+        {(label || labelTx) && <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />}
+        <TextInput
+          placeholder={actualPlaceholder}
+          placeholderTextColor={color.palette.lighterGrey}
+          underlineColorAndroid={color.transparent}
+          {...rest}
+          style={inputStyle}
+          ref={forwardedRef}
+        />
+      </View>
       {/* <View style={BASE_LINE} /> */}
+      {errorTx && <Text style={errorLabel} preset={"error"} tx={errorTx} />}
     </View>
   )
 }
