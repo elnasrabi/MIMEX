@@ -47,6 +47,11 @@ export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = 
       />
       <DrawerItem
         labelStyle={LABEL}
+        label="Safety Check"
+        onPress={() => props.navigation.navigate("SafetyCheck")}
+      />
+      <DrawerItem
+        labelStyle={LABEL}
         label="User Setting"
         onPress={() => props.navigation.navigate("userSetting")}
       />

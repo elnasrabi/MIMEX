@@ -16,6 +16,7 @@ import { QRScanner } from "../components/qr-scanner/qr-scanner"
 import { ConsignmentList } from "../screens/consignment-screen/consignment-list"
 import { ConsignmentDetail } from "../screens/consignment-screen/consignment-detail"
 import { MyList } from "../screens/myList-screen/myList";
+import { SafetyCheck } from "../screens/safety-check-screen/safety-check-screen";
 
 // const Stack = createNativeStackNavigator<PrimaryParamList>()
 
@@ -37,6 +38,7 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="Home" component={LandingScreen} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="MyList" component={MyList} />
+      <Drawer.Screen name="SafetyCheck" component={SafetyCheck} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="consignmentList" component={ConsignmentList} />
       <Stack.Screen name="qrScanner" component={QRScanner} />

@@ -13,6 +13,30 @@ export interface SearchProps {
     containerStyle?: ViewStyle
 
     /**
+     * Style overrides for the icon container
+     */
+
+    searchInputViewStyle?: ViewStyle
+
+    /**
+     * Style overrides for the icon container
+     */
+
+    searchTextStyle?: ViewStyle
+
+    /**
+     * Style overrides for the icon container
+     */
+
+    buttonStyle?: ViewStyle
+
+    /**
+     * overrides for having camera icon or not
+     */
+
+    cameraIcon?: boolean
+
+    /**
      * The name of the icon
      */
 

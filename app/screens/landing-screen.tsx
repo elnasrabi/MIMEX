@@ -42,7 +42,7 @@ const IMAGE_RED: ImageStyle = {
 }
 
 const SEARCH_VIEW: ViewStyle = {
-
+  marginEnd: 55
 }
 
 const AFS_LOGO: ImageStyle = {
@@ -112,8 +112,9 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
 
         {/* Search View */}
         <SearchView
-          containerStyle={SEARCH_VIEW}
-          onCameraPress={onCameraPress} />
+          searchTextStyle={SEARCH_VIEW}
+          onCameraPress={onCameraPress}
+          buttonStyle={SEARCH_VIEW} />
 
         {/* Bottom Option */}
         <View style={BOTTOM_LIST}>

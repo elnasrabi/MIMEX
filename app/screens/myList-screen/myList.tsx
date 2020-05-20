@@ -60,7 +60,7 @@ const SELECTALL_CHECKBOX_VIEW: ViewStyle = {
   margin: 10,
   marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 10 : 33
 }
-const RENDER_ADD: ViewStyle = {
+const RENDER_ADDRESSS: ViewStyle = {
   flex: 1,
   marginVertical: 5
 }
@@ -115,10 +115,10 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
               <Text style={{}}>Despatched</Text>
             </View>
           </View>
-          <View style={RENDER_ADD}>
+          <View style={RENDER_ADDRESSS}>
             <Text>123 RED TREE STREET</Text>
           </View>
-          <View style={RENDER_ADD}>
+          <View style={RENDER_ADDRESSS}>
             <Text>South Yarra</Text>
           </View>
         </View>

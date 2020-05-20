@@ -5,7 +5,8 @@
     "back": "Back",
     "success": "Success",
     "fail": "Fail",
-    "save": "Save"
+    "save": "Save",
+    "search": "Search"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -95,6 +96,10 @@
     "reactotron": "Demo Reactotron",
     "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
     "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
+  },
+  "safetyCheckScreen": {
+    "header": "Safety Check",
+    "results": "Results"
   },
   "storybook": {
     "placeholder": "Placeholder",
