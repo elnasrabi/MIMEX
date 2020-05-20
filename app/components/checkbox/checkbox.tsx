@@ -29,7 +29,7 @@ const FILL: ViewStyle = {
   backgroundColor: color.primary,
 }
 
-const LABEL: TextStyle = { paddingLeft: spacing[2] }
+const LABEL: TextStyle = { paddingLeft: spacing[2], paddingTop: 4, flex: 1 }
 
 export function Checkbox(props: CheckboxProps) {
   const numberOfLines = props.multiline ? 0 : 1

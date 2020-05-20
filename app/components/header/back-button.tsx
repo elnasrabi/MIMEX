@@ -22,7 +22,8 @@ const MAIN_VIEW: ViewStyle = {
   position: "absolute",
   top: 0,
   height: 50,
-  justifyContent: "center"
+  justifyContent: "center",
+  zIndex: 2
 }
 
 const TITLE: TextStyle = {

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, FlatList } from "react-native"
+import { ViewStyle, TextStyle, View, Platform, FlatList } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
