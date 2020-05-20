@@ -65,6 +65,7 @@ buck-out/
 # VS Code
 .vscode
 *.lock
+.history
 
 
 # Configurations
