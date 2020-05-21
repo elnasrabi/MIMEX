@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, Platform, FlatList } from "react-native"
+import { ViewStyle, TextStyle, View, Platform, FlatList, TouchableOpacity } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
@@ -75,9 +75,9 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         <View style={RENDER_DATE_VIEW}>
           <Text style={[RENDER_TEXT_STYLE, { color: color.palette.darkText }]} >{item.date}</Text>
         </View>
-        <View style={RENDER_LINK_VIEW}>
+        <TouchableOpacity style={RENDER_LINK_VIEW} onPress={() => props.navigation.navigate("SafetyCheckDetail")}>
           <Text style={[RENDER_TEXT_STYLE, { color: color.palette.link }]} >{item.link}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     )
   }

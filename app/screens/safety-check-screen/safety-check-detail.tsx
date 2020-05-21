@@ -48,6 +48,31 @@ const RENDER_ROW_DATA_VIEW: ViewStyle = {
 const RENDER_ROW_TEXT_STYLE: TextStyle = {
   paddingLeft: '20%'
 }
+const RENDER_RADIO_BUTTON_TEXT_VIEW: TextStyle = {
+  paddingLeft: 5
+}
+const COMMENT_TEXT_STYLE: TextStyle = {
+  marginTop: 15
+}
+const TEXTFIELD_INPUT_STYLE: TextStyle = {
+  height: 100
+}
+const TEXTFIELD_MAIN_STYLE: ViewStyle = {
+  width: '98%'
+}
+const RENDER_RADIO_CONTAINER: ViewStyle = {
+  marginTop: 20
+}
+const RENDER_RADIO_BUTTON_MAIN_VIEW: ViewStyle = {
+  marginTop: 5,
+  marginLeft: 5,
+  flexDirection: 'row'
+}
+const RENDER_RADIO_BUTTON_VIEW: ViewStyle = {
+  flexDirection: 'row',
+  alignItems: "center"
+}
+
 export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = observer((props) => {
 
   const [checkdetails, updateCheckDetails] = useState([
@@ -97,24 +122,24 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
 
   const renderRadioButton = (question, data, updateData) => {
     return (
-      <View style={{ marginTop: 20 }}>
+      <View style={RENDER_RADIO_CONTAINER}>
         <Text tx={question} />
-        <View style={{ marginTop: 5, marginLeft: 5, flexDirection: 'row' }} >
-          <View style={{ flexDirection: 'row', alignItems: "center" }} >
+        <View style={RENDER_RADIO_BUTTON_MAIN_VIEW} >
+          <View style={RENDER_RADIO_BUTTON_VIEW} >
             <RadioButton
               animation={'bounceIn'}
               isSelected={data[0].isSelect}
               onPress={() => { updateData([{ isSelect: true }, { isSelect: false }]) }}
             />
-            <Text style={{ paddingLeft: 5 }} tx={"safetyCheckDetailScreen.yes"} />
+            <Text style={RENDER_RADIO_BUTTON_TEXT_VIEW} tx={"safetyCheckDetailScreen.yes"} />
           </View>
-          <View style={{ alignItems: 'center', flexDirection: 'row', marginLeft: 10 }} >
+          <View style={[RENDER_RADIO_BUTTON_VIEW, { marginLeft: 10 }]} >
             <RadioButton
               animation={'bounceIn'}
               isSelected={data[1].isSelect}
               onPress={() => { updateData([{ isSelect: false }, { isSelect: true }]) }}
             />
-            <Text tx={"safetyCheckDetailScreen.no"} style={{ paddingLeft: 5 }} />
+            <Text tx={"safetyCheckDetailScreen.no"} style={RENDER_RADIO_BUTTON_TEXT_VIEW} />
           </View>
         </View>
       </View>
@@ -140,10 +165,10 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
         {renderRadioButton("safetyCheckDetailScreen.healthquestion", radio, updateRadio)}
         {renderRadioButton("safetyCheckDetailScreen.shiftquestion", radio1, updateRadio1)}
         {renderRadioButton("safetyCheckDetailScreen.alcoholquestion", radio2, updateRadio2)}
-        <Text tx={"safetyCheckDetailScreen.comments"} style={{ marginTop: 15 }} extraText={":"} />
+        <Text tx={"safetyCheckDetailScreen.comments"} style={COMMENT_TEXT_STYLE} extraText={":"} />
         <TextField
-          mainStyle={{ width: "98%" }}
-          inputStyle={{ height: 100 }}
+          mainStyle={TEXTFIELD_MAIN_STYLE}
+          inputStyle={TEXTFIELD_INPUT_STYLE}
           style={{}}
           returnKeyType={"search"}
           multiline={true}
