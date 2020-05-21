@@ -19,6 +19,8 @@ const MENU_BUTTON: ViewStyle = {
 
 const MAIN_VIEW: ViewStyle = {
   width: "100%",
+  position: "absolute",
+  top: 0,
   height: 50,
   justifyContent: "center"
 }
