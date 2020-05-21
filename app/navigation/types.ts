@@ -13,4 +13,6 @@ export type AuthParamList = {
   qrScanner: undefined
   consignmentList: undefined
   consignmentDetail: undefined
+  SafetyCheck: undefined
+  SafetyCheckDetail: undefined
 }

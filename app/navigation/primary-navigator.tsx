@@ -21,6 +21,21 @@ import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-d
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<AuthParamList>()
 
+const SafetyStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="SafetyCheck" component={SafetyCheck} />
+      <Stack.Screen name="SafetyCheckDetail" component={SafetyCheckDetail} />
+    </Stack.Navigator>
+  )
+}
+
 export function PrimaryNavigator() {
   return (
     <Drawer.Navigator
@@ -36,12 +51,11 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="Home" component={LandingScreen} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="MyList" component={MyList} />
-      <Drawer.Screen name="SafetyCheck" component={SafetyCheck} />
+      <Drawer.Screen name="SafetyStack" component={SafetyStack} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="consignmentList" component={ConsignmentList} />
       <Stack.Screen name="qrScanner" component={QRScanner} />
       <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
-      <Stack.Screen name="SafetyCheckDetail" component={SafetyCheckDetail} />
     </Drawer.Navigator>
   )
 }

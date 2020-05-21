@@ -98,23 +98,6 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   ]);
   const [comment, updateComment] = useState('')
 
-  useEffect(() => {
-    if (isFocused) {
-      updateCheckDetails([
-        { isCheck: false, text: "safetyCheckDetailScreen.leaks" },
-        { isCheck: false, text: "safetyCheckDetailScreen.pressure" },
-        { isCheck: false, text: "safetyCheckDetailScreen.lights" },
-        { isCheck: false, text: "safetyCheckDetailScreen.mirrors" },
-        { isCheck: false, text: "safetyCheckDetailScreen.alarms" },
-        { isCheck: false, text: "safetyCheckDetailScreen.brakes" }
-      ])
-      updateRadio([{ isSelect: false }, { isSelect: false }])
-      updateRadio1([{ isSelect: false }, { isSelect: false }])
-      updateRadio2([{ isSelect: false }, { isSelect: false }])
-      updateComment('')
-    }
-  }, [isFocused])
-
   const renderRow = (label, value, extratext = true) => {
     return (
       <View style={RENDER_ROW_CONTAINER}>
