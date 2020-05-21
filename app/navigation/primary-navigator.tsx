@@ -2,22 +2,19 @@
 /* eslint-disable react-native/no-color-literals */
 import React from "react"
 
-// import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { LandingScreen } from "../screens"
-import { UserSetting } from "../screens/user-screen/user-setting"
-// import { PrimaryParamList } from "./types"
+import { UserSetting } from "../screens/user-screen/user-setting-screen"
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { AuthParamList } from "./types"
-import { color } from "../theme"
 import { CustomDrawerContent } from "../components/drawer-menu/CustomDrawerContent"
-import { VehicleSetting } from "../screens/vehicle/vehicle-setting"
+import { VehicleSetting } from "../screens/vehicle-screen/vehicle-setting-screen"
 import { QRScanner } from "../components/qr-scanner/qr-scanner"
 import { ConsignmentList } from "../screens/consignment-screen/consignment-list"
 import { ConsignmentDetail } from "../screens/consignment-screen/consignment-detail"
-import { MyList } from "../screens/myList-screen/myList";
-import { SafetyCheck } from "../screens/safety-check-screen/safety-check-list";
-import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-detail";
+import { MyList } from "../screens/myList-screen/myList-screen";
+import { SafetyCheck } from "../screens/safety-check-screen/safety-check-list-screen";
+import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-detail-screen";
 
 // const Stack = createNativeStackNavigator<PrimaryParamList>()
 
