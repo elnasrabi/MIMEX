@@ -19,6 +19,12 @@ const SEARCH_INPUT: ViewStyle = {
 const MENU_BUTTON: ViewStyle = {
   marginTop: 20
 }
+const GO_BUTTON: ViewStyle = {
+  marginTop: 20,
+  width: 120,
+  justifyContent: 'center',
+  alignSelf: 'center',
+}
 
 const BACKGROUND_ICON: ImageStyle = {
   height: 70,
@@ -72,7 +78,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
       </View>
 
       {/* GO */}
-      <TouchableOpacity style={MENU_BUTTON} onPress={onGoPress}>
+      <TouchableOpacity style={GO_BUTTON} onPress={onGoPress}>
         <ImageBackground style={[BACKGROUND_ICON, buttonStyle]}
           source={icons.blackButton}>
           <Text preset="button" style={GO} tx={"searchView.go"} />

@@ -12,6 +12,7 @@ export const palette = {
   link: "#0000EE",
   gray: "#e3e3e3",
   red: "#F02929",
+  textGray: "#8D8A8A",
   toolbar: "#b6afaf",
   transparent: "rgba(52, 52, 52, 1)",
 }

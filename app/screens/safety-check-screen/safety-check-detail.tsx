@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useState, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, View, Platform, ScrollView, TextStyle } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Checkbox, TextField } from "../../components"
 import { color } from "../../theme"
@@ -46,7 +46,10 @@ const RENDER_ROW_DATA_VIEW: ViewStyle = {
   flex: 1
 }
 const RENDER_ROW_TEXT_STYLE: TextStyle = {
-  paddingLeft: '20%'
+  paddingLeft: '20%',
+}
+const RENDER_ROW_TEXT_DATA_STYLE: TextStyle = {
+  color: color.palette.textGray
 }
 const RENDER_RADIO_BUTTON_TEXT_VIEW: TextStyle = {
   paddingLeft: 5
@@ -75,6 +78,7 @@ const RENDER_RADIO_BUTTON_VIEW: ViewStyle = {
 
 export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = observer((props) => {
 
+  const isFocused = useIsFocused()
   const [checkdetails, updateCheckDetails] = useState([
     { isCheck: false, text: "safetyCheckDetailScreen.leaks" },
     { isCheck: false, text: "safetyCheckDetailScreen.pressure" },
@@ -92,6 +96,24 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   const [radio2, updateRadio2] = useState([
     { isSelect: false }, { isSelect: false }
   ]);
+  const [comment, updateComment] = useState('')
+
+  useEffect(() => {
+    if (isFocused) {
+      updateCheckDetails([
+        { isCheck: false, text: "safetyCheckDetailScreen.leaks" },
+        { isCheck: false, text: "safetyCheckDetailScreen.pressure" },
+        { isCheck: false, text: "safetyCheckDetailScreen.lights" },
+        { isCheck: false, text: "safetyCheckDetailScreen.mirrors" },
+        { isCheck: false, text: "safetyCheckDetailScreen.alarms" },
+        { isCheck: false, text: "safetyCheckDetailScreen.brakes" }
+      ])
+      updateRadio([{ isSelect: false }, { isSelect: false }])
+      updateRadio1([{ isSelect: false }, { isSelect: false }])
+      updateRadio2([{ isSelect: false }, { isSelect: false }])
+      updateComment('')
+    }
+  }, [isFocused])
 
   const renderRow = (label, value, extratext = true) => {
     return (
@@ -100,7 +122,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
           <Text extraText={extratext ? ":" : ''} style={RENDER_ROW_TEXT_STYLE} tx={label} />
         </View>
         <View style={RENDER_ROW_DATA_VIEW}>
-          <Text style={{}} text={value} />
+          <Text style={RENDER_ROW_TEXT_DATA_STYLE} text={value} />
         </View>
       </View>
     )
@@ -128,6 +150,8 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
           <View style={RENDER_RADIO_BUTTON_VIEW} >
             <RadioButton
               animation={'bounceIn'}
+              innerColor={color.palette.orange}
+              outerColor={color.palette.black}
               isSelected={data[0].isSelect}
               onPress={() => { updateData([{ isSelect: true }, { isSelect: false }]) }}
             />
@@ -136,6 +160,8 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
           <View style={[RENDER_RADIO_BUTTON_VIEW, { marginLeft: 10 }]} >
             <RadioButton
               animation={'bounceIn'}
+              innerColor={color.palette.orange}
+              outerColor={color.palette.black}
               isSelected={data[1].isSelect}
               onPress={() => { updateData([{ isSelect: false }, { isSelect: true }]) }}
             />
@@ -153,7 +179,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
       <BackButton
         title={"safetyCheckDetailScreen.header"}
         onPress={goBack} />
-      <ScrollView style={MAIN_VIEW} >
+      <ScrollView style={MAIN_VIEW}>
         {renderRow("safetyCheckDetailScreen.driver", "Neel Patanwadia")}
         {renderRow("safetyCheckDetailScreen.vehicle", "Red Van 2")}
         {renderRow("safetyCheckDetailScreen.date", "12-NOV-2020")}
@@ -172,6 +198,8 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
           style={{}}
           returnKeyType={"search"}
           multiline={true}
+          value={comment}
+          onChangeText={(value) => updateComment(value)}
           placeholderTx={""} />
       </ScrollView>
       <BottomButton
