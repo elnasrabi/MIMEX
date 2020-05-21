@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -12,6 +12,7 @@ import { ComConsignmentDetail } from "../../components/consignment/com-consigmen
 import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
 import ImagePicker from 'react-native-image-picker';
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { isIphoneX } from "react-native-iphone-x-helper";
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -54,7 +55,7 @@ const SIGNATURE_TEXT: TextStyle = {
   marginTop: 10
 }
 
-const CONSIGNMENT_VIEW: ViewStyle = { flex: 1 }
+const CONSIGNMENT_VIEW: ViewStyle = { flex: 1, marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33 }
 const CAMERA_ICON: ImageStyle = { marginTop: 5 }
 const STATUS_VIEW: ViewStyle = {
   height: 50,
