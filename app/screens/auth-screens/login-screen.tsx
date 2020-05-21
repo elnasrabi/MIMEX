@@ -92,7 +92,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     props.navigation.navigate("forgotpassword")
   }
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} preset="scroll" backgroundColor="black">
 
       <Icon style={AFS_LOGO} icon={"afsLogo"} />
       {authStore.hasLoginError ? <Text style={TEXT_INVALID} tx={"loginScreen.invalidUsernamePassword"} />

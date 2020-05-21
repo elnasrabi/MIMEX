@@ -108,7 +108,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
   }
 
   return (
-    <Screen style={ROOT} preset="scroll">
+    <Screen style={ROOT} preset="scroll" backgroundColor="black">
       <BackButton
         style={BACK_BUTTON}
         hasBackground={false}
