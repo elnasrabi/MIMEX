@@ -23,6 +23,23 @@ import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-su
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<AuthParamList>()
 
+const ConsignmentStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="consignmentList" component={ConsignmentList} />
+      <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
+      <Stack.Screen name="pdfViewer" component={PDFViewer} />
+      <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
+    </Stack.Navigator>
+  )
+}
+
 export function PrimaryNavigator() {
   return (
     <Drawer.Navigator
@@ -39,11 +56,8 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="MyList" component={MyList} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
-      <Drawer.Screen name="consignmentList" component={ConsignmentList} />
+      <Drawer.Screen name="consignmentList" component={ConsignmentStack} />
       <Stack.Screen name="qrScanner" component={QRScanner} />
-      <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
-      <Stack.Screen name="pdfViewer" component={PDFViewer} />
-      <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
     </Drawer.Navigator>
   )
 }
