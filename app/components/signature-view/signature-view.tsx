@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { ParamListBase } from "@react-navigation/native"
 import { BottomButton } from "../bottom-button/bottom-button"
 import { icons } from "../icon/icons"
+import { useStores } from "../../models/root-store"
 
 export interface SignatureViewProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -31,8 +32,11 @@ const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
 
 export const SignatureView: FunctionComponent<SignatureViewProps> = observer(props => {
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
+  const { consignmentStore } = useStores()
   const saveSign = () => {
     refs.saveImage()
+    consignmentStore.onSigned()
+    goBack()
   }
   const resetSign = () => {
     refs.resetImage()

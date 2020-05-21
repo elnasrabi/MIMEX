@@ -115,6 +115,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [imageUri, setImageUri] = useState("")
   const [viewImage, onViewImage] = useState(false)
   useEffect(() => {
+    consignmentStore.onSignedReset()
   }, [])
 
   const onCameraPres = () => {
@@ -129,6 +130,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
+  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png"
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -183,7 +185,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved && <Image source={{ uri: 'file:///storage/emulated/0/saved_signature/signature.png' }}
+              {consignmentStore.signedSaved && <Image source={{ uri: SING_IMAGE_URI, cache: "default" }}
                 style={SIGN_VIEW_IMAGE} />}
             </TouchableOpacity>
 
