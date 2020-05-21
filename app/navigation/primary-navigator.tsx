@@ -6,7 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { LandingScreen } from "../screens"
 import { UserSetting } from "../screens/user-screen/user-setting-screen"
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { AuthParamList } from "./types"
+import { PrimaryParamList } from "./types"
 import { CustomDrawerContent } from "../components/drawer-menu/CustomDrawerContent"
 import { VehicleSetting } from "../screens/vehicle-screen/vehicle-setting-screen"
 import { QRScanner } from "../components/qr-scanner/qr-scanner"
@@ -15,11 +15,14 @@ import { ConsignmentDetail } from "../screens/consignment-screen/consignment-det
 import { MyList } from "../screens/myList-screen/myList-screen";
 import { SafetyCheck } from "../screens/safety-check-screen/safety-check-list-screen";
 import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-detail-screen";
+import { PDFViewer } from "../screens/pdf-view/pdf-viewer"
+import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success"
+import { SignatureView } from "../components/signature-view/signature-view"
 
 // const Stack = createNativeStackNavigator<PrimaryParamList>()
 
 const Drawer = createDrawerNavigator()
-const Stack = createNativeStackNavigator<AuthParamList>()
+const Stack = createNativeStackNavigator<PrimaryParamList>()
 
 const SafetyStack = () => {
   return (
@@ -32,6 +35,38 @@ const SafetyStack = () => {
     >
       <Stack.Screen name="SafetyCheck" component={SafetyCheck} />
       <Stack.Screen name="SafetyCheckDetail" component={SafetyCheckDetail} />
+    </Stack.Navigator>
+  )
+}
+const ConsignmentStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="consignmentList" component={ConsignmentList} />
+      <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
+      <Stack.Screen name="pdfViewer" component={PDFViewer} />
+      <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
+      <Stack.Screen name="signatureView" component={SignatureView} />
+    </Stack.Navigator>
+  )
+}
+const LandingStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="Home" component={LandingScreen} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
     </Stack.Navigator>
   )
 }
@@ -48,14 +83,12 @@ export function PrimaryNavigator() {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={LandingScreen} />
+      <Drawer.Screen name="Home" component={LandingStack} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="MyList" component={MyList} />
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
-      <Drawer.Screen name="consignmentList" component={ConsignmentList} />
-      <Stack.Screen name="qrScanner" component={QRScanner} />
-      <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
+      <Drawer.Screen name="consignmentList" component={ConsignmentStack} />
     </Drawer.Navigator>
   )
 }

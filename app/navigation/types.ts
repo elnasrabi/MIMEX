@@ -6,13 +6,17 @@ export type RootParamList = {
 export type PrimaryParamList = {
   landing: undefined
   userSetting: undefined
-}
-export type AuthParamList = {
-  login: undefined
-  forgotpassword: undefined
   qrScanner: undefined
   consignmentList: undefined
   consignmentDetail: undefined
   SafetyCheck: undefined
   SafetyCheckDetail: undefined
+  pdfViewer: undefined
+  consignmentSuccess: undefined
+  signatureView: undefined
+  Home: undefined
+}
+export type AuthParamList = {
+  login: undefined
+  forgotpassword: undefined
 }

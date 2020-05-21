@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, ImageBackground } from "react-native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../components"
@@ -10,7 +10,6 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
-import { ADMINISTRATION, CARRIER } from "../utils/utils"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -29,16 +28,22 @@ const CONTAINER: ViewStyle = {
 
 const BOTTOM_LIST: ViewStyle = {
   position: "absolute",
-  bottom: 30,
-  alignSelf: "center"
+  bottom: 60,
+  left: 20,
+  right: 20,
+  flexDirection: "row"
 }
 const CONTINUE: ViewStyle = {
-  margin: 5
+  alignSelf: "center",
+  flex: 1
 }
 
 const IMAGE_RED: ImageStyle = {
   alignSelf: "center",
-  padding: 20
+  padding: 20,
+  flex: 1,
+  width: "100%",
+  height: "100%"
 }
 
 const SEARCH_VIEW: ViewStyle = {
@@ -46,37 +51,20 @@ const SEARCH_VIEW: ViewStyle = {
 }
 
 const AFS_LOGO: ImageStyle = {
-  height: 120,
-  width: 240,
   alignSelf: "center"
 }
 
 const CONTAINER_AFS_LOGO: ImageStyle = {
   position: "absolute",
-  top: 50,
+  top: 60,
   alignSelf: "center"
 }
-const BACKGROUND_ICON: ImageStyle = {
-  alignSelf: "center",
-  justifyContent: 'center',
-  height: 80,
-  width: "100%"
-}
 
-const TEXT: TextStyle = {
-  color: color.palette.white,
-  alignSelf: "center",
-  textAlign: "center",
-  width: 100
-}
+const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
 
-const adminList = ["landingScreen.addToList", "landingScreen.safetyCheck", "landingScreen.getRate", "landingScreen.help"]
-const carrierList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.help"]
-const customerList = ["landingScreen.getRate", "landingScreen.help"]
-let USER_TYPE = ""
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
-  const { homeStore, authStore } = useStores()
-  USER_TYPE = authStore.userData[0].userTypeName[0]
+  const { homeStore } = useStores()
+
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))
@@ -90,15 +78,6 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     props.navigation.navigate("qrScanner")
   }
 
-  const getOptionList = (): any => {
-    if (USER_TYPE === ADMINISTRATION) {
-      return adminList
-    } else if (USER_TYPE === CARRIER) {
-      return carrierList
-    } else {
-      return customerList
-    }
-  }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
       <MenuButton
@@ -118,22 +97,20 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
 
         {/* Bottom Option */}
         <View style={BOTTOM_LIST}>
-          <FlatList
-            data={getOptionList()}
-            numColumns={3}
-            renderItem={({ index, item }) => (
-              <TouchableOpacity
+          {dataList.map((data, index) => {
+            return (
+              <MyButton
+                buttonSource={icons.redButton2}
+                key={index}
+                imageBackground={IMAGE_RED}
                 style={CONTINUE}
-                key={index}>
-                <ImageBackground resizeMode={"contain"} style={BACKGROUND_ICON}
-                  source={icons.redButton2}>
-                  <Text style={TEXT} tx={item} />
-                </ImageBackground>
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
+                tx={data}
+              // onPress={onLogin}
+              />
+            )
+          })}
         </View>
+
       </View>
     </Screen>
   )

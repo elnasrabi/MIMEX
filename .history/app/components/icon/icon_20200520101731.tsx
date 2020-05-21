@@ -4,7 +4,7 @@ import { IconProps } from "./icon.props"
 import { icons } from "./icons"
 
 const ROOT: ImageStyle = {
-  // resizeMode: "contain",
+  resizeMode: "contain",
 }
 const CONTAINER: ImageStyle = {
 }
@@ -15,7 +15,7 @@ export function Icon(props: IconProps) {
 
   return (
     <View style={[containerStyle, CONTAINER]}>
-      <Image resizeMode={"contain"} style={style} source={icons[icon]} />
+      <Image style={style} source={{ uri: icons[icon] }} />
     </View>
   )
 }

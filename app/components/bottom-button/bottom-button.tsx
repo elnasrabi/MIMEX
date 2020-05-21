@@ -9,15 +9,15 @@ import { color } from "../../theme"
  * This component is a HOC over the built-in React Native one.
  */
 interface bottomButtonProps {
-  bottomViewstyle: object,
-  leftButtonStyle: object,
-  rightButtonStyle: object,
-  leftImage: object,
-  rightImage: object,
-  leftText: string,
-  rightText: string,
-  onLeftPress: () => void
-  onRightPress: () => void
+  bottomViewstyle?: object,
+  leftButtonStyle?: object,
+  rightButtonStyle?: object,
+  leftImage?: object,
+  rightImage?: object,
+  leftText?: string,
+  rightText?: string,
+  onLeftPress?: () => void
+  onRightPress?: () => void
 }
 
 export function BottomButton(props: bottomButtonProps) {
@@ -36,11 +36,10 @@ export function BottomButton(props: bottomButtonProps) {
 
   const BOTTOM_VIEW: ViewStyle = {
     flexDirection: "row",
-    backgroundColor: 'white',
     justifyContent: "space-evenly"
   }
   const LEFT_BUTTON_STYLE: ViewStyle = {
-    height: 45,
+    height: 55,
     width: 160,
     borderRadius: 10,
     justifyContent: "center",
@@ -48,7 +47,7 @@ export function BottomButton(props: bottomButtonProps) {
     overflow: 'hidden'
   }
   const RIGHT_BUTTON_STYLE: ViewStyle = {
-    height: 45,
+    height: 55,
     width: 130,
     justifyContent: "center",
     alignItems: 'center',
@@ -63,15 +62,14 @@ export function BottomButton(props: bottomButtonProps) {
     <View style={[BOTTOM_VIEW, bottomViewstyle]}>
       <TouchableOpacity onPress={onLeftPress}>
         <ImageBackground source={leftImage} style={[LEFT_BUTTON_STYLE, leftButtonStyle]} >
-          <Text style={[BUTTON_TEXT_STYLE]} tx={leftText} />
+          <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
         </ImageBackground>
       </TouchableOpacity>
       <TouchableOpacity onPress={onRightPress}>
         <ImageBackground source={rightImage} style={[RIGHT_BUTTON_STYLE, rightButtonStyle]}>
-          <Text style={[BUTTON_TEXT_STYLE]} tx={rightText} />
+          <Text style={BUTTON_TEXT_STYLE} tx={rightText} />
         </ImageBackground>
       </TouchableOpacity>
     </View>
   )
 }
-

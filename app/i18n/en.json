@@ -6,7 +6,20 @@
     "success": "Success",
     "fail": "Fail",
     "save": "Save",
-    "search": "Search"
+    "search": "Search",
+    "consignment": "Consignment",
+    "status": "Status",
+    "address": "Address",
+    "items": "Items",
+    "weight": "Weight",
+    "customer": "Customer",
+    "name": "Name",
+    "contact": "Contact",
+    "special": "Special Instruction",
+    "pdfViewer": "PDF Viewer",
+    "specialAction": "Special Action",
+    "reset": "Reset",
+    "signature": "Signature"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -151,5 +164,11 @@
   "MyList": {
     "header": "My List",
     "empty": " "
+  },
+  "consignmentSuccess": {
+    "consignment": "Consignment",
+    "sign": "Signed By",
+    "signPlace": "Enter Signed By",
+    "signature": "Signature"
   }
 }
