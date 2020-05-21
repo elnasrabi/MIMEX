@@ -89,9 +89,7 @@ const PICKER_VIEW: ViewStyle = {
   alignSelf: "center",
   borderColor: color.palette.darkText,
   borderWidth: 2,
-  borderRadius: 4,
-  paddingStart: 15,
-  paddingEnd: 15,
+  borderRadius: 4
 }
 
 const SIGN_VIEW: ViewStyle = {

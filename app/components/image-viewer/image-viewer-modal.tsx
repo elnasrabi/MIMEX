@@ -10,41 +10,47 @@ export interface ImageViewerModalProps {
     isViewImage: boolean
 }
 const CENTERED_VIEW: ViewStyle = {
-  justifyContent: "center",
-  alignItems: "center",
-  alignSelf: "center",
-  flex: 1,
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(100,100,100, 0.7)',
-  padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    flex: 1,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(100,100,100, 0.7)',
+    padding: 10,
 }
 
 const IMAGE_VIEW: ImageStyle = {
-  height: 350,
-  width: "100%",
-  borderRadius: 2,
-  borderColor: color.palette.darkText,
-  borderWidth: 2
+    height: 350,
+    width: "100%"
+}
+const IMAGE_CONTAINER: ImageStyle = {
+    height: 350,
+    width: "100%",
+    borderRadius: 2,
+    borderColor: color.palette.darkText,
+    borderWidth: 2
 }
 
 const CLOSE_ICON: ImageStyle = {
-  marginTop: 20
+    marginTop: 20
 }
 
 export const ImageViewerModal: FunctionComponent<ImageViewerModalProps> = observer(props => {
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={props.isViewImage}>
-      <View style={CENTERED_VIEW}>
-        <Image resizeMode={"center"} style={IMAGE_VIEW} source={{ uri: props.uri }} />
-        <TouchableOpacity style={CLOSE_ICON} onPress={props.onClose}>
-          <AntDesign name={"closecircle"} size={30} />
-        </TouchableOpacity>
-      </View>
-    </Modal>
-  )
+    return (
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={props.isViewImage}>
+            <View style={CENTERED_VIEW}>
+                <View style={IMAGE_CONTAINER}>
+                    <Image resizeMode={"center"} style={IMAGE_VIEW} source={{ uri: props.uri }} />
+                    <TouchableOpacity style={CLOSE_ICON} onPress={props.onClose}>
+                        <AntDesign name={"closecircle"} size={30} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
+    )
 })
