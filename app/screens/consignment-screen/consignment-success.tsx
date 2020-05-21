@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -10,13 +10,20 @@ import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { icons } from "../../components/icon/icons"
 import { ComConsignmentDetail } from "../../components/consignment/com-consigment-detail"
 import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker'
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
+import { isIphoneX } from "react-native-iphone-x-helper"
+import RNPickerSelect from 'react-native-picker-select'
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
+const dropDownData = [
+  { label: 'Football', value: 'football' },
+  { label: 'Baseball', value: 'baseball' },
+  { label: 'Hockey', value: 'hockey' },
+]
 const ROOT: ViewStyle = {
   flex: 1,
 }
@@ -55,7 +62,7 @@ const SIGNATURE_TEXT: TextStyle = {
   marginTop: 10
 }
 
-const CONSIGNMENT_VIEW: ViewStyle = { flex: 1 }
+const CONSIGNMENT_VIEW: ViewStyle = { flex: 1, marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33 }
 const STATUS_VIEW: ViewStyle = {
   height: 50,
   backgroundColor: color.palette.toolbar,
@@ -78,11 +85,15 @@ const PICKER_VIEW: ViewStyle = {
   flex: 1,
   justifyContent: "center",
   height: 40,
-  width: 180,
+  width: 200,
+  alignSelf: "center",
   borderColor: color.palette.darkText,
   borderWidth: 2,
-  borderRadius: 4
+  borderRadius: 4,
+  paddingStart: 15,
+  paddingEnd: 15,
 }
+
 const SIGN_VIEW: ViewStyle = {
   borderColor: color.palette.darkText,
   borderWidth: 2,
@@ -133,17 +144,15 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
           {/* Status */}
           <View style={STATUS_CONTAINER}>
+
             <View style={PICKER_CONTAINER}>
               <View style={PICKER_VIEW}>
-                <Picker
-                  selectedValue={selectedValue}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
-                </Picker>
+                <RNPickerSelect
+                  value={selectedValue}
+                  onValueChange={(value) => setSelectedValue(value)}
+                  items={dropDownData}
+                />
               </View>
-
               <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
             </View>
 
@@ -180,6 +189,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         </View>
       </ScrollView>
 
-    </Screen>
+    </Screen >
   )
 })
