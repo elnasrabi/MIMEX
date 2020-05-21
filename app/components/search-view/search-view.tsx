@@ -64,6 +64,8 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
     containerStyle,
     searchTextStyle,
     buttonStyle,
+    onChangeText,
+    value,
     cameraIcon = true
   } = props
 
@@ -71,7 +73,10 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
     <View style={[MENU_BUTTON, containerStyle]}>
       <Text preset="button" style={[HEADER, searchTextStyle]} tx={"searchView.search"} />
       <View style={[SEARCH_VIEW, searchInputViewStyle]}>
-        <TextField mainStyle={MAIN_STYLE} inputStyle={INPUT_STYLE} style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"searchView.searchHere"} />
+        <TextField
+          mainStyle={MAIN_STYLE}
+          onChangeText={onChangeText}
+          inputStyle={INPUT_STYLE} style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"searchView.searchHere"} value={value} />
         {cameraIcon ? <TouchableOpacity onPress={onCameraPress} style={CAMERA_ICON}>
           <EvilIcons color={color.palette.darkText} name="camera" size={55} />
         </TouchableOpacity> : null}

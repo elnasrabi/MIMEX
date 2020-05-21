@@ -40,7 +40,9 @@ export interface SearchProps {
      * The name of the icon
      */
 
-    onCameraPress?(): void
+    value?: string
 
+    onCameraPress?(): void
+    onChangeText?: (text: string) => void;
     onGoPress?(): void
 }

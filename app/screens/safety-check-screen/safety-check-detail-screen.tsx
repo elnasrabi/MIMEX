@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState, useEffect } from "react"
+import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, View, Platform, ScrollView, TextStyle } from "react-native"
-import { ParamListBase, useIsFocused } from "@react-navigation/native"
+import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Checkbox, TextField } from "../../components"
 import { color } from "../../theme"
@@ -78,7 +78,6 @@ const RENDER_RADIO_BUTTON_VIEW: ViewStyle = {
 
 export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = observer((props) => {
 
-  const isFocused = useIsFocused()
   const [checkdetails, updateCheckDetails] = useState([
     { isCheck: false, text: "safetyCheckDetailScreen.leaks" },
     { isCheck: false, text: "safetyCheckDetailScreen.pressure" },

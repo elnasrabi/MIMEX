@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useState, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, Platform, FlatList, TouchableOpacity } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
 import { color } from "../../theme"
@@ -68,7 +68,8 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
   }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-
+  const isFocused = useIsFocused()
+  const [searchBox, updateSearchBox] = useState('')
   const [resultlist, updateResultList] = useState([
     { id: '1', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
     { id: '2', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
@@ -80,6 +81,11 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
     { id: '8', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
     { id: '9', date: '12-Nov-2020', link: 'Vehicle Safety Check' }
   ])
+  useEffect(() => {
+    if (isFocused) {
+      updateSearchBox('')
+    }
+  }, [isFocused])
 
   const renderItem = ({ item, index }) => {
     return (
@@ -101,6 +107,8 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         onPress={handleDrawer} />
       <View style={[MAIN_VIEW, FLEX_VIEW]}>
         <SearchView
+          value={searchBox}
+          onChangeText={(text) => updateSearchBox(text)}
           containerStyle={SEARCH_VIEW_STYLE}
           searchInputViewStyle={SEARCH_INPUT_STYLE}
           cameraIcon={false}
