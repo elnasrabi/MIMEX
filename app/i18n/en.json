@@ -99,7 +99,8 @@
   },
   "safetyCheckScreen": {
     "header": "Safety Check",
-    "results": "Results"
+    "results": "Results",
+    "new": "New"
   },
   "safetyCheckDetailScreen": {
     "header": "Safety Check",

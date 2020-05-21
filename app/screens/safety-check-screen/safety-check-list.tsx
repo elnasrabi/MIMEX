@@ -19,15 +19,13 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
   const ROOT: ViewStyle = {
     paddingBottom: 10
   }
-  const BOTTOM_BUTTON_STYLE: ViewStyle = {
-    justifyContent: 'flex-end',
-    flex: 1
-  }
   const FLATLIST_STYLE: ViewStyle = {
     width: "90%",
     marginLeft: '4%',
     marginTop: 20,
-    height: "30%"
+  }
+  const BOTTOM_BUTTON_STYLE: ViewStyle = {
+    marginTop: 10
   }
   const MAIN_VIEW: ViewStyle = {
     marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 10 : 33
@@ -65,9 +63,23 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
   const RENDER_TEXT_STYLE: TextStyle = {
     fontSize: 15
   }
+  const FLEX_VIEW: ViewStyle = {
+    flex: 1
+  }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-  const [resultlist, updateResultList] = useState([{ id: '1', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '2', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '3', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '4', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '5', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '6', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '7', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '8', date: '12-Nov-2020', link: 'Vehicle Safety Check' }, { id: '9', date: '12-Nov-2020', link: 'Vehicle Safety Check' }])
+
+  const [resultlist, updateResultList] = useState([
+    { id: '1', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '2', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '3', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '4', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '5', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '6', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '7', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '8', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
+    { id: '9', date: '12-Nov-2020', link: 'Vehicle Safety Check' }
+  ])
 
   const renderItem = ({ item, index }) => {
     return (
@@ -87,7 +99,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
       <MenuButton
         title={"safetyCheckScreen.header"}
         onPress={handleDrawer} />
-      <View style={MAIN_VIEW}>
+      <View style={[MAIN_VIEW, FLEX_VIEW]}>
         <SearchView
           containerStyle={SEARCH_VIEW_STYLE}
           searchInputViewStyle={SEARCH_INPUT_STYLE}
@@ -95,19 +107,20 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
           buttonStyle={BUTTON_VIEW_STYLE} />
 
         <Text style={RESULT_TEXT_STYLE} tx={"safetyCheckScreen.results"} />
-
-        <FlatList
-          style={FLATLIST_STYLE}
-          data={resultlist}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => item.id}
-        />
-      </View>
-      <View style={BOTTOM_BUTTON_STYLE}>
+        <View style={FLEX_VIEW}>
+          <FlatList
+            style={FLATLIST_STYLE}
+            data={resultlist}
+            nestedScrollEnabled={true}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
         <BottomButton
+          bottomViewstyle={BOTTOM_BUTTON_STYLE}
           leftImage={icons.blackButton2}
           rightImage={icons.redButton}
-          leftText={"common.save"}
+          leftText={"safetyCheckScreen.new"}
           rightText={"common.cancel"} />
       </View>
     </Screen>
