@@ -13,7 +13,7 @@ import {
 } from '@react-navigation/drawer'
 
 export interface CustomDrawerContentProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
+  navigation?: NativeStackNavigationProp<ParamListBase>
 }
 
 const LABEL: TextStyle = { fontFamily: typography.primary, fontSize: 16, color: color.palette.darkText }

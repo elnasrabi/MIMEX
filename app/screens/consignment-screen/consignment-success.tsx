@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform, Image } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -15,6 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
+import { useStores } from "../../models/root-store"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -97,12 +98,18 @@ const SIGN_VIEW: ViewStyle = {
   borderWidth: 2,
   borderRadius: 3,
   marginTop: 20,
-  width: "100%",
   height: 300,
+  width: "100%",
   backgroundColor: color.palette.white
+}
+const SIGN_VIEW_IMAGE: ImageStyle = {
+  width: "100%",
+  height: 296
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
+
+  const { consignmentStore } = useStores()
   const [selectedValue, setSelectedValue] = useState("java")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
@@ -118,6 +125,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   }
   const onImageView = () => {
     onViewImage(!viewImage)
+  }
+  const onSignaturePress = () => {
+    props.navigation.navigate("signatureView")
   }
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
@@ -172,9 +182,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             />
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
-            <View style={SIGN_VIEW}>
-
-            </View>
+            <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
+              {consignmentStore.signedSaved && <Image source={{ uri: 'file:///storage/emulated/0/saved_signature/signature.png' }}
+                style={SIGN_VIEW_IMAGE} />}
+            </TouchableOpacity>
 
           </View>
           <View style={BOTTOM_VIEW}>

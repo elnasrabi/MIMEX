@@ -15,4 +15,5 @@ export type AuthParamList = {
   consignmentDetail: undefined
   pdfViewer: undefined
   consignmentSuccess: undefined
+  signatureView: undefined
 }

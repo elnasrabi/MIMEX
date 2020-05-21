@@ -14,9 +14,10 @@ import { VehicleSetting } from "../screens/vehicle/vehicle-setting"
 import { QRScanner } from "../components/qr-scanner/qr-scanner"
 import { ConsignmentList } from "../screens/consignment-screen/consignment-list"
 import { ConsignmentDetail } from "../screens/consignment-screen/consignment-detail"
-import { MyList } from "../screens/myList-screen/myList";
+import { MyList } from "../screens/myList-screen/myList"
 import { PDFViewer } from "../screens/pdf-view/pdf-viewer"
 import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success"
+import { SignatureView } from "../components/signature-view/signature-view"
 
 // const Stack = createNativeStackNavigator<PrimaryParamList>()
 
@@ -36,6 +37,8 @@ const ConsignmentStack = () => {
       <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
       <Stack.Screen name="pdfViewer" component={PDFViewer} />
       <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
+      <Stack.Screen name="signatureView" component={SignatureView} />
     </Stack.Navigator>
   )
 }
@@ -57,7 +60,6 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="MyList" component={MyList} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="consignmentList" component={ConsignmentStack} />
-      <Stack.Screen name="qrScanner" component={QRScanner} />
     </Drawer.Navigator>
   )
 }

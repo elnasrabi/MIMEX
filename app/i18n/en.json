@@ -16,7 +16,9 @@
     "contact": "Contact",
     "special": "Special Instruction",
     "pdfViewer": "PDF Viewer",
-    "specialAction": "Special Action"
+    "specialAction": "Special Action",
+    "reset": "Reset",
+    "signature": "Signature"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
