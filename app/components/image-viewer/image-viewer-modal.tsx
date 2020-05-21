@@ -52,7 +52,7 @@ export const ImageViewerModal: FunctionComponent<ImageViewerModalProps> = observ
             <View style={CENTERED_VIEW}>
                 <Image resizeMode={"contain"} style={IMAGE_VIEW} source={{ uri: props.uri }} />
                 <TouchableOpacity style={CLOSE_ICON} onPress={props.onClose}>
-                    <Text text={"Close"} />
+                    <Text style={{ color: color.palette.white, width: "100%" }} preset={"header"} text={"Close"} />
                 </TouchableOpacity>
             </View>
         </Modal>
