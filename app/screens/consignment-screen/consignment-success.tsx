@@ -12,6 +12,7 @@ import { ComConsignmentDetail } from "../../components/consignment/com-consigmen
 import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
 import ImagePicker from 'react-native-image-picker';
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -55,7 +56,6 @@ const SIGNATURE_TEXT: TextStyle = {
 }
 
 const CONSIGNMENT_VIEW: ViewStyle = { flex: 1 }
-const CAMERA_ICON: ImageStyle = { marginTop: 5 }
 const STATUS_VIEW: ViewStyle = {
   height: 50,
   backgroundColor: color.palette.toolbar,
@@ -96,13 +96,19 @@ const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
   const [selectedValue, setSelectedValue] = useState("java")
   const [fileName, setFileName] = useState("")
+  const [imageUri, setImageUri] = useState("")
+  const [viewImage, onViewImage] = useState(false)
   useEffect(() => {
   }, [])
 
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       setFileName(response.fileName)
+      setImageUri(response.uri)
     })
+  }
+  const onImageView = () => {
+    onViewImage(!viewImage)
   }
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
@@ -112,6 +118,12 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         onPress={goBack} />
       <ScrollView style={CONSIGNMENT_VIEW}>
         <View>
+          {/* Image View */}
+          <ImageViewerModal
+            uri={imageUri}
+            isViewImage={viewImage}
+            onClose={onImageView} />
+
           {/* Special Action */}
           <ComConsignmentDetail navigation={props.navigation} view={"specialAction"} />
 
@@ -139,7 +151,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
               <TouchableOpacity style={ROOT} onPress={onCameraPres}>
                 <EvilIcons color={color.palette.darkText} name="camera" size={60} />
               </TouchableOpacity>
-              <TouchableOpacity style={LINK_VIEW}>
+              <TouchableOpacity onPress={onImageView} style={LINK_VIEW}>
                 {fileName && <Text style={LINK_TEXT} preset={"normal"} text={fileName} />}
               </TouchableOpacity>
             </View>
