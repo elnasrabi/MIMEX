@@ -35,11 +35,11 @@ function ScreenWithScrolling(props: ScreenProps) {
   const backgroundStyle = props.backgroundColor ? { backgroundColor: props.backgroundColor } : {}
   const insetStyle = { paddingTop: props.unsafe ? 0 : insets.top }
   const statusBarColor = props.statusBarColor || color.palette.black
-  const wall = props.wall || icons.wall
+  const icon = icons[props.wall] || icons.wall
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
       <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
+      <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
         <View style={[preset.outer, insetStyle]}>
           <ScrollView
             keyboardShouldPersistTaps='handled'

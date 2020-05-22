@@ -92,7 +92,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   }
 
   return (
-    <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
+    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="scroll">
       <MenuButton
         hasBackground={false}
         onPress={handleDrawer} />
