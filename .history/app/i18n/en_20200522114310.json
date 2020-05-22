@@ -1,6 +1,6 @@
 {
   "common": {
-    "ok": "Ok!",
+    "ok": "OK!",
     "cancel": "Cancel",
     "back": "Back",
     "success": "Success",
@@ -31,7 +31,7 @@
   },
   "loginScreen": {
     "login": "Login",
-    "header": "Login Screen",
+    "header": "LOGIN SCREEN",
     "title": "DriverApp",
     "resetPassword": "Forgot Your Password ?",
     "username": "Username",
@@ -41,8 +41,8 @@
     "invalidUsernamePassword": "Invalid Username Password"
   },
   "userSetting": {
-    "title": "User Setting",
-    "header": "User Setting",
+    "title": "USER SETTING",
+    "header": "USER SETTING",
     "resetPassword": "Forgot your Password?",
     "email": "Username/Email",
     "mobile": "Mobile",
@@ -62,8 +62,8 @@
     "specialFeatures": "Special Features"
   },
   "vehicleSetting": {
-    "title": "Vehicle Setting",
-    "header": "Vehicle Setting",
+    "title": "VEHICLE SETTING",
+    "header": "VEHICLE SETTING",
     "resetPassword": "Forgot your Password?",
     "email": "Username/Email",
     "mobile": "Mobile",
@@ -82,9 +82,9 @@
     "specialFeatures": "Special Features"
   },
   "forgotpasswordScreen": {
-    "header": "Forgot Password",
+    "header": "FORGOT PASSWORD",
     "title": "Forgot your Password ?",
-    "submit": "Submit",
+    "submit": "SUbmit",
     "label": "Enter your Email Address",
     "desc": "We will send you an email to reset your password",
     "invalidError": "Email Address Not Valid",
@@ -93,8 +93,8 @@
   "landingScreen": {
     "search": "Search Manifest/Consignment",
     "searchHere": "Search Here...",
-    "header": "Landing screen",
-    "logout": "Logout",
+    "header": "LANDING SCREEN",
+    "logout": "LOGOUT",
     "go": "Go",
     "myList": "My List",
     "safetyCheck": "Safety Check",

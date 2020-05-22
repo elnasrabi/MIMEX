@@ -1,12 +1,11 @@
 {
   "common": {
-    "ok": "Ok!",
+    "ok": "OK!",
     "cancel": "Cancel",
     "back": "Back",
     "success": "Success",
     "fail": "Fail",
     "save": "Save",
-    "search": "Search",
     "consignment": "Consignment",
     "status": "Status",
     "address": "Address",
@@ -17,9 +16,7 @@
     "contact": "Contact",
     "special": "Special Instruction",
     "pdfViewer": "PDF Viewer",
-    "specialAction": "Special Action",
-    "reset": "Reset",
-    "signature": "Signature"
+    "specialAction": "Special Action"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -30,8 +27,8 @@
     "continue": "CONTINUE"
   },
   "loginScreen": {
-    "login": "Login",
-    "header": "Login Screen",
+    "login": "LOGIN",
+    "header": "LOGIN SCREEN",
     "title": "DriverApp",
     "resetPassword": "Forgot Your Password ?",
     "username": "Username",
@@ -41,8 +38,8 @@
     "invalidUsernamePassword": "Invalid Username Password"
   },
   "userSetting": {
-    "title": "User Setting",
-    "header": "User Setting",
+    "title": "USER SETTING",
+    "header": "USER SETTING",
     "resetPassword": "Forgot your Password?",
     "email": "Username/Email",
     "mobile": "Mobile",
@@ -62,8 +59,8 @@
     "specialFeatures": "Special Features"
   },
   "vehicleSetting": {
-    "title": "Vehicle Setting",
-    "header": "Vehicle Setting",
+    "title": "VEHICLE SETTING",
+    "header": "VEHICLE SETTING",
     "resetPassword": "Forgot your Password?",
     "email": "Username/Email",
     "mobile": "Mobile",
@@ -82,9 +79,9 @@
     "specialFeatures": "Special Features"
   },
   "forgotpasswordScreen": {
-    "header": "Forgot Password",
+    "header": "FORGOT PASSWORD",
     "title": "Forgot your Password ?",
-    "submit": "Submit",
+    "submit": "SUBMIT",
     "label": "Enter your Email Address",
     "desc": "We will send you an email to reset your password",
     "invalidError": "Email Address Not Valid",
@@ -93,8 +90,8 @@
   "landingScreen": {
     "search": "Search Manifest/Consignment",
     "searchHere": "Search Here...",
-    "header": "Landing screen",
-    "logout": "Logout",
+    "header": "LANDING SCREEN",
+    "logout": "LOGOUT",
     "go": "Go",
     "myList": "My List",
     "safetyCheck": "Safety Check",
@@ -109,29 +106,6 @@
     "reactotron": "Demo Reactotron",
     "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
     "iosReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
-  },
-  "safetyCheckScreen": {
-    "header": "Safety Check",
-    "results": "Results",
-    "new": "New"
-  },
-  "safetyCheckDetailScreen": {
-    "header": "Safety Check",
-    "driver": "Driver",
-    "vehicle": "Vehicle",
-    "date": "Date",
-    "leaks": "No Visible Leaks",
-    "pressure": "Tyre Pressure OK",
-    "lights": "Lights, Indicators OK",
-    "mirrors": "Windscreen, Mirrors OK",
-    "brakes": "Brakes, Steering OK",
-    "alarms": "Locks, Alarms OK",
-    "healthquestion": "Are you in a good health today",
-    "shiftquestion": "More than 10 hours since your last shift",
-    "alcoholquestion": "Are you under the influence of alcohol/drugs",
-    "yes": "Yes",
-    "no": "No",
-    "comments": "Comments"
   },
   "storybook": {
     "placeholder": "Placeholder",
@@ -167,8 +141,6 @@
   },
   "consignmentSuccess": {
     "consignment": "Consignment",
-    "sign": "Signed By",
-    "signPlace": "Enter Signed By",
-    "signature": "Signature"
+    "sign": "Signed By"
   }
 }
