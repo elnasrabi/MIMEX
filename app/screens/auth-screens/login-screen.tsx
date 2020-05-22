@@ -109,6 +109,8 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
         onChangeText={text => onChangeText(INPUT_USERNAME, text)}
         value={username}
         keyboardType={"email-address"}
+        autoCorrect={false}
+        autoCapitalize={"none"}
       />
       <TextField
         labelTx={"loginScreen.password"}
@@ -119,6 +121,8 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
         secureTextEntry={true}
         onChangeText={text => onChangeText(INPUT_PASSWORD, text)}
         value={password}
+        autoCorrect={false}
+        autoCapitalize={"none"}
       />
       <TouchableOpacity onPress={onResetPassword}>
         <Text style={RESET_PASSWORD} tx={"loginScreen.resetPassword"} />

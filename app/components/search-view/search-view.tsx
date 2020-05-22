@@ -70,6 +70,8 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
       <Text preset="button" style={[HEADER, searchTextStyle]} tx={"searchView.search"} />
       <View style={[SEARCH_VIEW, searchInputViewStyle]}>
         <TextField
+          autoCorrect={false}
+          autoCapitalize={"none"}
           mainStyle={MAIN_STYLE}
           onChangeText={onChangeText}
           inputStyle={INPUT_STYLE} style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"searchView.searchHere"} value={value} />

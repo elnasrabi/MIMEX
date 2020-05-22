@@ -78,7 +78,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
           <Text extraText={hasExtraText ? ":" : ""} style={LABEL} tx={label} />
         </View>
         <View style={VALUE_CONTAINER}>
-          <TextField mainStyle={TEXTINPUT_MAIN_VIEW} inputStyle={VALUE} value={value} />
+          <TextField
+            autoCorrect={false}
+            autoCapitalize={"none"}
+            mainStyle={TEXTINPUT_MAIN_VIEW}
+            inputStyle={VALUE}
+            value={value} />
         </View>
       </View>
     )

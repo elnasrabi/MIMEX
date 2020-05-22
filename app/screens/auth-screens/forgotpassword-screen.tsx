@@ -132,6 +132,8 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
           errorTx={isValidEmail ? undefined : "forgotpasswordScreen.enterEmail"}
           onSubmitEditing={onSubmit}
           keyboardType={"email-address"}
+          autoCorrect={false}
+          autoCapitalize={"none"}
         />
         <Text style={DESC} preset="button" tx="forgotpasswordScreen.desc" />
 
