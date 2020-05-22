@@ -17,6 +17,10 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1C16BFB198E5BC1B1CE9561E /* libPods-Moveit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8EB1A8342B5E89966DB999 /* libPods-Moveit.a */; };
+		1E3FBF8A2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
+		1E3FBF8B2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
+		1E3FBF8C2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
+		1E3FBF8D2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
 		1E815C67246E67CF00058207 /* ARIALNI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C5D246E67CE00058207 /* ARIALNI.TTF */; };
 		1E815C68246E67CF00058207 /* ARIALNI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C5D246E67CE00058207 /* ARIALNI.TTF */; };
 		1E815C69246E67CF00058207 /* ARIALNI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C5D246E67CE00058207 /* ARIALNI.TTF */; };
@@ -57,14 +61,6 @@
 		1E815C8C246E67CF00058207 /* arialbd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C66246E67CF00058207 /* arialbd.ttf */; };
 		1E815C8D246E67CF00058207 /* arialbd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C66246E67CF00058207 /* arialbd.ttf */; };
 		1E815C8E246E67CF00058207 /* arialbd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C66246E67CF00058207 /* arialbd.ttf */; };
-		1E815C91246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C8F246E67E600058207 /* ZektonExHv-Regular.ttf */; };
-		1E815C92246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C8F246E67E600058207 /* ZektonExHv-Regular.ttf */; };
-		1E815C93246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C8F246E67E600058207 /* ZektonExHv-Regular.ttf */; };
-		1E815C94246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C8F246E67E600058207 /* ZektonExHv-Regular.ttf */; };
-		1E815C95246E67E600058207 /* ZektonEx-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C90246E67E600058207 /* ZektonEx-Bold.otf */; };
-		1E815C96246E67E600058207 /* ZektonEx-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C90246E67E600058207 /* ZektonEx-Bold.otf */; };
-		1E815C97246E67E600058207 /* ZektonEx-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C90246E67E600058207 /* ZektonEx-Bold.otf */; };
-		1E815C98246E67E600058207 /* ZektonEx-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1E815C90246E67E600058207 /* ZektonEx-Bold.otf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -120,6 +116,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Moveit/main.m; sourceTree = "<group>"; };
 		1767919B5CD4347BD3297B3E /* Pods-Moveit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit.release.xcconfig"; path = "Target Support Files/Pods-Moveit/Pods-Moveit.release.xcconfig"; sourceTree = "<group>"; };
 		1E0CABFEBE6A4F228D0671CA /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../app/theme/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ZektonExHv Regular.ttf"; path = "../app/theme/fonts/ZektonExHv Regular.ttf"; sourceTree = "<group>"; };
 		1E815C5D246E67CE00058207 /* ARIALNI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARIALNI.TTF; path = ../app/theme/fonts/ARIALNI.TTF; sourceTree = "<group>"; };
 		1E815C5E246E67CE00058207 /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = arial.ttf; path = ../app/theme/fonts/arial.ttf; sourceTree = "<group>"; };
 		1E815C5F246E67CE00058207 /* ARIALNB.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARIALNB.TTF; path = ../app/theme/fonts/ARIALNB.TTF; sourceTree = "<group>"; };
@@ -130,8 +127,6 @@
 		1E815C64246E67CE00058207 /* arialbi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = arialbi.ttf; path = ../app/theme/fonts/arialbi.ttf; sourceTree = "<group>"; };
 		1E815C65246E67CE00058207 /* ARIALNBI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARIALNBI.TTF; path = ../app/theme/fonts/ARIALNBI.TTF; sourceTree = "<group>"; };
 		1E815C66246E67CF00058207 /* arialbd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = arialbd.ttf; path = ../app/theme/fonts/arialbd.ttf; sourceTree = "<group>"; };
-		1E815C8F246E67E600058207 /* ZektonExHv-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ZektonExHv-Regular.ttf"; path = "../app/theme/fonts/ZektonExHv-Regular.ttf"; sourceTree = "<group>"; };
-		1E815C90246E67E600058207 /* ZektonEx-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ZektonEx-Bold.otf"; path = "../app/theme/fonts/ZektonEx-Bold.otf"; sourceTree = "<group>"; };
 		28BF774262AE4D01956A20AC /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../app/theme/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		2956BB168B3E422C8B3A541F /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../app/theme/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Moveit-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moveit-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,8 +243,7 @@
 		4BA2FBDC07DD43118951D39F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1E815C90246E67E600058207 /* ZektonEx-Bold.otf */,
-				1E815C8F246E67E600058207 /* ZektonExHv-Regular.ttf */,
+				1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */,
 				1E815C62246E67CE00058207 /* Arial Black Italic.TTF */,
 				1E815C5E246E67CE00058207 /* arial.ttf */,
 				1E815C66246E67CF00058207 /* arialbd.ttf */,
@@ -470,7 +464,6 @@
 			files = (
 				1E815C8C246E67CF00058207 /* arialbd.ttf in Resources */,
 				1E815C6C246E67CF00058207 /* arial.ttf in Resources */,
-				1E815C96246E67E600058207 /* ZektonEx-Bold.otf in Resources */,
 				1E815C78246E67CF00058207 /* ariali.ttf in Resources */,
 				1E815C7C246E67CF00058207 /* Arial Black Italic.TTF in Resources */,
 				1E815C84246E67CF00058207 /* arialbi.ttf in Resources */,
@@ -478,8 +471,8 @@
 				1E815C80246E67CF00058207 /* ARIALN.TTF in Resources */,
 				1E815C70246E67CF00058207 /* ARIALNB.TTF in Resources */,
 				1E815C88246E67CF00058207 /* ARIALNBI.TTF in Resources */,
-				1E815C92246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */,
 				1E815C74246E67CF00058207 /* ariblk.ttf in Resources */,
+				1E3FBF8B2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,11 +492,10 @@
 				0163238BF7484F5BBEE1ADA0 /* Montserrat-ExtraBoldItalic.ttf in Resources */,
 				3773328AC93348408648401D /* Montserrat-ExtraLight.ttf in Resources */,
 				D911F08B2987469CB626BB78 /* Montserrat-ExtraLightItalic.ttf in Resources */,
-				1E815C91246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */,
 				1E815C7F246E67CF00058207 /* ARIALN.TTF in Resources */,
-				1E815C95246E67E600058207 /* ZektonEx-Bold.otf in Resources */,
 				6B2321768A0F48B8B1DA65DD /* Montserrat-Italic.ttf in Resources */,
 				1E815C7B246E67CF00058207 /* Arial Black Italic.TTF in Resources */,
+				1E3FBF8A2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */,
 				1E815C73246E67CF00058207 /* ariblk.ttf in Resources */,
 				1E815C87246E67CF00058207 /* ARIALNBI.TTF in Resources */,
 				D43D422071A145CCA8E48C1E /* Montserrat-Light.ttf in Resources */,
@@ -528,13 +520,12 @@
 			files = (
 				1E815C71246E67CF00058207 /* ARIALNB.TTF in Resources */,
 				1E815C75246E67CF00058207 /* ariblk.ttf in Resources */,
+				1E3FBF8C2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */,
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
 				1E815C6D246E67CF00058207 /* arial.ttf in Resources */,
 				1E815C7D246E67CF00058207 /* Arial Black Italic.TTF in Resources */,
 				1E815C8D246E67CF00058207 /* arialbd.ttf in Resources */,
 				1E815C85246E67CF00058207 /* arialbi.ttf in Resources */,
-				1E815C97246E67E600058207 /* ZektonEx-Bold.otf in Resources */,
-				1E815C93246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */,
 				1E815C81246E67CF00058207 /* ARIALN.TTF in Resources */,
 				1E815C79246E67CF00058207 /* ariali.ttf in Resources */,
 				1E815C89246E67CF00058207 /* ARIALNBI.TTF in Resources */,
@@ -548,7 +539,6 @@
 			files = (
 				1E815C8E246E67CF00058207 /* arialbd.ttf in Resources */,
 				1E815C6E246E67CF00058207 /* arial.ttf in Resources */,
-				1E815C98246E67E600058207 /* ZektonEx-Bold.otf in Resources */,
 				1E815C7A246E67CF00058207 /* ariali.ttf in Resources */,
 				1E815C7E246E67CF00058207 /* Arial Black Italic.TTF in Resources */,
 				1E815C86246E67CF00058207 /* arialbi.ttf in Resources */,
@@ -556,8 +546,8 @@
 				1E815C82246E67CF00058207 /* ARIALN.TTF in Resources */,
 				1E815C72246E67CF00058207 /* ARIALNB.TTF in Resources */,
 				1E815C8A246E67CF00058207 /* ARIALNBI.TTF in Resources */,
-				1E815C94246E67E600058207 /* ZektonExHv-Regular.ttf in Resources */,
 				1E815C76246E67CF00058207 /* ariblk.ttf in Resources */,
+				1E3FBF8D2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
