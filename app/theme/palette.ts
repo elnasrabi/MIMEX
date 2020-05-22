@@ -15,5 +15,5 @@ export const palette = {
   textGray: "#8D8A8A",
   toolbar: "#b6afaf",
   transparent: "rgba(52, 52, 52, 1)",
-  listBG: "rgba(255,255,255,0.6)"
+  listBG: "rgba(255,255,255,0.8)"
 }

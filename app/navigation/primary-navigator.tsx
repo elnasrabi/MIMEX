@@ -77,7 +77,7 @@ export function PrimaryNavigator() {
       drawerType='slide'
       keyboardDismissMode="on-drag"
       drawerStyle={{
-        width: 240,
+        width: 250,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
