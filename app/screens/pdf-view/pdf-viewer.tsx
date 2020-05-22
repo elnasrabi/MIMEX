@@ -16,7 +16,7 @@ export interface PDFViewerProps {
 const ROOT: ViewStyle = {
   flex: 1,
 }
-const PDF_VIEW: ViewStyle = { flex: 1, marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33 }
+const PDF_VIEW: ViewStyle = { flex: 1, marginTop: Platform.OS == 'android' ? 25 : isIphoneX() ? 10 : 33 }
 const PROGRESS: ViewStyle = {
   alignSelf: "center",
   flex: 1
