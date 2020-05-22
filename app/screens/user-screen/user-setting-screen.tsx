@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text } from "../../components"
+import { Screen, Text, TextField } from "../../components"
 import { color, typography } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
@@ -14,18 +14,13 @@ export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const MAIN_VIEW: ViewStyle = {
-  width: "100%",
-  height: 50,
-  backgroundColor: color.palette.toolbar,
-  marginTop: 10,
-  justifyContent: "center"
+const TEXTINPUT_MAIN_VIEW: ViewStyle = {
+  flex: 1, width: "100%"
 }
 
-const TITLE: TextStyle = {
-  fontSize: 18,
-  textAlign: "left",
-  marginStart: 15
+const TITLE: ViewStyle = {
+  flex: 1,
+  marginTop: 15
 }
 
 const ROOT: ViewStyle = {
@@ -34,8 +29,6 @@ const ROOT: ViewStyle = {
 
 const LABEL: TextStyle = {
   color: color.palette.black,
-  alignSelf: "center",
-  flex: 1,
   fontSize: 16,
   fontWeight: "bold",
   fontFamily: typography.secondary
@@ -64,7 +57,7 @@ const ROW: ViewStyle = {
   flexDirection: "row",
   marginStart: 20,
   marginEnd: 20,
-  marginTop: 20
+  alignItems: 'center'
 }
 const SCROLLVIEW_STYLE: ViewStyle = {
   marginBottom: 10,
@@ -81,9 +74,11 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const renderRow = (label, value, hasExtraText = false) => {
     return (
       <View style={ROW}>
-        <Text extraText={hasExtraText ? ":" : ""} style={LABEL} tx={label} />
+        <View style={TITLE}>
+          <Text extraText={hasExtraText ? ":" : ""} style={LABEL} tx={label} />
+        </View>
         <View style={VALUE_CONTAINER}>
-          <Text style={VALUE} text={value} />
+          <TextField mainStyle={TEXTINPUT_MAIN_VIEW} inputStyle={VALUE} value={value} />
         </View>
       </View>
     )
@@ -100,8 +95,8 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
       <ScrollView style={SCROLLVIEW_STYLE}>
         <View style={EMAIL_VIEW_STYLE}>
           <Text extraText={":"} style={EMAIL_TEXT_STYLE} tx={"userSetting.email"} />
-          <View style={{ marginTop: 10 }}>
-            <Text style={VALUE} text={"username@gmail.com"} />
+          <View >
+            <TextField mainStyle={TEXTINPUT_MAIN_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
           </View>
         </View>
 
