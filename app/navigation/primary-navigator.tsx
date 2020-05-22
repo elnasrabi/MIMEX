@@ -65,7 +65,6 @@ const LandingStack = () => {
       }}
     >
       <Stack.Screen name="Home" component={LandingScreen} />
-      <Stack.Screen name="qrScanner" component={QRScanner} />
     </Stack.Navigator>
   )
 }
@@ -83,6 +82,7 @@ export function PrimaryNavigator() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={LandingScreen} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="MyList" component={MyList} />
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />

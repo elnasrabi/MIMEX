@@ -78,6 +78,19 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     props.navigation.navigate("qrScanner")
   }
 
+  const onButtonPress = (item, index) => {
+    switch (item) {
+      case "landingScreen.myList":
+        return props.navigation.navigate('MyList')
+      case "landingScreen.safetyCheck":
+        return props.navigation.navigate('SafetyStack')
+      case "landingScreen.getRate":
+        // return props.navigation.navigate('')
+        return true
+      default: return true
+    }
+  }
+
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
       <MenuButton
@@ -105,7 +118,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
                 imageBackground={IMAGE_RED}
                 style={CONTINUE}
                 tx={data}
-              // onPress={onLogin}
+                onPress={() => onButtonPress(data, index)}
               />
             )
           })}
