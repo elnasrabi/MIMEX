@@ -1,7 +1,7 @@
 import * as React from "react"
 import { TouchableOpacity, TextStyle, ViewStyle, View } from "react-native"
 import { Text } from "../text/text"
-import { color, spacing } from "../../theme"
+import { color, spacing, typography } from "../../theme"
 import { CheckboxProps } from "./checkbox.props"
 import { mergeAll, flatten } from "ramda"
 
@@ -29,7 +29,7 @@ const FILL: ViewStyle = {
   backgroundColor: color.primary,
 }
 
-const LABEL: TextStyle = { paddingLeft: spacing[2], paddingTop: 4, flex: 1 }
+const LABEL: TextStyle = { paddingLeft: spacing[2], paddingTop: 4, flex: 1, fontFamily: typography.secondary }
 
 export function Checkbox(props: CheckboxProps) {
   const numberOfLines = props.multiline ? 0 : 1

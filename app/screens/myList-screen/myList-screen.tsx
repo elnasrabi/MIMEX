@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, FlatList, Platform } from "react-native"
+import { ViewStyle, View, FlatList, Platform, TextStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Checkbox } from "../../components"
-import { color } from "../../theme"
+import { color, typography } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons"
 import { BottomButton } from "../../components/bottom-button/bottom-button";
@@ -65,6 +65,14 @@ const RENDER_ADDRESSS: ViewStyle = {
   flex: 1,
   marginVertical: 5
 }
+const DESPATCH_TEXT_STYLE: TextStyle = {
+  color: color.palette.link,
+  fontFamily: typography.secondary
+}
+const RENDER_TEXT_STYLE: TextStyle = {
+  color: color.palette.black,
+  fontFamily: typography.secondary
+}
 
 export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
@@ -110,17 +118,17 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         <View style={RENDER_INNER_CONTAINER}>
           <View style={RENDER_CONSIGNMENT_DETAIL_VIEW}>
             <View style={CONTINUE}>
-              <Text>ABCD123456</Text>
+              <Text style={RENDER_TEXT_STYLE}>ABCD123456</Text>
             </View>
             <View style={[CONTINUE, { alignItems: "flex-end" }]}>
-              <Text style={{ color: color.palette.link }}>Despatched</Text>
+              <Text style={DESPATCH_TEXT_STYLE}>Despatched</Text>
             </View>
           </View>
           <View style={RENDER_ADDRESSS}>
-            <Text>123 RED TREE STREET</Text>
+            <Text style={RENDER_TEXT_STYLE}>123 RED TREE STREET</Text>
           </View>
           <View style={RENDER_ADDRESSS}>
-            <Text>South Yarra</Text>
+            <Text style={RENDER_TEXT_STYLE}>South Yarra</Text>
           </View>
         </View>
       </View>

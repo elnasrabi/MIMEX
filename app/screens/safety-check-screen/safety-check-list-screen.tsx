@@ -4,7 +4,7 @@ import { ViewStyle, TextStyle, View, Platform, FlatList, TouchableOpacity } from
 import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
-import { color } from "../../theme"
+import { color, typography } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
@@ -61,7 +61,8 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
     marginTop: 35
   }
   const RENDER_TEXT_STYLE: TextStyle = {
-    fontSize: 15
+    fontSize: 15,
+    fontFamily: typography.secondary
   }
   const FLEX_VIEW: ViewStyle = {
     flex: 1

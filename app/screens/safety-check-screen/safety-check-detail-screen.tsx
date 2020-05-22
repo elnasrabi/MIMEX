@@ -4,7 +4,7 @@ import { ViewStyle, View, Platform, ScrollView, TextStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Checkbox, TextField } from "../../components"
-import { color } from "../../theme"
+import { color, typography } from "../../theme"
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
 import { isIphoneX } from "react-native-iphone-x-helper";
@@ -58,7 +58,10 @@ const COMMENT_TEXT_STYLE: TextStyle = {
   marginTop: 15
 }
 const TEXTFIELD_INPUT_STYLE: TextStyle = {
-  height: 100
+  height: 100,
+}
+const TEXT_FONT_STYLE: TextStyle = {
+  fontFamily: typography.secondary
 }
 const TEXTFIELD_MAIN_STYLE: ViewStyle = {
   width: '98%'
@@ -101,10 +104,10 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
     return (
       <View style={RENDER_ROW_CONTAINER}>
         <View style={RENDER_ROW_TEXT_VIEW}>
-          <Text extraText={extratext ? ":" : ''} style={RENDER_ROW_TEXT_STYLE} tx={label} />
+          <Text extraText={extratext ? ":" : ''} style={[RENDER_ROW_TEXT_STYLE, TEXT_FONT_STYLE]} tx={label} />
         </View>
         <View style={RENDER_ROW_DATA_VIEW}>
-          <Text style={RENDER_ROW_TEXT_DATA_STYLE} text={value} />
+          <Text style={[RENDER_ROW_TEXT_DATA_STYLE, TEXT_FONT_STYLE]} text={value} />
         </View>
       </View>
     )
@@ -119,7 +122,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   const renderCheckBoxlist = (item, index) => {
     return (
       <View key={index}>
-        <Checkbox outlineStyle={CHECKBOX_STYLE} tx={item.text} value={item.isCheck} onToggle={() => updateCheckBox(index)} />
+        <Checkbox outlineStyle={CHECKBOX_STYLE} style={TEXT_FONT_STYLE} tx={item.text} value={item.isCheck} onToggle={() => updateCheckBox(index)} />
       </View>
     )
   }
@@ -127,7 +130,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   const renderRadioButton = (question, data, updateData) => {
     return (
       <View style={RENDER_RADIO_CONTAINER}>
-        <Text tx={question} />
+        <Text style={TEXT_FONT_STYLE} tx={question} />
         <View style={RENDER_RADIO_BUTTON_MAIN_VIEW} >
           <View style={RENDER_RADIO_BUTTON_VIEW} >
             <RadioButton
@@ -137,7 +140,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
               isSelected={data[0].isSelect}
               onPress={() => { updateData([{ isSelect: true }, { isSelect: false }]) }}
             />
-            <Text style={RENDER_RADIO_BUTTON_TEXT_VIEW} tx={"safetyCheckDetailScreen.yes"} />
+            <Text style={[RENDER_RADIO_BUTTON_TEXT_VIEW, TEXT_FONT_STYLE]} tx={"safetyCheckDetailScreen.yes"} />
           </View>
           <View style={[RENDER_RADIO_BUTTON_VIEW, { marginLeft: 10 }]} >
             <RadioButton
@@ -147,7 +150,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
               isSelected={data[1].isSelect}
               onPress={() => { updateData([{ isSelect: false }, { isSelect: true }]) }}
             />
-            <Text tx={"safetyCheckDetailScreen.no"} style={RENDER_RADIO_BUTTON_TEXT_VIEW} />
+            <Text tx={"safetyCheckDetailScreen.no"} style={[RENDER_RADIO_BUTTON_TEXT_VIEW, TEXT_FONT_STYLE]} />
           </View>
         </View>
       </View>
@@ -173,10 +176,10 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
         {renderRadioButton("safetyCheckDetailScreen.healthquestion", radio, updateRadio)}
         {renderRadioButton("safetyCheckDetailScreen.shiftquestion", radio1, updateRadio1)}
         {renderRadioButton("safetyCheckDetailScreen.alcoholquestion", radio2, updateRadio2)}
-        <Text tx={"safetyCheckDetailScreen.comments"} style={COMMENT_TEXT_STYLE} extraText={":"} />
+        <Text tx={"safetyCheckDetailScreen.comments"} style={[COMMENT_TEXT_STYLE, TEXT_FONT_STYLE]} extraText={":"} />
         <TextField
           mainStyle={TEXTFIELD_MAIN_STYLE}
-          inputStyle={TEXTFIELD_INPUT_STYLE}
+          inputStyle={[TEXTFIELD_INPUT_STYLE, TEXT_FONT_STYLE]}
           style={{}}
           returnKeyType={"search"}
           multiline={true}
