@@ -1,12 +1,11 @@
 import * as React from "react"
-import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View, ImageBackground, ViewStyle, ImageStyle, SafeAreaView } from "react-native"
+import { ScrollView, StatusBar, View, ImageBackground, ViewStyle, ImageStyle, SafeAreaView } from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { ScreenProps } from "./screen.props"
-import { isNonScrolling, offsets, presets } from "./screen.presets"
+import { isNonScrolling, presets } from "./screen.presets"
 import { icons } from "../icon/icons"
 import { color } from "../../theme"
 
-const isIos = Platform.OS === "ios"
 const IMAGE_BACKGROUND: ImageStyle = { height: "100%", width: "100%" }
 function ScreenWithoutScrolling(props: ScreenProps) {
   const insets = useSafeArea()
@@ -16,7 +15,6 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   const insetStyle: ViewStyle = { paddingTop: props.unsafe ? 0 : insets.top }
   const icon = icons[props.wall] || icons.wall
   const statusBarColor = props.statusBarColor || color.palette.black
-  const SAFE_AREA: ViewStyle = { flex: 1 }
 
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
@@ -38,7 +36,6 @@ function ScreenWithScrolling(props: ScreenProps) {
   const insetStyle = { paddingTop: props.unsafe ? 0 : insets.top }
   const statusBarColor = props.statusBarColor || color.palette.black
   const wall = props.wall || icons.wall
-  const SAFE_AREA: ViewStyle = { flex: 1 }
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
       <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
