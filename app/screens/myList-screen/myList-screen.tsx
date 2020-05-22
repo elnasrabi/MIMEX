@@ -112,7 +112,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
               <Text>ABCD123456</Text>
             </View>
             <View style={[CONTINUE, { alignItems: "flex-end" }]}>
-              <Text style={{}}>Despatched</Text>
+              <Text style={{ color: color.palette.link }}>Despatched</Text>
             </View>
           </View>
           <View style={RENDER_ADDRESSS}>

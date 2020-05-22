@@ -18,7 +18,7 @@ const ROOT: ViewStyle = { paddingBottom: 10 }
 const VALUE_CONTAINER: ViewStyle = { flex: 1 }
 
 const LABEL: TextStyle = {
-  color: color.palette.red,
+  color: color.palette.black,
   alignSelf: "center",
   flex: 1,
   fontSize: 16,
@@ -26,7 +26,7 @@ const LABEL: TextStyle = {
 }
 
 const VALUE: TextStyle = {
-  color: color.palette.black,
+  color: color.palette.link,
   fontSize: 16,
   fontWeight: "bold",
   textAlign: "right"
@@ -65,10 +65,9 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
         onPress={handleDrawer} />
 
       <ScrollView style={SCROLLVIEW_STYLE}>
-        {renderRow("vehicleSetting.vehicleId", "8545154", true)}
+        {renderRow("vehicleSetting.registration", "XXXX 8845")}
         {renderRow("vehicleSetting.vehicleName", "Red Van South East")}
         {renderRow("vehicleSetting.vehicleType", "2 Tan Truck")}
-        {renderRow("vehicleSetting.registration", "XXXX 8845")}
         {renderRow("vehicleSetting.weightCapacity", "1800 KG")}
         {renderRow("vehicleSetting.volumeCapacity", "1.00 cbm")}
         {renderRow("vehicleSetting.jobCapacity", "12")}
