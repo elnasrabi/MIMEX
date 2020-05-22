@@ -88,7 +88,7 @@ export const ConsignmentList: FunctionComponent<ConsignmentListProps> = observer
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   const goToDetailScreen = () => {
-    props.navigation.navigate("consignmentDetail")
+    // props.navigation.navigate("consignmentDetail")
   }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">

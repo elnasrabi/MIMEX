@@ -94,7 +94,10 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         <View style={RENDER_DATE_VIEW}>
           <Text style={[RENDER_TEXT_STYLE, { color: color.palette.darkText }]} >{item.date}</Text>
         </View>
-        <TouchableOpacity style={RENDER_LINK_VIEW} onPress={() => props.navigation.navigate("SafetyCheckDetail")}>
+        <TouchableOpacity
+          style={RENDER_LINK_VIEW}
+        // onPress={() => props.navigation.navigate("SafetyCheckDetail")}
+        >
           <Text style={[RENDER_TEXT_STYLE, { color: color.palette.link }]} >{item.link}</Text>
         </TouchableOpacity>
       </View>
