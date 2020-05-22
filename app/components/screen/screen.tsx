@@ -19,21 +19,14 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   const SAFE_AREA: ViewStyle = { flex: 1 }
 
   return (
-    <KeyboardAvoidingView
-      keyboardShouldPersistTaps='handled'
-      style={[preset.outer, backgroundStyle]}
-      behavior={isIos ? "padding" : null}
-      keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
-    >
-      <SafeAreaView style={[preset.outer, backgroundStyle]}>
-        <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-        <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
-          <View style={[preset.inner, style, insetStyle]}>
-            {props.children}
-          </View>
-        </ImageBackground>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+    <SafeAreaView style={[preset.outer, backgroundStyle]}>
+      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+      <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
+        <View style={[preset.inner, style, insetStyle]}>
+          {props.children}
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   )
 }
 
@@ -47,26 +40,20 @@ function ScreenWithScrolling(props: ScreenProps) {
   const wall = props.wall || icons.wall
   const SAFE_AREA: ViewStyle = { flex: 1 }
   return (
-    <KeyboardAvoidingView
-      style={[preset.outer, backgroundStyle]}
-      behavior={isIos ? "padding" : null}
-      keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
-    >
-      <SafeAreaView style={[preset.outer, backgroundStyle]}>
-        <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-        <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
-          <View style={[preset.outer, backgroundStyle, insetStyle]}>
-            <ScrollView
-              keyboardShouldPersistTaps='handled'
-              style={[preset.outer, backgroundStyle]}
-              contentContainerStyle={[preset.outer, style]}
-            >
-              {props.children}
-            </ScrollView>
-          </View>
-        </ImageBackground>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+    <SafeAreaView style={[preset.outer, backgroundStyle]}>
+      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+      <ImageBackground style={IMAGE_BACKGROUND} source={wall}>
+        <View style={[preset.outer, insetStyle]}>
+          <ScrollView
+            keyboardShouldPersistTaps='handled'
+            style={[preset.outer]}
+            contentContainerStyle={[preset.outer, style]}
+          >
+            {props.children}
+          </ScrollView>
+        </View>
+      </ImageBackground>
+    </SafeAreaView>
   )
 }
 

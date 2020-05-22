@@ -19,7 +19,6 @@ import { PDFViewer } from "../screens/pdf-view/pdf-viewer"
 import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success"
 import { SignatureView } from "../components/signature-view/signature-view"
 
-// const Stack = createNativeStackNavigator<PrimaryParamList>()
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<PrimaryParamList>()
@@ -66,7 +65,6 @@ const LandingStack = () => {
       }}
     >
       <Stack.Screen name="Home" component={LandingScreen} />
-      <Stack.Screen name="qrScanner" component={QRScanner} />
     </Stack.Navigator>
   )
 }
@@ -83,7 +81,8 @@ export function PrimaryNavigator() {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={LandingStack} />
+      <Drawer.Screen name="Home" component={LandingScreen} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="MyList" component={MyList} />
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />

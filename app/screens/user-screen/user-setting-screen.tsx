@@ -33,7 +33,7 @@ const ROOT: ViewStyle = {
 }
 
 const LABEL: TextStyle = {
-  color: color.palette.red,
+  color: color.palette.black,
   alignSelf: "center",
   flex: 1,
   fontSize: 16,
@@ -41,12 +41,12 @@ const LABEL: TextStyle = {
 }
 
 const VALUE: TextStyle = {
-  color: color.palette.black,
+  color: color.palette.link,
   fontSize: 16,
   fontWeight: "bold"
 }
 const EMAIL_TEXT_STYLE: TextStyle = {
-  color: color.palette.red,
+  color: color.palette.black,
   flex: 1,
   fontSize: 16,
   fontWeight: "bold"
@@ -109,18 +109,6 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         {renderRow("userSetting.licenceNumber", "Licence Number")}
         {renderRow("userSetting.expiry", "Expiry")}
 
-        <View style={MAIN_VIEW}>
-          <Text style={TITLE} tx="userSetting.vehicle" />
-        </View>
-
-        {renderRow("userSetting.vehicleId", "8545154", true)}
-        {renderRow("userSetting.vehicleName", "Red Van South East")}
-        {renderRow("userSetting.vehicleType", "2 Tan Truck")}
-        {renderRow("userSetting.registration", "XXXX 8845")}
-        {renderRow("userSetting.weightCapacity", "1800 KG")}
-        {renderRow("userSetting.volumeCapacity", "1.00 cbm")}
-        {renderRow("userSetting.jobCapacity", "12")}
-        {renderRow("userSetting.specialFeatures", "Add On Services")}
       </ScrollView>
       <BottomButton
         leftImage={icons.blackButton2}
