@@ -185,7 +185,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved && <Image source={{ uri: SING_IMAGE_URI, cache: "default" }}
+              {consignmentStore.signedSaved && <Image source={{ uri: SING_IMAGE_URI, cache: "reload" }}
                 style={SIGN_VIEW_IMAGE} />}
             </TouchableOpacity>
 
