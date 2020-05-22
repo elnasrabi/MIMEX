@@ -19,7 +19,10 @@
     "pdfViewer": "PDF Viewer",
     "specialAction": "Special Action",
     "reset": "Reset",
-    "signature": "Signature"
+    "signature": "Signature",
+    "permissionDenied": "The permission has denied.",
+    "permissionBlocked": "The permission has blocked.",
+    "permissionUnavailable": "This feature is not available ."
   },
   "errors": {
     "invalidEmail": "Invalid email address."

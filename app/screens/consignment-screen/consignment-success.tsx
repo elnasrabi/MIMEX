@@ -108,16 +108,21 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
+  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
 
   const { consignmentStore } = useStores()
   const [selectedValue, setSelectedValue] = useState("java")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
+  const [signUri, setSignUri] = useState(SING_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
   useEffect(() => {
     consignmentStore.onSignedReset()
   }, [])
 
+  props.navigation.addListener('focus', () => {
+    setSignUri(SING_IMAGE_URI)
+  })
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       setFileName(response.fileName)
@@ -130,7 +135,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
-  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png"
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -185,7 +189,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved && <Image source={{ uri: SING_IMAGE_URI, cache: "reload" }}
+              {consignmentStore.signedSaved && <Image source={{ uri: `${signUri}` }}
                 style={SIGN_VIEW_IMAGE} />}
             </TouchableOpacity>
 
