@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ImageStyle } from "react-native"
+import { ViewStyle, TextStyle, View, ImageStyle, ScrollView } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Icon } from "../../components"
@@ -108,13 +108,13 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
   }
 
   return (
-    <Screen style={ROOT} preset="scroll" backgroundColor="black">
+    <Screen style={ROOT} preset="fixed" backgroundColor="black">
       <BackButton
         style={BACK_BUTTON}
         hasBackground={false}
         onPress={goBack} />
 
-      <View style={CONTAINER}>
+      <ScrollView contentContainerStyle={CONTAINER}>
 
         <Icon containerStyle={CONTAINER_AFS_LOGO} style={AFS_LOGO} icon={"afsLogo"} />
 
@@ -140,7 +140,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
           tx="forgotpasswordScreen.submit"
           onPress={onSubmit}
         />
-      </View>
+      </ScrollView>
 
     </Screen>
 
