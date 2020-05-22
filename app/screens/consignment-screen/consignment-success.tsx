@@ -63,7 +63,7 @@ const SIGNATURE_TEXT: TextStyle = {
   marginTop: 10
 }
 
-const CONSIGNMENT_VIEW: ViewStyle = { flex: 1, marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33 }
+const CONSIGNMENT_VIEW: ViewStyle = { flex: 1, marginTop: Platform.OS === 'android' ? 60 : isIphoneX() ? 10 : 33 }
 const STATUS_VIEW: ViewStyle = {
   height: 50,
   backgroundColor: color.palette.toolbar,

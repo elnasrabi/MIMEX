@@ -30,7 +30,7 @@
     "continue": "CONTINUE"
   },
   "loginScreen": {
-    "login": "LOGIN",
+    "login": "Login",
     "header": "LOGIN SCREEN",
     "title": "DriverApp",
     "resetPassword": "Forgot Your Password ?",
@@ -82,9 +82,9 @@
     "specialFeatures": "Special Features"
   },
   "forgotpasswordScreen": {
-    "header": "FORGOT PASSWORD",
+    "header": "Forgot Password",
     "title": "Forgot your Password ?",
-    "submit": "SUBMIT",
+    "submit": "Submit",
     "label": "Enter your Email Address",
     "desc": "We will send you an email to reset your password",
     "invalidError": "Email Address Not Valid",
@@ -93,8 +93,8 @@
   "landingScreen": {
     "search": "Search Manifest/Consignment",
     "searchHere": "Search Here...",
-    "header": "LANDING SCREEN",
-    "logout": "LOGOUT",
+    "header": "Landing screen",
+    "logout": "Logout",
     "go": "Go",
     "myList": "My List",
     "safetyCheck": "Safety Check",
