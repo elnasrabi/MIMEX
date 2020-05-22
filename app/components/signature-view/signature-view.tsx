@@ -59,7 +59,7 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
       <View style={BOTTOM_VIEW}>
         <BottomButton
           leftImage={icons.blackButton2}
-          rightImage={icons.redButton}
+          rightImage={icons.redButton2}
           leftText={"common.save"}
           rightText={"common.reset"}
           onLeftPress={saveSign}

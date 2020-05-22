@@ -157,7 +157,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
       <BottomButton
         leftImage={icons.blackButton2}
-        rightImage={icons.redButton}
+        rightImage={icons.redButton2}
         leftText={"common.success"}
         rightText={"common.fail"} />
 

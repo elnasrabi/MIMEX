@@ -193,7 +193,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           <View style={BOTTOM_VIEW}>
             <BottomButton
               leftImage={icons.blackButton2}
-              rightImage={icons.redButton}
+              rightImage={icons.redButton2}
               leftText={"common.success"}
               rightText={"common.fail"} />
           </View>

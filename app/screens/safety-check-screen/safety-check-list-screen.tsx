@@ -132,7 +132,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
           bottomViewstyle={BOTTOM_BUTTON_STYLE}
           onLeftPress={() => props.navigation.navigate("SafetyCheckDetail")}
           leftImage={icons.blackButton2}
-          rightImage={icons.redButton}
+          rightImage={icons.redButton2}
           leftText={"safetyCheckScreen.new"}
           rightText={"common.cancel"} />
       </View>

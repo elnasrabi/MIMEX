@@ -75,7 +75,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
           <View style={BOTTOM_VIEW}>
             <BottomButton
               leftImage={icons.blackButton2}
-              rightImage={icons.redButton}
+              rightImage={icons.redButton2}
               leftText={"common.success"}
               rightText={"common.fail"}
               onLeftPress={onSuccessPress} />
