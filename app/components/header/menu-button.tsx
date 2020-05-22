@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { ImageStyle, ViewStyle, View, TextStyle } from "react-native"
-import { Button } from "../button/button"
+import { ImageStyle, ViewStyle, View, TextStyle, TouchableOpacity } from "react-native"
 import { Icon } from "../icon/icon"
 import { color } from "../../theme"
 import { IconProps } from "../icon/icon.props"
@@ -44,11 +43,9 @@ export const MenuButton: React.FunctionComponent<IconProps> = props => {
   return (
     <View style={[MAIN_VIEW, { backgroundColor: hasBackground ? color.palette.toolbar : "", zIndex: 2 }]}>
       {title && <Text style={TITLE} tx={title} />}
-      <View style={MENU_BUTTON}>
-        <Button preset="link" onPress={onPress}>
-          <Icon style={ICON} icon={"menuBar"} />
-        </Button>
-      </View>
+      <TouchableOpacity style={MENU_BUTTON} onPress={onPress}>
+        <Icon style={ICON} icon={"menuBar"} />
+      </TouchableOpacity>
     </View>
   )
 }

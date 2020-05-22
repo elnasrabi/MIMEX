@@ -42,7 +42,8 @@ const RENDER_INNER_CONTAINER: ViewStyle = {
   flex: 1,
   marginRight: 2,
   borderWidth: 1,
-  padding: 3
+  padding: 3,
+  backgroundColor: color.palette.listBG
 }
 const CHECKBOX_STYLE: ViewStyle = {
   height: 25,
