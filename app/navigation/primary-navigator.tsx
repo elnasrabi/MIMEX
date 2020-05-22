@@ -73,7 +73,7 @@ const LandingStack = () => {
 export function PrimaryNavigator() {
   return (
     <Drawer.Navigator
-      initialRouteName='Home'
+      initialRouteName='vehicleSetting'
       drawerPosition='right'
       drawerType='slide'
       keyboardDismissMode="on-drag"

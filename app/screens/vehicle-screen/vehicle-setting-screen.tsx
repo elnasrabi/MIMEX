@@ -104,8 +104,8 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
               value={selectedValue}
               onValueChange={(value) => setSelectedValue(value)}
               Icon={() =>
-                <View style={{ backgroundColor: 'white', height: 16, paddingStart: 5, marginTop: Platform.OS == "android" ? 18 : 3, paddingRight: 4 }}>
-                  <Image style={{ width: 15, height: 16, tintColor: color.palette.darkText }} source={icons.downArrow} />
+                <View style={{ height: 12, paddingStart: 5, marginTop: Platform.OS == "android" ? 20 : 5, paddingRight: 4 }}>
+                  <Image resizeMode={'contain'} style={{ width: 15, height: 12, tintColor: color.palette.black }} source={icons.downArrow} />
                 </View>
               }
               items={dropDownData}
