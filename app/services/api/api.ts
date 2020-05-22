@@ -46,10 +46,8 @@ export class Api {
   }
 
   async login(username: string, password: string): Promise<Types.LoginUserResult> {
-    console.tron.log('Basic:', "Basic " + base64.encode(username + ":" + password))
     const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"
     const response: ApiResponse<any> = await this.apisauce.post('', xmlData, { headers: { Authorization: "Basic " + base64.encode(username + ":" + password) } })
-    console.tron.log('response', response)
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
@@ -63,10 +61,8 @@ export class Api {
   }
 
   async forgotPassword(email: string): Promise<Types.LoginUserResult> {
-    console.tron.log('Basic:', "Basic " + base64.encode(email))
     const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"
     const response: ApiResponse<any> = await this.apisauce.post('', xmlData, { headers: { Authorization: "Basic " + base64.encode(username + ":" + password) } })
-    console.tron.log('response', response)
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem

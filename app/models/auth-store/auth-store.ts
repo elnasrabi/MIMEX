@@ -39,25 +39,25 @@ export const AuthStoreModel = types
         }
         self.isLoginLoading = false
       } catch (erro) {
-        console.tron.log('erro', erro)
+        // console.tron.log('erro', erro)
       }
     }),
     forgotPassword: flow(function* forgotPassword(email: string) {
-      self.isForgotLoading = true
-      try {
-        const data = yield api.forgotPassword(email)
-        if (data.kind === "ok") {
-          parseString(data.user, function (_error, result) {
-            self.userData = result.responses.userResponse
-            self.isLoggedIn = true
-          })
-        } else {
-          self.hasForgotError = true
-        }
-        self.isForgotLoading = false
-      } catch (erro) {
-        console.tron.log('erro', erro)
-      }
+      // self.isForgotLoading = true
+      // try {
+      //   const data = yield api.forgotPassword(email)
+      //   if (data.kind === "ok") {
+      //     parseString(data.user, function (_error, result) {
+      //       self.userData = result.responses.userResponse
+      //       self.isLoggedIn = true
+      //     })
+      //   } else {
+      //     self.hasForgotError = true
+      //   }
+      //   self.isForgotLoading = false
+      // } catch (erro) {
+      //   // console.tron.log('erro', erro)
+      // }
     }),
     resetLoginAuth() {
       self.hasLoginError = false
