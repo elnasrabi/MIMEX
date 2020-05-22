@@ -55,7 +55,7 @@ const SIGN_INPUT: ViewStyle = {
   borderWidth: 2
 }
 const SIGN_LABEL: TextStyle = {
-  color: color.palette.red,
+  color: color.palette.link,
   fontFamily: typography.secondary,
   fontSize: 18
 }

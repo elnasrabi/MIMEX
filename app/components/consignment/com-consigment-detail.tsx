@@ -10,9 +10,9 @@ import { MyButton } from "../button/my-button"
 import { icons } from "../icon/icons"
 
 export interface ComConsignmentDetailProps {
-    navigation?: NativeStackNavigationProp<ParamListBase>
-    view?: viewTypes,
-    data?: any
+  navigation?: NativeStackNavigationProp<ParamListBase>
+  view?: viewTypes,
+  data?: any
 }
 
 const viewType = {
@@ -37,10 +37,10 @@ const DETAIL_VIEW: ViewStyle = { flexDirection: "row" }
 const FIRE_BUTTON: ViewStyle = {
   alignSelf: "flex-start"
 }
-const CONSIGNMENT_VIEW: ViewStyle = { flex: 1 }
+const CONSIGNMENT_VIEW: TextStyle = { flex: 1, color: color.palette.link }
 const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10 }
 const SPECIAL_ACTION: ImageStyle = { height: 100, width: 100 }
-const ITEM_LABEL: TextStyle = { color: color.palette.red, marginEnd: 15 }
+const ITEM_LABEL: TextStyle = { color: color.palette.darkText, marginEnd: 15 }
 const CUSTOMER_VIEW: ViewStyle = {
   height: 50,
   backgroundColor: color.palette.toolbar,
@@ -52,6 +52,7 @@ const TITLE: TextStyle = {
   textAlign: "left",
   marginStart: 30,
 }
+const TEXT_VALUE: TextStyle = { color: color.palette.link, }
 export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> = observer(props => {
   const onFirePress = () => {
     props.navigation.navigate("pdfViewer")
@@ -68,11 +69,11 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"} text={"ABC545"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={"ABC545"} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"} text={"Dispatched"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={"Dispatched"} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
@@ -82,11 +83,11 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text text={"12"} preset={"normal"} />
+                <Text style={TEXT_VALUE} text={"12"} preset={"normal"} />
               </View>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text preset={"normal"} text={"24 KG"} />
+                <Text style={TEXT_VALUE} preset={"normal"} text={"24 KG"} />
               </View>
             </View>
           </View>
@@ -104,14 +105,14 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
           <View style={CONSIGNMENT_VIEW}>
             <View style={DETAIL_VIEW}>
               <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-              <Text preset={"normal"}>{"Mark belo"}</Text>
+              <Text style={TEXT_VALUE} preset={"normal"}>{"Mark belo"}</Text>
             </View>
             <View style={DETAIL_VIEW}>
               <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
-              <Text preset={"normal"}>{"856126555"}</Text>
+              <Text style={TEXT_VALUE} preset={"normal"}>{"856126555"}</Text>
             </View>
             <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
-            <Text text={"Line 1 \nLine 2"} preset={"normal"} />
+            <Text style={TEXT_VALUE} text={"Line 1 \nLine 2"} preset={"normal"} />
           </View>
           <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
             <Icon icon={"phone"} />
@@ -124,11 +125,11 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"} text={"ABC545"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={"ABC545"} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text preset={"normal"} text={"Dispatched"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={"Dispatched"} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 

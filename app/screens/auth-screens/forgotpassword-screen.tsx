@@ -34,14 +34,14 @@ const HEADER: TextStyle = {
   color: color.palette.red,
   fontSize: 25,
   textAlign: "center",
-  marginTop: 60
+  marginTop: 30
 }
 
 const LABEL: TextStyle = {
   ...TEXT,
   color: color.palette.white,
   fontSize: 20,
-  marginTop: 60,
+  marginTop: 30,
   textAlign: "center",
 }
 
@@ -57,7 +57,7 @@ const DESC: TextStyle = {
 const CONTINUE: ViewStyle = {
   alignSelf: "center",
   position: "absolute",
-  bottom: 10
+  bottom: 30
 }
 
 const EMAIL: TextStyle = {
