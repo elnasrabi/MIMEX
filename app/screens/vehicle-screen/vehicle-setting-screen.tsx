@@ -22,7 +22,7 @@ const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   borderColor: color.palette.darkText,
   borderWidth: 2,
   borderRadius: 4,
-  height: 25,
+  height: 40,
   justifyContent: 'center'
 }
 
@@ -85,6 +85,9 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
           <View style={VALUE_CONTAINER_REGISTRATION}>
             <RNPickerSelect
               style={{
+                placeholder: {
+                  fontSize: 15
+                },
                 inputIOS: {
                   color: color.palette.link,
                   fontSize: 16,
@@ -104,8 +107,8 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
               value={selectedValue}
               onValueChange={(value) => setSelectedValue(value)}
               Icon={() =>
-                <View style={{ height: 12, paddingStart: 5, marginTop: Platform.OS == "android" ? 20 : 5, paddingRight: 4 }}>
-                  <Image resizeMode={'contain'} style={{ width: 15, height: 12, tintColor: color.palette.black }} source={icons.downArrow} />
+                <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
+                  <Image resizeMode={'contain'} style={{ width: 15, height: 30, tintColor: color.palette.black }} source={icons.downArrow} />
                 </View>
               }
               items={dropDownData}
