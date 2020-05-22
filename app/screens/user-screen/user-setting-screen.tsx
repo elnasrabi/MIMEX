@@ -4,7 +4,7 @@ import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
-import { color } from "../../theme"
+import { color, typography } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
@@ -37,19 +37,22 @@ const LABEL: TextStyle = {
   alignSelf: "center",
   flex: 1,
   fontSize: 16,
-  fontWeight: "bold"
+  fontWeight: "bold",
+  fontFamily: typography.secondary
 }
 
 const VALUE: TextStyle = {
   color: color.palette.link,
   fontSize: 16,
-  fontWeight: "bold"
+  fontWeight: "bold",
+  fontFamily: typography.secondary
 }
 const EMAIL_TEXT_STYLE: TextStyle = {
   color: color.palette.black,
   flex: 1,
   fontSize: 16,
-  fontWeight: "bold"
+  fontWeight: "bold",
+  fontFamily: typography.secondary
 }
 
 const VALUE_CONTAINER: ViewStyle = {
