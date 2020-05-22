@@ -47,7 +47,7 @@ const IMAGE_RED: ImageStyle = {
 }
 
 const SEARCH_VIEW: ViewStyle = {
-  marginEnd: 55
+  // marginEnd: 55
 }
 
 const AFS_LOGO: ImageStyle = {

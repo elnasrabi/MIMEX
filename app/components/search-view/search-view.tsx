@@ -10,12 +10,10 @@ import { TextField } from "../text-field/text-field"
 import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
 import { icons } from "../icon/icons"
 
-const SEARCH_VIEW: ViewStyle = { flexDirection: "row", alignItems: "center" }
+const SEARCH_VIEW: ViewStyle = { flexDirection: "row" }
 
-const SEARCH_INPUT: ViewStyle = {
-  alignSelf: "center",
-  flex: 1
-}
+const SEARCH_INPUT: ViewStyle = {}
+
 const MENU_BUTTON: ViewStyle = {
   marginTop: 20
 }
@@ -35,10 +33,8 @@ const BACKGROUND_ICON: ImageStyle = {
 }
 
 const CAMERA_ICON: ImageStyle = {
-  alignSelf: "center",
   paddingStart: 15,
-  alignItems: "center",
-  marginTop: 10
+  marginTop: 15
 }
 
 const HEADER: TextStyle = {
