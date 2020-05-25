@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View } from "react-native"
+import { ViewStyle, View, Alert } from "react-native"
 import { color } from "../../theme"
 import SignatureCapture from 'react-native-signature-capture'
 import { Screen } from "../screen/screen"
@@ -10,6 +10,7 @@ import { ParamListBase } from "@react-navigation/native"
 import { BottomButton } from "../bottom-button/bottom-button"
 import { icons } from "../icon/icons"
 import { useStores } from "../../models/root-store"
+import { requestPermission, STORAGE_PERMISSION } from "../../utils/app-permission"
 
 export interface SignatureViewProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -33,10 +34,13 @@ const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
 export const SignatureView: FunctionComponent<SignatureViewProps> = observer(props => {
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   const { consignmentStore } = useStores()
-  const saveSign = () => {
-    refs.saveImage()
-    consignmentStore.onSigned()
-    goBack()
+  const saveSign = async () => {
+    const result = await requestPermission(STORAGE_PERMISSION)
+    if (result) {
+      refs.saveImage()
+      consignmentStore.onSigned()
+      goBack()
+    }
   }
   const resetSign = () => {
     refs.resetImage()
