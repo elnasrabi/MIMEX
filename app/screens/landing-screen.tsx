@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert } from "react-native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../components"
@@ -64,7 +64,26 @@ const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingS
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { homeStore } = useStores()
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Hold on!", "Are you sure you want to exit?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    };
 
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))
@@ -85,7 +104,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
       case "landingScreen.safetyCheck":
         return props.navigation.navigate('SafetyStack')
       case "landingScreen.getRate":
-        // return props.navigation.navigate('')
+        return props.navigation.navigate('GetARate')
         return true
       default: return true
     }
