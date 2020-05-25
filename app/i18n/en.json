@@ -118,6 +118,23 @@
     "results": "Results",
     "new": "New"
   },
+  "getARateScreen": {
+    "header": "Get a Rate",
+    "getTowns": "Get Towns",
+    "deliveryAddress": "Delivery Address",
+    "postCode": "Post Code",
+    "town": "Town",
+    "details": "Details",
+    "unitOfMeasure": "Unit of Measure",
+    "quantity": "Quantity",
+    "totalWeight": "Total Weight Kg",
+    "length": "Length (mm)",
+    "width": "Width (mm)",
+    "height": "Height (mm)",
+    "volume": "Volume (cbm)",
+    "submit": "Submit",
+    "pickUpAddress": "Pick Up Address"
+  },
   "safetyCheckDetailScreen": {
     "header": "Safety Check",
     "driver": "Driver",
