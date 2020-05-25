@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
@@ -71,7 +71,14 @@ const EMAIL_VIEW_STYLE: ViewStyle = {
 
 export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
 
-  const renderRow = (label, value, hasExtraText = false) => {
+  const [mobile, updateUserMobile] = useState('0411 111 111')
+  const [city, updateUserCity] = useState('South Yarra')
+  const [state, updateUsuerState] = useState('VIC')
+  const [licenceType, updateUserLicenceType] = useState('License Type')
+  const [licenceNumber, updateUserLicenceNumber] = useState('License Number')
+  const [expiry, updateUserExpiry] = useState('Expiry')
+
+  const renderRow = (label, value, onUpdate, hasExtraText = false) => {
     return (
       <View style={ROW}>
         <View style={TITLE}>
@@ -80,6 +87,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         <View style={VALUE_CONTAINER}>
           <TextField
             autoCorrect={false}
+            onChangeText={(text) => onUpdate(text)}
             autoCapitalize={"none"}
             mainStyle={TEXTINPUT_MAIN_VIEW}
             inputStyle={VALUE}
@@ -105,12 +113,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
           </View>
         </View>
 
-        {renderRow("userSetting.mobile", "0411 111 111", true)}
-        {renderRow("userSetting.city", "South Yarra", true)}
-        {renderRow("userSetting.state", "VIC", true)}
-        {renderRow("userSetting.licenceType", "Licence Type")}
-        {renderRow("userSetting.licenceNumber", "Licence Number")}
-        {renderRow("userSetting.expiry", "Expiry")}
+        {renderRow("userSetting.mobile", mobile, updateUserMobile, true)}
+        {renderRow("userSetting.city", city, updateUserCity, true)}
+        {renderRow("userSetting.state", state, updateUsuerState, true)}
+        {renderRow("userSetting.licenceType", licenceType, updateUserLicenceType)}
+        {renderRow("userSetting.licenceNumber", licenceNumber, updateUserLicenceNumber)}
+        {renderRow("userSetting.expiry", expiry, updateUserExpiry)}
 
       </ScrollView>
       <BottomButton
