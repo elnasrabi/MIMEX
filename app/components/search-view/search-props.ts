@@ -41,6 +41,8 @@ export interface SearchProps {
      */
 
     value?: string
+    isLoading?: boolean
+    isValidSearch?: boolean
 
     onCameraPress?(): void
     onChangeText?: (text: string) => void;

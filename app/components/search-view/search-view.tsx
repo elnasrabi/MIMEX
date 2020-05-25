@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { ImageStyle, ViewStyle, View, TouchableOpacity, ImageBackground, TextStyle } from "react-native"
+import { ImageStyle, ViewStyle, View, TouchableOpacity, ImageBackground, TextStyle, ActivityIndicator } from "react-native"
 
 import { color } from "../../theme"
 import { SearchProps } from "./search-props"
@@ -11,6 +11,7 @@ import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
 import { icons } from "../icon/icons"
 
 const SEARCH_VIEW: ViewStyle = { flexDirection: "row" }
+const ERROR_TEXT: TextStyle = {}
 
 const SEARCH_INPUT: ViewStyle = {}
 
@@ -62,7 +63,9 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
     buttonStyle,
     onChangeText,
     value,
-    cameraIcon = true
+    isValidSearch = true,
+    cameraIcon = true,
+    isLoading = false
   } = props
 
   return (
@@ -73,18 +76,21 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
           autoCorrect={false}
           autoCapitalize={"none"}
           mainStyle={MAIN_STYLE}
+          onSubmitEditing={onGoPress}
           onChangeText={onChangeText}
           inputStyle={INPUT_STYLE} style={SEARCH_INPUT} returnKeyType={"search"} placeholderTx={"searchView.searchHere"} value={value} />
         {cameraIcon ? <TouchableOpacity onPress={onCameraPress} style={CAMERA_ICON}>
           <EvilIcons color={color.palette.darkText} name="camera" size={55} />
         </TouchableOpacity> : null}
       </View>
-
+      {isValidSearch ? null : <Text preset="error" style={ERROR_TEXT} tx={"searchView.searchValue"} />}
       {/* GO */}
       <TouchableOpacity style={GO_BUTTON} onPress={onGoPress}>
         <ImageBackground style={[BACKGROUND_ICON, buttonStyle]}
           source={icons.blackButton}>
-          <Text preset="button" style={GO} tx={"searchView.go"} />
+          {isLoading ? <ActivityIndicator size="large" color={color.palette.white} />
+            : <Text preset="button" style={GO} tx={"searchView.go"} />
+          }
         </ImageBackground>
       </TouchableOpacity>
     </View>

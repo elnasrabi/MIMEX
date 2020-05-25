@@ -143,7 +143,9 @@
   "searchView": {
     "go": "Go",
     "search": "Search",
-    "searchHere": "Search Here..."
+    "searchHere": "Search Here...",
+    "searchValue": "Enter Search Value"    
+
   },
   "consignmentList": {
     "consignments": "Consignments",

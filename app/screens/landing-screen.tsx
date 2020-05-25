@@ -63,19 +63,42 @@ const CONTAINER_AFS_LOGO: ImageStyle = {
 const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
-  const { homeStore } = useStores()
-
+  const { homeStore, authStore } = useStores()
+  const [searchValue, onSearchValue] = useState("AMI000071")
+  const [isValidSearch, onValidSearch] = useState(true)
+  homeStore.resetConsignment()
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))
       homeStore.onCodeScanned({})
+      homeStore.resetConsignment()
     }
-  }, [homeStore.barCodeData])
+    if (!homeStore.isEmptyList) {
+      props.navigation.navigate("consignmentList")
+    }
+  }, [homeStore.barCodeData, homeStore.consignmentList])
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   const onCameraPress = () => {
     props.navigation.navigate("qrScanner")
+  }
+  const onSearchText = (text) => {
+    onSearchValue(text)
+    text ? onValidSearch(true) : onValidSearch(false)
+  }
+  const onGoPress = () => {
+    if (!searchValue) {
+      onValidSearch(false)
+    } else {
+      const requestData = {
+        consignmentMatchingExportRequest: {
+          // connoteNumber: "AMI000071"
+          connoteNumber: searchValue
+        }
+      }
+      homeStore.consignmentSearch(authStore.authorization, requestData)
+    }
   }
 
   const onButtonPress = (item, index) => {
@@ -106,6 +129,11 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
         <SearchView
           searchTextStyle={SEARCH_VIEW}
           onCameraPress={onCameraPress}
+          value={searchValue}
+          isValidSearch={isValidSearch}
+          onGoPress={onGoPress}
+          onChangeText={onSearchText}
+          isLoading={homeStore.isButtonLoading}
           buttonStyle={SEARCH_VIEW} />
 
         {/* Bottom Option */}

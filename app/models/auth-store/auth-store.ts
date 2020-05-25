@@ -17,7 +17,8 @@ export const AuthStoreModel = types
     shouldUpdate: false,
     hasLoginError: types.optional(types.frozen(), false),
     hasForgotError: types.optional(types.frozen(), false),
-    userData: types.optional(types.frozen(), {})
+    userData: types.optional(types.frozen(), {}),
+    authorization: types.optional(types.frozen(), "")
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
@@ -34,6 +35,7 @@ export const AuthStoreModel = types
             self.userData = result.responses.userResponse
             self.isLoggedIn = true
           })
+          self.authorization = data.authorization
         } else {
           self.hasLoginError = true
         }
