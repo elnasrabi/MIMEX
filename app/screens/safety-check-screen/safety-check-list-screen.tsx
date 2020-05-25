@@ -96,7 +96,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         </View>
         <TouchableOpacity
           style={RENDER_LINK_VIEW}
-          onPress={() => goTONextScreen()}
+          onPress={() => goToSafetyDetail()}
         >
           <Text style={[RENDER_TEXT_STYLE, { color: color.palette.link }]} >{item.link}</Text>
         </TouchableOpacity>
@@ -104,7 +104,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
     )
   }
 
-  const goTONextScreen = () => {
+  const goToSafetyDetail = () => {
     props.navigation.navigate("SafetyCheckDetail")
   }
 
@@ -134,7 +134,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         </View>
         <BottomButton
           bottomViewstyle={BOTTOM_BUTTON_STYLE}
-          onLeftPress={() => goTONextScreen()}
+          onLeftPress={() => goToSafetyDetail()}
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
           leftText={"safetyCheckScreen.new"}

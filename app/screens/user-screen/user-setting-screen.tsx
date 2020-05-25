@@ -71,12 +71,12 @@ const EMAIL_VIEW_STYLE: ViewStyle = {
 
 export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
 
-  const [mobile, updateUserMobile] = useState('0411 111 111')
-  const [city, updateUserCity] = useState('South Yarra')
-  const [state, updateUsuerState] = useState('VIC')
-  const [licenceType, updateUserLicenceType] = useState('License Type')
-  const [licenceNumber, updateUserLicenceNumber] = useState('License Number')
-  const [expiry, updateUserExpiry] = useState('Expiry')
+  const [mobile, updateMobile] = useState('0411 111 111')
+  const [city, updateCity] = useState('South Yarra')
+  const [state, updateState] = useState('VIC')
+  const [licenceType, updateLicenceType] = useState('License Type')
+  const [licenceNumber, updateLicenceNumber] = useState('License Number')
+  const [expiry, updateExpiry] = useState('Expiry')
 
   const renderRow = (label, value, onUpdate, hasExtraText = false) => {
     return (
@@ -113,12 +113,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
           </View>
         </View>
 
-        {renderRow("userSetting.mobile", mobile, updateUserMobile, true)}
-        {renderRow("userSetting.city", city, updateUserCity, true)}
-        {renderRow("userSetting.state", state, updateUsuerState, true)}
-        {renderRow("userSetting.licenceType", licenceType, updateUserLicenceType)}
-        {renderRow("userSetting.licenceNumber", licenceNumber, updateUserLicenceNumber)}
-        {renderRow("userSetting.expiry", expiry, updateUserExpiry)}
+        {renderRow("userSetting.mobile", mobile, updateMobile, true)}
+        {renderRow("userSetting.city", city, updateCity, true)}
+        {renderRow("userSetting.state", state, updateState, true)}
+        {renderRow("userSetting.licenceType", licenceType, updateLicenceType)}
+        {renderRow("userSetting.licenceNumber", licenceNumber, updateLicenceNumber)}
+        {renderRow("userSetting.expiry", expiry, updateExpiry)}
 
       </ScrollView>
       <BottomButton
