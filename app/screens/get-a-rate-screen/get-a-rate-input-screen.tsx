@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, Image } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Button } from "../../components"
@@ -10,6 +10,7 @@ import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { BackButton } from "../../components/header/back-button";
+import RNPickerSelect from 'react-native-picker-select'
 
 export interface GetARateProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -64,9 +65,22 @@ const RENDER_CONTAINER_TEXT: ViewStyle = {
   justifyContent: 'flex-end',
   paddingBottom: 10
 }
+const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
+  flex: 1,
+  borderColor: color.palette.darkText,
+  borderWidth: 2,
+  borderRadius: 4,
+  height: 40,
+  justifyContent: 'center'
+}
 
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
+  const dropDownData = [
+    { label: 'item 1', value: 'item 1' },
+    { label: 'item 2', value: 'item 2' },
+    { label: 'item 3', value: 'item 3' },
+  ]
   const [pickUpAddress, updatePckUpAddress] = useState('')
   const [postCode, updatePostCode] = useState('')
   const [town, updateTown] = useState('')
@@ -96,7 +110,42 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       </View>
     )
   }
-
+  const RNPicker = (value, onUpdate) => {
+    return (
+      <View style={VALUE_CONTAINER_REGISTRATION}>
+        <RNPickerSelect
+          style={{
+            placeholder: {
+              fontSize: 15
+            },
+            inputIOS: {
+              color: color.palette.black,
+              fontSize: 16,
+              fontWeight: "600",
+              paddingLeft: 5,
+              fontFamily: typography.secondary
+            },
+            inputAndroid: {
+              color: color.palette.black,
+              fontSize: 16,
+              fontWeight: "bold",
+              paddingLeft: 5,
+              fontFamily: typography.secondary
+            }
+          }}
+          placeholder={{ label: "Dropdown ID", value: '' }}
+          value={value}
+          onValueChange={(value) => onUpdate(value)}
+          Icon={() =>
+            <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
+              <Image resizeMode={'contain'} style={{ width: 15, height: 30, tintColor: color.palette.black }} source={icons.downArrow} />
+            </View>
+          }
+          items={dropDownData}
+        />
+      </View>
+    )
+  }
   const renderUnitRow = (label, value, onUpdate) => {
     return (
       <View style={RENDER_CONTAINER}>
@@ -104,36 +153,35 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           <Text style={[FONTFAMILY, { color: color.palette.textGray }]} tx={label} />
         </View>
         <View style={FLEX}>
-          <TextField
-            autoCorrect={false}
-            onChangeText={(text) => onUpdate(text)}
-            autoCapitalize={"none"}
-            mainStyle={{}}
-            inputStyle={[FONTFAMILY]}
-            value={value} />
+          {label == 'getARateScreen.unitOfMeasure' ? RNPicker(value, onUpdate)
+            : <TextField
+              autoCorrect={false}
+              onChangeText={(text) => onUpdate(text)}
+              autoCapitalize={"none"}
+              mainStyle={{}}
+              inputStyle={[FONTFAMILY]}
+              value={value} />}
         </View>
       </View>
     )
   }
 
-  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
+  const gotoRateListScreen = () => {
+    return props.navigation.navigate('GetARateList')
+  }
+
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <BackButton
+      <MenuButton
         title={"getARateScreen.header"}
-        onPress={goBack} />
+        onPress={handleDrawer} />
 
       <ScrollView contentContainerStyle={SCROLL_CONTAINER_STYLE} style={SCROLLVIEW_STYLE}>
         <View style={UPPER_VIEW_CONTAINER}>
           <Text style={[FONTFAMILY]} tx={'getARateScreen.pickUpAddress'} />
-          <TextField
-            autoCorrect={false}
-            onChangeText={(text) => updatePckUpAddress(text)}
-            autoCapitalize={"none"}
-            mainStyle={{}}
-            inputStyle={[FONTFAMILY]}
-            value={pickUpAddress} />
+          {RNPicker(pickUpAddress, updatePckUpAddress)}
           <View style={UPPER_VIEW_INNER_CONTAINER}>
             <Text style={[FONTFAMILY]} tx={'getARateScreen.deliveryAddress'} />
             {renderRow("getARateScreen.postCode", postCode, updatePostCode)}
@@ -161,6 +209,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       <BottomButton
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
+        onLeftPress={() => gotoRateListScreen()}
         leftText={"getARateScreen.submit"}
         rightText={"common.cancel"} />
     </Screen >

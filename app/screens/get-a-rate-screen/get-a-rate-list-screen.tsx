@@ -9,6 +9,7 @@ import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
+import { BackButton } from "../../components/header/back-button";
 
 export interface GetARateListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -120,12 +121,13 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
     return props.navigation.navigate("GetARate")
   }
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
+
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <MenuButton
+      <BackButton
         title={"getARateListScreen.header"}
-        onPress={handleDrawer} />
+        onPress={goBack} />
       <FlatList
         data={flatListData}
         renderItem={({ item, index }) => renderItem(item, index)}

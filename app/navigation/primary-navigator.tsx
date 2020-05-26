@@ -48,8 +48,8 @@ const GetARateStack = () => {
         stackPresentation: 'push'
       }}
     >
-      <Stack.Screen name="GetARateList" component={GetARateList} />
       <Stack.Screen name="GetARate" component={GetARate} />
+      <Stack.Screen name="GetARateList" component={GetARateList} />
     </Stack.Navigator>
   )
 }
