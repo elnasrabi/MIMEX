@@ -10,15 +10,15 @@ import { PrimaryParamList } from "./types"
 import { CustomDrawerContent } from "../components/drawer-menu/CustomDrawerContent"
 import { VehicleSetting } from "../screens/vehicle-screen/vehicle-setting-screen"
 import { QRScanner } from "../components/qr-scanner/qr-scanner"
-import { ConsignmentList } from "../screens/consignment-screen/consignment-list"
-import { ConsignmentDetail } from "../screens/consignment-screen/consignment-detail"
+import { ConsignmentList } from "../screens/consignment-screen/consignment-list-screen"
+import { ConsignmentDetail } from "../screens/consignment-screen/consignment-detail-screen"
 import { MyList } from "../screens/myList-screen/myList-screen";
 import { SafetyCheck } from "../screens/safety-check-screen/safety-check-list-screen";
 import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-detail-screen";
-import { PDFViewer } from "../screens/pdf-view/pdf-viewer"
-import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success"
+import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success-screen"
 import { SignatureView } from "../components/signature-view/signature-view"
-import { ConsignmentSpecial } from "../screens/consignment-screen/consignment-special"
+import { ConsignmentSpecial } from "../screens/consignment-screen/consignment-special-screen"
+import { PDFViewer } from "../screens/pdf-view/pdf-viewer-screen"
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<PrimaryParamList>()

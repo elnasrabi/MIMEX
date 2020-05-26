@@ -78,18 +78,17 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
             />
           </View>
 
-          <View style={BOTTOM_VIEW}>
-            <BottomButton
-              leftImage={icons.blackButton2}
-              rightImage={icons.redButton2}
-              leftText={"common.success"}
-              rightText={"common.fail"}
-              onLeftPress={onSuccessPress}
-              onRightPress={onFailPress} />
-          </View>
         </View>
       </ScrollView>
-
+      <View style={BOTTOM_VIEW}>
+        <BottomButton
+          leftImage={icons.blackButton2}
+          rightImage={icons.redButton2}
+          leftText={"common.success"}
+          rightText={"common.fail"}
+          onLeftPress={onSuccessPress}
+          onRightPress={onFailPress} />
+      </View>
     </Screen>
   )
 })

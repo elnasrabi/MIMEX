@@ -16,6 +16,7 @@ import { ImageViewerModal } from "../../components/image-viewer/image-viewer-mod
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
 import { useStores } from "../../models/root-store"
+import { translateText } from "../../utils/utils"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -43,7 +44,7 @@ const LINK_TEXT: TextStyle = {
 }
 
 const options = {
-  title: 'Select Avatar',
+  title: translateText("common.selectImage"),
   storageOptions: {
     skipBackup: true,
     path: 'images',
@@ -202,17 +203,17 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             </TouchableOpacity>
 
           </View>
-          <View style={BOTTOM_VIEW}>
-            <BottomButton
-              leftImage={icons.blackButton2}
-              rightImage={icons.redButton2}
-              leftText={"common.save"}
-              rightText={"common.cancel"}
-              onRightPress={goBack} />
-          </View>
+
         </View>
       </ScrollView>
-
+      <View style={BOTTOM_VIEW}>
+        <BottomButton
+          leftImage={icons.blackButton2}
+          rightImage={icons.redButton2}
+          leftText={"common.save"}
+          rightText={"common.cancel"}
+          onRightPress={goBack} />
+      </View>
     </Screen >
   )
 })

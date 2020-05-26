@@ -23,7 +23,8 @@
     "permissionDenied": "The permission has denied.",
     "permissionBlocked": "The permission has blocked.",
     "permissionUnavailable": "This feature is not available .",
-    "noData": "No Data Found."
+    "noData": "No Data Found.",
+    "selectImage": "Select Image"
   },
   "errors": {
     "invalidEmail": "Invalid email address."

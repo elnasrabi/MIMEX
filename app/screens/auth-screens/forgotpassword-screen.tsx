@@ -16,12 +16,10 @@ export interface ForgotpasswordScreenProps {
 
 const CONTAINER: ViewStyle = {
   flex: 1,
-  justifyContent: 'center',
   paddingStart: 25,
   paddingEnd: 25
 }
 const ROOT: ViewStyle = {
-  justifyContent: "center",
   flex: 1,
 }
 const TEXT: TextStyle = {
@@ -34,7 +32,8 @@ const HEADER: TextStyle = {
   color: color.palette.red,
   fontSize: 25,
   textAlign: "center",
-  marginTop: 30
+  marginTop: 40,
+  alignSelf: "flex-start"
 }
 
 const LABEL: TextStyle = {
@@ -70,9 +69,10 @@ const BACK_BUTTON: ImageStyle = {
 }
 
 const AFS_LOGO: ImageStyle = {
-  height: 120,
-  width: 240,
-  alignSelf: "center"
+  height: 100,
+  width: 200,
+  alignSelf: "center",
+  marginTop: 80
 }
 
 const CONTAINER_AFS_LOGO: ImageStyle = {
@@ -116,7 +116,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
 
       <ScrollView contentContainerStyle={CONTAINER}>
 
-        <Icon containerStyle={CONTAINER_AFS_LOGO} style={AFS_LOGO} icon={"afsLogo"} />
+        <Icon style={AFS_LOGO} icon={"afsLogo"} />
 
         {authStore.hasForgotError ? <Text style={HEADER} preset="button" tx="forgotpasswordScreen.invalidError" />
           : <Text style={HEADER} preset="button" tx="forgotpasswordScreen.title" />

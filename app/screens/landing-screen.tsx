@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler } from "react-native"
+import { ParamListBase, useFocusEffect } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../components"
 import { color } from "../theme"
@@ -80,6 +80,17 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     }
   }, [homeStore.barCodeData, consignmentStore.consignmentList])
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp()
+        return true
+      }
+      BackHandler.addEventListener('hardwareBackPress', onBackPress)
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+    }, [])
+  )
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   const onCameraPress = () => {

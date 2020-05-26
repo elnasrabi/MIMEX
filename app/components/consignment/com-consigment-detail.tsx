@@ -36,7 +36,8 @@ const CUSTOMER_CONTAINER: ViewStyle = {
 }
 const DETAIL_VIEW: ViewStyle = { flexDirection: "row" }
 const FIRE_BUTTON: ViewStyle = {
-  alignSelf: "flex-start"
+  alignSelf: "flex-start",
+  marginTop: 25
 }
 const CONSIGNMENT_VIEW: TextStyle = { flex: 1, color: color.palette.link }
 const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10, alignSelf: "flex-end" }

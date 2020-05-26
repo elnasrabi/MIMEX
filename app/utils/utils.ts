@@ -28,7 +28,7 @@ export function callApi(number) {
   // call(args).catch(console.error)
   Linking.openURL(`tel:${number}`)
 }
-const translateText = (text): string => {
+export function translateText(text): string {
   const i18nText = text && translate(text)
   return i18nText
 }

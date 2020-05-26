@@ -16,7 +16,8 @@ export interface LoginScreenProps {
 const ROOT: ViewStyle = {
   justifyContent: "center",
   paddingStart: 25,
-  paddingEnd: 25
+  paddingEnd: 25,
+  flex: 1
 }
 const RESET_PASSWORD: TextStyle = {
   color: color.palette.red,
@@ -39,13 +40,13 @@ const CONTINUE: ViewStyle = {
 }
 
 const AFS_LOGO: ImageStyle = {
-  height: 120,
-  width: 240,
+  height: 100,
+  width: 200,
   alignSelf: "center"
 }
 const TRUCK_LOGO: ImageStyle = {
-  height: 140,
-  width: 280,
+  height: 120,
+  width: 240,
   alignSelf: "center",
   marginTop: 50
 }
@@ -63,7 +64,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   let passwordRef: any
 
   useEffect(() => {
-    authStore.resetLoginAuth()
+    // authStore.resetLoginAuth()
   }, [])
 
   const onLogin = () => {
