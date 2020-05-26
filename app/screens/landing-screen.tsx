@@ -66,12 +66,10 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   const { homeStore, authStore } = useStores()
   const [searchValue, onSearchValue] = useState("AMI000071")
   const [isValidSearch, onValidSearch] = useState(true)
-  homeStore.resetConsignment()
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))
       homeStore.onCodeScanned({})
-      homeStore.resetConsignment()
     }
     if (!homeStore.isEmptyList) {
       props.navigation.navigate("consignmentList")

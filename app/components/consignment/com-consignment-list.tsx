@@ -29,6 +29,7 @@ const TEXT_VALUE: TextStyle = { color: color.palette.link, }
 export const ComConsignmentList: FunctionComponent<ComConsignmentListProps> = observer(props => {
 
   const { item, onPress = {}, index } = props
+  let consignment = item.consignmentMatchingConsignment[0]
   return (
     <TouchableOpacity onPress={onPress}>
       <View key={index} style={FLAT_LIST}>

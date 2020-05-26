@@ -9,6 +9,8 @@ import { Text } from "../text/text"
 import { TextField } from "../text-field/text-field"
 import EvilIcons from 'react-native-vector-icons/dist/EvilIcons'
 import { icons } from "../icon/icons"
+import { useStores } from "../../models/root-store"
+import { observer } from "mobx-react-lite"
 
 const SEARCH_VIEW: ViewStyle = { flexDirection: "row" }
 const ERROR_TEXT: TextStyle = {}
@@ -53,7 +55,8 @@ const GO: TextStyle = {
 const INPUT_STYLE: TextStyle = { borderColor: color.palette.darkText, borderWidth: 1.5 }
 const MAIN_STYLE: ViewStyle = { flex: 1 }
 
-export const SearchView: React.FunctionComponent<SearchProps> = props => {
+export const SearchView: React.FunctionComponent<SearchProps> = observer(props => {
+  const { homeStore } = useStores()
   const {
     onCameraPress,
     onGoPress,
@@ -64,8 +67,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
     onChangeText,
     value,
     isValidSearch = true,
-    cameraIcon = true,
-    isLoading = false
+    cameraIcon = true
   } = props
 
   return (
@@ -88,11 +90,11 @@ export const SearchView: React.FunctionComponent<SearchProps> = props => {
       <TouchableOpacity style={GO_BUTTON} onPress={onGoPress}>
         <ImageBackground style={[BACKGROUND_ICON, buttonStyle]}
           source={icons.blackButton}>
-          {isLoading ? <ActivityIndicator size="large" color={color.palette.white} />
+          {homeStore.isButtonLoading ? <ActivityIndicator size="large" color={color.palette.white} />
             : <Text preset="button" style={GO} tx={"searchView.go"} />
           }
         </ImageBackground>
       </TouchableOpacity>
     </View>
   )
-}
+})

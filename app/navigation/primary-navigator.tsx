@@ -66,6 +66,7 @@ const LandingStack = () => {
     >
       <Stack.Screen name="Home" component={LandingScreen} />
       <Stack.Screen name="qrScanner" component={QRScanner} />
+      <Stack.Screen name="consignmentList" component={ConsignmentList} />
     </Stack.Navigator>
   )
 }

@@ -9,6 +9,7 @@ import { MenuButton } from "../../components/header/menu-button"
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { ComConsignmentList } from "../../components/consignment/com-consignment-list"
 import { useStores } from "../../models/root-store"
+import { BackButton } from "../../components/header/back-button"
 
 export interface ConsignmentListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -22,25 +23,21 @@ const FLAT_LIST_CONTAINER: ViewStyle = { marginTop: Platform.OS == 'android' ? 6
 
 export const ConsignmentList: FunctionComponent<ConsignmentListProps> = observer(props => {
   const { homeStore } = useStores()
-  const [consignmentList, onSetConsignmentList] = useState([])
-  useEffect(() => {
-    onSetConsignmentList(homeStore.consignmentList)
-  }, [])
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
   const goToDetailScreen = () => {
     props.navigation.navigate("consignmentDetail")
   }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
-      <MenuButton
+      <BackButton
         title={"consignmentList.consignments"}
-        onPress={handleDrawer} />
+        onPress={goBack} />
 
       <FlatList
         style={FLAT_LIST_CONTAINER}
-        data={consignmentList}
+        data={homeStore.consignmentList}
         renderItem={({ item, index }) =>
           <ComConsignmentList item={item} index={index} onPress={goToDetailScreen} />
         }
