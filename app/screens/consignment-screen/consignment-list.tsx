@@ -22,11 +22,13 @@ const ROOT: ViewStyle = {
 const FLAT_LIST_CONTAINER: ViewStyle = { marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33 }
 
 export const ConsignmentList: FunctionComponent<ConsignmentListProps> = observer(props => {
-  const { homeStore } = useStores()
+  const { consignmentStore } = useStores()
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
-  const goToDetailScreen = () => {
+  const goToDetailScreen = (detail) => {
+    const consignmentDetail = detail.consignmentMatchingConsignment[0]
+    consignmentStore.setConsignmentDetail(consignmentDetail)
     props.navigation.navigate("consignmentDetail")
   }
   return (
@@ -37,9 +39,13 @@ export const ConsignmentList: FunctionComponent<ConsignmentListProps> = observer
 
       <FlatList
         style={FLAT_LIST_CONTAINER}
-        data={homeStore.consignmentList}
+        data={consignmentStore.consignmentList}
         renderItem={({ item, index }) =>
-          <ComConsignmentList item={item} index={index} onPress={goToDetailScreen} />
+          <TouchableOpacity onPress={() => {
+            goToDetailScreen(item)
+          }}>
+            <ComConsignmentList item={item} index={index} />
+          </TouchableOpacity>
         }
         keyExtractor={(item, index) => index.toString()}
       />

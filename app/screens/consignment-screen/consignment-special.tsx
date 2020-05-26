@@ -17,7 +17,7 @@ import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
 import { useStores } from "../../models/root-store"
 
-export interface ConsignmentSuccessProps {
+export interface ConsignmentSpecialProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const dropDownData = [
@@ -50,9 +50,11 @@ const options = {
   },
 }
 
-const SIGN_INPUT: ViewStyle = {
+const SIGN_INPUT: TextStyle = {
   borderColor: color.palette.darkText,
-  borderWidth: 2
+  borderWidth: 2,
+  height: 300,
+  flex: 1
 }
 const SIGN_LABEL: TextStyle = {
   color: color.palette.link,
@@ -74,12 +76,6 @@ const STATUS_TITLE: TextStyle = {
   fontSize: 18,
   textAlign: "left",
   marginStart: 30,
-}
-const PRESS_HERE: TextStyle = {
-  textAlign: "center",
-  alignSelf: "center",
-  fontSize: 25,
-  color: color.palette.gray
 }
 const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
 const STATUS_CONTAINER: ViewStyle = {
@@ -106,7 +102,6 @@ const SIGN_VIEW: ViewStyle = {
   marginTop: 20,
   height: 300,
   width: "100%",
-  justifyContent: "center",
   backgroundColor: color.palette.white
 }
 const SIGN_VIEW_IMAGE: ImageStyle = {
@@ -114,7 +109,7 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   height: 296
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
-export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
+export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
   const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
 
   const { consignmentStore } = useStores()
@@ -147,7 +142,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
       <BackButton
-        title={"consignmentSuccess.consignment"}
+        title={"consignmentFail.consignment"}
         onPress={goBack} />
       <ScrollView style={CONSIGNMENT_VIEW}>
         <View>
@@ -158,7 +153,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             onClose={onImageView} />
 
           {/* Special Action */}
-          <ComConsignmentDetail data={consignment} navigation={props.navigation} view={"specialAction"} />
+          <ComConsignmentDetail isFailView={true} data={consignment} navigation={props.navigation} view={"specialAction"} />
 
           <View style={STATUS_VIEW}>
             <Text style={STATUS_TITLE} tx={"common.status"} />
@@ -186,20 +181,15 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                 {fileName && <Text style={LINK_TEXT} preset={"normal"} text={fileName} />}
               </TouchableOpacity>
             </View>
+            <Text tx={"consignmentFail.notes"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
+
             <TextField
-              labelTx={"consignmentSuccess.sign"}
               inputStyle={SIGN_INPUT}
-              labelStyle={SIGN_LABEL}
+              multiline
             // errorTx={isValidPassword ? undefined : "loginScreen.errorPassword"}
             // onChangeText={text => onChangeText(INPUT_PASSWORD, text)}
             // value={password}
             />
-            <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
-
-            <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}` }}
-                style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
-            </TouchableOpacity>
 
           </View>
           <View style={BOTTOM_VIEW}>

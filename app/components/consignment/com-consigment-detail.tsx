@@ -12,7 +12,8 @@ import { icons } from "../icon/icons"
 export interface ComConsignmentDetailProps {
   navigation?: NativeStackNavigationProp<ParamListBase>
   view?: viewTypes,
-  data?: any
+  data?: any,
+  isFailView?: boolean
 }
 
 const viewType = {
@@ -38,8 +39,9 @@ const FIRE_BUTTON: ViewStyle = {
   alignSelf: "flex-start"
 }
 const CONSIGNMENT_VIEW: TextStyle = { flex: 1, color: color.palette.link }
-const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10 }
+const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10, alignSelf: "flex-end" }
 const SPECIAL_ACTION: ImageStyle = { height: 100, width: 100 }
+const SPECIAL_ACTION_BUTTON: ViewStyle = { alignSelf: "flex-end" }
 const ITEM_LABEL: TextStyle = { color: color.palette.darkText, marginEnd: 15 }
 const CUSTOMER_VIEW: ViewStyle = {
   height: 50,
@@ -58,10 +60,15 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
     props.navigation.navigate("pdfViewer")
   }
   const onActionPress = () => {
-    props.navigation.navigate("pdfViewer")
+    props.navigation.navigate("consignmentSpecial")
   }
   const onPhonePress = () => {
     callApi("645456456456")
+  }
+  const renderAddress = (data): string => {
+    const address = data.line1 + ", " + data.line2 + ", " + data.town + ", " +
+      data.state + ", " + data.country + " - " + data.postcode
+    return address
   }
   const renderView = () => {
     if (props.view === viewType.consignment) {
@@ -69,25 +76,25 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={"ABC545"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentId} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={"Dispatched"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.freightStateHistory[0].status} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
           <View style={DETAIL_VIEW}>
-            <Text style={CONSIGNMENT_VIEW} text={"126454 Red Tree Street South Yarra 24"} preset={"normal"} />
+            <Text style={CONSIGNMENT_VIEW} text={renderAddress(props.data.deliveryAddress[0].address[0])} preset={"normal"} />
 
             <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} text={"12"} preset={"normal"} />
+                <Text style={TEXT_VALUE} text={props.data.totalWeight} preset={"normal"} />
               </View>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} preset={"normal"} text={"24 KG"} />
+                <Text style={TEXT_VALUE} preset={"normal"} text={props.data.totalVolume} />
               </View>
             </View>
           </View>
@@ -125,25 +132,26 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={"ABC545"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentId} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={"Dispatched"} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.freightStateHistory[0].status} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
           <View style={DETAIL_VIEW}>
-            <Text style={CONSIGNMENT_VIEW} text={"126454 Red Tree Street South Yarra 24"} preset={"normal"} />
+            <Text style={CONSIGNMENT_VIEW} text={renderAddress(props.data.deliveryAddress[0].address[0])} preset={"normal"} />
           </View>
         </View>
-        <MyButton
+        {props.isFailView ? null : <MyButton
+          style={SPECIAL_ACTION_BUTTON}
           buttonSource={icons.blueButton}
           imageBackground={SPECIAL_ACTION}
           // isLoading={authStore.isLoginLoading}
           tx="common.specialAction"
           onPress={onActionPress}
-        />
+        />}
       </View>)
     }
   }

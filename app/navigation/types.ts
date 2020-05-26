@@ -13,6 +13,7 @@ export type PrimaryParamList = {
   SafetyCheckDetail: undefined
   pdfViewer: undefined
   consignmentSuccess: undefined
+  consignmentSpecial: undefined
   signatureView: undefined
   Home: undefined
 }

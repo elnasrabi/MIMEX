@@ -11,6 +11,7 @@ import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { icons } from "../../components/icon/icons"
 import { ComConsignmentDetail } from "../../components/consignment/com-consigment-detail"
 import { isIphoneX } from "react-native-iphone-x-helper";
+import { useStores } from "../../models/root-store"
 
 export interface ConsignmentDetailProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -37,12 +38,17 @@ const MAPS: ViewStyle = {
 const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
 
 export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = observer(props => {
+  const { consignmentStore } = useStores()
+  const consignment = consignmentStore.consignmentDetail
   useEffect(() => {
   }, [])
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
   const onSuccessPress = () => {
+    props.navigation.navigate("consignmentSuccess")
+  }
+  const onFailPress = () => {
     props.navigation.navigate("consignmentSuccess")
   }
 
@@ -54,10 +60,10 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
       <ScrollView style={CONSIGNMENT_VIEW}>
         <View>
           {/* consignment */}
-          <ComConsignmentDetail navigation={props.navigation} view={"consignment"} />
+          <ComConsignmentDetail data={consignment} navigation={props.navigation} view={"consignment"} />
 
           {/* Customer */}
-          <ComConsignmentDetail navigation={props.navigation} view={"customer"} />
+          <ComConsignmentDetail data={consignment} navigation={props.navigation} view={"customer"} />
 
           <View style={MAP_VIEW}>
             <MapView
@@ -78,7 +84,8 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
               rightImage={icons.redButton2}
               leftText={"common.success"}
               rightText={"common.fail"}
-              onLeftPress={onSuccessPress} />
+              onLeftPress={onSuccessPress}
+              onRightPress={onFailPress} />
           </View>
         </View>
       </ScrollView>

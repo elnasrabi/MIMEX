@@ -22,7 +22,8 @@
     "signature": "Signature",
     "permissionDenied": "The permission has denied.",
     "permissionBlocked": "The permission has blocked.",
-    "permissionUnavailable": "This feature is not available ."
+    "permissionUnavailable": "This feature is not available .",
+    "noData": "No Data Found."
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -174,6 +175,11 @@
     "consignment": "Consignment",
     "sign": "Signed By",
     "signPlace": "Enter Signed By",
-    "signature": "Signature"
+    "signature": "Signature",
+    "pressHere": "Press here"
+  },
+  "consignmentFail": {
+    "consignment": "Consignment",
+    "notes": "Notes"
   }
 }

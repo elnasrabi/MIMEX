@@ -56,7 +56,7 @@ const INPUT_STYLE: TextStyle = { borderColor: color.palette.darkText, borderWidt
 const MAIN_STYLE: ViewStyle = { flex: 1 }
 
 export const SearchView: React.FunctionComponent<SearchProps> = observer(props => {
-  const { homeStore } = useStores()
+  const { consignmentStore, homeStore } = useStores()
   const {
     onCameraPress,
     onGoPress,
@@ -90,7 +90,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = observer(props =
       <TouchableOpacity style={GO_BUTTON} onPress={onGoPress}>
         <ImageBackground style={[BACKGROUND_ICON, buttonStyle]}
           source={icons.blackButton}>
-          {homeStore.isButtonLoading ? <ActivityIndicator size="large" color={color.palette.white} />
+          {consignmentStore.isButtonLoading ? <ActivityIndicator size="large" color={color.palette.white} />
             : <Text preset="button" style={GO} tx={"searchView.go"} />
           }
         </ImageBackground>

@@ -10,6 +10,7 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
+import { showAlert } from "../utils/utils"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -63,18 +64,21 @@ const CONTAINER_AFS_LOGO: ImageStyle = {
 const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
-  const { homeStore, authStore } = useStores()
+  const { consignmentStore, homeStore, authStore } = useStores()
   const [searchValue, onSearchValue] = useState("AMI000071")
   const [isValidSearch, onValidSearch] = useState(true)
+  const [isGoPressed, setIsOnGoPress] = useState(false)
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))
       homeStore.onCodeScanned({})
     }
-    if (!homeStore.isEmptyList) {
+    if (isGoPressed && consignmentStore.isEmptyList) {
+      showAlert("common.noData")
+    } else if (isGoPressed && !consignmentStore.isEmptyList) {
       props.navigation.navigate("consignmentList")
     }
-  }, [homeStore.barCodeData, homeStore.consignmentList])
+  }, [homeStore.barCodeData, consignmentStore.consignmentList])
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
@@ -89,13 +93,14 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     if (!searchValue) {
       onValidSearch(false)
     } else {
+      setIsOnGoPress(true)
       const requestData = {
         consignmentMatchingExportRequest: {
           // connoteNumber: "AMI000071"
           connoteNumber: searchValue
         }
       }
-      homeStore.consignmentSearch(authStore.authorization, requestData)
+      consignmentStore.consignmentSearch(authStore.authorization, requestData)
     }
   }
 
@@ -131,7 +136,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
           isValidSearch={isValidSearch}
           onGoPress={onGoPress}
           onChangeText={onSearchText}
-          isLoading={homeStore.isButtonLoading}
+          isLoading={consignmentStore.isButtonLoading}
           buttonStyle={SEARCH_VIEW} />
 
         {/* Bottom Option */}

@@ -1,5 +1,6 @@
 import NetInfo from "@react-native-community/netinfo"
 import { Alert, Linking } from "react-native"
+import { translate } from "../i18n"
 // import call from 'react-native-phone-call'
 
 export function isEmpty(obj) {
@@ -26,4 +27,11 @@ export function callApi(number) {
   // }
   // call(args).catch(console.error)
   Linking.openURL(`tel:${number}`)
+}
+const translateText = (text): string => {
+  const i18nText = text && translate(text)
+  return i18nText
+}
+export function showAlert(text) {
+  Alert.alert(translateText(text))
 }
