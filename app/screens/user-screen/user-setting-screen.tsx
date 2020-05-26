@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -9,6 +9,8 @@ import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
+import moment from 'moment'
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -76,26 +78,59 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const [state, updateState] = useState('VIC')
   const [licenceType, updateLicenceType] = useState('License Type')
   const [licenceNumber, updateLicenceNumber] = useState('License Number')
-  const [expiry, updateExpiry] = useState('Expiry')
-
+  const [expiry, updateExpiry] = useState('')
+  const [date, setDate] = useState(new Date())
+  const [show, setShow] = useState(false);
   const renderRow = (label, value, onUpdate, hasExtraText = false) => {
     return (
       <View style={ROW}>
         <View style={TITLE}>
           <Text extraText={hasExtraText ? ":" : ""} style={LABEL} tx={label} />
         </View>
-        <View style={VALUE_CONTAINER}>
-          <TextField
-            autoCorrect={false}
-            onChangeText={(text) => onUpdate(text)}
-            autoCapitalize={"none"}
-            mainStyle={TEXTINPUT_MAIN_VIEW}
-            inputStyle={VALUE}
-            value={value} />
-        </View>
+        {label == 'userSetting.expiry' ?
+          <TouchableOpacity style={VALUE_CONTAINER} onPress={() => setShow(true)}>
+            <View style={{ width: "100%" }} pointerEvents='none'>
+              <TextField
+                autoCorrect={false}
+                editable={false}
+                onChangeText={(text) => onUpdate(text)}
+                autoCapitalize={"none"}
+                mainStyle={TEXTINPUT_MAIN_VIEW}
+                inputStyle={VALUE}
+                value={moment(date).format('DD-MMM-YYYY').toString()} />
+            </View>
+            <DateTimePickerModal
+              isVisible={show}
+              onConfirm={handleConfirm}
+              value={new Date()}
+              mode="date"
+              onCancel={hideDatePicker}
+            />
+          </TouchableOpacity>
+          :
+          <View style={VALUE_CONTAINER}>
+            <TextField
+              autoCorrect={false}
+              onChangeText={(text) => onUpdate(text)}
+              autoCapitalize={"none"}
+              mainStyle={TEXTINPUT_MAIN_VIEW}
+              inputStyle={VALUE}
+              value={value} />
+          </View>
+        }
       </View>
     )
   }
+
+  const hideDatePicker = () => {
+    setShow(false);
+  };
+
+  const handleConfirm = (date) => {
+    setShow(Platform.OS === 'ios');
+    setDate(date)
+    hideDatePicker();
+  };
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
