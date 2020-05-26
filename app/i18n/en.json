@@ -135,6 +135,17 @@
     "submit": "Submit",
     "pickUpAddress": "Pick Up Address"
   },
+  "getARateListScreen": {
+    "header": "Get a Rate",
+    "new": "New",
+    "carrier": "Carrier",
+    "service": "Service",
+    "rateIncSurc": "Rate Inc Surc",
+    "surcharge": "Surcharge",
+    "brokerRate": "Broker Rate",
+    "deliveryDate": "Delivery Date",
+    "transitDays": "Transit Days"
+  },
   "safetyCheckDetailScreen": {
     "header": "Safety Check",
     "driver": "Driver",

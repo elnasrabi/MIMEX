@@ -14,6 +14,8 @@ export type PrimaryParamList = {
   pdfViewer: undefined
   consignmentSuccess: undefined
   signatureView: undefined
+  GetARateList: undefined
+  GetARate: undefined
   Home: undefined
 }
 export type AuthParamList = {

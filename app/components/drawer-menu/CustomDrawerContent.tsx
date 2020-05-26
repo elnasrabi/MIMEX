@@ -53,7 +53,7 @@ export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = 
       <DrawerItem
         labelStyle={LABEL}
         label="Get a Rate"
-        onPress={() => props.navigation.navigate("GetARate")}
+        onPress={() => props.navigation.navigate("GetARateStack")}
       />
       <DrawerItem
         labelStyle={LABEL}

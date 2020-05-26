@@ -9,6 +9,7 @@ import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
+import { BackButton } from "../../components/header/back-button";
 
 export interface GetARateProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -66,12 +67,16 @@ const RENDER_CONTAINER_TEXT: ViewStyle = {
 
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
-  const [mobile, updateMobile] = useState('0411 111 111')
-  const [city, updateCity] = useState('South Yarra')
-  const [state, updateState] = useState('VIC')
-  const [licenceType, updateLicenceType] = useState('License Type')
-  const [licenceNumber, updateLicenceNumber] = useState('License Number')
-  const [expiry, updateExpiry] = useState('Expiry')
+  const [pickUpAddress, updatePckUpAddress] = useState('')
+  const [postCode, updatePostCode] = useState('')
+  const [town, updateTown] = useState('')
+  const [unitOfMeasure, updateUnitOfMeasure] = useState('')
+  const [quantity, updateQuantity] = useState('')
+  const [totalWeight, updateTotalWeight] = useState('')
+  const [length, updateLength] = useState('')
+  const [width, updateWidth] = useState('')
+  const [height, updateHeight] = useState('')
+  const [volume, updateVolume] = useState('')
 
   const renderRow = (label, value, onUpdate) => {
     return (
@@ -86,7 +91,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             autoCapitalize={"none"}
             mainStyle={{}}
             inputStyle={[FONTFAMILY]}
-            value={'value'} />
+            value={value} />
         </View>
       </View>
     )
@@ -105,32 +110,33 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             autoCapitalize={"none"}
             mainStyle={{}}
             inputStyle={[FONTFAMILY]}
-            value={'value'} />
+            value={value} />
         </View>
       </View>
     )
   }
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
+
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <MenuButton
+      <BackButton
         title={"getARateScreen.header"}
-        onPress={handleDrawer} />
+        onPress={goBack} />
 
       <ScrollView contentContainerStyle={SCROLL_CONTAINER_STYLE} style={SCROLLVIEW_STYLE}>
         <View style={UPPER_VIEW_CONTAINER}>
           <Text style={[FONTFAMILY]} tx={'getARateScreen.pickUpAddress'} />
           <TextField
             autoCorrect={false}
-            // onChangeText={(text) => onUpdate(text)}
+            onChangeText={(text) => updatePckUpAddress(text)}
             autoCapitalize={"none"}
             mainStyle={{}}
             inputStyle={[FONTFAMILY]}
-            value={'value'} />
+            value={pickUpAddress} />
           <View style={UPPER_VIEW_INNER_CONTAINER}>
             <Text style={[FONTFAMILY]} tx={'getARateScreen.deliveryAddress'} />
-            {renderRow("getARateScreen.postCode", city, updateCity)}
+            {renderRow("getARateScreen.postCode", postCode, updatePostCode)}
             <View style={BUTTON_VIEW_STYLE}>
               <Button style={BUTTON_STYLE}>
                 <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND_STYLE}>
@@ -138,18 +144,18 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
                 </ImageBackground>
               </Button>
             </View>
-            {renderRow("getARateScreen.town", city, updateCity)}
+            {renderRow("getARateScreen.town", town, updateTown)}
           </View>
         </View>
         <View style={{}}>
           <Text style={[FONTFAMILY]} tx={'getARateScreen.details'} />
-          {renderUnitRow("getARateScreen.unitOfMeasure", mobile, updateMobile)}
-          {renderUnitRow("getARateScreen.quantity", mobile, updateMobile)}
-          {renderUnitRow("getARateScreen.totalWeight", mobile, updateMobile)}
-          {renderUnitRow("getARateScreen.length", mobile, updateMobile)}
-          {renderUnitRow("getARateScreen.width", mobile, updateMobile)}
-          {renderUnitRow("getARateScreen.height", mobile, updateMobile)}
-          {renderUnitRow("getARateScreen.volume", mobile, updateMobile)}
+          {renderUnitRow("getARateScreen.unitOfMeasure", unitOfMeasure, updateUnitOfMeasure)}
+          {renderUnitRow("getARateScreen.quantity", quantity, updateQuantity)}
+          {renderUnitRow("getARateScreen.totalWeight", totalWeight, updateTotalWeight)}
+          {renderUnitRow("getARateScreen.length", length, updateLength)}
+          {renderUnitRow("getARateScreen.width", width, updateWidth)}
+          {renderUnitRow("getARateScreen.height", height, updateHeight)}
+          {renderUnitRow("getARateScreen.volume", volume, updateVolume)}
         </View>
       </ScrollView>
       <BottomButton

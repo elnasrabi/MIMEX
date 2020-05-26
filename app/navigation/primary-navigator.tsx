@@ -19,6 +19,7 @@ import { PDFViewer } from "../screens/pdf-view/pdf-viewer"
 import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success"
 import { SignatureView } from "../components/signature-view/signature-view"
 import { GetARate } from "../screens/get-a-rate-screen/get-a-rate-input-screen";
+import { GetARateList } from "../screens/get-a-rate-screen/get-a-rate-list-screen";
 
 
 const Drawer = createDrawerNavigator()
@@ -35,6 +36,20 @@ const SafetyStack = () => {
     >
       <Stack.Screen name="SafetyCheck" component={SafetyCheck} />
       <Stack.Screen name="SafetyCheckDetail" component={SafetyCheckDetail} />
+    </Stack.Navigator>
+  )
+}
+const GetARateStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="GetARateList" component={GetARateList} />
+      <Stack.Screen name="GetARate" component={GetARate} />
     </Stack.Navigator>
   )
 }
@@ -85,8 +100,8 @@ export function PrimaryNavigator() {
     >
       <Drawer.Screen name="LandingStack" component={LandingStack} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
+      <Drawer.Screen name="GetARateStack" component={GetARateStack} />
       <Drawer.Screen name="MyList" component={MyList} />
-      <Drawer.Screen name="GetARate" component={GetARate} />
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="ConsignmentStack" component={ConsignmentStack} />
