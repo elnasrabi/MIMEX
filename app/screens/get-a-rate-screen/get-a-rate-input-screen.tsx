@@ -11,6 +11,7 @@ import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { BackButton } from "../../components/header/back-button";
 import RNPickerSelect from 'react-native-picker-select'
+import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 
 export interface GetARateProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -65,13 +66,25 @@ const RENDER_CONTAINER_TEXT: ViewStyle = {
   justifyContent: 'flex-end',
   paddingBottom: 10
 }
-const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
-  flex: 1,
-  borderColor: color.palette.darkText,
-  borderWidth: 2,
-  borderRadius: 4,
-  height: 40,
-  justifyContent: 'center'
+const VALUE: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "bold",
+  fontFamily: typography.secondary
+}
+const INPUT_STYLE_IOS: TextStyle = {
+  color: color.palette.black,
+  fontSize: 16,
+  fontWeight: "600",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const INPUT_STYLE_ANDROID: TextStyle = {
+  color: color.palette.black,
+  fontSize: 16,
+  fontWeight: "bold",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
 }
 
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
@@ -91,6 +104,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const [width, updateWidth] = useState('')
   const [height, updateHeight] = useState('')
   const [volume, updateVolume] = useState('')
+  const currentRef: any[] = []
 
   const renderRow = (label, value, onUpdate) => {
     return (
@@ -104,63 +118,49 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             onChangeText={(text) => onUpdate(text)}
             autoCapitalize={"none"}
             mainStyle={{}}
-            inputStyle={[FONTFAMILY]}
+            inputStyle={VALUE}
             value={value} />
         </View>
       </View>
     )
   }
-  const RNPicker = (value, onUpdate) => {
-    return (
-      <View style={VALUE_CONTAINER_REGISTRATION}>
-        <RNPickerSelect
-          style={{
-            placeholder: {
-              fontSize: 15
-            },
-            inputIOS: {
-              color: color.palette.black,
-              fontSize: 16,
-              fontWeight: "600",
-              paddingLeft: 5,
-              fontFamily: typography.secondary
-            },
-            inputAndroid: {
-              color: color.palette.black,
-              fontSize: 16,
-              fontWeight: "bold",
-              paddingLeft: 5,
-              fontFamily: typography.secondary
-            }
-          }}
-          placeholder={{ label: "Dropdown ID", value: '' }}
-          value={value}
-          onValueChange={(value) => onUpdate(value)}
-          Icon={() =>
-            <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-              <Image resizeMode={'contain'} style={{ width: 15, height: 30, tintColor: color.palette.black }} source={icons.downArrow} />
-            </View>
-          }
-          items={dropDownData}
-        />
-      </View>
-    )
-  }
-  const renderUnitRow = (label, value, onUpdate) => {
+
+  const renderUnitRow = (key, label, value, onUpdate) => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={[RENDER_CONTAINER_TEXT, FLEX]}>
           <Text style={[FONTFAMILY, { color: color.palette.textGray }]} tx={label} />
         </View>
         <View style={FLEX}>
-          {label == 'getARateScreen.unitOfMeasure' ? RNPicker(value, onUpdate)
-            : <TextField
+          {label == 'getARateScreen.unitOfMeasure' ?
+            <DropdownPicker
+              dropDownData={dropDownData}
+              selectedValue={value}
+              onValueChange={(value) => onUpdate(value)}
+            />
+            :
+            <TextField
+              key={key}
               autoCorrect={false}
-              onChangeText={(text) => onUpdate(text)}
+              forwardedRef={(input) => {
+                currentRef.push(input)
+              }}
+              onSubmitEditing={() => {
+                if (currentRef[key + 1]) {
+                  currentRef[key + 1].focus()
+                } else {
+                  // Click on save button
+                }
+              }}
               autoCapitalize={"none"}
               mainStyle={{}}
-              inputStyle={[FONTFAMILY]}
-              value={value} />}
+              inputStyle={VALUE}
+              value={value}
+              blurOnSubmit={label == "getARateScreen.volume" ? true : false}
+              onChangeText={(text) => onUpdate(text)}
+              returnKeyType={'next'}
+            />
+          }
         </View>
       </View>
     )
@@ -181,7 +181,11 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       <ScrollView contentContainerStyle={SCROLL_CONTAINER_STYLE} style={SCROLLVIEW_STYLE}>
         <View style={UPPER_VIEW_CONTAINER}>
           <Text style={[FONTFAMILY]} tx={'getARateScreen.pickUpAddress'} />
-          {RNPicker(pickUpAddress, updatePckUpAddress)}
+          <DropdownPicker
+            dropDownData={dropDownData}
+            selectedValue={pickUpAddress}
+            onValueChange={(value) => updatePckUpAddress(value)}
+          />
           <View style={UPPER_VIEW_INNER_CONTAINER}>
             <Text style={[FONTFAMILY]} tx={'getARateScreen.deliveryAddress'} />
             {renderRow("getARateScreen.postCode", postCode, updatePostCode)}
@@ -197,13 +201,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         </View>
         <View style={{}}>
           <Text style={[FONTFAMILY]} tx={'getARateScreen.details'} />
-          {renderUnitRow("getARateScreen.unitOfMeasure", unitOfMeasure, updateUnitOfMeasure)}
-          {renderUnitRow("getARateScreen.quantity", quantity, updateQuantity)}
-          {renderUnitRow("getARateScreen.totalWeight", totalWeight, updateTotalWeight)}
-          {renderUnitRow("getARateScreen.length", length, updateLength)}
-          {renderUnitRow("getARateScreen.width", width, updateWidth)}
-          {renderUnitRow("getARateScreen.height", height, updateHeight)}
-          {renderUnitRow("getARateScreen.volume", volume, updateVolume)}
+          {renderUnitRow(0, "getARateScreen.unitOfMeasure", unitOfMeasure, updateUnitOfMeasure)}
+          {renderUnitRow(0, "getARateScreen.quantity", quantity, updateQuantity)}
+          {renderUnitRow(1, "getARateScreen.totalWeight", totalWeight, updateTotalWeight)}
+          {renderUnitRow(2, "getARateScreen.length", length, updateLength)}
+          {renderUnitRow(3, "getARateScreen.width", width, updateWidth)}
+          {renderUnitRow(4, "getARateScreen.height", height, updateHeight)}
+          {renderUnitRow(5, "getARateScreen.volume", volume, updateVolume)}
         </View>
       </ScrollView>
       <BottomButton

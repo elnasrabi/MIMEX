@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useState, useRef } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
@@ -81,7 +81,9 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const [expiry, updateExpiry] = useState('')
   const [date, setDate] = useState(new Date())
   const [show, setShow] = useState(false);
-  const renderRow = (label, value, onUpdate, hasExtraText = false) => {
+  const currentRef: any[] = []
+
+  const renderRow = (key, label, value, onUpdate, hasExtraText = false) => {
     return (
       <View style={ROW}>
         <View style={TITLE}>
@@ -110,12 +112,26 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
           :
           <View style={VALUE_CONTAINER}>
             <TextField
+              key={key}
               autoCorrect={false}
-              onChangeText={(text) => onUpdate(text)}
+              forwardedRef={(input) => {
+                currentRef.push(input)
+              }}
+              onSubmitEditing={() => {
+                if (currentRef[key + 1]) {
+                  currentRef[key + 1].focus()
+                } else {
+                  // Click on save button
+                }
+              }}
               autoCapitalize={"none"}
               mainStyle={TEXTINPUT_MAIN_VIEW}
               inputStyle={VALUE}
-              value={value} />
+              value={value}
+              blurOnSubmit={label == 'userSetting.licenceNumber' ? true : false}
+              onChangeText={(text) => onUpdate(text)}
+              returnKeyType={'next'}
+            />
           </View>
         }
       </View>
@@ -148,12 +164,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
           </View>
         </View>
 
-        {renderRow("userSetting.mobile", mobile, updateMobile, true)}
-        {renderRow("userSetting.city", city, updateCity, true)}
-        {renderRow("userSetting.state", state, updateState, true)}
-        {renderRow("userSetting.licenceType", licenceType, updateLicenceType)}
-        {renderRow("userSetting.licenceNumber", licenceNumber, updateLicenceNumber)}
-        {renderRow("userSetting.expiry", expiry, updateExpiry)}
+        {renderRow(0, "userSetting.mobile", mobile, updateMobile, true)}
+        {renderRow(1, "userSetting.city", city, updateCity, true)}
+        {renderRow(2, "userSetting.state", state, updateState, true)}
+        {renderRow(3, "userSetting.licenceType", licenceType, updateLicenceType)}
+        {renderRow(4, "userSetting.licenceNumber", licenceNumber, updateLicenceNumber)}
+        {renderRow(5, "userSetting.expiry", expiry, updateExpiry)}
 
       </ScrollView>
       <BottomButton
