@@ -63,7 +63,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
   const renderHeader = () => {
     return (
       <Video
-        source={{ uri: "http://commondatastorage.goojgleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" }}   // Can be a URL or a local file.
+        source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" }}   // Can be a URL or a local file.
         // source={icons.demoVideo}   // Can be a URL or a local file.
         onBuffer={() => <ActivityIndicator size="small" color="white" style={{ zIndex: 5 }} />}                // Callback when remote video is buffering
         onError={(error) => console.tron.log(error)}               // Callback when video cannot be loaded
