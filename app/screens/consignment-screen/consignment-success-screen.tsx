@@ -17,14 +17,15 @@ import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
 import { useStores } from "../../models/root-store"
 import { translateText } from "../../utils/utils"
+import { database } from "../../app"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const dropDownData = [
-  { label: 'Football', value: 'football' },
-  { label: 'Baseball', value: 'baseball' },
-  { label: 'Hockey', value: 'hockey' },
+  { label: 'Despatched', value: 'despatched' },
+  { label: 'Not Allowed', value: 'notAllowed' },
+  { label: 'Done', value: 'done' },
 ]
 const ROOT: ViewStyle = {
   flex: 1,
@@ -89,17 +90,41 @@ const STATUS_CONTAINER: ViewStyle = {
 const PICKER_CONTAINER: ViewStyle = {
   flexDirection: "row"
 }
-const PICKER_VIEW: ViewStyle = {
+
+const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   flex: 1,
-  justifyContent: "center",
-  height: 40,
-  width: 200,
-  alignSelf: "center",
   borderColor: color.palette.darkText,
   borderWidth: 2,
-  borderRadius: 4
+  borderRadius: 4,
+  height: 40,
+  justifyContent: 'center'
 }
-
+const PICKER_INPUT_IOS: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "600",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const PICKER_INPUT_ANDROID: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "900",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const PICKER_ICON_VIEW: ViewStyle = {
+  height: 35,
+  paddingStart: 5,
+  marginTop: Platform.OS === "android" ? 7 : -8,
+  justifyContent: "center",
+  paddingRight: 4
+}
+const PICKER_ICON: ImageStyle = {
+  width: 15,
+  height: 30,
+  tintColor: color.palette.black
+}
 const SIGN_VIEW: ViewStyle = {
   borderColor: color.palette.darkText,
   borderWidth: 2,
@@ -120,22 +145,32 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
-  const [selectedValue, setSelectedValue] = useState("java")
+  const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
   const [signUri, setSignUri] = useState(SING_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
+  const [isValidStatus, onSetValidStatus] = useState(true)
+  const [isValidFile, onSetValidFile] = useState(true)
+  const [isValidSignText, setValidSignText] = useState(true)
+  const [signText, onSignText] = useState("")
+  const [isValidSignImage, onSetValidSignImage] = useState(true)
+
   useEffect(() => {
     consignmentStore.onSignedReset()
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    getSavedData()
   }, [])
 
   props.navigation.addListener('focus', () => {
     setSignUri(SING_IMAGE_URI)
+    onSetValidSignImage(true)
   })
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       setFileName(response.fileName)
       setImageUri(response.uri)
+      onSetValidFile(true)
     })
   }
   const onImageView = () => {
@@ -144,6 +179,43 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
+
+  const onSave = async () => {
+    if (!selectedValue) {
+      onSetValidStatus(false)
+    } else if (!fileName) {
+      onSetValidFile(false)
+    } else if (!signText) {
+      setValidSignText(false)
+    } else if (!consignmentStore.signedSaved) {
+      onSetValidSignImage(false)
+    } else {
+      database.action(async () => {
+        const consignmentSuccess = database.collections.get("consignmentSuccess")
+        const consignment = await consignmentSuccess.create(consignmentSuccess => {
+          consignmentSuccess.status = selectedValue
+          consignmentSuccess.image = imageUri
+          consignmentSuccess.signBy = signText
+          consignmentSuccess.signImage = signUri
+          consignmentSuccess.date = new Date().toDateString()
+        })
+        console.log(consignment)
+      })
+    }
+  }
+  async function getSavedData() {
+    database.action(async () => {
+      const consignmentSuccess = database.collections.get("consignmentSuccess")
+      const newMovie = await consignmentSuccess.query().fetch()
+      console.log(newMovie)
+    })
+  }
+
+  const onChangeText = (text) => {
+    text ? setValidSignText(true) : setValidSignText(false)
+    onSignText(text)
+  }
+
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -169,15 +241,29 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           <View style={STATUS_CONTAINER}>
 
             <View style={PICKER_CONTAINER}>
-              <View style={PICKER_VIEW}>
+              <View style={VALUE_CONTAINER_REGISTRATION}>
                 <RNPickerSelect
+                  style={{
+                    inputIOS: PICKER_INPUT_IOS,
+                    inputAndroid: PICKER_INPUT_ANDROID
+                  }}
+                  placeholder={{ label: translateText("consignmentSuccess.status"), value: '' }}
                   value={selectedValue}
-                  onValueChange={(value) => setSelectedValue(value)}
+                  onValueChange={(value) => {
+                    setSelectedValue(value)
+                    onSetValidStatus(true)
+                  }}
+                  Icon={() =>
+                    <View style={PICKER_ICON_VIEW}>
+                      <Image resizeMode={'contain'} style={PICKER_ICON} source={icons.downArrow} />
+                    </View>
+                  }
                   items={dropDownData}
                 />
               </View>
               <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
             </View>
+            {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 
             <View style={CAMERA_VIEW}>
               <TouchableOpacity style={ROOT} onPress={onCameraPres}>
@@ -187,20 +273,24 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                 {fileName && <Text style={LINK_TEXT} preset={"normal"} text={fileName} />}
               </TouchableOpacity>
             </View>
+            {isValidFile ? null : <Text preset={"error"} tx={"consignmentSuccess.selectImage"} />}
+
             <TextField
               labelTx={"consignmentSuccess.sign"}
               inputStyle={SIGN_INPUT}
               labelStyle={SIGN_LABEL}
-            // errorTx={isValidPassword ? undefined : "loginScreen.errorPassword"}
-            // onChangeText={text => onChangeText(INPUT_PASSWORD, text)}
-            // value={password}
+              errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
+              onChangeText={text => onChangeText(text)}
+              value={signText}
             />
+
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
               {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}` }}
                 style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
+            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
 
           </View>
 
@@ -212,7 +302,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           rightImage={icons.redButton2}
           leftText={"common.save"}
           rightText={"common.cancel"}
-          onRightPress={goBack} />
+          onRightPress={goBack}
+          // eslint-disable-next-line @typescript-eslint/no-use-before-define
+          onLeftPress={onSave} />
       </View>
     </Screen >
   )
