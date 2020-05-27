@@ -91,11 +91,11 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} text={props.data.totalWeight} preset={"normal"} />
+                <Text style={TEXT_VALUE} text={props.data.consignmentItems[0].totalLineItemLabels} preset={"normal"} />
               </View>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} preset={"normal"} text={props.data.totalVolume} />
+                <Text style={TEXT_VALUE} preset={"normal"} text={props.data.totalWeight} />
               </View>
             </View>
           </View>
