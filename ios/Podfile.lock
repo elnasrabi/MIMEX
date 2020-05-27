@@ -240,10 +240,10 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-video (4.4.5):
+  - react-native-video (5.0.2):
     - React
-    - react-native-video/Video (= 4.4.5)
-  - react-native-video/Video (4.4.5):
+    - react-native-video/Video (= 5.0.2)
+  - react-native-video/Video (5.0.2):
     - React
   - React-RCTActionSheet (0.61.5):
     - React-Core/RCTActionSheetHeaders (= 0.61.5)
@@ -513,7 +513,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-signature-capture: 331c29f07b4f19ccfe63c5247a956b203abb500f
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-video: eee541262ada11bc7ffe8ec5508e6a877937c462
+  react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
