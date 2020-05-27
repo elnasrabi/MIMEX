@@ -118,6 +118,9 @@
     "results": "Results",
     "new": "New"
   },
+  "helpScreen": {
+    "header": "Help"
+  },
   "getARateScreen": {
     "header": "Get a Rate",
     "getTowns": "Get Towns",

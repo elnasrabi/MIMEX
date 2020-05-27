@@ -20,6 +20,7 @@ import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-su
 import { SignatureView } from "../components/signature-view/signature-view"
 import { GetARate } from "../screens/get-a-rate-screen/get-a-rate-input-screen";
 import { GetARateList } from "../screens/get-a-rate-screen/get-a-rate-list-screen";
+import { HelpScreen } from "../screens/help-screen/help-screen";
 
 
 const Drawer = createDrawerNavigator()
@@ -105,6 +106,7 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="ConsignmentStack" component={ConsignmentStack} />
+      <Drawer.Screen name="HelpScreen" component={HelpScreen} />
     </Drawer.Navigator>
   )
 }
