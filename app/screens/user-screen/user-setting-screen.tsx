@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
 import { color, typography } from "../../theme"
-import { MenuButton } from "../../components/header/menu-button";
-import { icons } from "../../components/icon/icons";
-import { BottomButton } from "../../components/bottom-button/bottom-button";
-import { isIphoneX } from "react-native-iphone-x-helper";
+import { MenuButton } from "../../components/header/menu-button"
+import { icons } from "../../components/icon/icons"
+import { BottomButton } from "../../components/bottom-button/bottom-button"
+import { isIphoneX } from "react-native-iphone-x-helper"
 
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -71,7 +71,9 @@ const EMAIL_VIEW_STYLE: ViewStyle = {
 
 export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
 
-  const renderRow = (label, value, hasExtraText = false) => {
+  const currentRef: any[] = []
+
+  const renderRow = (key, label, value, hasExtraText = false) => {
     return (
       <View style={ROW}>
         <View style={TITLE}>
@@ -79,7 +81,18 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         </View>
         <View style={VALUE_CONTAINER}>
           <TextField
+            key={key}
             autoCorrect={false}
+            forwardedRef={(input) => {
+              currentRef.push(input)
+            }}
+            onSubmitEditing={() => {
+              if (currentRef[key + 1]) {
+                currentRef[key + 1].focus()
+              } else {
+                // Click on save button
+              }
+            }}
             autoCapitalize={"none"}
             mainStyle={TEXTINPUT_MAIN_VIEW}
             inputStyle={VALUE}
@@ -88,15 +101,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
       </View>
     )
   }
-
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
         title={"userSetting.header"}
         onPress={handleDrawer} />
-
       <ScrollView style={SCROLLVIEW_STYLE}>
         <View style={EMAIL_VIEW_STYLE}>
           <Text extraText={":"} style={EMAIL_TEXT_STYLE} tx={"userSetting.email"} />
@@ -104,13 +114,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
             <TextField mainStyle={TEXTINPUT_MAIN_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
           </View>
         </View>
-
-        {renderRow("userSetting.mobile", "0411 111 111", true)}
-        {renderRow("userSetting.city", "South Yarra", true)}
-        {renderRow("userSetting.state", "VIC", true)}
-        {renderRow("userSetting.licenceType", "Licence Type")}
-        {renderRow("userSetting.licenceNumber", "Licence Number")}
-        {renderRow("userSetting.expiry", "Expiry")}
+        {renderRow(0, "userSetting.mobile", "0411 111 111", true)}
+        {renderRow(1, "userSetting.city", "South Yarra", true)}
+        {renderRow(2, "userSetting.state", "VIC", true)}
+        {renderRow(3, "userSetting.licenceType", "Licence Type")}
+        {renderRow(4, "userSetting.licenceNumber", "Licence Number")}
+        {renderRow(5, "userSetting.expiry", "Expiry")}
 
       </ScrollView>
       <BottomButton
