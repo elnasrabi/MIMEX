@@ -10,7 +10,7 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
-import { showAlert } from "../utils/utils"
+import { showAlert, isInternetAvailable } from "../utils/utils"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -100,18 +100,21 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     onSearchValue(text)
     text ? onValidSearch(true) : onValidSearch(false)
   }
-  const onGoPress = () => {
+  const onGoPress = async () => {
     if (!searchValue) {
       onValidSearch(false)
     } else {
-      setIsOnGoPress(true)
-      const requestData = {
-        consignmentMatchingExportRequest: {
-          // connoteNumber: "AMI000071"
-          connoteNumber: searchValue
+      const isConnected = await isInternetAvailable()
+      if (isConnected) {
+        setIsOnGoPress(true)
+        const requestData = {
+          consignmentMatchingExportRequest: {
+            // connoteNumber: "AMI000071"
+            connoteNumber: searchValue
+          }
         }
+        consignmentStore.consignmentSearch(authStore.authorization, requestData)
       }
-      consignmentStore.consignmentSearch(authStore.authorization, requestData)
     }
   }
 

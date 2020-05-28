@@ -91,7 +91,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
   const [email, onChangeEmail] = useState("")
 
   useEffect(() => {
-    authStore.resetForgotAuth()
+    // authStore.resetForgotAuth()
   }, [])
 
   const onChangeText = (text) => {

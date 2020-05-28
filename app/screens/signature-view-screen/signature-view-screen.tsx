@@ -3,14 +3,14 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, View, Alert, Platform } from "react-native"
 import { color } from "../../theme"
 import SignatureCapture from 'react-native-signature-capture'
-import { Screen } from "../screen/screen"
-import { BackButton } from "../header/back-button"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { ParamListBase } from "@react-navigation/native"
-import { BottomButton } from "../bottom-button/bottom-button"
-import { icons } from "../icon/icons"
 import { useStores } from "../../models/root-store"
 import { requestPermission, STORAGE_PERMISSION } from "../../utils/app-permission"
+import { Screen } from "../../components"
+import { BackButton } from "../../components/header/back-button"
+import { BottomButton } from "../../components/bottom-button/bottom-button"
+import { icons } from "../../components/icon/icons"
 
 export interface SignatureViewProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -35,7 +35,7 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   const { consignmentStore } = useStores()
   const saveSign = async () => {
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       const result = await requestPermission(STORAGE_PERMISSION)
       if (result) {
         refs.saveImage()
@@ -48,7 +48,7 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     refs.resetImage()
   }
   const onSaveEvent = (result: any) => {
-    consignmentStore.onSigned()
+    consignmentStore.onSigned(true)
     goBack()
   }
   return (

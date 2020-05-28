@@ -17,7 +17,7 @@ import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
 import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
-import { translateText } from "../../utils/utils"
+import { translateText, isInternetAvailable, showAlert } from "../../utils/utils"
 import { database } from "../../app"
 
 export interface ConsignmentSuccessProps {
@@ -144,7 +144,7 @@ const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 
 const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SING_IMAGE_URI = Platform.OS == 'android' ? "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random() : DOCUMENT_DIRECTORY_PATH + "/signature.png"
+  const SING_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
@@ -158,19 +158,21 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignText, setValidSignText] = useState(true)
   const [signText, onSignText] = useState("")
   const [isValidSignImage, onSetValidSignImage] = useState(true)
+  const [imageKey, onsetImageKey] = useState(0)
 
   useEffect(() => {
-    consignmentStore.onSignedReset()
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getSavedData()
+    consignmentStore.onSigned(false)
   }, [])
 
   useLayoutEffect(() => {
-    const listener = props.navigation.addListener('focus', () => {
+    props.navigation.addListener('focus', () => {
+      onsetImageKey(imageKey)
       setSignUri(SING_IMAGE_URI)
       onSetValidSignImage(true)
     })
-  }, []);
+  }, [])
 
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
@@ -183,30 +185,39 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     onViewImage(!viewImage)
   }
   const onSignaturePress = () => {
+    onsetImageKey(imageKey + 1)
     props.navigation.navigate("signatureView")
   }
 
   const onSave = async () => {
-    if (!selectedValue) {
-      onSetValidStatus(false)
-    } else if (!fileName) {
-      onSetValidFile(false)
-    } else if (!signText) {
-      setValidSignText(false)
-    } else if (!consignmentStore.signedSaved) {
-      onSetValidSignImage(false)
+    const isConnected = await isInternetAvailable(false)
+    if (isConnected) {
+      // showAlert("consignmentSuccess.save")
     } else {
-      database.action(async () => {
-        const consignmentSuccess = database.collections.get("consignmentSuccess")
-        const consignment = await consignmentSuccess.create(consignmentSuccess => {
-          consignmentSuccess.status = selectedValue
-          consignmentSuccess.image = imageUri
-          consignmentSuccess.signBy = signText
-          consignmentSuccess.signImage = signUri
-          consignmentSuccess.date = new Date().toDateString()
-        })
-      })
+      showAlert("consignmentSuccess.offlineDataSaveMessage")
+      // database.action(async () => {
+      //   const consignmentSuccess = database.collections.get("consignmentSuccess")
+      //   await consignmentSuccess.query().destroyAllPermanently()
+      //   await consignmentSuccess.create(consignmentSuccess => {
+      //     consignmentSuccess.status = selectedValue
+      //     consignmentSuccess.image = imageUri
+      //     consignmentSuccess.signBy = signText
+      //     consignmentSuccess.signImage = signUri
+      //     consignmentSuccess.date = new Date().toDateString()
+      //   })
+      // })
     }
+    // if (!selectedValue) {
+    //   onSetValidStatus(false)
+    // } else if (!fileName) {
+    //   onSetValidFile(false)
+    // } else if (!signText) {
+    //   setValidSignText(false)
+    // } else if (!consignmentStore.signedSaved) {
+    //   onSetValidSignImage(false)
+    // } else {
+
+    // }
   }
   async function getSavedData() {
     database.action(async () => {
@@ -290,8 +301,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
-            <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}` }}
+            <TouchableOpacity key={imageKey} onPress={onSignaturePress} style={SIGN_VIEW}>
+              {consignmentStore.signedSaved ? <Image key={imageKey} source={{ uri: `${signUri}` }}
                 style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}

@@ -10,10 +10,7 @@ import { useStores } from "../models/root-store"
 const Stack = createNativeStackNavigator<RootParamList>()
 
 const RootStack = observer(() => {
-  const { authStore, consignmentStore } = useStores()
-  consignmentStore.resetConsignment()
-  authStore.resetLoginAuth()
-  authStore.resetForgotAuth()
+  const { authStore } = useStores()
   return (
     <Stack.Navigator
       screenOptions={{
