@@ -10,6 +10,7 @@ import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import RNPickerSelect from 'react-native-picker-select'
+import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 
 export interface VehicleSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -82,38 +83,11 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
       <ScrollView style={SCROLLVIEW_STYLE}>
         <View style={ROW}>
           <Text style={LABEL} tx={"vehicleSetting.registration"} />
-          <View style={VALUE_CONTAINER_REGISTRATION}>
-            <RNPickerSelect
-              style={{
-                placeholder: {
-                  fontSize: 15
-                },
-                inputIOS: {
-                  color: color.palette.link,
-                  fontSize: 16,
-                  fontWeight: "600",
-                  paddingLeft: 5,
-                  fontFamily: typography.secondary
-                },
-                inputAndroid: {
-                  color: color.palette.link,
-                  fontSize: 16,
-                  fontWeight: "900",
-                  paddingLeft: 5,
-                  fontFamily: typography.secondary
-                }
-              }}
-              placeholder={{ label: "Registration-ID", value: '' }}
-              value={selectedValue}
-              onValueChange={(value) => setSelectedValue(value)}
-              Icon={() =>
-                <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-                  <Image resizeMode={'contain'} style={{ width: 15, height: 30, tintColor: color.palette.black }} source={icons.downArrow} />
-                </View>
-              }
-              items={dropDownData}
-            />
-          </View>
+          <DropdownPicker
+            dropDownData={dropDownData}
+            selectedValue={selectedValue}
+            onValueChange={(value) => setSelectedValue(value)}
+          />
         </View>
         {renderRow("vehicleSetting.vehicleName", "Red Van South East")}
         {renderRow("vehicleSetting.vehicleType", "2 Tan Truck")}
