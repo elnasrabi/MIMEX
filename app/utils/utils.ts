@@ -6,13 +6,22 @@ import { translate } from "../i18n"
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
 }
+export function translateText(text): string {
+  const i18nText = text && translate(text)
+  return i18nText
+}
+export function showAlert(text) {
+  Alert.alert(translateText(text))
+}
 
-export async function isInternetAvailable() {
+export async function isInternetAvailable(alert = true) {
   const netInfo = await NetInfo.fetch()
   if (netInfo.isConnected) {
     return true
   } else {
-    Alert.alert("No Internet Connection")
+    if (alert) {
+      showAlert("common.noInternet")
+    }
     return false
   }
 }
@@ -28,10 +37,4 @@ export function callApi(number) {
   // call(args).catch(console.error)
   Linking.openURL(`tel:${number}`)
 }
-export function translateText(text): string {
-  const i18nText = text && translate(text)
-  return i18nText
-}
-export function showAlert(text) {
-  Alert.alert(translateText(text))
-}
+

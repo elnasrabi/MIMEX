@@ -1,5 +1,7 @@
 import { Instance, SnapshotOut, types, flow, applySnapshot } from "mobx-state-tree"
 import { Api } from '../../services/api'
+import { omit } from "ramda"
+import { showAlert } from "../../utils/utils"
 // const parseString = require('react-native-xml2js').parseString
 const parseString = require('react-native-xml2js').parseString
 
@@ -14,7 +16,7 @@ api.setup()
 export const ConsignmentStoreModel = types
   .model("ConsignmentStore")
   .props({
-    signedSaved: types.optional(types.frozen(), false),
+    signedSaved: false,
     isButtonLoading: false,
     hasError: false,
     isEmptyList: true,
@@ -23,11 +25,8 @@ export const ConsignmentStoreModel = types
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
-    onSigned() {
-      self.signedSaved = true
-    },
-    onSignedReset() {
-      self.signedSaved = false
+    onSigned(value) {
+      self.signedSaved = value
     },
     consignmentSearch: flow(function* consignmentSearch(authorization: string, consignmentRequest: any) {
       self.isButtonLoading = true
@@ -45,31 +44,25 @@ export const ConsignmentStoreModel = types
             // console.log(result.responses.consignmentMatchingServiceResponse)
           })
         } else {
-          self.hasError = true
+          showAlert("common.somethingWrong")
         }
         self.isButtonLoading = false
       } catch (erro) {
         // console.tron.log('erro', erro)
       }
     }),
-    resetConsignment() {
-      self.hasError = false
-      self.isButtonLoading = false
-      self.isEmptyList = true
-    },
     setConsignmentDetail(detail) {
       self.consignmentDetail = detail
     }
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
-/**
-* Un-comment the following to omit model attributes from your snapshots (and from async storage).
-* Useful for sensitive data like passwords, or transitive state like whether a modal is open.
-
-* Note that you'll need to import `omit` from ramda, which is already included in the project!
-*  .postProcessSnapshot(omit(["password", "socialSecurityNumber", "creditCardNumber"]))
-*/
+  /**
+  * Un-comment the following to omit model attributes from your snapshots (and from async storage).
+  * Useful for sensitive data like passwords, or transitive state like whether a modal is open.
+  * Note that you'll need to import `omit` from ramda, which is already included in the project!
+  */
+  .postProcessSnapshot(omit(["signedSaved", "isButtonLoading", "hasError", "isEmptyList", "consignmentList", "consignmentDetail"]))
 
 type ConsignmentStoreType = Instance<typeof ConsignmentStoreModel>
 export interface ConsignmentStore extends ConsignmentStoreType { }

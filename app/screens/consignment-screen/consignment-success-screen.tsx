@@ -16,7 +16,7 @@ import { ImageViewerModal } from "../../components/image-viewer/image-viewer-mod
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
 import { useStores } from "../../models/root-store"
-import { translateText } from "../../utils/utils"
+import { translateText, isInternetAvailable, showAlert } from "../../utils/utils"
 import { database } from "../../app"
 
 export interface ConsignmentSuccessProps {
@@ -157,9 +157,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignImage, onSetValidSignImage] = useState(true)
 
   useEffect(() => {
-    consignmentStore.onSignedReset()
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getSavedData()
+    consignmentStore.onSigned(false)
   }, [])
 
   props.navigation.addListener('focus', () => {
@@ -181,27 +181,34 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   }
 
   const onSave = async () => {
-    if (!selectedValue) {
-      onSetValidStatus(false)
-    } else if (!fileName) {
-      onSetValidFile(false)
-    } else if (!signText) {
-      setValidSignText(false)
-    } else if (!consignmentStore.signedSaved) {
-      onSetValidSignImage(false)
+    const isConnected = await isInternetAvailable(false)
+    if (isConnected) {
+      // showAlert("consignmentSuccess.save")
     } else {
-      database.action(async () => {
-        const consignmentSuccess = database.collections.get("consignmentSuccess")
-        const consignment = await consignmentSuccess.create(consignmentSuccess => {
-          consignmentSuccess.status = selectedValue
-          consignmentSuccess.image = imageUri
-          consignmentSuccess.signBy = signText
-          consignmentSuccess.signImage = signUri
-          consignmentSuccess.date = new Date().toDateString()
-        })
-        console.log(consignment)
-      })
+      showAlert("consignmentSuccess.offlineDataSaveMessage")
+      // database.action(async () => {
+      //   const consignmentSuccess = database.collections.get("consignmentSuccess")
+      //   await consignmentSuccess.query().destroyAllPermanently()
+      //   await consignmentSuccess.create(consignmentSuccess => {
+      //     consignmentSuccess.status = selectedValue
+      //     consignmentSuccess.image = imageUri
+      //     consignmentSuccess.signBy = signText
+      //     consignmentSuccess.signImage = signUri
+      //     consignmentSuccess.date = new Date().toDateString()
+      //   })
+      // })
     }
+    // if (!selectedValue) {
+    //   onSetValidStatus(false)
+    // } else if (!fileName) {
+    //   onSetValidFile(false)
+    // } else if (!signText) {
+    //   setValidSignText(false)
+    // } else if (!consignmentStore.signedSaved) {
+    //   onSetValidSignImage(false)
+    // } else {
+
+    // }
   }
   async function getSavedData() {
     database.action(async () => {

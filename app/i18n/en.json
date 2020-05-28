@@ -24,7 +24,9 @@
     "permissionBlocked": "The permission has blocked.",
     "permissionUnavailable": "This feature is not available .",
     "noData": "No Data Found.",
-    "selectImage": "Select Image"
+    "selectImage": "Select Image",
+    "somethingWrong": "Something went wrong!!",
+    "noInternet": "No Internet Connection"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -182,7 +184,8 @@
     "selectStatus": "Select Status",
     "selectImage": "Select Image",
     "enterSignBy": "Enter Sign By Name",
-    "doSign": "Do Sign"
+    "doSign": "Do Sign",
+    "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
 
   },
   "consignmentFail": {

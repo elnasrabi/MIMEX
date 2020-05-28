@@ -28,6 +28,7 @@ export const AuthStoreModel = types
     },
     login: flow(function* login(username: string, password: string) {
       self.isLoginLoading = true
+      self.hasLoginError = false
       try {
         const data = yield api.login(username, password)
         if (data.kind === "ok") {
@@ -60,15 +61,7 @@ export const AuthStoreModel = types
       // } catch (erro) {
       //   // console.tron.log('erro', erro)
       // }
-    }),
-    resetLoginAuth() {
-      self.hasLoginError = false
-      self.isLoginLoading = false
-    },
-    resetForgotAuth() {
-      self.hasForgotError = false
-      self.isForgotLoading = false
-    }
+    })
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
   /**
@@ -78,7 +71,7 @@ export const AuthStoreModel = types
   * Note that you'll need to import `omit` from ramda, which is already included in the project!
 
   */
-  .postProcessSnapshot(omit(["password", "socialSecurityNumber", "creditCardNumber"]))
+  .postProcessSnapshot(omit(["hasForgotError", "isForgotLoading", "isLoginLoading", "hasLoginError"]))
 
 type AuthStoreType = Instance<typeof AuthStoreModel>
 export interface AuthStore extends AuthStoreType { }

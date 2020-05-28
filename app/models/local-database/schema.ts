@@ -7,6 +7,10 @@ export const mySchema = appSchema({
     tableSchema({
       name: "consignmentSuccess",
       columns: [
+        { name: "customerName", type: "string" },
+        { name: "userName", type: "string" },
+        { name: "consignmentNumber", type: "string" },
+        { name: "itemsCount", type: "string" },
         { name: "status", type: "string" },
         { name: "image", type: "string" },
         { name: "signBy", type: "string" },

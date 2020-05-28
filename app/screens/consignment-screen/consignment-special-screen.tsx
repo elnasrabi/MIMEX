@@ -120,7 +120,6 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   const [signUri, setSignUri] = useState(SING_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
   useEffect(() => {
-    consignmentStore.onSignedReset()
   }, [])
 
   props.navigation.addListener('focus', () => {

@@ -38,7 +38,7 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     const result = await requestPermission(STORAGE_PERMISSION)
     if (result) {
       refs.saveImage()
-      consignmentStore.onSigned()
+      consignmentStore.onSigned(true)
       goBack()
     }
   }
