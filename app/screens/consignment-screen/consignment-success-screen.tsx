@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform, Image } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
@@ -142,7 +142,7 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 let imageHash = Date.now()
-let random = Math.random()
+let randomNo = Math.random()
 
 const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
@@ -159,6 +159,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidFile, onSetValidFile] = useState(true)
   const [isValidSignText, setValidSignText] = useState(true)
   const [signText, onSignText] = useState("")
+  const [random, setRandom] = useState(0)
   const [isValidSignImage, onSetValidSignImage] = useState(true)
 
   useEffect(() => {
@@ -167,18 +168,19 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     consignmentStore.onSigned(false)
   }, [])
 
-  // useEffect(() => {
+  useLayoutEffect(() => {
+    props.navigation.addListener('focus', () => {
+      imageHash = Date.now()
+      setSignUri(SING_IMAGE_URI)
+      randomNo = Math.random()
+      setRandom(randomNo)
+      onSetValidSignImage(true)
+    })
+  }, [])
 
-  // }, [props.navigation])
-  props.navigation.addListener('focus', () => {
-    random = Math.random()
-    imageHash = Date.now()
-    setSignUri(SING_IMAGE_URI)
-    onSetValidSignImage(true)
-  })
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName(response.fileName)
+      setFileName('Consignment Photo')
       setImageUri(response.uri)
       onSetValidFile(true)
     })
@@ -224,7 +226,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     database.action(async () => {
       const consignmentSuccess = database.collections.get("consignmentSuccess")
       const newMovie = await consignmentSuccess.query().fetch()
-      console.log(newMovie)
     })
   }
 
@@ -304,7 +305,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}?${imageHash}` }}
+              {consignmentStore.signedSaved ? <Image key={random} source={{ uri: `${signUri}?${imageHash}` }}
                 style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
