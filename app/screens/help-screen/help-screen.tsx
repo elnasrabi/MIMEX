@@ -15,12 +15,10 @@ export interface HelpScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const ROOT: ViewStyle = {
-  paddingBottom: 10
-}
+const ROOT: ViewStyle = {}
 
 const FLATLIST_STYLE: ViewStyle = {
-  margin: 10,
+  marginHorizontal: 10,
   marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33
 }
 const RENDER_ITEM_CONTAINER: ViewStyle = {
@@ -98,7 +96,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
         <FlatList
           data={flatListdata}
           renderItem={({ item, index }) => renderItem(item, index)}
-          style={{ padding: 10 }}
+          style={{ margin: 10 }}
           keyExtractor={(item, index) => index.toString()}
         // ListHeaderComponent={() => renderHeader()}
         />}
