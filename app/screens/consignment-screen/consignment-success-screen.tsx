@@ -298,7 +298,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
               inputStyle={SIGN_INPUT}
               labelStyle={SIGN_LABEL}
               errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
-              keyboardType={"visible-password"}
               onChangeText={text => onChangeText(text)}
               value={signText}
             />

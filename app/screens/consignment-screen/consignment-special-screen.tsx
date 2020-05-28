@@ -235,7 +235,6 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
             <TextField
               inputStyle={SIGN_INPUT}
               multiline
-              keyboardType={"visible-password"}
             // errorTx={isValidPassword ? undefined : "loginScreen.errorPassword"}
             // onChangeText={text => onChangeText(INPUT_PASSWORD, text)}
             // value={password}

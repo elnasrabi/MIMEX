@@ -109,7 +109,6 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
         placeholder={"Enter Username"}
         onChangeText={text => onChangeText(INPUT_USERNAME, text)}
         value={username}
-        keyboardType={"visible-password"}
         autoCorrect={false}
         autoCapitalize={"none"}
       />

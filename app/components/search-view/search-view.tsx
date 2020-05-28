@@ -76,8 +76,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = observer(props =
       <View style={[SEARCH_VIEW, searchInputViewStyle]}>
         <TextField
           autoCorrect={false}
-          keyboardType={"visible-password"}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           mainStyle={MAIN_STYLE}
           onSubmitEditing={onGoPress}
           onChangeText={onChangeText}
