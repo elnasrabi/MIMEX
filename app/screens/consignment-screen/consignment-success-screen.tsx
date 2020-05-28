@@ -15,6 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
+import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
 import { translateText } from "../../utils/utils"
 import { database } from "../../app"
@@ -140,8 +141,10 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   height: 296
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
+
+const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
+  const SING_IMAGE_URI = Platform.OS == 'android' ? "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random() : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail

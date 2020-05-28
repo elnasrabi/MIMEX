@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, Alert } from "react-native"
+import { ViewStyle, View, Alert, Platform } from "react-native"
 import { color } from "../../theme"
 import SignatureCapture from 'react-native-signature-capture'
 import { Screen } from "../screen/screen"
@@ -35,15 +35,21 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   const { consignmentStore } = useStores()
   const saveSign = async () => {
-    const result = await requestPermission(STORAGE_PERMISSION)
-    if (result) {
+    if (Platform.OS == 'android') {
+      const result = await requestPermission(STORAGE_PERMISSION)
+      if (result) {
+        refs.saveImage()
+      }
+    } else {
       refs.saveImage()
-      consignmentStore.onSigned()
-      goBack()
     }
   }
   const resetSign = () => {
     refs.resetImage()
+  }
+  const onSaveEvent = (result: any) => {
+    consignmentStore.onSigned()
+    goBack()
   }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -57,7 +63,9 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
           saveImageFileInExtStorage={true}
           showNativeButtons={false}
           showTitleLabel={false}
-          viewMode={"portrait"} />
+          viewMode={"portrait"}
+          onSaveEvent={result => onSaveEvent(result)}
+        />
       </View>
 
       <View style={BOTTOM_VIEW}>
