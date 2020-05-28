@@ -153,27 +153,19 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   const [selectedValue, setSelectedValue] = useState("java")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
-  const [signUri, setSignUri] = useState(SING_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
-  const [isValidStatus, onSetValidStatus] = useState(true)
 
   useEffect(() => {
   }, [])
 
-  props.navigation.addListener('focus', () => {
-    setSignUri(SING_IMAGE_URI)
-  })
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName(response.fileName)
+      setFileName(translateText("consignmentSuccess.consignmentPhoto"))
       setImageUri(response.uri)
     })
   }
   const onImageView = () => {
     onViewImage(!viewImage)
-  }
-  const onSignaturePress = () => {
-    props.navigation.navigate("signatureView")
   }
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (

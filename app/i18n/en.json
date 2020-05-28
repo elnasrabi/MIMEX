@@ -179,8 +179,7 @@
     "go": "Go",
     "search": "Search",
     "searchHere": "Search Here...",
-    "searchValue": "Enter Search Value"    
-
+    "searchValue": "Enter Search Value"
   },
   "consignmentList": {
     "consignments": "Consignments",
@@ -216,8 +215,8 @@
     "selectImage": "Select Image",
     "enterSignBy": "Enter Sign By Name",
     "doSign": "Do Sign",
-    "offlineDataSaveMessage": "No Internet Connection!\nYour request has been saved offline,\nData will be saved to server once you will be Online."
-
+    "consignmentPhoto": "Consignment Photo",
+    "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
   },
   "consignmentFail": {
     "consignment": "Consignment",
