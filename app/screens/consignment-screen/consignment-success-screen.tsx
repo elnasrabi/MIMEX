@@ -169,15 +169,16 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   }, [])
 
   useLayoutEffect(() => {
-    props.navigation.addListener('focus', () => {
-      imageHash = Date.now()
-      setSignUri(SING_IMAGE_URI)
-      randomNo = Math.random()
-      setRandom(randomNo)
-      onSetValidSignImage(true)
-    })
+
   }, [])
 
+  props.navigation.addListener('focus', () => {
+    imageHash = Date.now()
+    setSignUri(SING_IMAGE_URI)
+    randomNo = Math.random()
+    setRandom(randomNo)
+    onSetValidSignImage(true)
+  })
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       setFileName('Consignment Photo')
