@@ -146,14 +146,14 @@ let randomNo = Math.random()
 
 const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SING_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
+  const SIGN_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
-  const [signUri, setSignUri] = useState(SING_IMAGE_URI)
+  const [signUri, setSignUri] = useState(SIGN_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
   const [isValidStatus, onSetValidStatus] = useState(true)
   const [isValidFile, onSetValidFile] = useState(true)
@@ -171,7 +171,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   useLayoutEffect(() => {
     props.navigation.addListener('focus', () => {
       imageHash = Date.now()
-      setSignUri(SING_IMAGE_URI)
+      setSignUri(SIGN_IMAGE_URI)
       randomNo = Math.random()
       setRandom(randomNo)
       onSetValidSignImage(true)
@@ -305,8 +305,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image key={random} source={{ uri: `${signUri}?${imageHash}` }}
-                style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
+              {consignmentStore.signedSaved ?
+                <Image key={random} source={Platform.OS == 'android' ? { uri: `${signUri}?${imageHash}` } : { uri: `${signUri}` }}
+                  style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
 
