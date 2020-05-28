@@ -5,5 +5,8 @@ project(':react-native-video').projectDir = new File(rootProject.projectDir, '..
 // project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
 include ':react-native-permissions'
 project(':react-native-permissions').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-permissions/android')
+include ':watermelondb'
+project(':watermelondb').projectDir =
+        new File(rootProject.projectDir, '../node_modules/@nozbe/watermelondb/native/android')
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'

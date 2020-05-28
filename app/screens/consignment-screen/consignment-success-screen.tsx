@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -15,16 +15,18 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
+import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
-import { translateText } from "../../utils/utils"
+import { translateText, isInternetAvailable, showAlert } from "../../utils/utils"
+import { database } from "../../app"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const dropDownData = [
-  { label: 'Football', value: 'football' },
-  { label: 'Baseball', value: 'baseball' },
-  { label: 'Hockey', value: 'hockey' },
+  { label: 'Despatched', value: 'despatched' },
+  { label: 'Not Allowed', value: 'notAllowed' },
+  { label: 'Done', value: 'done' },
 ]
 const ROOT: ViewStyle = {
   flex: 1,
@@ -89,17 +91,42 @@ const STATUS_CONTAINER: ViewStyle = {
 const PICKER_CONTAINER: ViewStyle = {
   flexDirection: "row"
 }
-const PICKER_VIEW: ViewStyle = {
+
+const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   flex: 1,
-  justifyContent: "center",
-  height: 40,
-  width: 200,
-  alignSelf: "center",
   borderColor: color.palette.darkText,
   borderWidth: 2,
-  borderRadius: 4
+  borderRadius: 4,
+  height: 40,
+  justifyContent: 'center'
 }
-
+const PICKER_INPUT_IOS: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "600",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const PICKER_INPUT_ANDROID: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "900",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const PICKER_ICON_VIEW: ViewStyle = {
+  height: 35,
+  paddingStart: 5,
+  marginTop: Platform.OS === "android" ? 7 : -8,
+  justifyContent: "center",
+  paddingRight: 4
+}
+const PICKER_ICON: ImageStyle = {
+  width: 15,
+  height: 18,
+  marginEnd: 5,
+  tintColor: color.palette.black
+}
 const SIGN_VIEW: ViewStyle = {
   borderColor: color.palette.darkText,
   borderWidth: 2,
@@ -115,27 +142,48 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   height: 296
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
+let imageHash = Date.now()
+let randomNo = Math.random()
+
+const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
+  const SIGN_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
-  const [selectedValue, setSelectedValue] = useState("java")
+  const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
-  const [signUri, setSignUri] = useState(SING_IMAGE_URI)
+  const [signUri, setSignUri] = useState(SIGN_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
+  const [isValidStatus, onSetValidStatus] = useState(true)
+  const [isValidFile, onSetValidFile] = useState(true)
+  const [isValidSignText, setValidSignText] = useState(true)
+  const [signText, onSignText] = useState("")
+  const [random, setRandom] = useState(0)
+  const [isValidSignImage, onSetValidSignImage] = useState(true)
+
   useEffect(() => {
-    consignmentStore.onSignedReset()
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    getSavedData()
+    consignmentStore.onSigned(false)
   }, [])
 
-  props.navigation.addListener('focus', () => {
-    setSignUri(SING_IMAGE_URI)
-  })
+  useLayoutEffect(() => {
+    props.navigation.addListener('focus', () => {
+      imageHash = Date.now()
+      setSignUri(SIGN_IMAGE_URI)
+      randomNo = Math.random()
+      setRandom(randomNo)
+      onSetValidSignImage(true)
+    })
+  }, [])
+
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName(response.fileName)
+      setFileName('Consignment Photo')
       setImageUri(response.uri)
+      onSetValidFile(true)
     })
   }
   const onImageView = () => {
@@ -144,6 +192,50 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
+
+  const onSave = async () => {
+    const isConnected = await isInternetAvailable(false)
+    // showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+    if (isConnected) {
+      // showAlert("consignmentSuccess.save")
+    } else {
+      showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+      // database.action(async () => {
+      //   const consignmentSuccess = database.collections.get("consignmentSuccess")
+      //   await consignmentSuccess.query().destroyAllPermanently()
+      //   await consignmentSuccess.create(consignmentSuccess => {
+      //     consignmentSuccess.status = selectedValue
+      //     consignmentSuccess.image = imageUri
+      //     consignmentSuccess.signBy = signText
+      //     consignmentSuccess.signImage = signUri
+      //     consignmentSuccess.date = new Date().toDateString()
+      //   })
+      // })
+    }
+    // if (!selectedValue) {
+    //   onSetValidStatus(false)
+    // } else if (!fileName) {
+    //   onSetValidFile(false)
+    // } else if (!signText) {
+    //   setValidSignText(false)
+    // } else if (!consignmentStore.signedSaved) {
+    //   onSetValidSignImage(false)
+    // } else {
+
+    // }
+  }
+  async function getSavedData() {
+    database.action(async () => {
+      const consignmentSuccess = database.collections.get("consignmentSuccess")
+      const newMovie = await consignmentSuccess.query().fetch()
+    })
+  }
+
+  const onChangeText = (text) => {
+    text ? setValidSignText(true) : setValidSignText(false)
+    onSignText(text)
+  }
+
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -169,15 +261,29 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           <View style={STATUS_CONTAINER}>
 
             <View style={PICKER_CONTAINER}>
-              <View style={PICKER_VIEW}>
+              <View style={VALUE_CONTAINER_REGISTRATION}>
                 <RNPickerSelect
+                  style={{
+                    inputIOS: PICKER_INPUT_IOS,
+                    inputAndroid: PICKER_INPUT_ANDROID
+                  }}
+                  placeholder={{ label: translateText("consignmentSuccess.status"), value: '' }}
                   value={selectedValue}
-                  onValueChange={(value) => setSelectedValue(value)}
+                  onValueChange={(value) => {
+                    setSelectedValue(value)
+                    onSetValidStatus(true)
+                  }}
+                  Icon={() =>
+                    (<View style={PICKER_ICON_VIEW}>
+                      <Image style={PICKER_ICON} source={icons.downArrow} />
+                    </View>)
+                  }
                   items={dropDownData}
                 />
               </View>
               <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
             </View>
+            {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 
             <View style={CAMERA_VIEW}>
               <TouchableOpacity style={ROOT} onPress={onCameraPres}>
@@ -187,20 +293,25 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                 {fileName && <Text style={LINK_TEXT} preset={"normal"} text={fileName} />}
               </TouchableOpacity>
             </View>
+            {isValidFile ? null : <Text preset={"error"} tx={"consignmentSuccess.selectImage"} />}
+
             <TextField
               labelTx={"consignmentSuccess.sign"}
               inputStyle={SIGN_INPUT}
               labelStyle={SIGN_LABEL}
-            // errorTx={isValidPassword ? undefined : "loginScreen.errorPassword"}
-            // onChangeText={text => onChangeText(INPUT_PASSWORD, text)}
-            // value={password}
+              errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
+              onChangeText={text => onChangeText(text)}
+              value={signText}
             />
+
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}` }}
-                style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
+              {consignmentStore.signedSaved
+                ? <Image key={random} source={Platform.OS === 'android' ? { uri: `${signUri}?${imageHash}` } : { uri: `${signUri}` }}
+                  style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
+            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
 
           </View>
 
@@ -212,7 +323,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           rightImage={icons.redButton2}
           leftText={"common.save"}
           rightText={"common.cancel"}
-          onRightPress={goBack} />
+          onRightPress={goBack}
+          // eslint-disable-next-line @typescript-eslint/no-use-before-define
+          onLeftPress={onSave} />
       </View>
     </Screen >
   )
