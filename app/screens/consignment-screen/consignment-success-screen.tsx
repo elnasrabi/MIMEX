@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform, Image } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
@@ -165,13 +165,16 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     getSavedData()
   }, [])
 
-  props.navigation.addListener('focus', () => {
-    setSignUri(SING_IMAGE_URI)
-    onSetValidSignImage(true)
-  })
+  useLayoutEffect(() => {
+    const listener = props.navigation.addListener('focus', () => {
+      setSignUri(SING_IMAGE_URI)
+      onSetValidSignImage(true)
+    })
+  }, []);
+
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName(response.fileName)
+      setFileName('Consignment Photo')
       setImageUri(response.uri)
       onSetValidFile(true)
     })
@@ -202,7 +205,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           consignmentSuccess.signImage = signUri
           consignmentSuccess.date = new Date().toDateString()
         })
-        console.log(consignment)
       })
     }
   }
@@ -210,7 +212,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     database.action(async () => {
       const consignmentSuccess = database.collections.get("consignmentSuccess")
       const newMovie = await consignmentSuccess.query().fetch()
-      console.log(newMovie)
     })
   }
 
