@@ -140,7 +140,8 @@ const PICKER_ICON_VIEW: ViewStyle = {
 }
 const PICKER_ICON: ImageStyle = {
   width: 15,
-  height: 30,
+  height: 18,
+  marginEnd: 5,
   tintColor: color.palette.black
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
@@ -213,7 +214,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                   }}
                   Icon={() =>
                     <View style={PICKER_ICON_VIEW}>
-                      <Image resizeMode={'contain'} style={PICKER_ICON} source={icons.downArrow} />
+                      <Image style={PICKER_ICON} source={icons.downArrow} />
                     </View>
                   }
                   items={dropDownData}

@@ -10,8 +10,8 @@ export function translateText(text): string {
   const i18nText = text && translate(text)
   return i18nText
 }
-export function showAlert(text) {
-  Alert.alert(translateText(text))
+export function showAlert(title, desc = "") {
+  Alert.alert(translateText(title), translateText(desc))
 }
 
 export async function isInternetAvailable(alert = true) {

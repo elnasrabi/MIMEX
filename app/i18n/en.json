@@ -185,7 +185,7 @@
     "selectImage": "Select Image",
     "enterSignBy": "Enter Sign By Name",
     "doSign": "Do Sign",
-    "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
+    "offlineDataSaveMessage": "No Internet Connection!\nYour request has been saved offline,\nData will be saved to server once you will be Online."
 
   },
   "consignmentFail": {

@@ -123,7 +123,8 @@ const PICKER_ICON_VIEW: ViewStyle = {
 }
 const PICKER_ICON: ImageStyle = {
   width: 15,
-  height: 30,
+  height: 18,
+  marginEnd: 5,
   tintColor: color.palette.black
 }
 const SIGN_VIEW: ViewStyle = {
@@ -194,10 +195,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false)
+    showAlert("", "consignmentSuccess.offlineDataSaveMessage")
     if (isConnected) {
       // showAlert("consignmentSuccess.save")
     } else {
-      showAlert("consignmentSuccess.offlineDataSaveMessage")
+      showAlert("", "consignmentSuccess.offlineDataSaveMessage")
       // database.action(async () => {
       //   const consignmentSuccess = database.collections.get("consignmentSuccess")
       //   await consignmentSuccess.query().destroyAllPermanently()
@@ -272,9 +274,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                     onSetValidStatus(true)
                   }}
                   Icon={() =>
-                    <View style={PICKER_ICON_VIEW}>
-                      <Image resizeMode={'contain'} style={PICKER_ICON} source={icons.downArrow} />
-                    </View>
+                    (<View style={PICKER_ICON_VIEW}>
+                      <Image style={PICKER_ICON} source={icons.downArrow} />
+                    </View>)
                   }
                   items={dropDownData}
                 />
