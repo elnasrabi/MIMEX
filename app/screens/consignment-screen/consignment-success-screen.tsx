@@ -298,6 +298,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
               inputStyle={SIGN_INPUT}
               labelStyle={SIGN_LABEL}
               errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
+              keyboardType={"visible-password"}
               onChangeText={text => onChangeText(text)}
               value={signText}
             />
@@ -305,8 +306,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ?
-                <Image key={random} source={Platform.OS == 'android' ? { uri: `${signUri}?${imageHash}` } : { uri: `${signUri}` }}
+              {consignmentStore.signedSaved
+                ? <Image key={random} source={Platform.OS === 'android' ? { uri: `${signUri}?${imageHash}` } : { uri: `${signUri}` }}
                   style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}

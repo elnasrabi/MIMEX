@@ -15,7 +15,7 @@ const CONTAINER: ViewStyle = {
 // the base styling for the TextInput
 const INPUT: TextStyle = {
   flex: 1,
-  fontFamily: typography.primary,
+  fontFamily: typography.secondary,
   color: color.text,
   minHeight: 40,
   fontSize: 16,
@@ -79,6 +79,9 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
       <View style={containerStyle}>
         {(label || labelTx) && <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />}
         <TextInput
+          autoCorrect={false}
+          autoCompleteType={"off"}
+          spellCheck={false}
           placeholder={actualPlaceholder}
           placeholderTextColor={color.palette.lighterGrey}
           underlineColorAndroid={color.transparent}
