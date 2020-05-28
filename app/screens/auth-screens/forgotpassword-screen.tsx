@@ -91,7 +91,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
   const [email, onChangeEmail] = useState("")
 
   useEffect(() => {
-    authStore.resetForgotAuth()
+    // authStore.resetForgotAuth()
   }, [])
 
   const onChangeText = (text) => {
@@ -131,7 +131,6 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
           returnKeyType={"done"}
           errorTx={isValidEmail ? undefined : "forgotpasswordScreen.enterEmail"}
           onSubmitEditing={onSubmit}
-          keyboardType={"email-address"}
           autoCorrect={false}
           autoCapitalize={"none"}
         />

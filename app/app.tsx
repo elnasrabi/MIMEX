@@ -15,7 +15,21 @@ import { useBackButtonHandler } from "./navigation/use-back-button-handler"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models/root-store"
 import * as storage from "./utils/storage"
 import getActiveRouteName from "./navigation/get-active-routename"
+import { Database } from "@nozbe/watermelondb";
+import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
+import { mySchema } from "./models/local-database/schema"
+import { dbModels } from "./models/local-database"
+import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
 
+const adapter = new SQLiteAdapter({
+  dbName: "MoveItDB",
+  schema: mySchema
+})
+export const database = new Database({
+  adapter,
+  modelClasses: dbModels,
+  actionsEnabled: true
+})
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
 // https://github.com/kmagiera/react-native-screens#using-native-stack-navigator
@@ -113,15 +127,17 @@ const App: React.FunctionComponent<{}> = () => {
 
   // otherwise, we're ready to render the app
   return (
-    <RootStoreProvider value={rootStore}>
-      <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
-        <RootNavigator
-          ref={navigationRef}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
-      </SafeAreaProvider>
-    </RootStoreProvider>
+    <DatabaseProvider database={database}>
+      <RootStoreProvider value={rootStore}>
+        <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
+          <RootNavigator
+            ref={navigationRef}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </SafeAreaProvider>
+      </RootStoreProvider>
+    </DatabaseProvider>
   )
 }
 

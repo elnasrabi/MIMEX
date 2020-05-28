@@ -72,7 +72,7 @@ export class Api {
   }
 
   async consignmentSearchByNumber(authorization: string, consignmentRequest: any): Promise<Types.ConsignmentResult> {
-    const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, consignmentRequest), { headers: { Authorization: "Basic c2VydmljZXNAYWZzOnNlcnZpY2VzMDkyMDE3" } })
+    const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, consignmentRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
       if (problem) return problem

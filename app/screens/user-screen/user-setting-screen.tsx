@@ -150,13 +150,11 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   };
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
         title={"userSetting.header"}
         onPress={handleDrawer} />
-
       <ScrollView style={SCROLLVIEW_STYLE}>
         <View style={EMAIL_VIEW_STYLE}>
           <Text extraText={":"} style={EMAIL_TEXT_STYLE} tx={"userSetting.email"} />

@@ -24,7 +24,9 @@
     "permissionBlocked": "The permission has blocked.",
     "permissionUnavailable": "This feature is not available .",
     "noData": "No Data Found.",
-    "selectImage": "Select Image"
+    "selectImage": "Select Image",
+    "somethingWrong": "Something went wrong!!",
+    "noInternet": "No Internet Connection"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -177,8 +179,7 @@
     "go": "Go",
     "search": "Search",
     "searchHere": "Search Here...",
-    "searchValue": "Enter Search Value"    
-
+    "searchValue": "Enter Search Value"
   },
   "consignmentList": {
     "consignments": "Consignments",
@@ -208,7 +209,14 @@
     "sign": "Signed By",
     "signPlace": "Enter Signed By",
     "signature": "Signature",
-    "pressHere": "Press here"
+    "pressHere": "Press here",
+    "status": "Status",
+    "selectStatus": "Select Status",
+    "selectImage": "Select Image",
+    "enterSignBy": "Enter Sign By Name",
+    "doSign": "Do Sign",
+    "consignmentPhoto": "Consignment Photo",
+    "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
   },
   "consignmentFail": {
     "consignment": "Consignment",

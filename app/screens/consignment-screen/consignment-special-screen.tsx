@@ -16,14 +16,15 @@ import { ImageViewerModal } from "../../components/image-viewer/image-viewer-mod
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
 import { useStores } from "../../models/root-store"
+import { translateText } from "../../utils/utils"
 
 export interface ConsignmentSpecialProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const dropDownData = [
-  { label: 'Football', value: 'football' },
-  { label: 'Baseball', value: 'baseball' },
-  { label: 'Hockey', value: 'hockey' },
+  { label: 'Despatched', value: 'despatched' },
+  { label: 'Not Allowed', value: 'notAllowed' },
+  { label: 'Done', value: 'done' },
 ]
 const ROOT: ViewStyle = {
   flex: 1,
@@ -108,6 +109,41 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   width: "100%",
   height: 296
 }
+const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
+  flex: 1,
+  borderColor: color.palette.darkText,
+  borderWidth: 2,
+  borderRadius: 4,
+  height: 40,
+  justifyContent: 'center'
+}
+const PICKER_INPUT_IOS: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "600",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const PICKER_INPUT_ANDROID: TextStyle = {
+  color: color.palette.link,
+  fontSize: 16,
+  fontWeight: "900",
+  paddingLeft: 5,
+  fontFamily: typography.secondary
+}
+const PICKER_ICON_VIEW: ViewStyle = {
+  height: 35,
+  paddingStart: 5,
+  marginTop: Platform.OS === "android" ? 7 : -8,
+  justifyContent: "center",
+  paddingRight: 4
+}
+const PICKER_ICON: ImageStyle = {
+  width: 15,
+  height: 18,
+  marginEnd: 5,
+  tintColor: color.palette.black
+}
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
   const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
@@ -117,26 +153,19 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   const [selectedValue, setSelectedValue] = useState("java")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
-  const [signUri, setSignUri] = useState(SING_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
+
   useEffect(() => {
-    consignmentStore.onSignedReset()
   }, [])
 
-  props.navigation.addListener('focus', () => {
-    setSignUri(SING_IMAGE_URI)
-  })
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName(response.fileName)
+      setFileName(translateText("consignmentSuccess.consignmentPhoto"))
       setImageUri(response.uri)
     })
   }
   const onImageView = () => {
     onViewImage(!viewImage)
-  }
-  const onSignaturePress = () => {
-    props.navigation.navigate("signatureView")
   }
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
@@ -163,10 +192,23 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
           <View style={STATUS_CONTAINER}>
 
             <View style={PICKER_CONTAINER}>
-              <View style={PICKER_VIEW}>
+              <View style={VALUE_CONTAINER_REGISTRATION}>
                 <RNPickerSelect
+                  style={{
+                    inputIOS: PICKER_INPUT_IOS,
+                    inputAndroid: PICKER_INPUT_ANDROID
+                  }}
+                  placeholder={{ label: translateText("consignmentSuccess.status"), value: '' }}
                   value={selectedValue}
-                  onValueChange={(value) => setSelectedValue(value)}
+                  onValueChange={(value) => {
+                    setSelectedValue(value)
+                    onSetValidStatus(true)
+                  }}
+                  Icon={() =>
+                    <View style={PICKER_ICON_VIEW}>
+                      <Image style={PICKER_ICON} source={icons.downArrow} />
+                    </View>
+                  }
                   items={dropDownData}
                 />
               </View>

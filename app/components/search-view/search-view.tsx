@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
 import * as React from "react"
-import { ImageStyle, ViewStyle, View, TouchableOpacity, ImageBackground, TextStyle, ActivityIndicator } from "react-native"
+import { ImageStyle, ViewStyle, View, TouchableOpacity, ImageBackground, TextStyle, ActivityIndicator, Platform } from "react-native"
 
 import { color } from "../../theme"
 import { SearchProps } from "./search-props"
@@ -76,7 +76,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = observer(props =
       <View style={[SEARCH_VIEW, searchInputViewStyle]}>
         <TextField
           autoCorrect={false}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           mainStyle={MAIN_STYLE}
           onSubmitEditing={onGoPress}
           onChangeText={onChangeText}
