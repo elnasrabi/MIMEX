@@ -195,7 +195,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false)
-    showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+    // showAlert("", "consignmentSuccess.offlineDataSaveMessage")
     if (isConnected) {
       // showAlert("consignmentSuccess.save")
     } else {

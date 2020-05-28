@@ -18,14 +18,11 @@ import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-d
 import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success-screen"
 import { ConsignmentSpecial } from "../screens/consignment-screen/consignment-special-screen"
 import { PDFViewer } from "../screens/pdf-view/pdf-viewer-screen"
-<<<<<<< HEAD
 import { SignatureView } from "../screens/signature-view-screen/signature-view-screen"
-=======
 import { GetARate } from "../screens/get-a-rate-screen/get-a-rate-input-screen";
 import { GetARateList } from "../screens/get-a-rate-screen/get-a-rate-list-screen";
 import { HelpScreen } from "../screens/help-screen/help-screen";
 
->>>>>>> 07fae0537c3a691f361b754859b5076192fe154f
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<PrimaryParamList>()
