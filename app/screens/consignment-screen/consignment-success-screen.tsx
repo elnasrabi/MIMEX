@@ -15,6 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNPickerSelect from 'react-native-picker-select'
+import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
 import { translateText, isInternetAvailable, showAlert } from "../../utils/utils"
 import { database } from "../../app"
@@ -140,8 +141,10 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   height: 296
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
+
+const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
+  const SING_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
@@ -155,6 +158,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignText, setValidSignText] = useState(true)
   const [signText, onSignText] = useState("")
   const [isValidSignImage, onSetValidSignImage] = useState(true)
+  const [imageKey, onsetImageKey] = useState(0)
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -162,7 +166,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     consignmentStore.onSigned(false)
   }, [])
 
+  // useEffect(() => {
+
+  // }, [props.navigation])
   props.navigation.addListener('focus', () => {
+    onsetImageKey(imageKey)
     setSignUri(SING_IMAGE_URI)
     onSetValidSignImage(true)
   })
@@ -177,6 +185,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     onViewImage(!viewImage)
   }
   const onSignaturePress = () => {
+    onsetImageKey(imageKey + 1)
     props.navigation.navigate("signatureView")
   }
 
@@ -293,8 +302,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
-            <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}` }}
+            <TouchableOpacity key={imageKey} onPress={onSignaturePress} style={SIGN_VIEW}>
+              {consignmentStore.signedSaved ? <Image key={imageKey} source={{ uri: `${signUri}` }}
                 style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}

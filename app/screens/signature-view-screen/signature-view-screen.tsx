@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, Alert } from "react-native"
+import { ViewStyle, View, Alert, Platform } from "react-native"
 import { color } from "../../theme"
 import SignatureCapture from 'react-native-signature-capture'
-import { Screen } from "../screen/screen"
-import { BackButton } from "../header/back-button"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { ParamListBase } from "@react-navigation/native"
-import { BottomButton } from "../bottom-button/bottom-button"
-import { icons } from "../icon/icons"
 import { useStores } from "../../models/root-store"
 import { requestPermission, STORAGE_PERMISSION } from "../../utils/app-permission"
+import { Screen } from "../../components"
+import { BackButton } from "../../components/header/back-button"
+import { BottomButton } from "../../components/bottom-button/bottom-button"
+import { icons } from "../../components/icon/icons"
 
 export interface SignatureViewProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -35,15 +35,21 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   const { consignmentStore } = useStores()
   const saveSign = async () => {
-    const result = await requestPermission(STORAGE_PERMISSION)
-    if (result) {
+    if (Platform.OS === 'android') {
+      const result = await requestPermission(STORAGE_PERMISSION)
+      if (result) {
+        refs.saveImage()
+      }
+    } else {
       refs.saveImage()
-      consignmentStore.onSigned(true)
-      goBack()
     }
   }
   const resetSign = () => {
     refs.resetImage()
+  }
+  const onSaveEvent = (result: any) => {
+    consignmentStore.onSigned(true)
+    goBack()
   }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -57,7 +63,9 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
           saveImageFileInExtStorage={true}
           showNativeButtons={false}
           showTitleLabel={false}
-          viewMode={"portrait"} />
+          viewMode={"portrait"}
+          onSaveEvent={result => onSaveEvent(result)}
+        />
       </View>
 
       <View style={BOTTOM_VIEW}>

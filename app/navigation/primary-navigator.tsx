@@ -16,9 +16,9 @@ import { MyList } from "../screens/myList-screen/myList-screen";
 import { SafetyCheck } from "../screens/safety-check-screen/safety-check-list-screen";
 import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-detail-screen";
 import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success-screen"
-import { SignatureView } from "../components/signature-view-screen/signature-view-screen"
 import { ConsignmentSpecial } from "../screens/consignment-screen/consignment-special-screen"
 import { PDFViewer } from "../screens/pdf-view/pdf-viewer-screen"
+import { SignatureView } from "../screens/signature-view-screen/signature-view-screen"
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<PrimaryParamList>()
