@@ -141,6 +141,8 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   height: 296
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
+let imageHash = Date.now()
+let random = Math.random()
 
 const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
@@ -158,7 +160,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignText, setValidSignText] = useState(true)
   const [signText, onSignText] = useState("")
   const [isValidSignImage, onSetValidSignImage] = useState(true)
-  const [imageKey, onsetImageKey] = useState(0)
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -170,7 +171,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   // }, [props.navigation])
   props.navigation.addListener('focus', () => {
-    onsetImageKey(imageKey)
+    random = Math.random()
+    imageHash = Date.now()
     setSignUri(SING_IMAGE_URI)
     onSetValidSignImage(true)
   })
@@ -185,7 +187,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     onViewImage(!viewImage)
   }
   const onSignaturePress = () => {
-    onsetImageKey(imageKey + 1)
     props.navigation.navigate("signatureView")
   }
 
@@ -302,8 +303,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
-            <TouchableOpacity key={imageKey} onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? <Image key={imageKey} source={{ uri: `${signUri}` }}
+            <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
+              {consignmentStore.signedSaved ? <Image source={{ uri: `${signUri}?${imageHash}` }}
                 style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
