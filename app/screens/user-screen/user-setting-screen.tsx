@@ -83,7 +83,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const [show, setShow] = useState(false);
   const currentRef: any[] = []
 
-  const renderRow = (key, label, value, onUpdate, hasExtraText = false) => {
+  const renderRow = (key, label, value, onUpdate, keyboardType = 'default', hasExtraText = false) => {
     return (
       <View style={ROW}>
         <View style={TITLE}>
@@ -128,6 +128,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
               mainStyle={TEXTINPUT_MAIN_VIEW}
               inputStyle={VALUE}
               value={value}
+              keyboardType={keyboardType}
               blurOnSubmit={label == 'userSetting.licenceNumber' ? true : false}
               onChangeText={(text) => onUpdate(text)}
               returnKeyType={'next'}
@@ -164,11 +165,11 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
           </View>
         </View>
 
-        {renderRow(0, "userSetting.mobile", mobile, updateMobile, true)}
-        {renderRow(1, "userSetting.city", city, updateCity, true)}
-        {renderRow(2, "userSetting.state", state, updateState, true)}
-        {renderRow(3, "userSetting.licenceType", licenceType, updateLicenceType)}
-        {renderRow(4, "userSetting.licenceNumber", licenceNumber, updateLicenceNumber)}
+        {renderRow(0, "userSetting.mobile", mobile, updateMobile, 'phone-pad', true)}
+        {renderRow(1, "userSetting.city", city, updateCity, 'default', true)}
+        {renderRow(2, "userSetting.state", state, updateState, 'default', true)}
+        {renderRow(3, "userSetting.licenceType", licenceType, updateLicenceType, 'default')}
+        {renderRow(4, "userSetting.licenceNumber", licenceNumber, updateLicenceNumber, 'decimal-pad')}
         {renderRow(5, "userSetting.expiry", expiry, updateExpiry)}
 
       </ScrollView>

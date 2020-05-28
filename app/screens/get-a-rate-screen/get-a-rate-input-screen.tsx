@@ -106,7 +106,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const [volume, updateVolume] = useState('')
   const currentRef: any[] = []
 
-  const renderRow = (label, value, onUpdate) => {
+  const renderRow = (label, value, onUpdate, keyboardType = 'default') => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={RENDER_CONTAINER_TEXT}>
@@ -118,6 +118,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             onChangeText={(text) => onUpdate(text)}
             autoCapitalize={"none"}
             mainStyle={{}}
+            keyboardType={keyboardType}
             inputStyle={VALUE}
             value={value} />
         </View>
@@ -125,7 +126,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     )
   }
 
-  const renderUnitRow = (key, label, value, onUpdate) => {
+  const renderUnitRow = (key, label, value, onUpdate, keyboardType = 'default') => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={[RENDER_CONTAINER_TEXT, FLEX]}>
@@ -156,6 +157,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               mainStyle={{}}
               inputStyle={VALUE}
               value={value}
+              keyboardType={keyboardType}
               blurOnSubmit={label == "getARateScreen.volume" ? true : false}
               onChangeText={(text) => onUpdate(text)}
               returnKeyType={'next'}
@@ -188,7 +190,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           />
           <View style={UPPER_VIEW_INNER_CONTAINER}>
             <Text style={[FONTFAMILY]} tx={'getARateScreen.deliveryAddress'} />
-            {renderRow("getARateScreen.postCode", postCode, updatePostCode)}
+            {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
             <View style={BUTTON_VIEW_STYLE}>
               <Button style={BUTTON_STYLE}>
                 <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND_STYLE}>
@@ -202,12 +204,12 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         <View style={{}}>
           <Text style={[FONTFAMILY]} tx={'getARateScreen.details'} />
           {renderUnitRow(0, "getARateScreen.unitOfMeasure", unitOfMeasure, updateUnitOfMeasure)}
-          {renderUnitRow(0, "getARateScreen.quantity", quantity, updateQuantity)}
-          {renderUnitRow(1, "getARateScreen.totalWeight", totalWeight, updateTotalWeight)}
-          {renderUnitRow(2, "getARateScreen.length", length, updateLength)}
-          {renderUnitRow(3, "getARateScreen.width", width, updateWidth)}
-          {renderUnitRow(4, "getARateScreen.height", height, updateHeight)}
-          {renderUnitRow(5, "getARateScreen.volume", volume, updateVolume)}
+          {renderUnitRow(0, "getARateScreen.quantity", quantity, updateQuantity, 'decimal-pad')}
+          {renderUnitRow(1, "getARateScreen.totalWeight", totalWeight, updateTotalWeight, 'decimal-pad')}
+          {renderUnitRow(2, "getARateScreen.length", length, updateLength, 'decimal-pad')}
+          {renderUnitRow(3, "getARateScreen.width", width, updateWidth, 'decimal-pad')}
+          {renderUnitRow(4, "getARateScreen.height", height, updateHeight, 'decimal-pad')}
+          {renderUnitRow(5, "getARateScreen.volume", volume, updateVolume, 'decimal-pad')}
         </View>
       </ScrollView>
       <BottomButton
