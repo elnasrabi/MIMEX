@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
+import { useFocusEffect } from '@react-navigation/native';
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
