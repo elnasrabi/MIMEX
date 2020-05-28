@@ -214,13 +214,13 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
-  - react-native-camera (3.26.0):
+  - react-native-camera (3.25.0):
     - React
-    - react-native-camera/RCT (= 3.26.0)
-    - react-native-camera/RN (= 3.26.0)
-  - react-native-camera/RCT (3.26.0):
+    - react-native-camera/RCT (= 3.25.0)
+    - react-native-camera/RN (= 3.25.0)
+  - react-native-camera/RCT (3.25.0):
     - React
-  - react-native-camera/RN (3.26.0):
+  - react-native-camera/RN (3.25.0):
     - React
   - react-native-google-maps (0.27.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
@@ -230,7 +230,7 @@ PODS:
     - React
   - react-native-maps (0.27.1):
     - React
-  - react-native-netinfo (5.9.0):
+  - react-native-netinfo (5.8.1):
     - React
   - react-native-pdf (6.1.2):
     - React
@@ -239,6 +239,11 @@ PODS:
   - react-native-signature-capture (0.4.10):
     - React
   - react-native-splash-screen (3.2.0):
+    - React
+  - react-native-video (5.0.2):
+    - React
+    - react-native-video/Video (= 5.0.2)
+  - react-native-video/Video (5.0.2):
     - React
   - React-RCTActionSheet (0.61.5):
     - React-Core/RCTActionSheetHeaders (= 0.61.5)
@@ -284,6 +289,8 @@ PODS:
   - RNCAsyncStorage (1.10.0):
     - React
   - RNCMaskedView (0.1.5):
+    - React
+  - RNDateTimePicker (2.4.0):
     - React
   - RNGestureHandler (1.6.1):
     - React
@@ -334,6 +341,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-signature-capture (from `../node_modules/react-native-signature-capture`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -349,6 +357,7 @@ DEPENDENCIES:
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNLocalize (from `../node_modules/react-native-localize`)
@@ -359,7 +368,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - boost-for-react-native
     - Google-Maps-iOS-Utils
     - GoogleMaps
@@ -422,6 +431,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-signature-capture"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -450,6 +461,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -477,11 +490,11 @@ SPEC CHECKSUMS:
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleMaps: 32ca02de09de357a10ac773f2c70f1986751392d
   IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
-  Permission-Camera: 402f1ac15b962448d75e8cf2039d235e7bc09a85
-  Permission-LocationAlways: 48085521ad224052f5b25c3fdc6d0e996d162428
-  Permission-LocationWhenInUse: 7449010ca36a26dbe6b10e69e9d6ebcab0222c42
-  Permission-Motion: f1d0e65296b9a741ac3493a86c2330b8c06b04b4
-  Permission-PhotoLibrary: d98d4dcf5da6bb811fac27abdd441e6a2facc53c
+  Permission-Camera: 3ed116545ee8806cd706bca0e1a9a2c3cd36c6bd
+  Permission-LocationAlways: 11a49dcb06b6772f3d8b08ef01e18a1ece1d6375
+  Permission-LocationWhenInUse: fd5f96c0bb38fef7ce36f450ac45c82906e6eb70
+  Permission-Motion: 883361cc8857343dc3889dc1007e0eb05025fe8e
+  Permission-PhotoLibrary: 56e71522b008d9abca150680c1f8050f267cdffb
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
@@ -491,15 +504,16 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-camera: 2b74be8edc1103c4c46d1f4e5f41723d9ff052cc
+  react-native-camera: 27613bdafdeffeb498e249aebf8c4d501aa7eef7
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
-  react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
+  react-native-image-picker: 668e72d0277dc8c12ae90e835507c1eddd2e4f85
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
-  react-native-netinfo: 7b3c53674ea611b26a7788821f137c6d9d3a038b
+  react-native-netinfo: ae21a6ab293d6c75af0c17c562ef37a931218886
   react-native-pdf: 7d76a6619f76a6ebfb2f82a4f2feeb17826ba8b4
-  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
-  react-native-signature-capture: 331c29f07b4f19ccfe63c5247a956b203abb500f
+  react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
+  react-native-signature-capture: 6dae6c8c9f085536d4ba305e15c01f0a3a49373e
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
+  react-native-video: 961749da457e73bf0b5565edfbaffc25abfb8974
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
@@ -510,19 +524,20 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  ReactNativeKeyboardManager: 6c42da02c08b7eb16440f9fdc1c78f776a11cdca
+  ReactNativeKeyboardManager: b657632ca39d78a409949835d92fc3bed537c826
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNCAsyncStorage: 6d99641f8e6f15d169d695d8ef184bf187903f11
-  RNCMaskedView: dd13f9f7b146a9ad82f9b7eb6c9b5548fcf6e990
+  RNCAsyncStorage: b34d2399d3e25db01d5b881949b503bd3c224d57
+  RNCMaskedView: c8b53164b85ecf94c9a44d67082df0f03c1f74cc
+  RNDateTimePicker: 39a3987baca0848368f71f02c45bf6e1e61041c0
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNKeychain: a5623de13ec5378bfb8035422e3dee4fa538660d
-  RNLocalize: b6df30cc25ae736d37874f9bce13351db2f56796
-  RNPermissions: 3635b407c15f2fe591bd2101c8f20aa0912caba8
+  RNLocalize: fc27ee5878ce5a3af73873fb2d8e866e0d1e6d84
+  RNPermissions: 8ca17fd6c822eea589fe84709d9426e05cc39c39
   RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
   RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: ed3380085fb52317deaa76886c03cbf62208c30f
+PODFILE CHECKSUM: 9b6d0ee5d517da9123a1da1045454ab1d58e8dfd
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

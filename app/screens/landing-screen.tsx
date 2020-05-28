@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler } from "react-native"
-import { ParamListBase, useFocusEffect } from "@react-navigation/native"
+import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../components"
 import { color } from "../theme"
@@ -125,7 +125,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
       case "landingScreen.safetyCheck":
         return props.navigation.navigate('SafetyStack')
       case "landingScreen.getRate":
-        // return props.navigation.navigate('')
+        return props.navigation.navigate('GetARateStack')
         return true
       default: return true
     }

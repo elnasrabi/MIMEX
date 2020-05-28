@@ -18,7 +18,14 @@ import { SafetyCheckDetail } from "../screens/safety-check-screen/safety-check-d
 import { ConsignmentSuccess } from "../screens/consignment-screen/consignment-success-screen"
 import { ConsignmentSpecial } from "../screens/consignment-screen/consignment-special-screen"
 import { PDFViewer } from "../screens/pdf-view/pdf-viewer-screen"
+<<<<<<< HEAD
 import { SignatureView } from "../screens/signature-view-screen/signature-view-screen"
+=======
+import { GetARate } from "../screens/get-a-rate-screen/get-a-rate-input-screen";
+import { GetARateList } from "../screens/get-a-rate-screen/get-a-rate-list-screen";
+import { HelpScreen } from "../screens/help-screen/help-screen";
+
+>>>>>>> 07fae0537c3a691f361b754859b5076192fe154f
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator<PrimaryParamList>()
@@ -34,6 +41,20 @@ const SafetyStack = () => {
     >
       <Stack.Screen name="SafetyCheck" component={SafetyCheck} />
       <Stack.Screen name="SafetyCheckDetail" component={SafetyCheckDetail} />
+    </Stack.Navigator>
+  )
+}
+const GetARateStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="GetARate" component={GetARate} />
+      <Stack.Screen name="GetARateList" component={GetARateList} />
     </Stack.Navigator>
   )
 }
@@ -86,10 +107,12 @@ export function PrimaryNavigator() {
     >
       <Drawer.Screen name="LandingStack" component={LandingStack} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
+      <Drawer.Screen name="GetARateStack" component={GetARateStack} />
       <Drawer.Screen name="MyList" component={MyList} />
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="ConsignmentStack" component={ConsignmentStack} />
+      <Drawer.Screen name="HelpScreen" component={HelpScreen} />
     </Drawer.Navigator>
   )
 }
