@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, Platform, FlatList, View, Text, TextStyle, Alert, ActivityIndicator } from "react-native"
+import { ViewStyle, Platform, FlatList, View, Text, TextStyle, Dimensions } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
@@ -9,6 +9,7 @@ import { MenuButton } from "../../components/header/menu-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import Video from 'react-native-video';
 import { icons } from "../../components/icon/icons";
+import VideoPlayer from 'react-native-video-controls';
 
 export interface HelpScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -44,8 +45,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
     { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' },
     { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' }
   ]
-  let videoRef: any
-  const [retry, setRetry] = useState(true)
+  const [fullScreen, setFullScreen] = useState(false)
   const renderItem = (item, index) => {
     return (
       <View style={RENDER_ITEM_CONTAINER} key={index}>
@@ -60,35 +60,48 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
       </View>
     )
   }
+
+  const onEnterFullScreen = () => {
+    return setFullScreen(true)
+  }
+  const onExitFullScreen = () => {
+    return setFullScreen(false)
+  }
+  let VideoRef: any
   const renderHeader = () => {
     return (
-      <Video
-        source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" }}   // Can be a URL or a local file.
-        // source={icons.demoVideo}   // Can be a URL or a local file.
-        onBuffer={() => <ActivityIndicator size="small" color="white" style={{ zIndex: 5 }} />}                // Callback when remote video is buffering
-        onError={(error) => console.tron.log(error)}               // Callback when video cannot be loaded
-        style={{ height: 200, backgroundColor: 'black' }}
-        onLoadStart={(el) => console.tron.log('onLOadStart', el)}
-        onLoadEnd={() => console.tron.log('onLOadend')}
-        onLoad={(el) => console.tron.log('onLOad', el)}
-        repeat={true}
-      />
+      <View style={[FLATLIST_STYLE, fullScreen ? { height: 300 } : { height: 250 }]}>
+        <VideoPlayer
+          ref={(ref) => VideoRef = ref}
+          source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" }}   // Can be a URL or a local file.
+          // source={icons.demoVideo}   // Can be a URL or a local file.
+          style={[fullScreen ? { backgroundColor: 'black', width: '100%' } : { height: 200, backgroundColor: 'black' }]}
+          videoStyle={{ width: '100%' }}
+          onEnterFullscreen={() => onEnterFullScreen()}
+          onExitFullscreen={() => onExitFullScreen()}
+          disableBack={true}
+          toggleResizeModeOnFullscreen={false}
+          resizeMode={'contain'}
+        />
+      </View>
     )
   }
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <MenuButton
+    <Screen style={[ROOT, fullScreen ? { backgroundColor: 'black', justifyContent: "center" } : {}]} statusBar={fullScreen ? 'light-content' : 'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed" backgroundColor={fullScreen ? "black" : ""}>
+      {fullScreen ? null : (<MenuButton
         title={"helpScreen.header"}
         onPress={handleDrawer} />
-
-      <FlatList
-        data={flatListdata}
-        renderItem={({ item, index }) => renderItem(item, index)}
-        style={FLATLIST_STYLE}
-        keyExtractor={(item, index) => index.toString()}
-        ListHeaderComponent={() => renderHeader()}
-      />
+      )}
+      {renderHeader()}
+      {fullScreen ? null :
+        <FlatList
+          data={flatListdata}
+          renderItem={({ item, index }) => renderItem(item, index)}
+          style={{ padding: 10 }}
+          keyExtractor={(item, index) => index.toString()}
+        // ListHeaderComponent={() => renderHeader()}
+        />}
     </Screen>
 
   )
