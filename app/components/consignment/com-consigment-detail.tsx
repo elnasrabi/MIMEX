@@ -77,7 +77,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentId} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
@@ -91,7 +91,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} text={props.data.consignmentItems[0].totalLineItemLabels} preset={"normal"} />
+                <Text style={TEXT_VALUE} text={props.data.consignmentItems[0].totalLineItemLabels[0]} preset={"normal"} />
               </View>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
@@ -133,7 +133,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentId} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />

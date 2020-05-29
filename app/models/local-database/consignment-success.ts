@@ -14,6 +14,7 @@ export default class ConsignmentSuccess extends Model {
   @field("signBy") signBy;
   @field("signImage") signImage;
   @field("date") date;
+  @field("synced") synced;
 
   // async addConsignment(body) {
   //   return this.collections.get("consignmentSuccess").create(consignmentSuccess => {

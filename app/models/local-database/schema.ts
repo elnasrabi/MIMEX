@@ -15,7 +15,8 @@ export const mySchema = appSchema({
         { name: "image", type: "string" },
         { name: "signBy", type: "string" },
         { name: "signImage", type: "string" },
-        { name: "date", type: "string" }
+        { name: "date", type: "string" },
+        { name: "synced", type: "boolean" }
       ]
     }),
   ]
