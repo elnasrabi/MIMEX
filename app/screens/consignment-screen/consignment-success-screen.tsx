@@ -138,7 +138,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [signText, onSignText] = useState("")
   const [random, setRandom] = useState(0)
   const [isValidSignImage, onSetValidSignImage] = useState(true)
-
+  let isConsignmentSaved = false
   const { isSuccess } = props.route.params
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -214,6 +214,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       // const post = await consignmentSuccess.query().fetch()
       const post = await consignmentSuccess.query(Q.where("consignmentNumber", consignmentNumber)).fetch()
       console.log(post)
+      if (post && post[0].consignmentNumber === consignmentNumber) {
+        isConsignmentSaved = true
+      }
     })
   }
 
@@ -255,7 +258,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
+              <Text preset={"normal"} style={DATE_TEXT} text={new Date().toLocaleString()} />
             </View>
             {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 
@@ -297,8 +300,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           leftText={"common.save"}
           rightText={"common.cancel"}
           onRightPress={goBack}
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          onLeftPress={onSave} />
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        // onLeftPress={onSave} 
+        />
       </View>
     </Screen >
   )

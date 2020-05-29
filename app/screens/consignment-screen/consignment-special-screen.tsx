@@ -148,7 +148,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
+              <Text preset={"normal"} style={DATE_TEXT} text={new Date().toLocaleString()} />
             </View>
 
             <View style={CAMERA_VIEW}>
