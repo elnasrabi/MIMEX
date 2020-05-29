@@ -77,10 +77,10 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
     return (
       <View style={RENDER_SUB_ROW_CONTAINER}>
         <View style={RENDER_SUB_ROW_TEXTVIEW_STYLE}>
-          {displayText ? <Text style={[FONTFAMILY]} tx={tx} /> : null}
+          {displayText ? <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={tx} /> : null}
         </View>
         <View style={RENDER_SUB_ROW_VALUE_VIEW_STYLE}>
-          <Text style={[FONTFAMILY]}>{displayText ? value : `- ${value}`}</Text>
+          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{displayText ? value : `- ${value}`}</Text>
         </View>
       </View>
     )
@@ -90,10 +90,10 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
     return (
       <View style={RENDER_SUB_ROW_CONTAINER}>
         <View style={RENDER_SUB_RATE_ROW_TEXTVIEW_STYLE}>
-          <Text tx={tx} style={[FONTFAMILY]} />
+          <Text tx={tx} style={[FONTFAMILY, { color: color.palette.black }]} />
         </View>
         <View style={RENDER_SUB_RATE_ROW_TEXTVIEW_STYLE}>
-          <Text style={[FONTFAMILY]}>{value}</Text>
+          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value}</Text>
         </View>
       </View>
     )
@@ -138,6 +138,7 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
         onLeftPress={() => goToGetARate()}
+        onRightPress={() => goToGetARate()}
         leftText={"getARateListScreen.new"}
         rightText={"common.cancel"} />
     </Screen >

@@ -86,7 +86,13 @@ const INPUT_STYLE_ANDROID: TextStyle = {
   paddingLeft: 5,
   fontFamily: typography.secondary
 }
-
+const SEPERATOR_LINE: ViewStyle = {
+  height: 2,
+  backgroundColor: color.palette.black,
+  width: '100%',
+  marginBottom: 10,
+  borderRadius: 5
+}
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   const dropDownData = [
@@ -110,7 +116,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={RENDER_CONTAINER_TEXT}>
-          <Text style={[FONTFAMILY, { color: color.palette.textGray }]} tx={label} />
+          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
         <View style={RENDER_CONTAINER_TEXTINPUT}>
           <TextField
@@ -130,7 +136,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={[RENDER_CONTAINER_TEXT, FLEX]}>
-          <Text style={[FONTFAMILY, { color: color.palette.textGray }]} tx={label} />
+          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
         <View style={FLEX}>
           {label == 'getARateScreen.unitOfMeasure' ?
@@ -171,6 +177,9 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const gotoRateListScreen = () => {
     return props.navigation.navigate('GetARateList')
   }
+  const gotoHomeScreen = () => {
+    return props.navigation.navigate('Home')
+  }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
@@ -182,14 +191,16 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
       <ScrollView contentContainerStyle={SCROLL_CONTAINER_STYLE} style={SCROLLVIEW_STYLE}>
         <View style={UPPER_VIEW_CONTAINER}>
-          <Text style={[FONTFAMILY]} tx={'getARateScreen.pickUpAddress'} />
+          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
+          <View style={SEPERATOR_LINE} />
           <DropdownPicker
             dropDownData={dropDownData}
             selectedValue={pickUpAddress}
             onValueChange={(value) => updatePckUpAddress(value)}
           />
           <View style={UPPER_VIEW_INNER_CONTAINER}>
-            <Text style={[FONTFAMILY]} tx={'getARateScreen.deliveryAddress'} />
+            <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
+            <View style={SEPERATOR_LINE} />
             {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
             <View style={BUTTON_VIEW_STYLE}>
               <Button style={BUTTON_STYLE}>
@@ -202,7 +213,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           </View>
         </View>
         <View style={{}}>
-          <Text style={[FONTFAMILY]} tx={'getARateScreen.details'} />
+          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.details'} />
+          <View style={[SEPERATOR_LINE, { width: '97%' }]} />
           {renderUnitRow(0, "getARateScreen.unitOfMeasure", unitOfMeasure, updateUnitOfMeasure)}
           {renderUnitRow(0, "getARateScreen.quantity", quantity, updateQuantity, 'decimal-pad')}
           {renderUnitRow(1, "getARateScreen.totalWeight", totalWeight, updateTotalWeight, 'decimal-pad')}
@@ -216,6 +228,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
         onLeftPress={() => gotoRateListScreen()}
+        onRightPress={() => gotoHomeScreen()}
         leftText={"getARateScreen.submit"}
         rightText={"common.cancel"} />
     </Screen >

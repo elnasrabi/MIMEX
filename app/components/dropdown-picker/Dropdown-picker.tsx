@@ -29,6 +29,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
     borderColor: color.palette.lightGrey,
     borderWidth: 1,
     borderRadius: 4,
+    backgroundColor: color.palette.white,
     height: 40,
     justifyContent: 'center'
   }
@@ -52,7 +53,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
       <RNPickerSelect
         style={{
           placeholder: {
-            fontSize: 15
+            fontSize: 15,
           },
           inputIOS: inputStyleIOS ? inputStyleIOS : INPUT_STYLE_IOS,
           inputAndroid: inputStyleAndroid ? inputStyleAndroid : INPUT_STYLE_ANDROID

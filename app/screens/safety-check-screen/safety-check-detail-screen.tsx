@@ -59,6 +59,8 @@ const COMMENT_TEXT_STYLE: TextStyle = {
 }
 const TEXTFIELD_INPUT_STYLE: TextStyle = {
   height: 100,
+  color: color.palette.link,
+  textAlignVertical: 'top'
 }
 const TEXT_FONT_STYLE: TextStyle = {
   fontFamily: typography.secondary
