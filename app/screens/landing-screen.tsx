@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { useFocusEffect } from '@react-navigation/native';
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler } from "react-native"
+import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler, Keyboard } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, Icon } from "../components"
@@ -118,6 +118,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
             connoteNumber: searchValue
           }
         }
+        Keyboard.dismiss()
         consignmentStore.consignmentSearch(authStore.authorization, requestData)
       }
     }
