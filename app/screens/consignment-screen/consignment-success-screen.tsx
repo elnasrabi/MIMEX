@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -23,10 +23,19 @@ import { database } from "../../app"
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
-const dropDownData = [
-  { label: 'Despatched', value: 'despatched' },
-  { label: 'Not Allowed', value: 'notAllowed' },
-  { label: 'Done', value: 'done' },
+const statusFail = [
+  { label: 'Receiver Closed', value: 'receiverClosed' },
+  { label: 'Refused Delivery', value: 'refusedDelivery' },
+  { label: 'Incorrect Delivery Address', value: 'incorrectDeliveryAddress' },
+  { label: 'No One Home', value: 'noOneHome' },
+  { label: 'Unable to Deliver Long Wait Time', value: 'unableToDeliver' },
+]
+
+const statusSuccess = [
+  { label: 'Delivered', value: 'delivered' },
+  { label: 'Picked Up', value: 'pickedUp' },
+  { label: 'At Depot', value: 'atDepot' },
+  { label: 'Handed to On Forwarder', value: 'handed' },
 ]
 const ROOT: ViewStyle = {
   flex: 1,
@@ -53,12 +62,8 @@ const options = {
   },
 }
 
-const SIGN_INPUT: ViewStyle = {
-  borderColor: color.palette.darkText,
-  borderWidth: 2
-}
 const SIGN_LABEL: TextStyle = {
-  color: color.palette.link,
+  color: color.palette.darkText,
   fontFamily: typography.secondary,
   fontSize: 18
 }
@@ -149,7 +154,7 @@ const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
   const SIGN_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
-  const { consignmentStore } = useStores()
+  const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
@@ -163,6 +168,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [random, setRandom] = useState(0)
   const [isValidSignImage, onSetValidSignImage] = useState(true)
 
+  const { isSuccess } = props.route.params
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getSavedData()
@@ -181,9 +187,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName('Consignment Photo')
-      setImageUri(response.uri)
-      onSetValidFile(true)
+      if (!response.didCancel) {
+        setFileName('Consignment Photo')
+        setImageUri(response.uri)
+        onSetValidFile(true)
+      }
     })
   }
   const onImageView = () => {
@@ -195,39 +203,46 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false)
-    // showAlert("", "consignmentSuccess.offlineDataSaveMessage")
-    if (isConnected) {
-      // showAlert("consignmentSuccess.save")
+    if (!isConnected) {
+      // Call API
     } else {
-      showAlert("", "consignmentSuccess.offlineDataSaveMessage")
-      // database.action(async () => {
-      //   const consignmentSuccess = database.collections.get("consignmentSuccess")
-      //   await consignmentSuccess.query().destroyAllPermanently()
-      //   await consignmentSuccess.create(consignmentSuccess => {
-      //     consignmentSuccess.status = selectedValue
-      //     consignmentSuccess.image = imageUri
-      //     consignmentSuccess.signBy = signText
-      //     consignmentSuccess.signImage = signUri
-      //     consignmentSuccess.date = new Date().toDateString()
-      //   })
-      // })
+      if (!selectedValue) {
+        onSetValidStatus(false)
+      } else if (!fileName) {
+        onSetValidFile(false)
+      } else if (!signText) {
+        setValidSignText(false)
+      } else if (!consignmentStore.signedSaved) {
+        onSetValidSignImage(false)
+      } else {
+        database.action(async () => {
+          const consignmentSuccess = database.collections.get("consignmentSuccess")
+          await consignmentSuccess.query().destroyAllPermanently()
+          const data = await consignmentSuccess.create(consignmentSuccess => {
+            consignmentSuccess.customerName = "John jacob"
+            consignmentSuccess.userName = authStore.userData[0].loginName[0]
+            consignmentSuccess.consignmentNumber = consignment.consignmentNumber[0]
+            consignmentSuccess.itemsCount = consignment.consignmentItems[0].totalLineItemLabels[0]
+            consignmentSuccess.status = selectedValue
+            consignmentSuccess.image = imageUri
+            consignmentSuccess.signBy = signText
+            consignmentSuccess.signImage = signUri
+            consignmentSuccess.date = new Date().toDateString()
+            consignmentSuccess.synced = false
+            console.log(consignmentSuccess)
+          })
+          console.log(data)
+          showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+        })
+      }
     }
-    // if (!selectedValue) {
-    //   onSetValidStatus(false)
-    // } else if (!fileName) {
-    //   onSetValidFile(false)
-    // } else if (!signText) {
-    //   setValidSignText(false)
-    // } else if (!consignmentStore.signedSaved) {
-    //   onSetValidSignImage(false)
-    // } else {
-
-    // }
   }
   async function getSavedData() {
     database.action(async () => {
       const consignmentSuccess = database.collections.get("consignmentSuccess")
-      const newMovie = await consignmentSuccess.query().fetch()
+      const consignment = consignmentStore.consignmentDetail
+      const post = await consignmentSuccess.find(consignment.consignmentNumber.toString())
+      console.log(post)
     })
   }
 
@@ -278,7 +293,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                       <Image style={PICKER_ICON} source={icons.downArrow} />
                     </View>)
                   }
-                  items={dropDownData}
+                  items={isSuccess ? statusSuccess : statusFail}
                 />
               </View>
               <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
@@ -297,7 +312,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
             <TextField
               labelTx={"consignmentSuccess.sign"}
-              inputStyle={SIGN_INPUT}
               labelStyle={SIGN_LABEL}
               errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
               onChangeText={text => onChangeText(text)}
