@@ -16,8 +16,9 @@ export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const TEXTINPUT_MAIN_VIEW: ViewStyle = {
-  flex: 1, width: "100%"
+const textInputView: ViewStyle = {
+  flex: 1,
+  width: "100%"
 }
 
 const TITLE: ViewStyle = {
@@ -42,7 +43,7 @@ const VALUE: TextStyle = {
   fontWeight: "bold",
   fontFamily: typography.secondary
 }
-const EMAIL_TEXT_STYLE: TextStyle = {
+const emailText: TextStyle = {
   color: color.palette.black,
   flex: 1,
   fontSize: 16,
@@ -61,11 +62,11 @@ const ROW: ViewStyle = {
   marginEnd: 20,
   alignItems: 'center'
 }
-const SCROLLVIEW_STYLE: ViewStyle = {
+const SCROLLVIEW: ViewStyle = {
   marginBottom: 10,
   marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
 }
-const EMAIL_VIEW_STYLE: ViewStyle = {
+const emailView: ViewStyle = {
   marginStart: 20,
   marginEnd: 20,
   marginTop: 20
@@ -97,7 +98,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
                 editable={false}
                 onChangeText={(text) => onUpdate(text)}
                 autoCapitalize={"none"}
-                mainStyle={TEXTINPUT_MAIN_VIEW}
+                mainStyle={textInputView}
                 inputStyle={VALUE}
                 value={moment(date).format('DD-MMM-YYYY').toString()} />
             </View>
@@ -125,7 +126,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
                 }
               }}
               autoCapitalize={"none"}
-              mainStyle={TEXTINPUT_MAIN_VIEW}
+              mainStyle={textInputView}
               inputStyle={VALUE}
               value={value}
               keyboardType={keyboardType}
@@ -159,11 +160,11 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
       <MenuButton
         title={"userSetting.header"}
         onPress={handleDrawer} />
-      <ScrollView style={SCROLLVIEW_STYLE}>
-        <View style={EMAIL_VIEW_STYLE}>
-          <Text extraText={":"} style={EMAIL_TEXT_STYLE} tx={"userSetting.email"} />
+      <ScrollView style={SCROLLVIEW}>
+        <View style={emailView}>
+          <Text extraText={":"} style={emailText} tx={"userSetting.email"} />
           <View >
-            <TextField mainStyle={TEXTINPUT_MAIN_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
+            <TextField mainStyle={textInputView} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
           </View>
         </View>
 

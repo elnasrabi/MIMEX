@@ -23,27 +23,30 @@ const FLATLIST_STYLE: ViewStyle = {
   margin: 10,
   marginTop: Platform.OS == 'android' ? 50 : isIphoneX() ? 0 : 23,
 }
-const RENDER_SUB_RATE_ROW_TEXTVIEW_STYLE: ViewStyle = {
+const subRateRowView: ViewStyle = {
   flex: 1
 }
-const RENDER_SUB_ROW_VALUE_VIEW_STYLE: ViewStyle = {
+const subRowValue: ViewStyle = {
   flex: 0.7
 }
-const RENDER_SUB_ROW_TEXTVIEW_STYLE: ViewStyle = {
+const subRowLabel: ViewStyle = {
   flex: 0.3,
   justifyContent: "center"
 }
-const RENDER_SUB_ROW_CONTAINER: ViewStyle = {
+const subRowContainer: ViewStyle = {
   flexDirection: "row",
   marginTop: 10
 }
-const RENDER_ITEM_CONTAINER: ViewStyle = {
+const mainContainer: ViewStyle = {
   backgroundColor: color.palette.listBG,
   borderWidth: 1,
   padding: 5,
   paddingTop: 10,
   borderRadius: 5,
   marginTop: 15
+}
+const subContainer: ViewStyle = {
+  marginBottom: 20
 }
 
 export const GetARateList: FunctionComponent<GetARateListProps> = observer((props) => {
@@ -75,11 +78,11 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
   ]
   const renderSubRow = (tx, value, displayText = true) => {
     return (
-      <View style={RENDER_SUB_ROW_CONTAINER}>
-        <View style={RENDER_SUB_ROW_TEXTVIEW_STYLE}>
+      <View style={subRowContainer}>
+        <View style={subRowLabel}>
           {displayText ? <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={tx} /> : null}
         </View>
-        <View style={RENDER_SUB_ROW_VALUE_VIEW_STYLE}>
+        <View style={subRowValue}>
           <Text style={[FONTFAMILY, { color: color.palette.link }]}>{displayText ? value : `- ${value}`}</Text>
         </View>
       </View>
@@ -88,11 +91,11 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
 
   const renderSubRateRow = (tx, value) => {
     return (
-      <View style={RENDER_SUB_ROW_CONTAINER}>
-        <View style={RENDER_SUB_RATE_ROW_TEXTVIEW_STYLE}>
+      <View style={subRowContainer}>
+        <View style={subRateRowView}>
           <Text tx={tx} style={[FONTFAMILY, { color: color.palette.black }]} />
         </View>
-        <View style={RENDER_SUB_RATE_ROW_TEXTVIEW_STYLE}>
+        <View style={subRateRowView}>
           <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value}</Text>
         </View>
       </View>
@@ -102,9 +105,11 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
 
   const renderItem = (item, index) => {
     return (
-      <View key={index} style={RENDER_ITEM_CONTAINER}>
-        <Text style={[FONTFAMILY]}>{item.header1}</Text>
-        {item.header2 ? <Text style={[FONTFAMILY, { marginBottom: 20 }]}>{item.header2}</Text> : null}
+      <View key={index} style={mainContainer}>
+        <View style={subContainer}>
+          <Text style={[FONTFAMILY]}>{item.header1}</Text>
+          {item.header2 ? <Text style={[FONTFAMILY]}>{item.header2}</Text> : null}
+        </View>
         {renderSubRow("getARateListScreen.carrier", item.carrier)}
         {renderSubRow("getARateListScreen.service", item.service)}
         {renderSubRow("getARateListScreen.header", item.serviceType, false)}

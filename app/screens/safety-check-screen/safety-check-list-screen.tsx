@@ -24,43 +24,43 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
     marginLeft: '4%',
     marginTop: 20,
   }
-  const BOTTOM_BUTTON_STYLE: ViewStyle = {
+  const BOTTOM_BUTTON: ViewStyle = {
     marginTop: 10
   }
   const MAIN_VIEW: ViewStyle = {
     marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 10 : 33
   }
-  const SEARCH_VIEW_STYLE: ViewStyle = {
+  const SEARCH_VIEW: ViewStyle = {
     marginTop: "10%"
   }
-  const SEARCH_INPUT_STYLE: ViewStyle = {
+  const SEARCH_INPUT: ViewStyle = {
     width: '50%',
     marginVertical: 20,
     alignSelf: "center"
   }
-  const BUTTON_VIEW_STYLE: ViewStyle = {
+  const BUTTON_VIEW: ViewStyle = {
     height: 50
   }
-  const RENDER_CONTAINER: ViewStyle = {
+  const subContainer: ViewStyle = {
     marginBottom: 10,
     flexDirection: "row",
     justifyContent: 'space-between'
   }
-  const RENDER_DATE_VIEW: ViewStyle = {
+  const dateStyle: ViewStyle = {
     flex: 0.4
   }
-  const RENDER_LINK_VIEW: ViewStyle = {
+  const linkStyle: ViewStyle = {
     flex: 0.7,
     alignItems: 'flex-end',
     paddingRight: 5
   }
-  const RESULT_TEXT_STYLE: TextStyle = {
+  const resultText: TextStyle = {
     color: color.palette.darkText,
     fontSize: 22,
     alignSelf: "center",
     marginTop: 35
   }
-  const RENDER_TEXT_STYLE: TextStyle = {
+  const fontStyle: TextStyle = {
     fontSize: 15,
     fontFamily: typography.secondary
   }
@@ -90,14 +90,14 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
 
   const renderItem = ({ item, index }) => {
     return (
-      <View key={index} style={RENDER_CONTAINER} >
-        <View style={RENDER_DATE_VIEW}>
-          <Text style={[RENDER_TEXT_STYLE, { color: color.palette.darkText }]} >{item.date}</Text>
+      <View key={index} style={subContainer} >
+        <View style={dateStyle}>
+          <Text style={[fontStyle, { color: color.palette.darkText }]} >{item.date}</Text>
         </View>
         <TouchableOpacity
-          style={RENDER_LINK_VIEW}
+          style={linkStyle}
           onPress={() => gotoSafetyDetail()}>
-          <Text style={[RENDER_TEXT_STYLE, { color: color.palette.link }]} >{item.link}</Text>
+          <Text style={[fontStyle, { color: color.palette.link }]} >{item.link}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -119,12 +119,12 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         <SearchView
           value={searchBox}
           onChangeText={(text) => updateSearchBox(text)}
-          containerStyle={SEARCH_VIEW_STYLE}
-          searchInputViewStyle={SEARCH_INPUT_STYLE}
+          containerStyle={SEARCH_VIEW}
+          searchInputViewStyle={SEARCH_INPUT}
           cameraIcon={false}
-          buttonStyle={BUTTON_VIEW_STYLE} />
+          buttonStyle={BUTTON_VIEW} />
 
-        <Text style={RESULT_TEXT_STYLE} tx={"safetyCheckScreen.results"} />
+        <Text style={resultText} tx={"safetyCheckScreen.results"} />
         <View style={FLEX_VIEW}>
           <FlatList
             style={FLATLIST_STYLE}
@@ -135,7 +135,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
           />
         </View>
         <BottomButton
-          bottomViewstyle={BOTTOM_BUTTON_STYLE}
+          bottomViewstyle={BOTTOM_BUTTON}
           onLeftPress={() => gotoSafetyDetail()}
           onRightPress={() => gotoHomeScreen()}
           leftImage={icons.blackButton2}

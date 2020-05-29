@@ -23,29 +23,29 @@ const CONTINUE: ViewStyle = {
 const FLATLIST_STYLE: ViewStyle = {
   marginVertical: 10
 }
-const RENDER_CONTAINER: ViewStyle = {
+const mainContainer: ViewStyle = {
   flexDirection: 'row',
   marginBottom: 10
 }
-const RENDER_CONSIGNMENT_DETAIL_VIEW: ViewStyle = {
+const consignmentDetail: ViewStyle = {
   flex: 1,
   flexDirection: 'row',
   justifyContent: "space-between",
   marginVertical: 5
 }
-const RENDER_CHECKBOX_VIEW: ViewStyle = {
+const checkBoxView: ViewStyle = {
   justifyContent: "center",
   alignItems: 'center',
   marginLeft: 5
 }
-const RENDER_INNER_CONTAINER: ViewStyle = {
+const subContainer: ViewStyle = {
   flex: 1,
   marginRight: 2,
   borderWidth: 1,
   padding: 3,
   backgroundColor: color.palette.listBG
 }
-const CHECKBOX_STYLE: ViewStyle = {
+const checkbox: ViewStyle = {
   height: 25,
   width: 25,
   borderColor: color.palette.black
@@ -57,19 +57,19 @@ const SEPERATOR_LINE: ViewStyle = {
   marginLeft: 10,
   borderRadius: 5
 }
-const SELECTALL_CHECKBOX_VIEW: ViewStyle = {
+const selecAllCheckBox: ViewStyle = {
   margin: 10,
   marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 10 : 33
 }
-const RENDER_ADDRESSS: ViewStyle = {
+const addressView: ViewStyle = {
   flex: 1,
   marginVertical: 5
 }
-const DESPATCH_TEXT_STYLE: TextStyle = {
+const dispatchStyle: TextStyle = {
   color: color.palette.link,
   fontFamily: typography.secondary
 }
-const RENDER_TEXT_STYLE: TextStyle = {
+const textStyle: TextStyle = {
   color: color.palette.black,
   fontFamily: typography.secondary
 }
@@ -106,29 +106,29 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const renderItem = ({ item, index }) => {
     return (
-      <View key={index} style={RENDER_CONTAINER}>
-        <View style={RENDER_CHECKBOX_VIEW}>
+      <View key={index} style={mainContainer}>
+        <View style={checkBoxView}>
           <Checkbox
             tx='MyList.empty'
-            outlineStyle={[CHECKBOX_STYLE, { marginLeft: 5 }]}
+            outlineStyle={[checkbox, { marginLeft: 5 }]}
             value={item.check}
             onToggle={() => { updateCheckBox(index) }}
           />
         </View>
-        <View style={RENDER_INNER_CONTAINER}>
-          <View style={RENDER_CONSIGNMENT_DETAIL_VIEW}>
+        <View style={subContainer}>
+          <View style={consignmentDetail}>
             <View style={CONTINUE}>
-              <Text style={RENDER_TEXT_STYLE}>ABCD123456</Text>
+              <Text style={textStyle}>ABCD123456</Text>
             </View>
             <View style={[CONTINUE, { alignItems: "flex-end" }]}>
-              <Text style={DESPATCH_TEXT_STYLE}>Despatched</Text>
+              <Text style={dispatchStyle}>Despatched</Text>
             </View>
           </View>
-          <View style={RENDER_ADDRESSS}>
-            <Text style={RENDER_TEXT_STYLE}>123 RED TREE STREET</Text>
+          <View style={addressView}>
+            <Text style={textStyle}>123 RED TREE STREET</Text>
           </View>
-          <View style={RENDER_ADDRESSS}>
-            <Text style={RENDER_TEXT_STYLE}>South Yarra</Text>
+          <View style={addressView}>
+            <Text style={textStyle}>South Yarra</Text>
           </View>
         </View>
       </View>
@@ -140,10 +140,10 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       <MenuButton
         title={"MyList.header"}
         onPress={handleDrawer} />
-      <View style={SELECTALL_CHECKBOX_VIEW}>
+      <View style={selecAllCheckBox}>
         <Checkbox
           tx='MyList.empty'
-          outlineStyle={CHECKBOX_STYLE}
+          outlineStyle={checkbox}
           value={toggleAll}
           onToggle={() => updateAllCheckBox(!toggleAll)} />
       </View>

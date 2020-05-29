@@ -20,22 +20,22 @@ const FONTFAMILY: TextStyle = {
 const ROOT: ViewStyle = {
   paddingBottom: 10
 }
-const SCROLLVIEW_STYLE: ViewStyle = {
+const scrollViewStyle: ViewStyle = {
   marginBottom: 10,
   marginTop: Platform.OS == 'android' ? 50 : isIphoneX() ? 10 : 33
 }
-const SCROLL_CONTAINER_STYLE: ViewStyle = {
+const scrollContainer: ViewStyle = {
   marginLeft: 10,
   width: '96%'
 }
-const UPPER_VIEW_CONTAINER: ViewStyle = {
+const upperContainer: ViewStyle = {
   width: '97%',
   paddingBottom: 20
 }
-const UPPER_VIEW_INNER_CONTAINER: ViewStyle = {
+const upperContainerSubView: ViewStyle = {
   marginTop: 20
 }
-const BUTTON_VIEW_STYLE: ViewStyle = {
+const BUTTON_VIEW: ViewStyle = {
   marginTop: 15,
   alignItems: 'flex-end',
   paddingRight: '6%'
@@ -43,24 +43,24 @@ const BUTTON_VIEW_STYLE: ViewStyle = {
 const BUTTON_STYLE: ViewStyle = {
   backgroundColor: 'transparent'
 }
-const IMAGE_BACKGROUND_STYLE: ViewStyle = {
+const IMAGE_BACKGROUND: ViewStyle = {
   justifyContent: 'center',
   borderRadius: 10,
   overflow: 'hidden',
   paddingHorizontal: 20,
   height: 40
 }
-const RENDER_CONTAINER_TEXTINPUT: ViewStyle = {
+const textFielfView: ViewStyle = {
   width: "60%"
 }
 const FLEX: ViewStyle = {
   flex: 1
 }
-const RENDER_CONTAINER: ViewStyle = {
+const containerView: ViewStyle = {
   flexDirection: 'row',
   justifyContent: 'space-between'
 }
-const RENDER_CONTAINER_TEXT: ViewStyle = {
+const containerText: ViewStyle = {
   justifyContent: 'flex-end',
   paddingBottom: 10
 }
@@ -98,11 +98,11 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
-      <View style={RENDER_CONTAINER}>
-        <View style={RENDER_CONTAINER_TEXT}>
+      <View style={containerView}>
+        <View style={containerText}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
-        <View style={RENDER_CONTAINER_TEXTINPUT}>
+        <View style={textFielfView}>
           <TextField
             autoCorrect={false}
             onChangeText={(text) => onUpdate(text)}
@@ -118,8 +118,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   const renderUnitRow = (key, label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
-      <View style={RENDER_CONTAINER}>
-        <View style={[RENDER_CONTAINER_TEXT, FLEX]}>
+      <View style={containerView}>
+        <View style={[containerText, FLEX]}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
         <View style={FLEX}>
@@ -174,8 +174,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         title={"getARateScreen.header"}
         onPress={handleDrawer} />
 
-      <ScrollView contentContainerStyle={SCROLL_CONTAINER_STYLE} style={SCROLLVIEW_STYLE}>
-        <View style={UPPER_VIEW_CONTAINER}>
+      <ScrollView contentContainerStyle={scrollContainer} style={scrollViewStyle}>
+        <View style={upperContainer}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
           <View style={SEPERATOR_LINE} />
           <DropdownPicker
@@ -184,13 +184,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             selectedValue={pickUpAddress}
             onValueChange={(value) => updatePckUpAddress(value)}
           />
-          <View style={UPPER_VIEW_INNER_CONTAINER}>
+          <View style={upperContainerSubView}>
             <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
             <View style={SEPERATOR_LINE} />
             {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
-            <View style={BUTTON_VIEW_STYLE}>
+            <View style={BUTTON_VIEW}>
               <Button style={BUTTON_STYLE}>
-                <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND_STYLE}>
+                <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND}>
                   <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
                 </ImageBackground>
               </Button>

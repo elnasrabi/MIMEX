@@ -33,50 +33,50 @@ const CHECKBOX_STYLE: ViewStyle = {
   width: 25,
   borderColor: color.palette.black
 }
-const RENDER_ROW_CONTAINER: ViewStyle = {
+const rowContainer: ViewStyle = {
   flexDirection: "row",
   justifyContent: "space-evenly",
   marginTop: 5
 }
-const RENDER_ROW_TEXT_VIEW: ViewStyle = {
+const lableStyle: ViewStyle = {
   flex: 0.7,
   alignItems: "flex-start"
 }
-const RENDER_ROW_DATA_VIEW: ViewStyle = {
+const dataStyle: ViewStyle = {
   flex: 1
 }
-const RENDER_ROW_TEXT_STYLE: TextStyle = {
+const lableText: TextStyle = {
   paddingLeft: '20%',
 }
-const RENDER_ROW_TEXT_DATA_STYLE: TextStyle = {
+const dataText: TextStyle = {
   color: color.palette.textGray
 }
-const RENDER_RADIO_BUTTON_TEXT_VIEW: TextStyle = {
+const radioButtonView: TextStyle = {
   paddingLeft: 5
 }
-const COMMENT_TEXT_STYLE: TextStyle = {
+const commentText: TextStyle = {
   marginTop: 15
 }
-const TEXTFIELD_INPUT_STYLE: TextStyle = {
+const textFieldInput: TextStyle = {
   height: 100,
   color: color.palette.link,
   textAlignVertical: 'top'
 }
-const TEXT_FONT_STYLE: TextStyle = {
+const fontStyle: TextStyle = {
   fontFamily: typography.secondary
 }
-const TEXTFIELD_MAIN_STYLE: ViewStyle = {
+const textFieldMain: ViewStyle = {
   width: '98%'
 }
-const RENDER_RADIO_CONTAINER: ViewStyle = {
+const radioContainer: ViewStyle = {
   marginTop: 20
 }
-const RENDER_RADIO_BUTTON_MAIN_VIEW: ViewStyle = {
+const radioButtonMainView: ViewStyle = {
   marginTop: 5,
   marginLeft: 5,
   flexDirection: 'row'
 }
-const RENDER_RADIO_BUTTON_VIEW: ViewStyle = {
+const radioButtonSubView: ViewStyle = {
   flexDirection: 'row',
   alignItems: "center"
 }
@@ -104,12 +104,12 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
 
   const renderRow = (label, value, extratext = true) => {
     return (
-      <View style={RENDER_ROW_CONTAINER}>
-        <View style={RENDER_ROW_TEXT_VIEW}>
-          <Text extraText={extratext ? ":" : ''} style={[RENDER_ROW_TEXT_STYLE, TEXT_FONT_STYLE]} tx={label} />
+      <View style={rowContainer}>
+        <View style={lableStyle}>
+          <Text extraText={extratext ? ":" : ''} style={[lableText, fontStyle]} tx={label} />
         </View>
-        <View style={RENDER_ROW_DATA_VIEW}>
-          <Text style={[RENDER_ROW_TEXT_DATA_STYLE, TEXT_FONT_STYLE]} text={value} />
+        <View style={dataStyle}>
+          <Text style={[dataText, fontStyle]} text={value} />
         </View>
       </View>
     )
@@ -124,17 +124,17 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   const renderCheckBoxlist = (item, index) => {
     return (
       <View key={index}>
-        <Checkbox outlineStyle={CHECKBOX_STYLE} style={TEXT_FONT_STYLE} tx={item.text} value={item.isCheck} onToggle={() => updateCheckBox(index)} />
+        <Checkbox outlineStyle={CHECKBOX_STYLE} style={fontStyle} tx={item.text} value={item.isCheck} onToggle={() => updateCheckBox(index)} />
       </View>
     )
   }
 
   const renderRadioButton = (question, data, updateData) => {
     return (
-      <View style={RENDER_RADIO_CONTAINER}>
-        <Text style={TEXT_FONT_STYLE} tx={question} />
-        <View style={RENDER_RADIO_BUTTON_MAIN_VIEW} >
-          <View style={RENDER_RADIO_BUTTON_VIEW} >
+      <View style={radioContainer}>
+        <Text style={fontStyle} tx={question} />
+        <View style={radioButtonMainView} >
+          <View style={radioButtonSubView} >
             <RadioButton
               animation={'bounceIn'}
               innerColor={color.palette.orange}
@@ -142,9 +142,9 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
               isSelected={data[0].isSelect}
               onPress={() => { updateData([{ isSelect: true }, { isSelect: false }]) }}
             />
-            <Text style={[RENDER_RADIO_BUTTON_TEXT_VIEW, TEXT_FONT_STYLE]} tx={"safetyCheckDetailScreen.yes"} />
+            <Text style={[radioButtonView, fontStyle]} tx={"safetyCheckDetailScreen.yes"} />
           </View>
-          <View style={[RENDER_RADIO_BUTTON_VIEW, { marginLeft: 10 }]} >
+          <View style={[radioButtonSubView, { marginLeft: 10 }]} >
             <RadioButton
               animation={'bounceIn'}
               innerColor={color.palette.orange}
@@ -152,7 +152,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
               isSelected={data[1].isSelect}
               onPress={() => { updateData([{ isSelect: false }, { isSelect: true }]) }}
             />
-            <Text tx={"safetyCheckDetailScreen.no"} style={[RENDER_RADIO_BUTTON_TEXT_VIEW, TEXT_FONT_STYLE]} />
+            <Text tx={"safetyCheckDetailScreen.no"} style={[radioButtonView, fontStyle]} />
           </View>
         </View>
       </View>
@@ -182,10 +182,10 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
         {renderRadioButton("safetyCheckDetailScreen.healthquestion", radio, updateRadio)}
         {renderRadioButton("safetyCheckDetailScreen.shiftquestion", radio1, updateRadio1)}
         {renderRadioButton("safetyCheckDetailScreen.alcoholquestion", radio2, updateRadio2)}
-        <Text tx={"safetyCheckDetailScreen.comments"} style={[COMMENT_TEXT_STYLE, TEXT_FONT_STYLE]} extraText={":"} />
+        <Text tx={"safetyCheckDetailScreen.comments"} style={[commentText, fontStyle]} extraText={":"} />
         <TextField
-          mainStyle={TEXTFIELD_MAIN_STYLE}
-          inputStyle={[TEXTFIELD_INPUT_STYLE, TEXT_FONT_STYLE]}
+          mainStyle={textFieldMain}
+          inputStyle={[textFieldInput, fontStyle]}
           style={{}}
           returnKeyType={"default"}
           multiline={true}
