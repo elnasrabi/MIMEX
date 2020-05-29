@@ -5,13 +5,13 @@ import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Button } from "../../components"
 import { color, typography } from "../../theme"
-import { MenuButton } from "../../components/header/menu-button";
-import { icons } from "../../components/icon/icons";
-import { BottomButton } from "../../components/bottom-button/bottom-button";
-import { isIphoneX } from "react-native-iphone-x-helper";
-import { BackButton } from "../../components/header/back-button";
+import { MenuButton } from "../../components/header/menu-button"
+import { icons } from "../../components/icon/icons"
+import { BottomButton } from "../../components/bottom-button/bottom-button"
+import { isIphoneX } from "react-native-iphone-x-helper"
+import { BackButton } from "../../components/header/back-button"
 import RNPickerSelect from 'react-native-picker-select'
-import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
+import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 
 export interface GetARateProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -94,7 +94,6 @@ const SEPERATOR_LINE: ViewStyle = {
   borderRadius: 5
 }
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
-
   const dropDownData = [
     { label: 'item 1', value: 'item 1' },
     { label: 'item 2', value: 'item 2' },
@@ -139,14 +138,14 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
         <View style={FLEX}>
-          {label == 'getARateScreen.unitOfMeasure' ?
-            <DropdownPicker
+          {label == 'getARateScreen.unitOfMeasure'
+            ? <DropdownPicker
               dropDownData={dropDownData}
               selectedValue={value}
+              placeHolder={"common.registrationId"}
               onValueChange={(value) => onUpdate(value)}
             />
-            :
-            <TextField
+            : <TextField
               key={key}
               autoCorrect={false}
               forwardedRef={(input) => {
@@ -164,7 +163,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               inputStyle={VALUE}
               value={value}
               keyboardType={keyboardType}
-              blurOnSubmit={label == "getARateScreen.volume" ? true : false}
+              blurOnSubmit={label == "getARateScreen.volume"}
               onChangeText={(text) => onUpdate(text)}
               returnKeyType={'next'}
             />
