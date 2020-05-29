@@ -22,9 +22,8 @@ export interface ConsignmentSpecialProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const dropDownData = [
-  { label: 'Despatched', value: 'despatched' },
-  { label: 'Not Allowed', value: 'notAllowed' },
-  { label: 'Done', value: 'done' },
+  { label: 'Wait Time', value: 'waitTime' },
+  { label: 'Damaged', value: 'damaged' },
 ]
 const ROOT: ViewStyle = {
   flex: 1,
@@ -85,30 +84,6 @@ const STATUS_CONTAINER: ViewStyle = {
 const PICKER_CONTAINER: ViewStyle = {
   flexDirection: "row"
 }
-const PICKER_VIEW: ViewStyle = {
-  flex: 1,
-  justifyContent: "center",
-  height: 40,
-  width: 200,
-  alignSelf: "center",
-  borderColor: color.palette.darkText,
-  borderWidth: 2,
-  borderRadius: 4
-}
-
-const SIGN_VIEW: ViewStyle = {
-  borderColor: color.palette.darkText,
-  borderWidth: 2,
-  borderRadius: 3,
-  marginTop: 20,
-  height: 300,
-  width: "100%",
-  backgroundColor: color.palette.white
-}
-const SIGN_VIEW_IMAGE: ImageStyle = {
-  width: "100%",
-  height: 296
-}
 const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   flex: 1,
   borderColor: color.palette.darkText,
@@ -146,22 +121,24 @@ const PICKER_ICON: ImageStyle = {
 }
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
-  const SING_IMAGE_URI = "file:///storage/emulated/0/saved_signature/signature.png?random=" + Math.random()
 
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
-  const [selectedValue, setSelectedValue] = useState("java")
+  const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
   const [viewImage, onViewImage] = useState(false)
-
+  const [isValidStatus, onSetValidStatus] = useState(true)
+  const [isValidFile, onSetValidFile] = useState(true)
   useEffect(() => {
   }, [])
 
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
-      setFileName(translateText("consignmentSuccess.consignmentPhoto"))
-      setImageUri(response.uri)
+      if (!response.didCancel) {
+        setFileName(translateText("consignmentSuccess.consignmentPhoto"))
+        setImageUri(response.uri)
+      }
     })
   }
   const onImageView = () => {

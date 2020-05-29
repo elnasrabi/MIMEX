@@ -16,7 +16,7 @@ const CONTAINER: ViewStyle = {
 const INPUT: TextStyle = {
   flex: 1,
   fontFamily: typography.secondary,
-  color: color.text,
+  color: color.palette.link,
   minHeight: 40,
   fontSize: 16,
   paddingStart: 10,
