@@ -63,7 +63,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
         onValueChange={onValueChange}
         Icon={() =>
           <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-            <Image resizeMode={'contain'} style={{ width: 15, height: 30, tintColor: color.palette.black }} source={icons.downArrow} />
+            <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />
           </View>
         }
         items={dropDownData}
