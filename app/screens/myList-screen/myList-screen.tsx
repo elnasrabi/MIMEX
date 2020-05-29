@@ -78,10 +78,10 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   const [toggleAll, useToggleAll] = useState(false)
-  const [Mylist, updateMyList] = useState([{ id: '1', check: false }, { id: '2', check: false }, { id: '3', check: false }, { id: '4', check: false }, { id: '5', check: false }, { id: '6', check: false }, { id: '7', check: false }, { id: '8', check: false }, { id: '9', check: false }])
+  const [mylist, updateMyList] = useState([{ id: '1', check: false }, { id: '2', check: false }, { id: '3', check: false }, { id: '4', check: false }, { id: '5', check: false }, { id: '6', check: false }, { id: '7', check: false }, { id: '8', check: false }, { id: '9', check: false }])
 
   const updateCheckBox = (index) => {
-    let newArr = [...Mylist]
+    let newArr = [...mylist]
     let i = 0, j;
     newArr[index].check = !newArr[index].check
     for (j = 0; j < newArr.length; j++) {
@@ -96,7 +96,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     updateMyList(newArr)
   }
   const updateAllCheckBox = (isSelect) => {
-    let newArr = [...Mylist]
+    let newArr = [...mylist]
     for (let i = 0; i < newArr.length; i++) {
       newArr[i].check = isSelect
     }
@@ -149,7 +149,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       </View>
       <View style={SEPERATOR_LINE} />
       <FlatList
-        data={Mylist}
+        data={mylist}
         style={FLATLIST_STYLE}
         keyExtractor={(item, index) => item.id}
         renderItem={renderItem}
