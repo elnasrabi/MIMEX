@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useRef } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -83,7 +83,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const [show, setShow] = useState(false);
   const currentRef: any[] = []
 
-  const renderRow = (key, label, value, onUpdate, keyboardType = 'default', hasExtraText = false) => {
+  const renderRow = (key, label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default', hasExtraText = false) => {
     return (
       <View style={ROW}>
         <View style={TITLE}>
@@ -149,6 +149,10 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
     hideDatePicker();
   };
 
+  const gotoHome = () => {
+    return props.navigation.navigate('Home')
+  }
+
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
@@ -174,6 +178,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
       <BottomButton
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
+        onRightPress={() => gotoHome()}
         leftText={"common.save"}
         rightText={"common.cancel"} />
     </Screen>

@@ -106,6 +106,9 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
   const gotoSafetyDetail = () => {
     return props.navigation.navigate('SafetyCheckDetail')
   }
+  const gotoHomeScreen = () => {
+    return props.navigation.navigate('Home')
+  }
 
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
@@ -134,6 +137,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
         <BottomButton
           bottomViewstyle={BOTTOM_BUTTON_STYLE}
           onLeftPress={() => gotoSafetyDetail()}
+          onRightPress={() => gotoHomeScreen()}
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
           leftText={"safetyCheckScreen.new"}

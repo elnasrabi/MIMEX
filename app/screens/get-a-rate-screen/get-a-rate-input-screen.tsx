@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, Image, KeyboardTypeOptions } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Button } from "../../components"
@@ -112,7 +112,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const [volume, updateVolume] = useState('')
   const currentRef: any[] = []
 
-  const renderRow = (label, value, onUpdate, keyboardType = 'default') => {
+  const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={RENDER_CONTAINER_TEXT}>
@@ -132,7 +132,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     )
   }
 
-  const renderUnitRow = (key, label, value, onUpdate, keyboardType = 'default') => {
+  const renderUnitRow = (key, label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
       <View style={RENDER_CONTAINER}>
         <View style={[RENDER_CONTAINER_TEXT, FLEX]}>

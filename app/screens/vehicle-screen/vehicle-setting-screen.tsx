@@ -72,6 +72,11 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
     { label: 'XXXX 8846', value: 'XXXX 8846' },
     { label: 'XXXX 8847', value: 'XXXX 8847' },
   ]
+
+  const gotoHome = () => {
+    return props.navigation.navigate('Home')
+  }
+
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   const [selectedValue, setSelectedValue] = useState("java")
   return (
@@ -100,6 +105,7 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
       <BottomButton
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
+        onRightPress={() => gotoHome()}
         leftText={"common.save"}
         rightText={"common.cancel"} />
     </Screen >

@@ -161,6 +161,10 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
+  const gotoSafetyCheckList = () => {
+    return props.navigation.navigate('SafetyCheck')
+  }
+
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <BackButton
@@ -192,6 +196,8 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
       <BottomButton
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
+        onLeftPress={() => gotoSafetyCheckList()}
+        onRightPress={() => gotoSafetyCheckList()}
         leftText={'common.save'}
         rightText={'common.cancel'}
       />
