@@ -2,18 +2,12 @@ import * as React from "react"
 import { View, TextInput, TextStyle, ViewStyle } from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate } from "../../i18n"
-import { Text } from "../text/text"
 import { TextFieldProps } from "./text-field.props"
 import { mergeAll, flatten } from "ramda"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
   paddingVertical: spacing[3],
-}
-
-const BASE_LINE: ViewStyle = {
-  height: 1,
-  backgroundColor: color.palette.darkText
 }
 // the base styling for the TextInput
 const INPUT: TextStyle = {
@@ -43,8 +37,6 @@ export const TextFieldSimple: React.FunctionComponent<TextFieldProps> = props =>
   const {
     placeholderTx,
     placeholder,
-    labelTx,
-    label,
     preset = "default",
     style: styleOverride,
     inputStyle: inputStyleOverride,
@@ -57,11 +49,6 @@ export const TextFieldSimple: React.FunctionComponent<TextFieldProps> = props =>
   let inputStyle: TextStyle = INPUT
   inputStyle = enhance(inputStyle, inputStyleOverride)
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
-
-  const LABEL: TextStyle = {
-    color: color.palette.darkText,
-    fontSize: 16
-  }
 
   return (
     <View style={containerStyle}>

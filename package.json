@@ -46,6 +46,7 @@
     "moment": "^2.26.0",
     "ramda": "0.27.0",
     "react": "16.9.0",
+    "react-moment": "^0.9.7",
     "react-native": "0.61.5",
     "react-native-base64": "0.0.2",
     "react-native-camera": "^3.25.0",

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image, Alert } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -16,7 +16,7 @@ import { ImageViewerModal } from "../../components/image-viewer/image-viewer-mod
 import { isIphoneX } from "react-native-iphone-x-helper"
 import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, showAlert } from "../../utils/utils"
+import { translateText, isInternetAvailable, showAlert, getCurrentDate, getFormattedDate } from "../../utils/utils"
 import { database } from "../../app"
 import { Q } from "@nozbe/watermelondb"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
@@ -117,7 +117,12 @@ const SIGN_VIEW_IMAGE: ImageStyle = {
   width: "100%",
   height: 296
 }
-const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
+const DATE_TEXT: TextStyle = {
+  flex: 1,
+  textAlign: "right",
+  alignSelf: "center",
+  fontSize: 15
+}
 let imageHash = Date.now()
 let randomNo = Math.random()
 
@@ -214,7 +219,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       // const post = await consignmentSuccess.query().fetch()
       const post = await consignmentSuccess.query(Q.where("consignmentNumber", consignmentNumber)).fetch()
       console.log(post)
-      if (post && post[0].consignmentNumber === consignmentNumber) {
+      if (post.length > 0 && post[0].consignmentNumber === consignmentNumber) {
         isConsignmentSaved = true
       }
     })
@@ -258,7 +263,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={new Date().toLocaleString()} />
+              <Text preset={"normal"} style={DATE_TEXT} text={getFormattedDate(new Date().toLocaleString())} />
             </View>
             {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 
@@ -300,9 +305,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           leftText={"common.save"}
           rightText={"common.cancel"}
           onRightPress={goBack}
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        // onLeftPress={onSave} 
-        />
+          // eslint-disable-next-line @typescript-eslint/no-use-before-define
+          onLeftPress={onSave} />
       </View>
     </Screen >
   )

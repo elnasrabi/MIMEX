@@ -13,7 +13,6 @@ import { color } from "../../theme"
 export function MyButton(props: ButtonProps) {
   // grab the props
   const {
-    preset = "primary",
     tx,
     buttonSource,
     style: styleOverride,

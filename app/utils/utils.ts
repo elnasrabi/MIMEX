@@ -2,6 +2,7 @@ import NetInfo from "@react-native-community/netinfo"
 import { Alert, Linking } from "react-native"
 import { translate } from "../i18n"
 // import call from 'react-native-phone-call'
+import Moment from 'moment'
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
@@ -37,4 +38,8 @@ export function callApi(number) {
   // call(args).catch(console.error)
   Linking.openURL(`tel:${number}`)
 }
-
+export function getFormattedDate(date): string {
+  Moment.locale('en')
+  const newDate = Moment(date).format('hh:mmA, DD MMM, yyyy')
+  return newDate
+}

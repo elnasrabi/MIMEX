@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ImageStyle, ScrollView } from "react-native"
+import { ViewStyle, TextStyle, ImageStyle, ScrollView } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Icon } from "../../components"
@@ -73,12 +73,6 @@ const AFS_LOGO: ImageStyle = {
   width: 200,
   alignSelf: "center",
   marginTop: 80
-}
-
-const CONTAINER_AFS_LOGO: ImageStyle = {
-  position: "absolute",
-  top: 70,
-  alignSelf: "center"
 }
 
 export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> = observer((props) => {
