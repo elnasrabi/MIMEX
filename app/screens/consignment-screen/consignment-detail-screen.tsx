@@ -46,10 +46,10 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
   const onSuccessPress = () => {
-    props.navigation.navigate("consignmentSuccess")
+    props.navigation.navigate("consignmentSuccess", { isSuccess: true })
   }
   const onFailPress = () => {
-    props.navigation.navigate("consignmentSuccess")
+    props.navigation.navigate("consignmentSuccess", { isSuccess: false })
   }
 
   return (
