@@ -100,9 +100,6 @@ const PICKER_CONTAINER: ViewStyle = {
 
 const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   flex: 1,
-  borderColor: color.palette.darkText,
-  borderWidth: 2,
-  borderRadius: 4,
   height: 40,
   justifyContent: 'center'
 }
@@ -194,7 +191,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           const data = await consignmentSuccess.create(consignmentSuccess => {
             consignmentSuccess.customerName = "John jacob"
             consignmentSuccess.userName = authStore.userData[0].loginName[0]
-            consignmentSuccess.consignmentNumber = "AMI000072"
+            consignmentSuccess.consignmentNumber = consignment.consignmentNumber[0]
             consignmentSuccess.itemsCount = consignment.consignmentItems[0].totalLineItemLabels[0]
             consignmentSuccess.status = selectedValue
             consignmentSuccess.image = imageUri
@@ -214,8 +211,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     database.action(async () => {
       const consignmentNumber = consignment.consignmentNumber.toString()
       const consignmentSuccess = database.collections.get("consignmentSuccess")
-      const post = await consignmentSuccess.query().fetch()
-      // const post = await consignmentSuccess.query(Q.where("consignmentNumber", consignmentNumber)).fetch()
+      // const post = await consignmentSuccess.query().fetch()
+      const post = await consignmentSuccess.query(Q.where("consignmentNumber", consignmentNumber)).fetch()
       console.log(post)
     })
   }
@@ -254,6 +251,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                 <DropdownPicker
                   dropDownData={isSuccess ? statusSuccess : statusFail}
                   selectedValue={selectedValue}
+                  placeHolder={"common.status"}
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>

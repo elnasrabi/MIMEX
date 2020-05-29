@@ -86,6 +86,7 @@ export const VehicleSetting: FunctionComponent<VehicleSettingProps> = observer((
           <DropdownPicker
             dropDownData={dropDownData}
             selectedValue={selectedValue}
+            placeHolder={"common.registrationId"}
             onValueChange={(value) => setSelectedValue(value)}
           />
         </View>

@@ -195,6 +195,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           <View style={SEPERATOR_LINE} />
           <DropdownPicker
             dropDownData={dropDownData}
+            placeHolder={"common.registrationId"}
             selectedValue={pickUpAddress}
             onValueChange={(value) => updatePckUpAddress(value)}
           />

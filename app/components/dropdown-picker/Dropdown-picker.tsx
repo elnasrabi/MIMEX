@@ -4,6 +4,7 @@ import { color } from "../../theme"
 import { typography } from "../../theme";
 import RNPickerSelect from 'react-native-picker-select'
 import { icons } from "../icon/icons";
+import { translateText } from "../../utils/utils";
 
 /**
  * For your text displaying needs.
@@ -11,7 +12,10 @@ import { icons } from "../icon/icons";
  * This component is a HOC over the built-in React Native one.
  */
 interface dropdownPickerProps {
-  dropDownData: any[], selectedValue: any, onValueChange: (value: any) => void, inputStyleIOS?: TextStyle, inputStyleAndroid?: TextStyle
+  dropDownData: any[], selectedValue: any, onValueChange: (value: any) => void,
+  inputStyleIOS?: TextStyle,
+  inputStyleAndroid?: TextStyle,
+  placeHolder?: string
 }
 
 export function DropdownPicker(props: dropdownPickerProps) {
@@ -21,7 +25,8 @@ export function DropdownPicker(props: dropdownPickerProps) {
     selectedValue,
     onValueChange,
     inputStyleAndroid,
-    inputStyleIOS
+    inputStyleIOS,
+    placeHolder
   } = props
 
   const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
@@ -58,7 +63,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
           inputIOS: inputStyleIOS ? inputStyleIOS : INPUT_STYLE_IOS,
           inputAndroid: inputStyleAndroid ? inputStyleAndroid : INPUT_STYLE_ANDROID
         }}
-        placeholder={{ label: "Registration-ID", value: '' }}
+        placeholder={{ label: translateText(placeHolder), value: '' }}
         value={selectedValue}
         onValueChange={onValueChange}
         Icon={() =>
