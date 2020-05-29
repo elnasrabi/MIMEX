@@ -86,9 +86,6 @@ const PICKER_CONTAINER: ViewStyle = {
 }
 const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   flex: 1,
-  borderColor: color.palette.darkText,
-  borderWidth: 2,
-  borderRadius: 4,
   height: 40,
   justifyContent: 'center'
 }
@@ -147,6 +144,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                 <DropdownPicker
                   dropDownData={dropDownData}
                   selectedValue={selectedValue}
+                  placeHolder={"common.status"}
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>

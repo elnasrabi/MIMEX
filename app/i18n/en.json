@@ -26,7 +26,8 @@
     "noData": "No Data Found.",
     "selectImage": "Select Image",
     "somethingWrong": "Something went wrong!!",
-    "noInternet": "No Internet Connection"
+    "noInternet": "No Internet Connection",
+    "registrationId": "Registration-ID"
   },
   "errors": {
     "invalidEmail": "Invalid email address."

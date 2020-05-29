@@ -71,15 +71,18 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   const [isGoPressed, setIsOnGoPress] = useState(false)
   useEffect(() => {
     if (homeStore.barCodeData.data) {
-      Alert.alert(JSON.stringify(homeStore.barCodeData.data))
+      onSearchValue(homeStore.barCodeData.data)
       homeStore.onCodeScanned({})
     }
+  }, [homeStore.barCodeData])
+
+  useEffect(() => {
     if (isGoPressed && consignmentStore.isEmptyList) {
       showAlert("common.noData")
     } else if (isGoPressed && !consignmentStore.isEmptyList) {
       props.navigation.navigate("consignmentList")
     }
-  }, [homeStore.barCodeData, consignmentStore.consignmentList])
+  }, [consignmentStore.consignmentList])
 
   useFocusEffect(
     React.useCallback(() => {
