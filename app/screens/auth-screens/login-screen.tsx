@@ -54,13 +54,13 @@ const INPUT_USERNAME = "username"
 const INPUT_PASSWORD = "password"
 export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
   const { authStore } = useStores()
-  // const [username, onChangeUsername] = useState("")
-  // const [password, onChangePassword] = useState("")
+  const [username, onChangeUsername] = useState("")
+  const [password, onChangePassword] = useState("")
   const [isValidUsername, setValidUsername] = useState(true)
   const [isValidPassword, setValidPassword] = useState(true)
 
-  const [username, onChangeUsername] = useState("services@afs")
-  const [password, onChangePassword] = useState("services092017")
+  // const [username, onChangeUsername] = useState("services@afs")
+  // const [password, onChangePassword] = useState("services092017")
   let passwordRef: any
 
   useEffect(() => {
