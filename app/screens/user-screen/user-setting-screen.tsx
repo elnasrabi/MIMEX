@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useRef } from "react"
+import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions } from "react-native"
 import { ParamListBase } from "@react-navigation/native"

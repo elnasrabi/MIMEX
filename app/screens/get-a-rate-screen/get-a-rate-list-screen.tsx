@@ -1,11 +1,10 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, Platform, FlatList } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
 import { color, typography } from "../../theme"
-import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
@@ -31,7 +30,8 @@ const RENDER_SUB_ROW_VALUE_VIEW_STYLE: ViewStyle = {
   flex: 0.7
 }
 const RENDER_SUB_ROW_TEXTVIEW_STYLE: ViewStyle = {
-  flex: 0.3, justifyContent: "center"
+  flex: 0.3,
+  justifyContent: "center"
 }
 const RENDER_SUB_ROW_CONTAINER: ViewStyle = {
   flexDirection: "row",

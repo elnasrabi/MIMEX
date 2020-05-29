@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text } from "../../components"
@@ -9,7 +9,6 @@ import { MenuButton } from "../../components/header/menu-button";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import RNPickerSelect from 'react-native-picker-select'
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 
 export interface VehicleSettingProps {
@@ -18,14 +17,6 @@ export interface VehicleSettingProps {
 
 const ROOT: ViewStyle = { paddingBottom: 10 }
 const VALUE_CONTAINER: ViewStyle = { flex: 1 }
-const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
-  flex: 1,
-  borderColor: color.palette.darkText,
-  borderWidth: 2,
-  borderRadius: 4,
-  height: 40,
-  justifyContent: 'center'
-}
 
 const LABEL: TextStyle = {
   color: color.palette.black,

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, Image, KeyboardTypeOptions } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Button } from "../../components"
@@ -9,8 +9,6 @@ import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import { BackButton } from "../../components/header/back-button";
-import RNPickerSelect from 'react-native-picker-select'
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 
 export interface GetARateProps {
@@ -70,20 +68,6 @@ const VALUE: TextStyle = {
   color: color.palette.link,
   fontSize: 16,
   fontWeight: "bold",
-  fontFamily: typography.secondary
-}
-const INPUT_STYLE_IOS: TextStyle = {
-  color: color.palette.black,
-  fontSize: 16,
-  fontWeight: "600",
-  paddingLeft: 5,
-  fontFamily: typography.secondary
-}
-const INPUT_STYLE_ANDROID: TextStyle = {
-  color: color.palette.black,
-  fontSize: 16,
-  fontWeight: "bold",
-  paddingLeft: 5,
   fontFamily: typography.secondary
 }
 const SEPERATOR_LINE: ViewStyle = {

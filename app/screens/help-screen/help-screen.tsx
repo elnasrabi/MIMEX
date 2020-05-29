@@ -97,7 +97,6 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
           renderItem={({ item, index }) => renderItem(item, index)}
           style={{ margin: 10 }}
           keyExtractor={(item, index) => index.toString()}
-        // ListHeaderComponent={() => renderHeader()}
         />}
     </Screen>
 
