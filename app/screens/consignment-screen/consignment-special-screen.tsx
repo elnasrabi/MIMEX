@@ -14,9 +14,9 @@ import ImagePicker from 'react-native-image-picker'
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
-import RNPickerSelect from 'react-native-picker-select'
 import { useStores } from "../../models/root-store"
 import { translateText } from "../../utils/utils"
+import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 
 export interface ConsignmentSpecialProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -92,33 +92,7 @@ const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   height: 40,
   justifyContent: 'center'
 }
-const PICKER_INPUT_IOS: TextStyle = {
-  color: color.palette.link,
-  fontSize: 16,
-  fontWeight: "600",
-  paddingLeft: 5,
-  fontFamily: typography.secondary
-}
-const PICKER_INPUT_ANDROID: TextStyle = {
-  color: color.palette.link,
-  fontSize: 16,
-  fontWeight: "900",
-  paddingLeft: 5,
-  fontFamily: typography.secondary
-}
-const PICKER_ICON_VIEW: ViewStyle = {
-  height: 35,
-  paddingStart: 5,
-  marginTop: Platform.OS === "android" ? 7 : -8,
-  justifyContent: "center",
-  paddingRight: 4
-}
-const PICKER_ICON: ImageStyle = {
-  width: 15,
-  height: 18,
-  marginEnd: 5,
-  tintColor: color.palette.black
-}
+
 const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
 
@@ -170,23 +144,10 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
 
             <View style={PICKER_CONTAINER}>
               <View style={VALUE_CONTAINER_REGISTRATION}>
-                <RNPickerSelect
-                  style={{
-                    inputIOS: PICKER_INPUT_IOS,
-                    inputAndroid: PICKER_INPUT_ANDROID
-                  }}
-                  placeholder={{ label: translateText("consignmentSuccess.status"), value: '' }}
-                  value={selectedValue}
-                  onValueChange={(value) => {
-                    setSelectedValue(value)
-                    onSetValidStatus(true)
-                  }}
-                  Icon={() =>
-                    <View style={PICKER_ICON_VIEW}>
-                      <Image style={PICKER_ICON} source={icons.downArrow} />
-                    </View>
-                  }
-                  items={dropDownData}
+                <DropdownPicker
+                  dropDownData={dropDownData}
+                  selectedValue={selectedValue}
+                  onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
               <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />

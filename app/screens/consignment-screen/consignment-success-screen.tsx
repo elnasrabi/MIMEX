@@ -14,11 +14,12 @@ import ImagePicker from 'react-native-image-picker'
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
-import RNPickerSelect from 'react-native-picker-select'
 import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
 import { translateText, isInternetAvailable, showAlert } from "../../utils/utils"
 import { database } from "../../app"
+import { Q } from "@nozbe/watermelondb"
+import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -105,33 +106,6 @@ const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   height: 40,
   justifyContent: 'center'
 }
-const PICKER_INPUT_IOS: TextStyle = {
-  color: color.palette.link,
-  fontSize: 16,
-  fontWeight: "600",
-  paddingLeft: 5,
-  fontFamily: typography.secondary
-}
-const PICKER_INPUT_ANDROID: TextStyle = {
-  color: color.palette.link,
-  fontSize: 16,
-  fontWeight: "900",
-  paddingLeft: 5,
-  fontFamily: typography.secondary
-}
-const PICKER_ICON_VIEW: ViewStyle = {
-  height: 35,
-  paddingStart: 5,
-  marginTop: Platform.OS === "android" ? 7 : -8,
-  justifyContent: "center",
-  paddingRight: 4
-}
-const PICKER_ICON: ImageStyle = {
-  width: 15,
-  height: 18,
-  marginEnd: 5,
-  tintColor: color.palette.black
-}
 const SIGN_VIEW: ViewStyle = {
   borderColor: color.palette.darkText,
   borderWidth: 2,
@@ -217,11 +191,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       } else {
         database.action(async () => {
           const consignmentSuccess = database.collections.get("consignmentSuccess")
-          await consignmentSuccess.query().destroyAllPermanently()
           const data = await consignmentSuccess.create(consignmentSuccess => {
             consignmentSuccess.customerName = "John jacob"
             consignmentSuccess.userName = authStore.userData[0].loginName[0]
-            consignmentSuccess.consignmentNumber = consignment.consignmentNumber[0]
+            consignmentSuccess.consignmentNumber = "AMI000072"
             consignmentSuccess.itemsCount = consignment.consignmentItems[0].totalLineItemLabels[0]
             consignmentSuccess.status = selectedValue
             consignmentSuccess.image = imageUri
@@ -239,9 +212,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   }
   async function getSavedData() {
     database.action(async () => {
+      const consignmentNumber = consignment.consignmentNumber.toString()
       const consignmentSuccess = database.collections.get("consignmentSuccess")
-      const consignment = consignmentStore.consignmentDetail
-      const post = await consignmentSuccess.find(consignment.consignmentNumber.toString())
+      const post = await consignmentSuccess.query().fetch()
+      // const post = await consignmentSuccess.query(Q.where("consignmentNumber", consignmentNumber)).fetch()
       console.log(post)
     })
   }
@@ -277,23 +251,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
             <View style={PICKER_CONTAINER}>
               <View style={VALUE_CONTAINER_REGISTRATION}>
-                <RNPickerSelect
-                  style={{
-                    inputIOS: PICKER_INPUT_IOS,
-                    inputAndroid: PICKER_INPUT_ANDROID
-                  }}
-                  placeholder={{ label: translateText("consignmentSuccess.status"), value: '' }}
-                  value={selectedValue}
-                  onValueChange={(value) => {
-                    setSelectedValue(value)
-                    onSetValidStatus(true)
-                  }}
-                  Icon={() =>
-                    (<View style={PICKER_ICON_VIEW}>
-                      <Image style={PICKER_ICON} source={icons.downArrow} />
-                    </View>)
-                  }
-                  items={isSuccess ? statusSuccess : statusFail}
+                <DropdownPicker
+                  dropDownData={isSuccess ? statusSuccess : statusFail}
+                  selectedValue={selectedValue}
+                  onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
               <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
