@@ -183,7 +183,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
           mainStyle={TEXTFIELD_MAIN_STYLE}
           inputStyle={[TEXTFIELD_INPUT_STYLE, TEXT_FONT_STYLE]}
           style={{}}
-          returnKeyType={"search"}
+          returnKeyType={"default"}
           multiline={true}
           value={comment}
           onChangeText={(value) => updateComment(value)}

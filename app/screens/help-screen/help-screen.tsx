@@ -1,14 +1,12 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, Platform, FlatList, View, Text, TextStyle, Dimensions } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ViewStyle, Platform, FlatList, View, Text, TextStyle } from "react-native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
 import { color, typography } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import Video from 'react-native-video';
-import { icons } from "../../components/icon/icons";
 import VideoPlayer from 'react-native-video-controls';
 
 export interface HelpScreenProps {
@@ -44,6 +42,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
     { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' }
   ]
   const [fullScreen, setFullScreen] = useState(false)
+  const isFocused = useIsFocused()
   const renderItem = (item, index) => {
     return (
       <View style={RENDER_ITEM_CONTAINER} key={index}>
@@ -58,7 +57,6 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
       </View>
     )
   }
-
   const onEnterFullScreen = () => {
     return setFullScreen(true)
   }
@@ -78,6 +76,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
           onEnterFullscreen={() => onEnterFullScreen()}
           onExitFullscreen={() => onExitFullScreen()}
           disableBack={true}
+          paused={isFocused ? false : true}
           toggleResizeModeOnFullscreen={false}
           resizeMode={'contain'}
         />

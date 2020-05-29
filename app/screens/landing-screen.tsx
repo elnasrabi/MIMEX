@@ -66,7 +66,8 @@ const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingS
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore } = useStores()
-  const [searchValue, onSearchValue] = useState("AMI000071")
+  // const [searchValue, onSearchValue] = useState("AMI000071")
+  const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true)
   const [isGoPressed, setIsOnGoPress] = useState(false)
   useEffect(() => {
