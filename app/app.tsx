@@ -4,11 +4,12 @@
 
 import "./i18n"
 import React, { useState, useEffect, useRef } from "react"
-import { YellowBox } from "react-native"
+import { YellowBox, Text, TextInput } from "react-native"
 import { NavigationContainerRef } from "@react-navigation/native"
 import { contains } from "ramda"
 import { enableScreens } from "react-native-screens"
 import { SafeAreaProvider, initialWindowSafeAreaInsets } from "react-native-safe-area-context"
+
 
 import { RootNavigator, exitRoutes, setRootNavigation } from "./navigation"
 import { useBackButtonHandler } from "./navigation/use-back-button-handler"
@@ -44,6 +45,15 @@ YellowBox.ignoreWarnings([
   "componentWillReceiveProps is deprecated",
   "Require cycle:",
 ])
+
+/**
+ * Disable Font Scalling 
+ */
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
 
 /**
  * Are we allowed to exit the app?  This is called when the back button
