@@ -149,7 +149,7 @@ const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
   const SIGN_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
-  const { consignmentStore } = useStores()
+  const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
@@ -195,39 +195,46 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false)
-    // showAlert("", "consignmentSuccess.offlineDataSaveMessage")
-    if (isConnected) {
-      // showAlert("consignmentSuccess.save")
+    if (!isConnected) {
+      // Call API
     } else {
-      showAlert("", "consignmentSuccess.offlineDataSaveMessage")
-      // database.action(async () => {
-      //   const consignmentSuccess = database.collections.get("consignmentSuccess")
-      //   await consignmentSuccess.query().destroyAllPermanently()
-      //   await consignmentSuccess.create(consignmentSuccess => {
-      //     consignmentSuccess.status = selectedValue
-      //     consignmentSuccess.image = imageUri
-      //     consignmentSuccess.signBy = signText
-      //     consignmentSuccess.signImage = signUri
-      //     consignmentSuccess.date = new Date().toDateString()
-      //   })
-      // })
+      if (!selectedValue) {
+        onSetValidStatus(false)
+      } else if (!fileName) {
+        onSetValidFile(false)
+      } else if (!signText) {
+        setValidSignText(false)
+      } else if (!consignmentStore.signedSaved) {
+        onSetValidSignImage(false)
+      } else {
+        database.action(async () => {
+          const consignmentSuccess = database.collections.get("consignmentSuccess")
+          await consignmentSuccess.query().destroyAllPermanently()
+          const data = await consignmentSuccess.create(consignmentSuccess => {
+            consignmentSuccess.customerName = "John jacob"
+            consignmentSuccess.userName = authStore.userData[0].loginName[0]
+            consignmentSuccess.consignmentNumber = consignment.consignmentNumber[0]
+            consignmentSuccess.itemsCount = consignment.consignmentItems[0].totalLineItemLabels[0]
+            consignmentSuccess.status = selectedValue
+            consignmentSuccess.image = imageUri
+            consignmentSuccess.signBy = signText
+            consignmentSuccess.signImage = signUri
+            consignmentSuccess.date = new Date().toDateString()
+            consignmentSuccess.synced = false
+            console.log(consignmentSuccess)
+          })
+          console.log(data)
+          showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+        })
+      }
     }
-    // if (!selectedValue) {
-    //   onSetValidStatus(false)
-    // } else if (!fileName) {
-    //   onSetValidFile(false)
-    // } else if (!signText) {
-    //   setValidSignText(false)
-    // } else if (!consignmentStore.signedSaved) {
-    //   onSetValidSignImage(false)
-    // } else {
-
-    // }
   }
   async function getSavedData() {
     database.action(async () => {
       const consignmentSuccess = database.collections.get("consignmentSuccess")
-      const newMovie = await consignmentSuccess.query().fetch()
+      const consignment = consignmentStore.consignmentDetail
+      const post = await consignmentSuccess.find(consignment.consignmentNumber.toString())
+      console.log(post)
     })
   }
 
