@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Button } from "../../components"
@@ -11,7 +11,9 @@ import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { isIphoneX } from "react-native-iphone-x-helper"
 
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
-
+import { isInternetAvailable } from "../../utils/utils";
+import moment from 'moment'
+import { useStores } from "../../models/root-store";
 export interface GetARateProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
@@ -62,8 +64,7 @@ const CONTAINER: ViewStyle = {
   justifyContent: 'space-between'
 }
 const CONTAINER_TEXT: ViewStyle = {
-  justifyContent: 'flex-end',
-  paddingBottom: 10
+  marginTop: 25
 }
 const VALUE: TextStyle = {
   color: color.palette.link,
@@ -79,6 +80,7 @@ const SEPERATOR_LINE: ViewStyle = {
   borderRadius: 5
 }
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
+  const { GetARateStore, authStore } = useStores()
   const dropDownData = [
     { label: 'item 1', value: 'item 1' },
     { label: 'item 2', value: 'item 2' },
@@ -94,6 +96,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const [width, updateWidth] = useState('')
   const [height, updateHeight] = useState('')
   const [volume, updateVolume] = useState('')
+  const [isValidUnitOfMeasure, setIsValidUnitOfMeasure] = useState(true)
+  const [isValidQuantity, setIsValidQuantity] = useState(true)
+  const [isValidWeight, setIsValidWeight] = useState(true)
+  const [isValidLength, setIsValidLength] = useState(true)
+  const [isValidWidth, setIsValidWidth] = useState(true)
+  const [isValidHeight, setIsValidHeight] = useState(true)
+  const [isValidVolume, setIsValidVolume] = useState(true)
   const currentRef: any[] = []
 
   const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
@@ -116,16 +125,17 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     )
   }
 
-  const renderUnitRow = (key, label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
+  const renderUnitRow = (key, label, isValid, errorLabel, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
       <View style={CONTAINER}>
-        <View style={[CONTAINER_TEXT, FLEX]}>
+        <View style={[CONTAINER_TEXT, FLEX, label == 'getARateScreen.unitOfMeasure' ? { marginTop: 10 } : {}]}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
         <View style={FLEX}>
           {label == 'getARateScreen.unitOfMeasure'
             ? <DropdownPicker
               dropDownData={dropDownData}
+              errorTx={isValid ? undefined : errorLabel}
               selectedValue={value}
               placeHolder={"common.registrationId"}
               onValueChange={(value) => onUpdate(value)}
@@ -146,6 +156,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               autoCapitalize={"none"}
               mainStyle={{}}
               inputStyle={VALUE}
+              errorTx={isValid ? undefined : errorLabel}
               value={value}
               keyboardType={keyboardType}
               blurOnSubmit={label == "getARateScreen.volume"}
@@ -154,8 +165,73 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             />
           }
         </View>
-      </View>
+      </View >
     )
+  }
+  const checkValidation = async () => {
+    if (!quantity) { setIsValidQuantity(false) } else { setIsValidQuantity(true) }
+    if (!totalWeight) { setIsValidWeight(false) } else { setIsValidWeight(true) }
+    if (!length) { setIsValidLength(false) } else { setIsValidLength(true) }
+    if (!width) { setIsValidWidth(false) } else { setIsValidWidth(true) }
+    if (!height) { setIsValidHeight(false) } else { setIsValidHeight(true) }
+    if (!volume) {
+      setIsValidVolume(false)
+    } else {
+      setIsValidVolume(true)
+    }
+    if (isValidQuantity && isValidWeight && isValidLength && isValidWidth && isValidHeight && isValidVolume) {
+      console.tron.log("1", isValidQuantity, isValidWeight, isValidLength, isValidWidth, isValidHeight, isValidVolume)
+      getACalculatedRate()
+    }
+  }
+
+  const getACalculatedRate = async () => {
+    console.tron.log("2")
+    const isConnected = await isInternetAvailable()
+    Keyboard.dismiss()
+    if (isConnected) {
+      const requestData = {
+        consignmentRateTimeRequest: {
+          consignment: {
+            despatchDate: moment(new Date()).format("YYYY-MM-DD"),
+            pickupAddress: {
+              address: {
+                addressCode: "MELBCCS",
+                town: "WEST FOOTSCRAY",
+                postcode: "3012"
+              }
+            },
+            deliveryAddress: {
+              address: {
+                town: "CRAIGIE",
+                state: "WA",
+                postcode: "6025",
+                country: "AU"
+              }
+            },
+            container: {
+              unit: "PALLET",
+              weight: '5',
+              length: '1000',
+              width: '1000',
+              height: '1000',
+              volume: '175000',
+              quantity: '1'
+              // weight: totalWeight,
+              // length: length,
+              // width: width,
+              // height: height,
+              // volume: volume,
+              // quantity: quantity
+            }
+          }
+        }
+      }
+      await GetARateStore.getARate(authStore.authorization, requestData)
+      if (GetARateStore.responseSuccess) {
+        gotoRateListScreen()
+      }
+    }
   }
 
   const gotoRateListScreen = () => {
@@ -200,19 +276,20 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         <View style={{}}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.details'} />
           <View style={[SEPERATOR_LINE, { width: '97%' }]} />
-          {renderUnitRow(0, "getARateScreen.unitOfMeasure", unitOfMeasure, updateUnitOfMeasure)}
-          {renderUnitRow(0, "getARateScreen.quantity", quantity, updateQuantity, 'decimal-pad')}
-          {renderUnitRow(1, "getARateScreen.totalWeight", totalWeight, updateTotalWeight, 'decimal-pad')}
-          {renderUnitRow(2, "getARateScreen.length", length, updateLength, 'decimal-pad')}
-          {renderUnitRow(3, "getARateScreen.width", width, updateWidth, 'decimal-pad')}
-          {renderUnitRow(4, "getARateScreen.height", height, updateHeight, 'decimal-pad')}
-          {renderUnitRow(5, "getARateScreen.volume", volume, updateVolume, 'decimal-pad')}
+          {renderUnitRow(0, "getARateScreen.unitOfMeasure", isValidUnitOfMeasure, 'getARateScreen.emptyunitOfMeasure', unitOfMeasure, updateUnitOfMeasure)}
+          {renderUnitRow(0, "getARateScreen.quantity", isValidQuantity, "getARateScreen.emptyquantity", quantity, updateQuantity, 'decimal-pad')}
+          {renderUnitRow(1, "getARateScreen.totalWeight", isValidWeight, "getARateScreen.emptytotalWeight", totalWeight, updateTotalWeight, 'decimal-pad')}
+          {renderUnitRow(2, "getARateScreen.length", isValidLength, "getARateScreen.emptylength", length, updateLength, 'decimal-pad')}
+          {renderUnitRow(3, "getARateScreen.width", isValidWidth, "getARateScreen.emptywidth", width, updateWidth, 'decimal-pad')}
+          {renderUnitRow(4, "getARateScreen.height", isValidHeight, "getARateScreen.emptyheight", height, updateHeight, 'decimal-pad')}
+          {renderUnitRow(5, "getARateScreen.volume", isValidVolume, "getARateScreen.emptyvolume", volume, updateVolume, 'decimal-pad')}
         </View>
       </ScrollView>
       <BottomButton
         leftImage={icons.blackButton2}
+        isLoadingLeft={GetARateStore.isButtonLoading}
         rightImage={icons.redButton2}
-        onLeftPress={() => gotoRateListScreen()}
+        onLeftPress={() => getACalculatedRate()}
         onRightPress={() => gotoHomeScreen()}
         leftText={"getARateScreen.submit"}
         rightText={"common.cancel"} />

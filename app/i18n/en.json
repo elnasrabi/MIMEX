@@ -140,6 +140,13 @@
     "width": "Width (mm)",
     "height": "Height (mm)",
     "volume": "Volume (cbm)",
+    "emptyunitOfMeasure": "Select Unit",
+    "emptyquantity": "Enter Quantity",
+    "emptytotalWeight": "Enter Weight",
+    "emptylength": "Enter Length",
+    "emptywidth": "Enter Width",
+    "emptyheight": "Enter Height",
+    "emptyvolume": "Enter Volume",
     "submit": "Submit",
     "pickUpAddress": "Pick Up Address"
   },

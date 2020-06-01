@@ -9,7 +9,8 @@ import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { BackButton } from "../../components/header/back-button";
-
+import { useStores } from "../../models/root-store";
+import moment from "moment";
 export interface GetARateListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
@@ -20,7 +21,7 @@ const ROOT: ViewStyle = {
   paddingBottom: 10
 }
 const FLATLIST_STYLE: ViewStyle = {
-  margin: 10,
+  margin: 10, paddingRight: 8, marginRight: 3,
   marginTop: Platform.OS == 'android' ? 50 : isIphoneX() ? 0 : 23,
 }
 const SUB_RATE_ROW_VIEW: ViewStyle = {
@@ -31,7 +32,6 @@ const SUB_ROW_VALUE: ViewStyle = {
 }
 const SUB_ROW_LABEL: ViewStyle = {
   flex: 0.3,
-  justifyContent: "center"
 }
 const SUB_ROW_CONTAINER: ViewStyle = {
   flexDirection: "row",
@@ -50,40 +50,17 @@ const SUB_CONTAINER: ViewStyle = {
 }
 
 export const GetARateList: FunctionComponent<GetARateListProps> = observer((props) => {
-  const flatListData = [
-    {
-      header1: 'AFS - STAR TRACK EXPRESS',
-      header2: 'Road Express Service',
-      carrier: 'Alternative Freight Servies',
-      service: 'STAR TRACK EXPRESS',
-      serviceType: 'Road Express',
-      rateIncSurc: '$ 11.00',
-      surcharge: '$ 0.00',
-      brokerRate: '$ 0.00',
-      deliveryDate: '28 Dec 2020',
-      transitDays: '5'
-    },
-    {
-      header1: 'AFX - TOLL PRIORITY - Overnight',
-      header2: '',
-      carrier: 'Alternative Freight Servies',
-      service: 'TOLL PRIORITY',
-      serviceType: 'Overnight',
-      rateIncSurc: '$ 11.00',
-      surcharge: '$ 0.00',
-      brokerRate: '$ 0.00',
-      deliveryDate: '28 Dec 2020',
-      transitDays: '5'
-    }
-  ]
-  const renderSubRow = (tx, value, displayText = true) => {
+  const { GetARateStore } = useStores()
+  const flatListData = GetARateStore.geteARateList
+
+  const renderSubRow = (tx, value) => {
     return (
       <View style={SUB_ROW_CONTAINER}>
         <View style={SUB_ROW_LABEL}>
-          {displayText ? <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={tx} /> : null}
+          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={tx} />
         </View>
         <View style={SUB_ROW_VALUE}>
-          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{displayText ? value : `- ${value}`}</Text>
+          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value}</Text>
         </View>
       </View>
     )
@@ -96,7 +73,7 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
           <Text tx={tx} style={[FONTFAMILY, { color: color.palette.black }]} />
         </View>
         <View style={SUB_RATE_ROW_VIEW}>
-          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value}</Text>
+          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value ? value : '-'}</Text>
         </View>
       </View>
     )
@@ -104,20 +81,19 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
 
 
   const renderItem = (item, index) => {
+    console.tron.log("Item", item)
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={SUB_CONTAINER}>
-          <Text style={[FONTFAMILY]}>{item.header1}</Text>
-          {item.header2 ? <Text style={[FONTFAMILY]}>{item.header2}</Text> : null}
+          <Text style={[FONTFAMILY]}>{item.journey[0]}</Text>
         </View>
-        {renderSubRow("getARateListScreen.carrier", item.carrier)}
-        {renderSubRow("getARateListScreen.service", item.service)}
-        {renderSubRow("getARateListScreen.header", item.serviceType, false)}
-        {renderSubRateRow('getARateListScreen.rateIncSurc', item.rateIncSurc)}
-        {renderSubRateRow('getARateListScreen.surcharge', item.surcharge)}
-        {renderSubRateRow('getARateListScreen.brokerRate', item.brokerRate)}
-        {renderSubRateRow('getARateListScreen.deliveryDate', item.deliveryDate)}
-        {renderSubRateRow('getARateListScreen.transitDays', item.transitDays)}
+        {renderSubRow("getARateListScreen.carrier", item.consignmentRateTime[0].carrier[0])}
+        {renderSubRow("getARateListScreen.service", item.consignmentRateTime[0].service[0])}
+        {renderSubRateRow('getARateListScreen.rateIncSurc', `$ ${item.consignmentRateTime[0].rate[0]}`)}
+        {renderSubRateRow('getARateListScreen.surcharge', item.consignmentRateTime[0].surcharge)}
+        {renderSubRateRow('getARateListScreen.brokerRate', item.consignmentRateTime[0].brokerRate)}
+        {renderSubRateRow('getARateListScreen.deliveryDate', item.consignmentRateTime[0].deliveryDate[0])}
+        {renderSubRateRow('getARateListScreen.transitDays', item.consignmentRateTime[0].transitDays[0])}
       </View>
     )
   }

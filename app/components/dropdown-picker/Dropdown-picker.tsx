@@ -5,6 +5,7 @@ import { color, typography } from "../../theme"
 import RNPickerSelect from 'react-native-picker-select'
 import { icons } from "../icon/icons"
 import { translateText } from "../../utils/utils"
+import { Text } from "../text/text";
 
 /**
  * For your text displaying needs.
@@ -15,7 +16,8 @@ interface dropdownPickerProps {
   dropDownData: any[], selectedValue: any, onValueChange: (value: any) => void,
   inputStyleIOS?: TextStyle,
   inputStyleAndroid?: TextStyle,
-  placeHolder?: string
+  placeHolder?: string,
+  errorTx?: string
 }
 
 export function DropdownPicker(props: dropdownPickerProps) {
@@ -26,7 +28,8 @@ export function DropdownPicker(props: dropdownPickerProps) {
     onValueChange,
     inputStyleAndroid,
     inputStyleIOS,
-    placeHolder
+    placeHolder,
+    errorTx
   } = props
 
   const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
@@ -52,27 +55,33 @@ export function DropdownPicker(props: dropdownPickerProps) {
     paddingLeft: 5,
     fontFamily: typography.secondary
   }
+  const errorLabel: TextStyle = {
+    textAlign: "right"
+  }
 
   return (
-    <View style={VALUE_CONTAINER_REGISTRATION}>
-      <RNPickerSelect
-        style={{
-          placeholder: {
-            fontSize: 15,
-          },
-          inputIOS: inputStyleIOS || INPUT_STYLE_IOS,
-          inputAndroid: inputStyleAndroid || INPUT_STYLE_ANDROID
-        }}
-        placeholder={{ label: translateText(placeHolder), value: '' }}
-        value={selectedValue}
-        onValueChange={onValueChange}
-        Icon={() =>
-          <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-            <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />
-          </View>
-        }
-        items={dropDownData}
-      />
-    </View>
+    <>
+      <View style={VALUE_CONTAINER_REGISTRATION}>
+        <RNPickerSelect
+          style={{
+            placeholder: {
+              fontSize: 15,
+            },
+            inputIOS: inputStyleIOS || INPUT_STYLE_IOS,
+            inputAndroid: inputStyleAndroid || INPUT_STYLE_ANDROID
+          }}
+          placeholder={{ label: translateText(placeHolder), value: '' }}
+          value={selectedValue}
+          onValueChange={onValueChange}
+          Icon={() =>
+            <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
+              <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />
+            </View>
+          }
+          items={dropDownData}
+        />
+      </View>
+      {errorTx && <Text style={errorLabel} preset={"error"} tx={errorTx} />}
+    </>
   )
 }

@@ -137,7 +137,6 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
         return props.navigation.navigate('SafetyStack')
       case "landingScreen.getRate":
         return props.navigation.navigate('GetARateStack')
-        return true
       default: return true
     }
   }

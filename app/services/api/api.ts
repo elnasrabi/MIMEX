@@ -85,6 +85,20 @@ export class Api {
     }
   }
 
+  async getACalculatedRate(authorization: string, getARateRequest: any): Promise<Types.GetARateResult> {
+    const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getARateRequest), { headers: { Authorization: "Basic " + authorization } })
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const getARateData = response.data
+      return { kind: "ok", getaRate: getARateData, Status: response.status }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
   async forgotPassword(email: string): Promise<Types.LoginUserResult> {
     const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"
     const response: ApiResponse<any> = await this.apisauce.post('', xmlData, { headers: { Authorization: "Basic " + base64.encode(username + ":" + password) } })
