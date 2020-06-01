@@ -15,7 +15,10 @@ export interface HelpScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const ROOT: ViewStyle = {}
+const ROOT: ViewStyle = {
+  backgroundColor: 'black',
+  justifyContent: "center"
+}
 
 const FLATLIST_STYLE: ViewStyle = {
   marginHorizontal: 10,
@@ -95,7 +98,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
   return (
-    <Screen style={[ROOT, fullScreen ? { backgroundColor: 'black', justifyContent: "center" } : {}]} statusBar={fullScreen ? 'light-content' : 'dark-content'} statusBarColor={fullScreen ? color.palette.black : color.palette.white} wall={'whiteWall'} preset="fixed" backgroundColor={fullScreen ? "black" : ""}>
+    <Screen style={fullScreen ? ROOT : {}} statusBar={fullScreen ? 'light-content' : 'dark-content'} statusBarColor={fullScreen ? color.palette.black : color.palette.white} wall={'whiteWall'} preset="fixed" backgroundColor={fullScreen ? "black" : ""}>
       {fullScreen ? null : (<MenuButton
         title={"helpScreen.header"}
         onPress={handleDrawer} />
