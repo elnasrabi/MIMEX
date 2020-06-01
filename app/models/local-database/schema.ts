@@ -19,5 +19,17 @@ export const mySchema = appSchema({
         { name: "synced", type: "boolean" }
       ]
     }),
+    tableSchema({
+      name: "userData",
+      columns: [
+        { name: "email", type: "string" },
+        { name: "userName", type: "string" },
+        { name: "firstName", type: "string" },
+        { name: "lastName", type: "string" },
+        { name: "loginName", type: "string" },
+        { name: "passwordUpdated", type: "string" },
+        { name: "userTypeName", type: "string" }
+      ]
+    }),
   ]
 })

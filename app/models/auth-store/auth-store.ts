@@ -1,6 +1,7 @@
 import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
 import { omit } from "ramda"
 import { Api } from '../../services/api'
+import UserDataModel from "../local-database/user-data-modal"
 const parseString = require('react-native-xml2js').parseString
 
 /**
@@ -32,9 +33,17 @@ export const AuthStoreModel = types
       try {
         const data = yield api.login(username, password)
         if (data.kind === "ok") {
-          parseString(data.user, function (_error, result) {
+          parseString(data.user, async function (_error, result) {
             self.userData = result.responses.userResponse
             self.isLoggedIn = true
+            const model = new UserDataModel()
+            const offlineConsignment = await model.getUserData(self.userData[0].loginName[0])
+            console.log(offlineConsignment)
+            if (offlineConsignment.length > 0 && offlineConsignment[0].loginName === self.userData[0].loginName[0]) {
+              model.addUserData(true, self.userData)
+            } else {
+              model.addUserData(false, self.userData)
+            }
           })
           self.authorization = data.authorization
         } else {

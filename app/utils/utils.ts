@@ -40,6 +40,6 @@ export function callApi(number) {
 }
 export function getFormattedDate(date): string {
   Moment.locale('en')
-  const newDate = Moment(date).format('hh:mmA, DD MMM, yyyy')
+  const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
   return newDate
 }
