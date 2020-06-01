@@ -16,7 +16,7 @@ export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 
-const textInputView: ViewStyle = {
+const TEXTINPUT_VIEW: ViewStyle = {
   flex: 1,
   width: "100%"
 }
@@ -43,7 +43,7 @@ const VALUE: TextStyle = {
   fontWeight: "bold",
   fontFamily: typography.secondary
 }
-const emailText: TextStyle = {
+const EMAIL_TEXT: TextStyle = {
   color: color.palette.black,
   flex: 1,
   fontSize: 16,
@@ -66,7 +66,7 @@ const SCROLLVIEW: ViewStyle = {
   marginBottom: 10,
   marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
 }
-const emailView: ViewStyle = {
+const EMAIL_VIEW: ViewStyle = {
   marginStart: 20,
   marginEnd: 20,
   marginTop: 20
@@ -98,7 +98,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
                 editable={false}
                 onChangeText={(text) => onUpdate(text)}
                 autoCapitalize={"none"}
-                mainStyle={textInputView}
+                mainStyle={TEXTINPUT_VIEW}
                 inputStyle={VALUE}
                 value={moment(date).format('DD-MMM-YYYY').toString()} />
             </View>
@@ -126,7 +126,7 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
                 }
               }}
               autoCapitalize={"none"}
-              mainStyle={textInputView}
+              mainStyle={TEXTINPUT_VIEW}
               inputStyle={VALUE}
               value={value}
               keyboardType={keyboardType}
@@ -161,10 +161,10 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         title={"userSetting.header"}
         onPress={handleDrawer} />
       <ScrollView style={SCROLLVIEW}>
-        <View style={emailView}>
-          <Text extraText={":"} style={emailText} tx={"userSetting.email"} />
+        <View style={EMAIL_VIEW}>
+          <Text extraText={":"} style={EMAIL_TEXT} tx={"userSetting.email"} />
           <View >
-            <TextField mainStyle={textInputView} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
+            <TextField mainStyle={TEXTINPUT_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
           </View>
         </View>
 
