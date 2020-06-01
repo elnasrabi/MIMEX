@@ -21,15 +21,15 @@ const FLATLIST_STYLE: ViewStyle = {
   marginHorizontal: 10,
   marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33
 }
-const RENDER_ITEM_CONTAINER: ViewStyle = {
+const ITEM_CONTAINER: ViewStyle = {
   marginBottom: 10
 }
-const QUESTION_TEXT_STYLE: TextStyle = {
+const QUESTION_TEXT: TextStyle = {
   color: color.palette.black,
   fontSize: 22,
   fontFamily: typography.secondary
 }
-const ANSWER_TEXT_STYLE: TextStyle = {
+const ANSWER_TEXT: TextStyle = {
   color: color.palette.lightGrey,
   fontSize: 22,
   fontFamily: typography.secondary
@@ -44,17 +44,16 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
     { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' }
   ]
   const [fullScreen, setFullScreen] = useState(false)
-  const [pause, setPause] = useState(false)
   const renderItem = (item, index) => {
     return (
-      <View style={RENDER_ITEM_CONTAINER} key={index}>
+      <View style={ITEM_CONTAINER} key={index}>
         <View>
-          <Text style={QUESTION_TEXT_STYLE}>{item.question}</Text>
+          <Text style={QUESTION_TEXT}>{item.question}</Text>
         </View>
         <View>
-          <Text style={ANSWER_TEXT_STYLE}>{item.answer}</Text>
-          <Text style={ANSWER_TEXT_STYLE}>{item.answer}</Text>
-          <Text style={ANSWER_TEXT_STYLE}>{item.answer}</Text>
+          <Text style={ANSWER_TEXT}>{item.answer}</Text>
+          <Text style={ANSWER_TEXT}>{item.answer}</Text>
+          <Text style={ANSWER_TEXT}>{item.answer}</Text>
         </View>
       </View>
     )
@@ -65,15 +64,13 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
   const onExitFullScreen = () => {
     return setFullScreen(false)
   }
-  let VideoRef: any
   const renderHeader = () => {
     return (
       <View style={[FLATLIST_STYLE, fullScreen ? { height: Dimensions.get("screen").width - 100 } : { height: 250 }]}>
         <VideoPlayer
-          ref={(ref) => VideoRef = ref}
-          pause={pause}
-          // source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" }}   // Can be a URL or a local file.
-          source={icons.demoVideo}   // Can be a URL or a local file.
+          pause={isFocusedOrientation ? false : true}
+          source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" }}   // Can be a URL or a local file.
+          // source={icons.demoVideo}   // Can be a URL or a local file.
           style={[fullScreen ? { backgroundColor: 'black', width: '100%' } : { height: 200, backgroundColor: 'black' }]}
           videoStyle={{ width: '100%' }}
           onEnterFullscreen={() => onEnterFullScreen()}
