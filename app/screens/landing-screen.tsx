@@ -11,6 +11,7 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
+import { isInternetAvailable, showAlert } from "../utils/utils"
 import Orientation from "react-native-orientation-locker";
 
 export interface LandingScreenProps {

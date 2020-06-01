@@ -5,6 +5,7 @@ import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
 import { color, typography } from "../../theme"
+import { icons } from "../../components/icon/icons";
 import { MenuButton } from "../../components/header/menu-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import VideoPlayer from 'react-native-video-controls';
