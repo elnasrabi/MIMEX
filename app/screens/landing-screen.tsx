@@ -10,6 +10,7 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
+import Orientation from "react-native-orientation-locker";
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -64,7 +65,9 @@ const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingS
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { homeStore } = useStores()
-
+  useEffect(() => {
+    Orientation.lockToPortrait()
+  })
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       Alert.alert(JSON.stringify(homeStore.barCodeData.data))

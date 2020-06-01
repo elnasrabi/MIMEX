@@ -47,6 +47,8 @@ target 'Moveit' do
   pod 'Google-Maps-iOS-Utils'
 
 
+  pod 'react-native-orientation-locker', :path => '../node_modules/react-native-orientation-locker'
+
   target 'MoveitTests' do
     inherit! :search_paths
     # Pods for testing
