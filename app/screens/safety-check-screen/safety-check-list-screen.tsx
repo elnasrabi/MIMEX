@@ -41,26 +41,26 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
   const BUTTON_VIEW: ViewStyle = {
     height: 50
   }
-  const subContainer: ViewStyle = {
+  const SUB_CONTAINER: ViewStyle = {
     marginBottom: 10,
     flexDirection: "row",
     justifyContent: 'space-between'
   }
-  const dateStyle: ViewStyle = {
+  const DATE_STYLE: ViewStyle = {
     flex: 0.4
   }
-  const linkStyle: ViewStyle = {
+  const LINK_STYLE: ViewStyle = {
     flex: 0.7,
     alignItems: 'flex-end',
     paddingRight: 5
   }
-  const resultText: TextStyle = {
+  const RESULT_TEXT: TextStyle = {
     color: color.palette.darkText,
     fontSize: 22,
     alignSelf: "center",
     marginTop: 35
   }
-  const fontStyle: TextStyle = {
+  const FONT_STYLE: TextStyle = {
     fontSize: 15,
     fontFamily: typography.secondary
   }
@@ -90,14 +90,14 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
 
   const renderItem = ({ item, index }) => {
     return (
-      <View key={index} style={subContainer} >
-        <View style={dateStyle}>
-          <Text style={[fontStyle, { color: color.palette.darkText }]} >{item.date}</Text>
+      <View key={index} style={SUB_CONTAINER} >
+        <View style={DATE_STYLE}>
+          <Text style={[FONT_STYLE, { color: color.palette.darkText }]} >{item.date}</Text>
         </View>
         <TouchableOpacity
-          style={linkStyle}
+          style={LINK_STYLE}
           onPress={() => gotoSafetyDetail()}>
-          <Text style={[fontStyle, { color: color.palette.link }]} >{item.link}</Text>
+          <Text style={[FONT_STYLE, { color: color.palette.link }]} >{item.link}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -124,7 +124,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
           cameraIcon={false}
           buttonStyle={BUTTON_VIEW} />
 
-        <Text style={resultText} tx={"safetyCheckScreen.results"} />
+        <Text style={RESULT_TEXT} tx={"safetyCheckScreen.results"} />
         <View style={FLEX_VIEW}>
           <FlatList
             style={FLATLIST_STYLE}

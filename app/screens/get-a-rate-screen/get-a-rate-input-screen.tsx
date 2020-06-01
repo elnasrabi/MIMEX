@@ -21,19 +21,19 @@ const FONTFAMILY: TextStyle = {
 const ROOT: ViewStyle = {
   paddingBottom: 10
 }
-const scrollViewStyle: ViewStyle = {
+const SCROLLVIEW_STYLE: ViewStyle = {
   marginBottom: 10,
   marginTop: Platform.OS == 'android' ? 50 : isIphoneX() ? 10 : 33
 }
-const scrollContainer: ViewStyle = {
+const SCROLLVIEW_CONTAINER: ViewStyle = {
   marginLeft: 10,
   width: '96%'
 }
-const upperContainer: ViewStyle = {
+const UPPER_CONTAINER: ViewStyle = {
   width: '97%',
   paddingBottom: 20
 }
-const upperContainerSubView: ViewStyle = {
+const UPPER_CONTAINER_SUBVIEW: ViewStyle = {
   marginTop: 20
 }
 const BUTTON_VIEW: ViewStyle = {
@@ -51,17 +51,17 @@ const IMAGE_BACKGROUND: ViewStyle = {
   paddingHorizontal: 20,
   height: 40
 }
-const textFielfView: ViewStyle = {
+const TEXTFIELD_VIEW: ViewStyle = {
   width: "60%"
 }
 const FLEX: ViewStyle = {
   flex: 1
 }
-const containerView: ViewStyle = {
+const CONTAINER: ViewStyle = {
   flexDirection: 'row',
   justifyContent: 'space-between'
 }
-const containerText: ViewStyle = {
+const CONTAINER_TEXT: ViewStyle = {
   justifyContent: 'flex-end',
   paddingBottom: 10
 }
@@ -98,11 +98,11 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
-      <View style={containerView}>
-        <View style={containerText}>
+      <View style={CONTAINER}>
+        <View style={CONTAINER_TEXT}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
-        <View style={textFielfView}>
+        <View style={TEXTFIELD_VIEW}>
           <TextField
             autoCorrect={false}
             onChangeText={(text) => onUpdate(text)}
@@ -118,8 +118,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   const renderUnitRow = (key, label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
-      <View style={containerView}>
-        <View style={[containerText, FLEX]}>
+      <View style={CONTAINER}>
+        <View style={[CONTAINER_TEXT, FLEX]}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
         </View>
         <View style={FLEX}>
@@ -173,8 +173,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         title={"getARateScreen.header"}
         onPress={handleDrawer} />
 
-      <ScrollView contentContainerStyle={scrollContainer} style={scrollViewStyle}>
-        <View style={upperContainer}>
+      <ScrollView contentContainerStyle={SCROLLVIEW_CONTAINER} style={SCROLLVIEW_STYLE}>
+        <View style={UPPER_CONTAINER}>
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
           <View style={SEPERATOR_LINE} />
           <DropdownPicker
@@ -183,7 +183,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             selectedValue={pickUpAddress}
             onValueChange={(value) => updatePckUpAddress(value)}
           />
-          <View style={upperContainerSubView}>
+          <View style={UPPER_CONTAINER_SUBVIEW}>
             <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
             <View style={SEPERATOR_LINE} />
             {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
