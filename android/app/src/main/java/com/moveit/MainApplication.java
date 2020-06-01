@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import org.wonday.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -32,11 +33,11 @@ public class MainApplication extends Application implements ReactApplication {
           return packages;
         }
 
-        @Override
-        protected String getJSMainModuleName() {
-          return "index";
-        }
-      };
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
+    }
+  };
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -59,9 +60,9 @@ public class MainApplication extends Application implements ReactApplication {
     if (BuildConfig.DEBUG) {
       try {
         /*
-         We use reflection here to pick up the class that initializes Flipper,
-        since Flipper library is not available in release mode
-        */
+         * We use reflection here to pick up the class that initializes Flipper, since
+         * Flipper library is not available in release mode
+         */
         Class<?> aClass = Class.forName("com.facebook.flipper.ReactNativeFlipper");
         aClass.getMethod("initializeFlipper", Context.class).invoke(null, context);
       } catch (ClassNotFoundException e) {

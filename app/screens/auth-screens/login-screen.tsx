@@ -8,6 +8,7 @@ import { useStores } from "../../models/root-store"
 import { color } from "../../theme"
 import { MyButton } from "../../components/button/my-button"
 import { isInternetAvailable } from "../../utils/utils"
+import Orientation from "react-native-orientation-locker";
 
 export interface LoginScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -64,7 +65,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   let passwordRef: any
 
   useEffect(() => {
-    // authStore.resetLoginAuth()
+    Orientation.lockToPortrait()
   }, [])
 
   const onLogin = () => {

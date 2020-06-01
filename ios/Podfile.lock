@@ -232,6 +232,8 @@ PODS:
     - React
   - react-native-netinfo (5.9.0):
     - React
+  - react-native-orientation-locker (1.1.8):
+    - React
   - react-native-pdf (6.1.2):
     - React
   - react-native-safe-area-context (0.7.3):
@@ -337,6 +339,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-signature-capture (from `../node_modules/react-native-signature-capture`)
@@ -423,6 +426,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-orientation-locker:
+    :path: "../node_modules/react-native-orientation-locker"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
   react-native-safe-area-context:
@@ -509,6 +514,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-netinfo: 7b3c53674ea611b26a7788821f137c6d9d3a038b
+  react-native-orientation-locker: f0ca1a8e5031dab6b74bfb4ab33a17ed2c2fcb0d
   react-native-pdf: 7d76a6619f76a6ebfb2f82a4f2feeb17826ba8b4
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-signature-capture: 331c29f07b4f19ccfe63c5247a956b203abb500f
@@ -538,6 +544,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 9b6d0ee5d517da9123a1da1045454ab1d58e8dfd
+PODFILE CHECKSUM: 9f7f77ea0291dcdcbb4bae5d3c48b7c55c7ca7a1
 
 COCOAPODS: 1.7.5

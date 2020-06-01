@@ -11,7 +11,7 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
-import { showAlert, isInternetAvailable } from "../utils/utils"
+import Orientation from "react-native-orientation-locker";
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -70,6 +70,10 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true)
   const [isGoPressed, setIsOnGoPress] = useState(false)
+
+  useEffect(() => {
+    Orientation.lockToPortrait()
+  })
   useEffect(() => {
     if (homeStore.barCodeData.data) {
       onSearchValue(homeStore.barCodeData.data)
