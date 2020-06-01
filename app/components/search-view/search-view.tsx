@@ -56,7 +56,7 @@ const INPUT_STYLE: TextStyle = { borderColor: color.palette.darkText, borderWidt
 const MAIN_STYLE: ViewStyle = { flex: 1 }
 
 export const SearchView: React.FunctionComponent<SearchProps> = observer(props => {
-  const { consignmentStore, homeStore } = useStores()
+  const { consignmentStore } = useStores()
   const {
     onCameraPress,
     onGoPress,

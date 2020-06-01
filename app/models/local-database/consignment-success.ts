@@ -1,6 +1,6 @@
 // models/Movie.js
 import { Model } from "@nozbe/watermelondb"
-import { field, date, children } from "@nozbe/watermelondb/decorators"
+import { field } from "@nozbe/watermelondb/decorators"
 
 export default class ConsignmentSuccess extends Model {
   static table = "consignmentSuccess";

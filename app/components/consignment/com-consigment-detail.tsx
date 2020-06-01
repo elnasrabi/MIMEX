@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ImageStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"

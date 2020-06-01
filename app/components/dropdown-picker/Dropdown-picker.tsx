@@ -1,10 +1,10 @@
 import * as React from "react"
 import { TextStyle, View, ViewStyle, Platform, Image } from "react-native"
-import { color } from "../../theme"
-import { typography } from "../../theme";
+import { color, typography } from "../../theme"
+
 import RNPickerSelect from 'react-native-picker-select'
-import { icons } from "../icon/icons";
-import { translateText } from "../../utils/utils";
+import { icons } from "../icon/icons"
+import { translateText } from "../../utils/utils"
 
 /**
  * For your text displaying needs.
@@ -60,8 +60,8 @@ export function DropdownPicker(props: dropdownPickerProps) {
           placeholder: {
             fontSize: 15,
           },
-          inputIOS: inputStyleIOS ? inputStyleIOS : INPUT_STYLE_IOS,
-          inputAndroid: inputStyleAndroid ? inputStyleAndroid : INPUT_STYLE_ANDROID
+          inputIOS: inputStyleIOS || INPUT_STYLE_IOS,
+          inputAndroid: inputStyleAndroid || INPUT_STYLE_ANDROID
         }}
         placeholder={{ label: translateText(placeHolder), value: '' }}
         value={selectedValue}

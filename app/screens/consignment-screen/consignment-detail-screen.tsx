@@ -1,12 +1,12 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent, useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
+import { ViewStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
 import { color } from "../../theme"
 import { BackButton } from "../../components/header/back-button"
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { icons } from "../../components/icon/icons"
 import { ComConsignmentDetail } from "../../components/consignment/com-consigment-detail"

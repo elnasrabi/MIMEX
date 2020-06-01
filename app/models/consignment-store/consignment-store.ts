@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types, flow, applySnapshot } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
 import { Api } from '../../services/api'
 import { omit } from "ramda"
 import { showAlert } from "../../utils/utils"

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Picker, ImageStyle, Alert, Platform, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -15,7 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText } from "../../utils/utils"
+import { translateText, getCurrentDate, getFormattedDate } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 
 export interface ConsignmentSpecialProps {
@@ -51,13 +51,13 @@ const options = {
 }
 
 const SIGN_INPUT: TextStyle = {
-  borderColor: color.palette.darkText,
+  borderColor: color.palette.link,
   borderWidth: 2,
   height: 300,
   flex: 1
 }
 const SIGN_LABEL: TextStyle = {
-  color: color.palette.link,
+  color: color.palette.darkText,
   fontFamily: typography.secondary,
   fontSize: 18
 }
@@ -90,7 +90,12 @@ const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   justifyContent: 'center'
 }
 
-const DATE_TEXT: TextStyle = { flex: 1, textAlign: "right", fontSize: 16 }
+const DATE_TEXT: TextStyle = {
+  flex: 1,
+  textAlign: "right",
+  alignSelf: "center",
+  fontSize: 15
+}
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
 
   const { consignmentStore } = useStores()
@@ -99,8 +104,6 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
   const [viewImage, onViewImage] = useState(false)
-  const [isValidStatus, onSetValidStatus] = useState(true)
-  const [isValidFile, onSetValidFile] = useState(true)
   useEffect(() => {
   }, [])
 
@@ -148,7 +151,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={"11 March 2020\n11:15 am"} />
+              <Text preset={"normal"} style={DATE_TEXT} text={getFormattedDate(new Date())} />
             </View>
 
             <View style={CAMERA_VIEW}>

@@ -1,14 +1,12 @@
-import React, { FunctionComponent, useEffect, useRef } from "react"
+import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, TouchableOpacity, Alert, Linking } from "react-native"
+import { TextStyle, } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField } from "../../components"
 import { useStores } from "../../models/root-store"
-import { color, spacing, typography } from "../../theme"
+import { color, typography } from "../../theme"
 import {
   DrawerContentScrollView,
-  DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer'
 
@@ -20,13 +18,9 @@ const LABEL: TextStyle = { fontFamily: typography.primary, fontSize: 16, color: 
 
 export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = observer((props) => {
   const { authStore } = useStores()
-  let passwordRef: any
 
   const onLogout = () => {
     authStore.logout()
-  }
-  const onResetPassword = () => {
-    props.navigation.navigate("forgotpassword")
   }
   return (
     <DrawerContentScrollView {...props}>

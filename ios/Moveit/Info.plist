@@ -41,6 +41,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires to access your Camera to scan bar code.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires to access your current location if you wish to share the Consignment location.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires to access your current location if you wish to share the Consignment location.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires to access your microphone to record video with your voice.</string>
 	<key>NSMotionUsageDescription</key>

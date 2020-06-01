@@ -15,8 +15,7 @@ export interface QRProps {
     /**
      * The name of the icon
      */
-
-     
+ 
     onSuccess?(): void
 
     onGoPress?(): void

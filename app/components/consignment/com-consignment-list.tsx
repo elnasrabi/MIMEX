@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, Platform } from "react-native"
+import { ViewStyle, TextStyle, View } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Icon } from "../../components"
+import { Text } from "../../components"
 import { color } from "../../theme"
 
 export interface ComConsignmentListProps {
@@ -27,7 +27,7 @@ const STATUS: TextStyle = { color: color.palette.link, }
 const TEXT_VALUE: TextStyle = { color: color.palette.link, }
 
 export const ComConsignmentList: FunctionComponent<ComConsignmentListProps> = observer(props => {
-  const { item, onPress = {}, index } = props
+  const { item, index } = props
   const cons = item.consignmentMatchingConsignment[0]
   return (
     <View key={index} style={FLAT_LIST}>

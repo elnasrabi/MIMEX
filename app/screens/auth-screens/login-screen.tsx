@@ -3,9 +3,9 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, TouchableOpacity, Alert, ImageStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Button, TextField, Icon } from "../../components"
+import { Screen, Text, TextField, Icon } from "../../components"
 import { useStores } from "../../models/root-store"
-import { color, spacing } from "../../theme"
+import { color } from "../../theme"
 import { MyButton } from "../../components/button/my-button"
 import { isInternetAvailable } from "../../utils/utils"
 
@@ -54,13 +54,13 @@ const INPUT_USERNAME = "username"
 const INPUT_PASSWORD = "password"
 export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props) => {
   const { authStore } = useStores()
-  const [username, onChangeUsername] = useState("")
-  const [password, onChangePassword] = useState("")
+  // const [username, onChangeUsername] = useState("")
+  // const [password, onChangePassword] = useState("")
   const [isValidUsername, setValidUsername] = useState(true)
   const [isValidPassword, setValidPassword] = useState(true)
 
-  // const [username, onChangeUsername] = useState("services@afs")
-  // const [password, onChangePassword] = useState("services092017")
+  const [username, onChangeUsername] = useState("services@afs")
+  const [password, onChangePassword] = useState("services092017")
   let passwordRef: any
 
   useEffect(() => {
@@ -71,9 +71,10 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     const isConnected = isInternetAvailable()
     if (!username) {
       setValidUsername(false)
-    } else if (!password) {
+    } if (!password) {
       setValidPassword(false)
-    } else if (isConnected) {
+    }
+    if (username && password && isConnected) {
       authStore.login(username, password)
       // authStore.resetAuth()
     }

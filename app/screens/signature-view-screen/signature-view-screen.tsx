@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, Alert, Platform } from "react-native"
+import { ViewStyle, View, Platform } from "react-native"
 import { color } from "../../theme"
 import SignatureCapture from 'react-native-signature-capture'
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"

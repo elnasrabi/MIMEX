@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { useFocusEffect } from '@react-navigation/native';
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, FlatList, TouchableOpacity, ImageStyle, Alert, BackHandler, Keyboard } from "react-native"
+import { ViewStyle, View, ImageStyle, BackHandler, Keyboard } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Icon } from "../components"
+import { Screen, Icon } from "../components"
 import { color } from "../theme"
 import { MenuButton } from "../components/header/menu-button"
 import { SearchView } from "../components/search-view/search-view"
@@ -66,8 +66,8 @@ const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingS
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore } = useStores()
-  // const [searchValue, onSearchValue] = useState("AMI000071")
-  const [searchValue, onSearchValue] = useState("")
+  const [searchValue, onSearchValue] = useState("AMI000071")
+  // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true)
   const [isGoPressed, setIsOnGoPress] = useState(false)
   useEffect(() => {
