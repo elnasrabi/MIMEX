@@ -3,16 +3,21 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard } from "react-native"
 import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
+import { isIphoneX } from "react-native-iphone-x-helper"
+import moment from 'moment'
+import KeyboardManager from "react-native-keyboard-manager";
+
+// import from modal and utils
+import { isInternetAvailable } from "../../utils/utils";
+import { useStores } from "../../models/root-store";
+
+// iports from components
 import { Screen, Text, TextField, Button } from "../../components"
 import { color, typography } from "../../theme"
 import { MenuButton } from "../../components/header/menu-button"
 import { icons } from "../../components/icon/icons"
 import { BottomButton } from "../../components/bottom-button/bottom-button"
-import { isIphoneX } from "react-native-iphone-x-helper"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
-import { isInternetAvailable } from "../../utils/utils";
-import moment from 'moment'
-import { useStores } from "../../models/root-store";
 export interface GetARateProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
@@ -107,6 +112,9 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   useEffect(() => {
     if (isFocused) {
       clearInputs()
+      if (Platform.OS === 'ios') {
+        KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+      }
     }
   }, [isFocused])
 
@@ -242,7 +250,6 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               value={value}
               keyboardType={keyboardType}
               blurOnSubmit={label == "getARateScreen.volume"}
-              // onChangeText={(text) => onUpdate(text)}
               onChangeText={(value) => {
                 if (value) {
                   if (/^\d+$/.test(value)) {
