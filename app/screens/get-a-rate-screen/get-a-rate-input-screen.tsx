@@ -84,7 +84,7 @@ const SEPERATOR_LINE: ViewStyle = {
   borderRadius: 5
 };
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
-  const { GetARateStore, authStore } = useStores();
+  const { getARateStore, authStore } = useStores();
   const isFocused = useIsFocused();
   const measurementUnitData = [{ label: 'PALLET', value: 'PALLET' }];
   const pickUpAddressData = [{ label: 'MELBCCS WEST FOOTSCRAY', value: 'MELBCCS WEST FOOTSCRAY' }];
@@ -110,13 +110,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const currentRef: any[] = [];
 
   useEffect(() => {
-    if (isFocused && !GetARateStore.preventRefresh) {
+    if (isFocused && !getARateStore.preventRefresh) {
       clearInputs();
     }
     if (Platform.OS === 'ios') {
       KeyboardManager.setToolbarPreviousNextButtonEnable(true);
     }
-    GetARateStore.updatePreventrefersh(false);
+    getARateStore.updatePreventrefersh(false);
   }, [isFocused])
 
   const checkValidation = async () => {
@@ -169,8 +169,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           }
         }
       }
-      await GetARateStore.getARate(authStore.authorization, requestData)
-      if (GetARateStore.responseSuccess) {
+      await getARateStore.getARate(authStore.authorization, requestData)
+      if (getARateStore.responseSuccess) {
         gotoRateListScreen()
       }
     }
@@ -325,7 +325,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       </ScrollView>
       <BottomButton
         leftImage={icons.blackButton2}
-        isLoadingLeft={GetARateStore.isButtonLoading}
+        isLoadingLeft={getARateStore.isButtonLoading}
         rightImage={icons.redButton2}
         onLeftPress={checkValidation}
         onRightPress={() => gotoHomeScreen()}

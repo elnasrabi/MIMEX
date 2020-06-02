@@ -51,8 +51,8 @@ const SUB_CONTAINER: ViewStyle = {
 };
 
 export const GetARateList: FunctionComponent<GetARateListProps> = observer((props) => {
-  const { GetARateStore } = useStores();
-  const flatListData = GetARateStore.geteARateList;
+  const { getARateStore } = useStores();
+  const flatListData = getARateStore.geteARateList;
   const renderSubRow = (tx, value) => {
     return (
       <View style={SUB_ROW_CONTAINER}>
@@ -102,7 +102,7 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
   }
 
   const goBack = React.useMemo(() => () => {
-    GetARateStore.updatePreventrefersh(true)
+    getARateStore.updatePreventrefersh(true)
     props.navigation.goBack()
   }, [props.navigation]);
 
