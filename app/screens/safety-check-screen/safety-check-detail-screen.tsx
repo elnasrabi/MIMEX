@@ -3,83 +3,84 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, View, Platform, ScrollView, TextStyle } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, Checkbox, TextField } from "../../components"
-import { color, typography } from "../../theme"
+import { isIphoneX } from "react-native-iphone-x-helper";
+import RadioButton from "react-native-radio-button";
+
+// imports from components ,themes and modals
+import { Screen, Text, Checkbox, TextField } from "../../components";
+import { color, typography } from "../../theme";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
-import { isIphoneX } from "react-native-iphone-x-helper";
 import { BackButton } from "../../components/header/back-button";
-import RadioButton from "react-native-radio-button";
 export interface SafetyCheckDetailProps {
   navigation: NativeStackNavigationProp<ParamListBase>
-}
-
+};
 const ROOT: ViewStyle = {
   paddingBottom: 10
-}
+};
 const MAIN_VIEW: ViewStyle = {
   marginLeft: 10, marginBottom: 10,
   marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 10 : 33,
-}
+};
 const SEPERATOR_LINE: ViewStyle = {
   height: 5,
   backgroundColor: color.palette.black,
   width: '95%',
   borderRadius: 5,
   marginVertical: 15
-}
+};
 const CHECKBOX_STYLE: ViewStyle = {
   height: 25,
   width: 25,
   borderColor: color.palette.black
-}
+};
 const ROW_CONTAINER: ViewStyle = {
   flexDirection: "row",
   justifyContent: "space-evenly",
   marginTop: 5
-}
+};
 const LABEL_STYLE: ViewStyle = {
   flex: 0.7,
   alignItems: "flex-start"
-}
+};
 const DATE_STYLE: ViewStyle = {
   flex: 1
-}
+};
 const LABEL_TEXT: TextStyle = {
   paddingLeft: '20%',
-}
+};
 const DATE_TEXT: TextStyle = {
   color: color.palette.textGray
-}
+};
 const RADIO_BUTTON_VIEW: TextStyle = {
   paddingLeft: 5
-}
+};
 const COMMON_TEXT: TextStyle = {
   marginTop: 15
-}
+};
 const TEXT_FIELD_INPUT: TextStyle = {
   height: 100,
   color: color.palette.link,
   textAlignVertical: 'top'
-}
+};
 const FONT_STYLE: TextStyle = {
   fontFamily: typography.secondary
-}
+};
 const TEXTFIELD_MAIN: ViewStyle = {
   width: '98%'
-}
+};
 const RADIO_CONTAINER: ViewStyle = {
   marginTop: 20
-}
+};
 const RADIO_BUTTON_MAINVIEW: ViewStyle = {
   marginTop: 5,
   marginLeft: 5,
   flexDirection: 'row'
-}
+};
 const RADIO_BUTTON_SUBVIEW: ViewStyle = {
   flexDirection: 'row',
   alignItems: "center"
-}
+};
 
 export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = observer((props) => {
 
@@ -90,7 +91,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
     { isCheck: false, text: "safetyCheckDetailScreen.mirrors" },
     { isCheck: false, text: "safetyCheckDetailScreen.alarms" },
     { isCheck: false, text: "safetyCheckDetailScreen.brakes" }
-  ])
+  ]);
   const [radio, updateRadio] = useState([
     { isSelect: false }, { isSelect: false }
   ]);
@@ -100,7 +101,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   const [radio2, updateRadio2] = useState([
     { isSelect: false }, { isSelect: false }
   ]);
-  const [comment, updateComment] = useState('')
+  const [comment, updateComment] = useState('');
 
   const renderRow = (label, value, extratext = true) => {
     return (
@@ -159,10 +160,10 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
     )
   }
 
-  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
+  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation]);
 
   const gotoSafetyCheckList = () => {
-    return props.navigation.navigate('SafetyCheck')
+    return props.navigation.navigate('SafetyCheck');
   }
 
   return (

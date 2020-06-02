@@ -1,50 +1,51 @@
-import { Instance, SnapshotOut, types, flow, getParent } from "mobx-state-tree"
-import { Api } from '../../services/api'
-import { omit } from "ramda"
-import { showAlert } from "../../utils/utils"
-const parseString = require('react-native-xml2js').parseString
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
+import { Api } from '../../services/api';
+import { omit } from "ramda";
+import { showAlert } from "../../utils/utils";
+const parseString = require('react-native-xml2js').parseString;
 
+const api = new Api();
+api.setup();
 
-const api = new Api()
-api.setup()
 /**
  * Model description here for TypeScript hints.
  */
-export const GetARateModelModel = types
+export const GetARateModel = types
   .model("GetARateModel")
   .props({
     isButtonLoading: types.optional(types.boolean, false),
-    isEmptyList: types.optional(types.boolean, true),
     geteARateList: types.optional(types.frozen(), []),
     responseSuccess: types.optional(types.boolean, false),
+    preventRefresh: types.optional(types.boolean, false)
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
 
+    updatePreventrefersh(value) {
+      self.preventRefresh = value
+    },
+
     getARate: flow(function* getARate(authorization: string, getARateRequest: any) {
-      self.isButtonLoading = true
+      self.isButtonLoading = true;
       try {
-        const data = yield api.getACalculatedRate(authorization, getARateRequest)
+        const data = yield api.getACalculatedRate(authorization, getARateRequest);
         if (data.kind === "ok" && data.Status == 200) {
           parseString(data.getaRate, { trim: true }, function (_error, result) {
-            if (result.responses.consignmentRateTimeServiceResponses[0] === '') {
-              self.isEmptyList = false
-              self.geteARateList = []
-              self.responseSuccess = false
+            let response = result.responses.consignmentRateTimeServiceResponses[0];
+            if (response === '') {
+              self.geteARateList = [];
+              self.responseSuccess = false;
             }
             else {
-              self.isEmptyList = false
-              self.geteARateList = result.responses.consignmentRateTimeServiceResponses[0].consignmentRateTimeServiceResponse[0].consignmentRateTimeGroups[0].consignmentRateTimes
-              self.responseSuccess = true
+              self.geteARateList = response.consignmentRateTimeServiceResponse[0].consignmentRateTimeGroups[0].consignmentRateTimes;
+              self.responseSuccess = true;
             }
           })
         } else {
-          showAlert("common.somethingWrong")
+          showAlert("common.somethingWrong");
         }
-      } catch (erro) {
-        // console.tron.log('erro', erro)
-      }
-      self.isButtonLoading = false
+      } catch (erro) { }
+      self.isButtonLoading = false;
     }),
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -55,9 +56,9 @@ export const GetARateModelModel = types
   
   * Note that you'll need to import `omit` from ramda, which is already included in the project!
   */
-  .postProcessSnapshot(omit(["isButtonLoading", "isEmptyList", "geteARateList", "responseSuccess"]))
+  .postProcessSnapshot(omit(["isButtonLoading", "geteARateList", "responseSuccess", "preventRefresh"]))
 
-type GetARateModelType = Instance<typeof GetARateModelModel>
+type GetARateModelType = Instance<typeof GetARateModel>
 export interface GetARateModel extends GetARateModelType { }
-type GetARateModelSnapshotType = SnapshotOut<typeof GetARateModelModel>
+type GetARateModelSnapshotType = SnapshotOut<typeof GetARateModel>
 export interface GetARateModelSnapshot extends GetARateModelSnapshotType { }

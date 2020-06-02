@@ -47,9 +47,7 @@ export const ConsignmentStoreModel = types
           showAlert("common.somethingWrong")
         }
         self.isButtonLoading = false
-      } catch (erro) {
-        // console.tron.log('erro', erro)
-      }
+      } catch (erro) { }
     }),
     setConsignmentDetail(detail) {
       self.consignmentDetail = detail

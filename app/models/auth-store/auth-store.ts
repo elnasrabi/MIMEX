@@ -41,9 +41,7 @@ export const AuthStoreModel = types
           self.hasLoginError = true
         }
         self.isLoginLoading = false
-      } catch (erro) {
-        // console.tron.log('erro', erro)
-      }
+      } catch (erro) { }
     }),
     forgotPassword: flow(function* forgotPassword(email: string) {
       // self.isForgotLoading = true
@@ -58,9 +56,7 @@ export const AuthStoreModel = types
       //     self.hasForgotError = true
       //   }
       //   self.isForgotLoading = false
-      // } catch (erro) {
-      //   // console.tron.log('erro', erro)
-      // }
+      // } catch (erro) { }
     })
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

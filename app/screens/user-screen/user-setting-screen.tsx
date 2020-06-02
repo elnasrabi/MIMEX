@@ -1,88 +1,83 @@
-import React, { FunctionComponent, useState, useEffect } from "react"
-import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions } from "react-native"
-import { ParamListBase, useIsFocused } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, TextField } from "../../components"
-import { color, typography } from "../../theme"
+import React, { FunctionComponent, useState, useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions } from "react-native";
+import { ParamListBase, useIsFocused } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "react-native-screens/native-stack";
+import { isIphoneX } from "react-native-iphone-x-helper";
+import moment from 'moment';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import KeyboardManager from "react-native-keyboard-manager";
+
+// imports from components, themes and modals
+import { Screen, Text, TextField } from "../../components";
+import { color, typography } from "../../theme";
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
-import { isIphoneX } from "react-native-iphone-x-helper";
-import moment from 'moment'
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import KeyboardManager from "react-native-keyboard-manager";
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
-}
-
+};
 const TEXTINPUT_VIEW: ViewStyle = {
   flex: 1,
   width: "100%"
-}
-
+};
 const TITLE: ViewStyle = {
   flex: 1,
   marginTop: 15
-}
-
+};
 const ROOT: ViewStyle = {
   paddingBottom: 10
-}
-
+};
 const LABEL: TextStyle = {
   color: color.palette.black,
   fontSize: 16,
   fontWeight: "bold",
   fontFamily: typography.secondary
-}
-
+};
 const VALUE: TextStyle = {
   color: color.palette.link,
   fontSize: 16,
   fontWeight: "bold",
   fontFamily: typography.secondary
-}
+};
 const EMAIL_TEXT: TextStyle = {
   color: color.palette.black,
   flex: 1,
   fontSize: 16,
   fontWeight: "bold",
   fontFamily: typography.secondary
-}
-
+};
 const VALUE_CONTAINER: ViewStyle = {
   flex: 1,
   alignItems: "flex-end"
-}
-
+};
 const ROW: ViewStyle = {
   flexDirection: "row",
   marginStart: 20,
   marginEnd: 20,
   alignItems: 'center'
-}
+};
 const SCROLLVIEW: ViewStyle = {
   marginBottom: 10,
   marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
-}
+};
 const EMAIL_VIEW: ViewStyle = {
   marginStart: 20,
   marginEnd: 20,
   marginTop: 20
-}
+};
 
 export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
-  const isFocused = useIsFocused()
-  const [mobile, updateMobile] = useState('0411 111 111')
-  const [city, updateCity] = useState('South Yarra')
-  const [state, updateState] = useState('VIC')
-  const [licenceType, updateLicenceType] = useState('License Type')
-  const [licenceNumber, updateLicenceNumber] = useState('License Number')
-  const [expiry, updateExpiry] = useState('')
-  const [date, setDate] = useState(new Date())
+  const isFocused = useIsFocused();
+  const [mobile, updateMobile] = useState('0411 111 111');
+  const [city, updateCity] = useState('South Yarra');
+  const [state, updateState] = useState('VIC');
+  const [licenceType, updateLicenceType] = useState('License Type');
+  const [licenceNumber, updateLicenceNumber] = useState('License Number');
+  const [expiry, updateExpiry] = useState('');
+  const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const currentRef: any[] = []
+  const currentRef: any[] = [];
 
   useEffect(() => {
     if (isFocused) {
@@ -154,15 +149,16 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
 
   const handleConfirm = (date) => {
     setShow(Platform.OS === 'ios');
-    setDate(date)
+    setDate(date);
     hideDatePicker();
   };
 
   const gotoHome = () => {
-    return props.navigation.navigate('Home')
+    return props.navigation.navigate('Home');
   }
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
+
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
@@ -175,14 +171,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
             <TextField mainStyle={TEXTINPUT_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
           </View>
         </View>
-
         {renderRow(0, "userSetting.mobile", mobile, updateMobile, 'phone-pad', true)}
         {renderRow(1, "userSetting.city", city, updateCity, 'default', true)}
         {renderRow(2, "userSetting.state", state, updateState, 'default', true)}
         {renderRow(3, "userSetting.licenceType", licenceType, updateLicenceType, 'default')}
         {renderRow(4, "userSetting.licenceNumber", licenceNumber, updateLicenceNumber, 'decimal-pad')}
         {renderRow(5, "userSetting.expiry", expiry, updateExpiry)}
-
       </ScrollView>
       <BottomButton
         leftImage={icons.blackButton2}
@@ -191,6 +185,5 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         leftText={"common.save"}
         rightText={"common.cancel"} />
     </Screen>
-
   )
 })
