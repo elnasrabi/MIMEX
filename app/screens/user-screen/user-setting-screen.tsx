@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useState, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
 import { color, typography } from "../../theme"
@@ -11,7 +11,7 @@ import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import moment from 'moment'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
+import KeyboardManager from "react-native-keyboard-manager";
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
@@ -73,7 +73,7 @@ const EMAIL_VIEW: ViewStyle = {
 }
 
 export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
-
+  const isFocused = useIsFocused()
   const [mobile, updateMobile] = useState('0411 111 111')
   const [city, updateCity] = useState('South Yarra')
   const [state, updateState] = useState('VIC')
@@ -83,6 +83,14 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const [date, setDate] = useState(new Date())
   const [show, setShow] = useState(false);
   const currentRef: any[] = []
+
+  useEffect(() => {
+    if (isFocused) {
+      if (Platform.OS === 'ios') {
+        KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+      }
+    }
+  }, [isFocused])
 
   const renderRow = (key, label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default', hasExtraText = false) => {
     return (
