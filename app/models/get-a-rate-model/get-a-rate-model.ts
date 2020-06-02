@@ -2,7 +2,6 @@ import { Instance, SnapshotOut, types, flow, getParent } from "mobx-state-tree"
 import { Api } from '../../services/api'
 import { omit } from "ramda"
 import { showAlert } from "../../utils/utils"
-// const parseString = require('react-native-xml2js').parseString
 const parseString = require('react-native-xml2js').parseString
 
 

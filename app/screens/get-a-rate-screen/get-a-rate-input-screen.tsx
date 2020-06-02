@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useState, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField, Button } from "../../components"
 import { color, typography } from "../../theme"
@@ -9,7 +9,6 @@ import { MenuButton } from "../../components/header/menu-button"
 import { icons } from "../../components/icon/icons"
 import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { isIphoneX } from "react-native-iphone-x-helper"
-
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import { isInternetAvailable } from "../../utils/utils";
 import moment from 'moment'
@@ -81,13 +80,11 @@ const SEPERATOR_LINE: ViewStyle = {
 }
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const { GetARateStore, authStore } = useStores()
-  const dropDownData = [
-    { label: 'item 1', value: 'item 1' },
-    { label: 'item 2', value: 'item 2' },
-    { label: 'item 3', value: 'item 3' },
-  ]
-  const [pickUpAddress, updatePckUpAddress] = useState('')
+  const isFocused = useIsFocused()
+  const measurementUnitData = [{ label: 'PALLET', value: 'PALLET' }]
+  const pickUpAddressData = [{ label: 'MELBCCS WEST FOOTSCRAY', value: 'MELBCCS WEST FOOTSCRAY' }]
   const [postCode, updatePostCode] = useState('')
+  const [pickUpAddress, updatePckUpAddress] = useState('')
   const [town, updateTown] = useState('')
   const [unitOfMeasure, updateUnitOfMeasure] = useState('')
   const [quantity, updateQuantity] = useState('')
@@ -96,6 +93,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const [width, updateWidth] = useState('')
   const [height, updateHeight] = useState('')
   const [volume, updateVolume] = useState('')
+  const [isValidPickUpAddres, setIsValidPickUpAddres] = useState(true)
+  const [isValidDeliveryAddres, setIsValidDeliveryAddres] = useState(true)
   const [isValidUnitOfMeasure, setIsValidUnitOfMeasure] = useState(true)
   const [isValidQuantity, setIsValidQuantity] = useState(true)
   const [isValidWeight, setIsValidWeight] = useState(true)
@@ -104,6 +103,89 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const [isValidHeight, setIsValidHeight] = useState(true)
   const [isValidVolume, setIsValidVolume] = useState(true)
   const currentRef: any[] = []
+
+  useEffect(() => {
+    if (isFocused) {
+      clearInputs()
+    }
+  }, [isFocused])
+
+  const checkValidation = async () => {
+    if (!pickUpAddress) { setIsValidPickUpAddres(false) } else { setIsValidPickUpAddres(true) }
+    if (!town) { setIsValidDeliveryAddres(false) } else { setIsValidDeliveryAddres(true) }
+    if (!unitOfMeasure) { setIsValidUnitOfMeasure(false) } else { setIsValidUnitOfMeasure(true) }
+    if (!quantity) { setIsValidQuantity(false) } else { setIsValidQuantity(true) }
+    if (!totalWeight) { setIsValidWeight(false) } else { setIsValidWeight(true) }
+    if (!length) { setIsValidLength(false) } else { setIsValidLength(true) }
+    if (!width) { setIsValidWidth(false) } else { setIsValidWidth(true) }
+    if (!height) { setIsValidHeight(false) } else { setIsValidHeight(true) }
+    if (!volume) { setIsValidVolume(false) } else { setIsValidVolume(true) }
+    if (pickUpAddress && unitOfMeasure && quantity && totalWeight && length && width && height && volume) {
+      getACalculatedRate()
+    }
+  }
+
+  const getACalculatedRate = async () => {
+    const isConnected = await isInternetAvailable()
+    Keyboard.dismiss()
+    if (isConnected) {
+      const requestData = {
+        consignmentRateTimeRequest: {
+          consignment: {
+            despatchDate: moment(new Date()).format("YYYY-MM-DD"),
+            pickupAddress: {
+              address: {
+                addressCode: "MELBCCS",
+                town: "WEST FOOTSCRAY",
+                postcode: "3012"
+              }
+            },
+            deliveryAddress: {
+              address: {
+                town: "CRAIGIE",
+                state: "WA",
+                postcode: "6025",
+                country: "AU"
+              }
+            },
+            container: {
+              unit: unitOfMeasure,
+              weight: totalWeight,
+              length: length,
+              width: width,
+              height: height,
+              volume: volume,
+              quantity: quantity
+            }
+          }
+        }
+      }
+      await GetARateStore.getARate(authStore.authorization, requestData)
+      if (GetARateStore.responseSuccess) {
+        gotoRateListScreen()
+      }
+    }
+  }
+
+  const gotoRateListScreen = () => {
+    return props.navigation.navigate('GetARateList')
+  }
+  const gotoHomeScreen = () => {
+    return props.navigation.navigate('Home')
+  }
+
+  const clearInputs = () => {
+    updatePostCode('')
+    updatePckUpAddress('')
+    updateTown('')
+    updateUnitOfMeasure('')
+    updateQuantity('')
+    updateTotalWeight('')
+    updateLength('')
+    updateWidth('')
+    updateHeight('')
+    updateVolume('')
+  }
 
   const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
     return (
@@ -134,10 +216,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         <View style={FLEX}>
           {label == 'getARateScreen.unitOfMeasure'
             ? <DropdownPicker
-              dropDownData={dropDownData}
+              dropDownData={measurementUnitData}
               errorTx={isValid ? undefined : errorLabel}
               selectedValue={value}
-              placeHolder={"common.registrationId"}
+              placeHolder={"getARateScreen.unitOfMeasure"}
               onValueChange={(value) => onUpdate(value)}
             />
             : <TextField
@@ -168,78 +250,6 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       </View >
     )
   }
-  const checkValidation = async () => {
-    if (!quantity) { setIsValidQuantity(false) } else { setIsValidQuantity(true) }
-    if (!totalWeight) { setIsValidWeight(false) } else { setIsValidWeight(true) }
-    if (!length) { setIsValidLength(false) } else { setIsValidLength(true) }
-    if (!width) { setIsValidWidth(false) } else { setIsValidWidth(true) }
-    if (!height) { setIsValidHeight(false) } else { setIsValidHeight(true) }
-    if (!volume) {
-      setIsValidVolume(false)
-    } else {
-      setIsValidVolume(true)
-    }
-    if (isValidQuantity && isValidWeight && isValidLength && isValidWidth && isValidHeight && isValidVolume) {
-      console.tron.log("1", isValidQuantity, isValidWeight, isValidLength, isValidWidth, isValidHeight, isValidVolume)
-      getACalculatedRate()
-    }
-  }
-
-  const getACalculatedRate = async () => {
-    console.tron.log("2")
-    const isConnected = await isInternetAvailable()
-    Keyboard.dismiss()
-    if (isConnected) {
-      const requestData = {
-        consignmentRateTimeRequest: {
-          consignment: {
-            despatchDate: moment(new Date()).format("YYYY-MM-DD"),
-            pickupAddress: {
-              address: {
-                addressCode: "MELBCCS",
-                town: "WEST FOOTSCRAY",
-                postcode: "3012"
-              }
-            },
-            deliveryAddress: {
-              address: {
-                town: "CRAIGIE",
-                state: "WA",
-                postcode: "6025",
-                country: "AU"
-              }
-            },
-            container: {
-              unit: "PALLET",
-              weight: '5',
-              length: '1000',
-              width: '1000',
-              height: '1000',
-              volume: '175000',
-              quantity: '1'
-              // weight: totalWeight,
-              // length: length,
-              // width: width,
-              // height: height,
-              // volume: volume,
-              // quantity: quantity
-            }
-          }
-        }
-      }
-      await GetARateStore.getARate(authStore.authorization, requestData)
-      if (GetARateStore.responseSuccess) {
-        gotoRateListScreen()
-      }
-    }
-  }
-
-  const gotoRateListScreen = () => {
-    return props.navigation.navigate('GetARateList')
-  }
-  const gotoHomeScreen = () => {
-    return props.navigation.navigate('Home')
-  }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
@@ -254,9 +264,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
           <View style={SEPERATOR_LINE} />
           <DropdownPicker
-            dropDownData={dropDownData}
-            placeHolder={"common.registrationId"}
+            dropDownData={pickUpAddressData}
+            placeHolder={"getARateScreen.pickUpAddress"}
             selectedValue={pickUpAddress}
+            errorTx={isValidPickUpAddres ? undefined : "getARateScreen.emptyPickUpAddress"}
             onValueChange={(value) => updatePckUpAddress(value)}
           />
           <View style={UPPER_CONTAINER_SUBVIEW}>
@@ -289,7 +300,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         leftImage={icons.blackButton2}
         isLoadingLeft={GetARateStore.isButtonLoading}
         rightImage={icons.redButton2}
-        onLeftPress={() => getACalculatedRate()}
+        onLeftPress={checkValidation}
         onRightPress={() => gotoHomeScreen()}
         leftText={"getARateScreen.submit"}
         rightText={"common.cancel"} />
