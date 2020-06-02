@@ -242,7 +242,16 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               value={value}
               keyboardType={keyboardType}
               blurOnSubmit={label == "getARateScreen.volume"}
-              onChangeText={(text) => onUpdate(text)}
+              // onChangeText={(text) => onUpdate(text)}
+              onChangeText={(value) => {
+                if (value) {
+                  if (/^\d+$/.test(value)) {
+                    return onUpdate(value)
+                  }
+                } else {
+                  return onUpdate(value)
+                }
+              }}
               returnKeyType={'next'}
             />
           }
