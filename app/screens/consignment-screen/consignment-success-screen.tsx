@@ -210,20 +210,19 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false)
-    if (!isConnected) {
+
+    if (!selectedValue) {
+      onSetValidStatus(false)
+    } else if (!fileName) {
+      onSetValidFile(false)
+    } else if (!signText) {
+      setValidSignText(false)
+    } else if (!consignmentStore.signedSaved) {
+      onSetValidSignImage(false)
+    } else if (isConnected) {
       // Call API
     } else {
-      if (!selectedValue) {
-        onSetValidStatus(false)
-      } else if (!fileName) {
-        onSetValidFile(false)
-      } else if (!signText) {
-        setValidSignText(false)
-      } else if (!consignmentStore.signedSaved) {
-        onSetValidSignImage(false)
-      } else {
-        addAndUpdateRecordOffline()
-      }
+      addAndUpdateRecordOffline()
     }
   }
   async function getSavedData() {

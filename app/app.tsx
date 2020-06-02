@@ -20,6 +20,7 @@ import { mySchema } from "./models/local-database/schema"
 import { dbModels } from "./models/local-database"
 import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
 import SplashScreen from 'react-native-splash-screen'
+import { isInternetAlive } from "./utils/utils"
 
 const adapter = new SQLiteAdapter({
   dbName: "MoveItDB",
@@ -101,6 +102,7 @@ const App: React.FunctionComponent<{}> = () => {
   useEffect(() => {
     ; (async () => {
       SplashScreen.hide()
+      isInternetAlive()
       setupRootStore().then(setRootStore)
     })()
   }, [])

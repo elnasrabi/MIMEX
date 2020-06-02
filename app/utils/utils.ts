@@ -43,3 +43,11 @@ export function getFormattedDate(date): string {
   const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
   return newDate
 }
+
+export function isInternetAlive() {
+  NetInfo.addEventListener(state => {
+    // Alert.alert("d")
+    console.log("Connection type", state.type)
+    console.log("Is connected?", state.isConnected)
+  })
+}
