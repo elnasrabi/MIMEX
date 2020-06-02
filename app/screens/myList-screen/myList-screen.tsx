@@ -94,10 +94,10 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const updateCheckBox = (index) => {
     let newArr = [...mylist]
     let i = 0, j;
-    newArr[index].check = !newArr[index].check
+    newArr[index].check = !newArr[index].check;
     for (j = 0; j < newArr.length; j++) {
       if (newArr[j].check) {
-        i++
+        i++;
       }
     }
     if (i == newArr.length) {
@@ -107,9 +107,9 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     updateMyList(newArr);
   }
   const updateAllCheckBox = (isSelect) => {
-    let newArr = [...mylist]
+    let newArr = [...mylist];
     for (let i = 0; i < newArr.length; i++) {
-      newArr[i].check = isSelect
+      newArr[i].check = isSelect;
     }
     updateMyList(newArr);
     useToggleAll(!toggleAll);
