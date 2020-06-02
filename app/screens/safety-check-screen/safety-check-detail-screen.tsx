@@ -119,7 +119,7 @@ export const SafetyCheckDetail: FunctionComponent<SafetyCheckDetailProps> = obse
   const updateCheckBox = (index) => {
     let newArray = [...checkdetails]
     newArray[index].isCheck = !newArray[index].isCheck
-    updateCheckDetails(newArray)
+    updateCheckDetails(newArray);
   }
 
   const renderCheckBoxlist = (item, index) => {

@@ -130,12 +130,12 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     if (!height) { setIsValidHeight(false) } else { setIsValidHeight(true) }
     if (!volume) { setIsValidVolume(false) } else { setIsValidVolume(true) }
     if (pickUpAddress && unitOfMeasure && quantity && totalWeight && length && width && height && volume) {
-      getACalculatedRate()
+      getACalculatedRate();
     }
   }
 
   const getACalculatedRate = async () => {
-    const isConnected = await isInternetAvailable()
+    const isConnected = await isInternetAvailable();
     Keyboard.dismiss()
     if (isConnected) {
       const requestData = {
@@ -169,9 +169,9 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           }
         }
       }
-      await getARateStore.getARate(authStore.authorization, requestData)
+      await getARateStore.getARate(authStore.authorization, requestData);
       if (getARateStore.responseSuccess) {
-        gotoRateListScreen()
+        gotoRateListScreen();
       }
     }
   }
@@ -185,25 +185,25 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   }
 
   const clearInputs = () => {
-    updatePostCode('')
-    updatePckUpAddress('')
-    updateTown('')
-    updateUnitOfMeasure('')
-    updateQuantity('')
-    updateTotalWeight('')
-    updateLength('')
-    updateWidth('')
-    updateHeight('')
-    updateVolume('')
-    setIsValidPickUpAddres(true)
-    setIsValidDeliveryAddres(true)
-    setIsValidUnitOfMeasure(true)
-    setIsValidQuantity(true)
-    setIsValidWeight(true)
-    setIsValidLength(true)
-    setIsValidWidth(true)
-    setIsValidHeight(true)
-    setIsValidVolume(true)
+    updatePostCode('');
+    updatePckUpAddress('');
+    updateTown('');
+    updateUnitOfMeasure('');
+    updateQuantity('');
+    updateTotalWeight('');
+    updateLength('');
+    updateWidth('');
+    updateHeight('');
+    updateVolume('');
+    setIsValidPickUpAddres(true);
+    setIsValidDeliveryAddres(true);
+    setIsValidUnitOfMeasure(true);
+    setIsValidQuantity(true);
+    setIsValidWeight(true);
+    setIsValidLength(true);
+    setIsValidWidth(true);
+    setIsValidHeight(true);
+    setIsValidVolume(true);
   }
 
   const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
@@ -264,10 +264,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               onChangeText={(value) => {
                 if (value) {
                   if (/^\d+$/.test(value)) {
-                    return onUpdate(value)
+                    return onUpdate(value);
                   }
                 } else {
-                  return onUpdate(value)
+                  return onUpdate(value);
                 }
               }}
               returnKeyType={'next'}

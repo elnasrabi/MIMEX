@@ -22,7 +22,7 @@ export const GetARateModel = types
   .actions(self => ({
 
     updatePreventrefersh(value) {
-      self.preventRefresh = value
+      self.preventRefresh = value;
     },
 
     getARate: flow(function* getARate(authorization: string, getARateRequest: any) {

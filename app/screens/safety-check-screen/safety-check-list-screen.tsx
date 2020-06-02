@@ -87,7 +87,7 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
 
   useEffect(() => {
     if (isFocused) {
-      updateSearchBox('')
+      updateSearchBox('');
     }
   }, [isFocused])
 

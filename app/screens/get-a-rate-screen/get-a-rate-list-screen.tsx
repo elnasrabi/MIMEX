@@ -80,7 +80,7 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
   }
 
   const renderItem = (item, index) => {
-    const consignmentRate = item.consignmentRateTime[0]
+    const consignmentRate = item.consignmentRateTime[0];
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={SUB_CONTAINER}>
@@ -98,12 +98,12 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
   }
 
   const goToGetARate = () => {
-    return props.navigation.navigate("GetARate")
+    return props.navigation.navigate("GetARate");
   }
 
   const goBack = React.useMemo(() => () => {
-    getARateStore.updatePreventrefersh(true)
-    props.navigation.goBack()
+    getARateStore.updatePreventrefersh(true);
+    props.navigation.goBack();
   }, [props.navigation]);
 
   return (
