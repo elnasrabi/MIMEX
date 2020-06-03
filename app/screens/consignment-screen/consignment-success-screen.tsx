@@ -147,6 +147,7 @@ RNFS.exists(dir).then(result => {
     RNFS.mkdir(dir)
   }
 })
+let userObj
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
 
   const { consignmentStore, authStore } = useStores()
@@ -166,12 +167,19 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const { isSuccess } = props.route.params
   const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
   const loginName = authStore.userData[0].loginName[0]
-  const SIGN_IMAGE_URI = getSignaturePath(consNo + loginName)
+  const imageFileName = consNo + loginName
+  const SIGN_IMAGE_URI = getSignaturePath(imageFileName)
   // console.log(SIGN_IMAGE_URI)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    getUserData()
     consignmentStore.onSigned(false)
   }, [])
+
+  const getUserData = async () => {
+    const model = new UserModel()
+    userObj = await model.getUserData(authStore.userData[0].loginName[0])
+  }
 
   useLayoutEffect(() => {
     props.navigation.addListener('focus', () => {
@@ -186,7 +194,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       if (!response.didCancel) {
-        const filePath = getImagePath(consNo + loginName)
+        const filePath = getImagePath(imageFileName)
         RNFS.writeFile(filePath, response.data, 'base64').then(result => {
           setFileName('Consignment Photo')
           imageHash = Date.now()
@@ -222,17 +230,15 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       consignmentNumber: consignment.consignmentNumber[0],
       itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
       status: selectedValue,
-      image: imageUri,
+      image: imageFileName,
       signBy: signText,
-      signImage: signUri,
+      signImage: imageFileName,
       date: new Date().toDateString(),
       synced: false
     }
     const modal = new ConsignmentModel()
     const isSaved = await getSavedData()
     console.log(isSaved)
-    const model = new UserModel()
-    const userObj = await model.getUserData(authStore.userData[0].loginName[0])
     modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
   }
 
