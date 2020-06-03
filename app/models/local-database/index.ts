@@ -1,3 +1,3 @@
-import ConsignmentSuccessModel from "./consignment-success-model"
-import UserDataModel from "./user-data-modal"
-export const dbModels = [ConsignmentSuccessModel, UserDataModel]
+import ConsignmentModel from "./consignment-model"
+import UserModel from "./user-modal"
+export const dbModels = [ConsignmentModel, UserModel]

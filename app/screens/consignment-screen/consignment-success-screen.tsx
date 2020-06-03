@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -18,7 +18,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
 import { translateText, isInternetAvailable, showAlert, getFormattedDate } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
-import ConsignmentSuccessModel from "../../models/local-database/consignment-success-model"
+import ConsignmentModel from "../../models/local-database/consignment-model"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -124,11 +124,11 @@ const DATE_TEXT: TextStyle = {
 }
 let imageHash = Date.now()
 let randomNo = Math.random()
-let offlineConsignment
-let isConsignmentSaved = false
 interface recordProps {
   customerName: string
-  userName: string
+  loginName: string
+  eventName: string
+  eventNotes: string
   consignmentNumber: string
   itemsCount: string
   status: string
@@ -142,13 +142,13 @@ interface recordProps {
 const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 const currentDate = getFormattedDate(new Date().toLocaleString())
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SIGN_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const [signUri, setSignUri] = useState(SIGN_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
   const [isValidStatus, onSetValidStatus] = useState(true)
@@ -158,9 +158,14 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [random, setRandom] = useState(0)
   const [isValidSignImage, onSetValidSignImage] = useState(true)
   const { isSuccess } = props.route.params
+  const dirs = DOCUMENT_DIRECTORY_PATH + "/signature/"
+  const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
+  const loginName = authStore.userData[0].loginName[0]
+  const prefix = Platform.OS === "android" ? "file:///" : ""
+  const SIGN_IMAGE_URI = prefix + dirs + consNo + loginName + ".png"
+  console.log(SIGN_IMAGE_URI)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    getSavedData()
     consignmentStore.onSigned(false)
   }, [])
 
@@ -189,11 +194,19 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
-
-  const addAndUpdateRecordOffline = () => {
+  async function getSavedData(): Promise<boolean> {
+    const consignmentNumber = consignment.consignmentNumber.toString()
+    const loginName = authStore.userData[0].loginName[0]
+    const modal = new ConsignmentModel()
+    const isConsignmentSaved = await modal.getSavedConsignment(consignmentNumber, loginName)
+    return isConsignmentSaved
+  }
+  const addAndUpdateRecordOffline = async () => {
     const record: recordProps = {
       customerName: "John jacob",
-      userName: authStore.userData[0].loginName[0],
+      eventNotes: "",
+      eventName: "Notes",
+      loginName: authStore.userData[0].loginName[0],
       consignmentNumber: consignment.consignmentNumber[0],
       itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
       status: selectedValue,
@@ -203,9 +216,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       date: new Date().toDateString(),
       synced: false
     }
-
-    const modal = new ConsignmentSuccessModel()
-    modal.addAndUpdateRecordOffline(isConsignmentSaved, record)
+    const modal = new ConsignmentModel()
+    const isSaved = await getSavedData()
+    modal.addAndUpdateRecordOffline(isSaved, record)
   }
 
   const onSave = async () => {
@@ -224,13 +237,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     } else {
       addAndUpdateRecordOffline()
     }
-  }
-  async function getSavedData() {
-    const consignmentNumber = consignment.consignmentNumber.toString()
-    const loginName = authStore.userData[0].loginName[0]
-    const modal = new ConsignmentSuccessModel()
-    isConsignmentSaved = await modal.getSavedConsignment(consignmentNumber, loginName)
-    console.log(isConsignmentSaved)
   }
 
   const onChangeText = (text) => {

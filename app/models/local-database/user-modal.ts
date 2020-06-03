@@ -4,27 +4,30 @@ import { field } from "@nozbe/watermelondb/decorators"
 import { database } from "../../app"
 
 let offlineConsignment
-export default class UserDataModel extends Model {
-  static table = "userData";
+export default class UserModel extends Model {
+  static table = "user";
+  static associations = {
+    user: { type: 'has_many', foreignKey: 'login_name' },
+  }
 
   @field("email") email;
-  @field("firstName") firstName;
-  @field("lastName") lastName;
-  @field("loginName") loginName;
-  @field("passwordUpdated") passwordUpdated;
-  @field("userTypeName") userTypeName;
+  @field("first_name") firstName;
+  @field("last_name") lastName;
+  @field("login_name") loginName;
+  @field("password_updated") passwordUpdated;
+  @field("user_type_name") userTypeName;
 
   async getUserData(loginName): Promise<any> {
     return await database.action(async (): Promise<boolean> => {
-      const consignmentSuccess = database.collections.get("userData")
-      offlineConsignment = await consignmentSuccess.query(Q.where("loginName", loginName)).fetch()
+      const consignmentSuccess = database.collections.get("user")
+      offlineConsignment = await consignmentSuccess.query(Q.where("login_name", loginName)).fetch()
       return offlineConsignment
     })
   }
 
   async addUserData(isUserSaved, offlineData) {
     database.action(async () => {
-      const userTable = database.collections.get("userData")
+      const userTable = database.collections.get("user")
       if (isUserSaved) {
         const record = await userTable.find(offlineConsignment[0].id)
         record.update(update => {
