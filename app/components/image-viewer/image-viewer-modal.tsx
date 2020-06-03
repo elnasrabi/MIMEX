@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, TouchableOpacity, Modal, Image, ImageStyle } from "react-native"
+import { ViewStyle, View, TouchableOpacity, Modal, Image, ImageStyle, Platform } from "react-native"
 import AntDesign from 'react-native-vector-icons/dist/AntDesign'
 import { color } from "../../theme"
 
 export interface ImageViewerModalProps {
-    uri: string,
-    onClose: any,
-    isViewImage: boolean
+  uri: string,
+  onClose: any,
+  isViewImage: boolean,
+  imageHash: any
 }
 const CENTERED_VIEW: ViewStyle = {
   justifyContent: "center",
@@ -40,7 +41,7 @@ export const ImageViewerModal: FunctionComponent<ImageViewerModalProps> = observ
       transparent={true}
       visible={props.isViewImage}>
       <View style={CENTERED_VIEW}>
-        <Image resizeMode={"center"} style={IMAGE_VIEW} source={{ uri: props.uri }} />
+        <Image resizeMode={"center"} style={IMAGE_VIEW} source={Platform.OS === 'android' ? { uri: `${props.uri}?${props.imageHash}` } : { uri: `${props.uri}` }} />
         <TouchableOpacity style={CLOSE_ICON} onPress={props.onClose}>
           <AntDesign name={"closecircle"} size={30} />
         </TouchableOpacity>

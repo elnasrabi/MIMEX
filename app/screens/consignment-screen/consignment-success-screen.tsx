@@ -14,11 +14,12 @@ import ImagePicker from 'react-native-image-picker'
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
-import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, showAlert, getFormattedDate } from "../../utils/utils"
+import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import ConsignmentModel from "../../models/local-database/consignment-model"
+import RNFS from 'react-native-fs'
+import UserModel from "../../models/local-database/user-modal"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -139,8 +140,13 @@ interface recordProps {
   synced: boolean
 }
 
-const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
 const currentDate = getFormattedDate(new Date().toLocaleString())
+const dir = getImageDir()
+RNFS.exists(dir).then(result => {
+  if (!result) {
+    RNFS.mkdir(dir)
+  }
+})
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
 
   const { consignmentStore, authStore } = useStores()
@@ -158,12 +164,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [random, setRandom] = useState(0)
   const [isValidSignImage, onSetValidSignImage] = useState(true)
   const { isSuccess } = props.route.params
-  const dirs = DOCUMENT_DIRECTORY_PATH + "/signature/"
   const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
   const loginName = authStore.userData[0].loginName[0]
-  const prefix = Platform.OS === "android" ? "file:///" : ""
-  const SIGN_IMAGE_URI = prefix + dirs + consNo + loginName + ".png"
-  console.log(SIGN_IMAGE_URI)
+  const SIGN_IMAGE_URI = getSignaturePath(consNo + loginName)
+  // console.log(SIGN_IMAGE_URI)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     consignmentStore.onSigned(false)
@@ -182,9 +186,17 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       if (!response.didCancel) {
-        setFileName('Consignment Photo')
-        setImageUri(response.uri)
-        onSetValidFile(true)
+        const filePath = getImagePath(consNo + loginName)
+        RNFS.writeFile(filePath, response.data, 'base64').then(result => {
+          setFileName('Consignment Photo')
+          imageHash = Date.now()
+          setImageUri(filePath)
+          // console.log(filePath)
+          // console.log(result)
+          onSetValidFile(true)
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     })
   }
@@ -218,7 +230,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     }
     const modal = new ConsignmentModel()
     const isSaved = await getSavedData()
-    modal.addAndUpdateRecordOffline(isSaved, record)
+    console.log(isSaved)
+    const model = new UserModel()
+    const userObj = await model.getUserData(authStore.userData[0].loginName[0])
+    modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
   }
 
   const onSave = async () => {
@@ -232,7 +247,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       setValidSignText(false)
     } else if (!consignmentStore.signedSaved) {
       onSetValidSignImage(false)
-    } else if (isConnected) {
+    } else if (!isConnected) {
       // Call API
     } else {
       addAndUpdateRecordOffline()
@@ -254,6 +269,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         <View>
           {/* Image View */}
           <ImageViewerModal
+            imageHash={imageHash}
             uri={imageUri}
             isViewImage={viewImage}
             onClose={onImageView} />

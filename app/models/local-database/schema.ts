@@ -10,7 +10,7 @@ export const mySchema = appSchema({
         { name: "customer_name", type: "string" },
         { name: "event_name", type: "string" },
         { name: "event_notes", type: "string" },
-        { name: "login_name", type: "string" },
+        { name: "user_id", type: "string", isIndexed: true },
         { name: "consignment_number", type: "string" },
         { name: "items_count", type: "string" },
         { name: "status", type: "string" },

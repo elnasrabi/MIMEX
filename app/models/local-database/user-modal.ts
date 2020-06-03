@@ -1,13 +1,13 @@
 // models/Movie.js
 import { Model, Q } from "@nozbe/watermelondb"
-import { field } from "@nozbe/watermelondb/decorators"
+import { field, children } from "@nozbe/watermelondb/decorators"
 import { database } from "../../app"
 
 let offlineConsignment
 export default class UserModel extends Model {
   static table = "user";
   static associations = {
-    user: { type: 'has_many', foreignKey: 'login_name' },
+    consignments: { type: 'has_many', foreignKey: 'user_id' },
   }
 
   @field("email") email;
@@ -17,11 +17,22 @@ export default class UserModel extends Model {
   @field("password_updated") passwordUpdated;
   @field("user_type_name") userTypeName;
 
+  @children("consignments") consignments;
+
   async getUserData(loginName): Promise<any> {
     return await database.action(async (): Promise<boolean> => {
       const consignmentSuccess = database.collections.get("user")
       offlineConsignment = await consignmentSuccess.query(Q.where("login_name", loginName)).fetch()
+      console.log(offlineConsignment)
       return offlineConsignment
+    })
+  }
+
+  async getConsignment(userObj): Promise<any> {
+    return await database.action(async (): Promise<boolean> => {
+      const consignments = await userObj.consignments.fetch()
+      console.log(consignments)
+      return false
     })
   }
 
