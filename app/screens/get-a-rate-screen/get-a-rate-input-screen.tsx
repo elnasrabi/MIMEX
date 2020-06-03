@@ -1,11 +1,13 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard } from "react-native";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView } from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import moment from 'moment';
 import KeyboardManager from "react-native-keyboard-manager";
+import { Formik } from "formik";
+import * as yup from "yup";
 
 // import from modal and utils
 import { isInternetAvailable } from "../../utils/utils";
@@ -83,35 +85,45 @@ const SEPERATOR_LINE: ViewStyle = {
   marginBottom: 10,
   borderRadius: 5
 };
+const BOTTOM_BUTTON: ViewStyle = {
+  position: 'absolute',
+  bottom: 0,
+  alignSelf: 'center',
+  backgroundColor: 'white',
+  width: '100%'
+}
+const ERROR_TEXT: TextStyle = {
+  color: color.palette.red,
+  fontFamily: typography.secondary,
+  alignSelf: 'flex-end'
+}
+const TEXTINPUT_TEXT: TextStyle = {
+  color: color.palette.link,
+  fontFamily: typography.secondary,
+  fontSize: 16,
+  fontWeight: 'bold',
+  padding: 10,
+  flex: 1,
+  borderColor: color.palette.lightGrey,
+  borderWidth: 1,
+  borderRadius: 4,
+  backgroundColor: color.palette.white,
+  height: 40,
+  justifyContent: 'center'
+}
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const { getARateStore, authStore } = useStores();
   const isFocused = useIsFocused();
   const measurementUnitData = [{ label: 'PALLET', value: 'PALLET' }];
   const pickUpAddressData = [{ label: 'MELBCCS WEST FOOTSCRAY', value: 'MELBCCS WEST FOOTSCRAY' }];
   const [postCode, updatePostCode] = useState('');
-  const [pickUpAddress, updatePckUpAddress] = useState('');
   const [town, updateTown] = useState('');
-  const [unitOfMeasure, updateUnitOfMeasure] = useState('');
-  const [quantity, updateQuantity] = useState('');
-  const [totalWeight, updateTotalWeight] = useState('');
-  const [length, updateLength] = useState('');
-  const [width, updateWidth] = useState('');
-  const [height, updateHeight] = useState('');
-  const [volume, updateVolume] = useState('');
-  const [isValidPickUpAddres, setIsValidPickUpAddres] = useState(true);
-  const [isValidDeliveryAddres, setIsValidDeliveryAddres] = useState(true);
-  const [isValidUnitOfMeasure, setIsValidUnitOfMeasure] = useState(true);
-  const [isValidQuantity, setIsValidQuantity] = useState(true);
-  const [isValidWeight, setIsValidWeight] = useState(true);
-  const [isValidLength, setIsValidLength] = useState(true);
-  const [isValidWidth, setIsValidWidth] = useState(true);
-  const [isValidHeight, setIsValidHeight] = useState(true);
-  const [isValidVolume, setIsValidVolume] = useState(true);
   const currentRef: any[] = [];
+  const formikRef = useRef();
 
   useEffect(() => {
     if (isFocused && !getARateStore.preventRefresh) {
-      clearInputs();
+      formikRef.current.resetForm();
     }
     if (Platform.OS === 'ios') {
       KeyboardManager.setToolbarPreviousNextButtonEnable(true);
@@ -119,24 +131,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     getARateStore.updatePreventrefersh(false);
   }, [isFocused])
 
-  const checkValidation = async () => {
-    if (!pickUpAddress) { setIsValidPickUpAddres(false) } else { setIsValidPickUpAddres(true) }
-    if (!town) { setIsValidDeliveryAddres(false) } else { setIsValidDeliveryAddres(true) }
-    if (!unitOfMeasure) { setIsValidUnitOfMeasure(false) } else { setIsValidUnitOfMeasure(true) }
-    if (!quantity) { setIsValidQuantity(false) } else { setIsValidQuantity(true) }
-    if (!totalWeight) { setIsValidWeight(false) } else { setIsValidWeight(true) }
-    if (!length) { setIsValidLength(false) } else { setIsValidLength(true) }
-    if (!width) { setIsValidWidth(false) } else { setIsValidWidth(true) }
-    if (!height) { setIsValidHeight(false) } else { setIsValidHeight(true) }
-    if (!volume) { setIsValidVolume(false) } else { setIsValidVolume(true) }
-    if (pickUpAddress && unitOfMeasure && quantity && totalWeight && length && width && height && volume) {
-      getACalculatedRate();
-    }
-  }
 
-  const getACalculatedRate = async () => {
+  const getACalculatedRate = async (values) => {
     const isConnected = await isInternetAvailable();
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     if (isConnected) {
       const requestData = {
         consignmentRateTimeRequest: {
@@ -158,13 +156,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               }
             },
             container: {
-              unit: unitOfMeasure,
-              weight: totalWeight,
-              length: length,
-              width: width,
-              height: height,
-              volume: volume,
-              quantity: quantity
+              unit: values.unitOfMeasure,
+              weight: values.weight,
+              length: values.length,
+              width: values.width,
+              height: values.height,
+              volume: values.volume,
+              quantity: values.quantity
             }
           }
         }
@@ -180,30 +178,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     return props.navigation.navigate('GetARateList');
   }
   const gotoHomeScreen = () => {
-    clearInputs();
+    formikRef.current.resetForm();
     return props.navigation.navigate('Home');
-  }
-
-  const clearInputs = () => {
-    updatePostCode('');
-    updatePckUpAddress('');
-    updateTown('');
-    updateUnitOfMeasure('');
-    updateQuantity('');
-    updateTotalWeight('');
-    updateLength('');
-    updateWidth('');
-    updateHeight('');
-    updateVolume('');
-    setIsValidPickUpAddres(true);
-    setIsValidDeliveryAddres(true);
-    setIsValidUnitOfMeasure(true);
-    setIsValidQuantity(true);
-    setIsValidWeight(true);
-    setIsValidLength(true);
-    setIsValidWidth(true);
-    setIsValidHeight(true);
-    setIsValidVolume(true);
   }
 
   const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
@@ -226,59 +202,92 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     )
   }
 
-  const renderUnitRow = (key, label, isValid, errorLabel, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
+
+  const ValidationSchema = yup.object().shape({
+    quantity: yup.number()
+      .required()
+      .integer('Quantity must be an integer')
+      .label('Quantity'),
+    weight: yup.number()
+      .required()
+      .integer('Weight must be an integer')
+      .label('Weight'),
+    length: yup.number()
+      .required()
+      .integer('Length must be an integer')
+      .label('Length'),
+    width: yup.number()
+      .required()
+      .integer('Width must be an integer')
+      .label('Width'),
+    height: yup.number()
+      .required()
+      .integer('Height must be an integer')
+      .label('Height'),
+    volume: yup.number()
+      .required()
+      .integer('Volume must be an integer')
+      .label('Volume'),
+    unitofMeasure: yup.string()
+      .required()
+      .label('Unit of Measurement'),
+    pickUpAddress: yup.string()
+      .required()
+      .label('Pick Up Address')
+  });
+
+  const FieldWrapper = ({ children, label, errors }) => {
     return (
-      <View style={CONTAINER}>
-        <View style={[CONTAINER_TEXT, FLEX, label == 'getARateScreen.unitOfMeasure' ? { marginTop: 10 } : {}]}>
-          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
+      <View style={{ marginBottom: 5 }}>
+        <View style={CONTAINER}>
+          <View style={[FLEX, { justifyContent: "center" }]}>
+            <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
+          </View>
+          <View style={FLEX}>
+            {children}
+          </View>
         </View>
-        <View style={FLEX}>
-          {label == 'getARateScreen.unitOfMeasure'
-            ? <DropdownPicker
-              dropDownData={measurementUnitData}
-              errorTx={isValid ? undefined : errorLabel}
-              selectedValue={value}
-              placeHolder={"getARateScreen.unitOfMeasure"}
-              onValueChange={(value) => onUpdate(value)}
-            />
-            : <TextField
-              key={key}
-              autoCorrect={false}
-              forwardedRef={(input) => {
-                currentRef.push(input)
-              }}
-              onSubmitEditing={() => {
-                if (currentRef[key + 1]) {
-                  currentRef[key + 1].focus()
-                } else {
-                  // Click on save button
-                }
-              }}
-              autoCapitalize={"none"}
-              mainStyle={{}}
-              inputStyle={VALUE}
-              errorTx={isValid ? undefined : errorLabel}
-              value={value}
-              keyboardType={keyboardType}
-              blurOnSubmit={label == "getARateScreen.volume"}
-              onChangeText={(value) => {
-                if (value) {
-                  if (/^\d+$/.test(value)) {
-                    return onUpdate(value);
-                  }
-                } else {
-                  return onUpdate(value);
-                }
-              }}
-              returnKeyType={'next'}
-            />
-          }
-        </View>
-      </View >
+        {errors &&
+          <Text style={ERROR_TEXT}>{errors}</Text>
+        }
+      </View>
     )
   }
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
+  const RenderUnits = ({ keyValue, label, errors, handleChange, handleChangeKey, values, blurOnSubmit = false, ...rest }) => {
+    return (
+      <FieldWrapper
+        label={label}
+        errors={errors}
+      >
+        <TextInput
+          key={keyValue}
+          keyboardType={'number-pad'}
+          returnKeyType={blurOnSubmit ? 'done' : 'next'}
+          blurOnSubmit={blurOnSubmit}
+          ref={(input) => {
+            currentRef.push(input)
+          }}
+          onSubmitEditing={() => {
+            if (currentRef[keyValue + 1]) {
+              currentRef[keyValue + 1].focus()
+            } else {
+              // Click on save button
+            }
+          }}
+          style={TEXTINPUT_TEXT}
+          onChangeText={handleChange(handleChangeKey)}
+          value={values}
+          {...rest}
+        />
+      </FieldWrapper>
+    )
+  }
+
+  const onsubmit = (values, actions) => {
+    getACalculatedRate(values);
+  }
 
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
@@ -286,51 +295,128 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         title={"getARateScreen.header"}
         onPress={handleDrawer} />
 
-      <ScrollView contentContainerStyle={SCROLLVIEW_CONTAINER} style={SCROLLVIEW_STYLE}>
-        <View style={UPPER_CONTAINER}>
-          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
-          <View style={SEPERATOR_LINE} />
-          <DropdownPicker
-            dropDownData={pickUpAddressData}
-            placeHolder={"getARateScreen.pickUpAddress"}
-            selectedValue={pickUpAddress}
-            errorTx={isValidPickUpAddres ? undefined : "getARateScreen.emptyPickUpAddress"}
-            onValueChange={(value) => updatePckUpAddress(value)}
-          />
-          <View style={UPPER_CONTAINER_SUBVIEW}>
-            <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
-            <View style={SEPERATOR_LINE} />
-            {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
-            <View style={BUTTON_VIEW}>
-              <Button style={BUTTON_STYLE}>
-                <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND}>
-                  <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
-                </ImageBackground>
-              </Button>
-            </View>
-            {renderRow("getARateScreen.town", town, updateTown)}
-          </View>
-        </View>
-        <View style={{}}>
-          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.details'} />
-          <View style={[SEPERATOR_LINE, { width: '97%' }]} />
-          {renderUnitRow(0, "getARateScreen.unitOfMeasure", isValidUnitOfMeasure, 'getARateScreen.emptyunitOfMeasure', unitOfMeasure, updateUnitOfMeasure)}
-          {renderUnitRow(0, "getARateScreen.quantity", isValidQuantity, "getARateScreen.emptyquantity", quantity, updateQuantity, 'decimal-pad')}
-          {renderUnitRow(1, "getARateScreen.totalWeight", isValidWeight, "getARateScreen.emptytotalWeight", totalWeight, updateTotalWeight, 'decimal-pad')}
-          {renderUnitRow(2, "getARateScreen.length", isValidLength, "getARateScreen.emptylength", length, updateLength, 'decimal-pad')}
-          {renderUnitRow(3, "getARateScreen.width", isValidWidth, "getARateScreen.emptywidth", width, updateWidth, 'decimal-pad')}
-          {renderUnitRow(4, "getARateScreen.height", isValidHeight, "getARateScreen.emptyheight", height, updateHeight, 'decimal-pad')}
-          {renderUnitRow(5, "getARateScreen.volume", isValidVolume, "getARateScreen.emptyvolume", volume, updateVolume, 'decimal-pad')}
-        </View>
-      </ScrollView>
-      <BottomButton
-        leftImage={icons.blackButton2}
-        isLoadingLeft={getARateStore.isButtonLoading}
-        rightImage={icons.redButton2}
-        onLeftPress={checkValidation}
-        onRightPress={() => gotoHomeScreen()}
-        leftText={"getARateScreen.submit"}
-        rightText={"common.cancel"} />
+      <Formik
+        initialValues={{
+          pickUpAddress: '',
+          quantity: '',
+          weight: '',
+          length: '',
+          width: '',
+          height: '',
+          volume: '',
+          unitofMeasure: ''
+        }}
+        onSubmit={onsubmit}
+        innerRef={formikRef}
+        validationSchema={ValidationSchema}
+      >
+        {({ handleChange, handleSubmit, setFieldValue, values, errors, touched }) => (
+          <SafeAreaView>
+            <ScrollView contentContainerStyle={SCROLLVIEW_CONTAINER} style={SCROLLVIEW_STYLE}>
+              <View style={UPPER_CONTAINER}>
+                <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
+                <View style={SEPERATOR_LINE} />
+                <DropdownPicker
+                  dropDownData={pickUpAddressData}
+                  placeHolder={"getARateScreen.pickUpAddress"}
+                  selectedValue={values.pickUpAddress}
+                  onValueChange={(value) => setFieldValue('pickUpAddress', value)}
+                />
+                {touched.pickUpAddress && errors.pickUpAddress &&
+                  <Text style={ERROR_TEXT}>{errors.pickUpAddress}</Text>
+                }
+                <View style={UPPER_CONTAINER_SUBVIEW}>
+                  <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
+                  <View style={SEPERATOR_LINE} />
+                  {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
+                  <View style={BUTTON_VIEW}>
+                    <Button style={BUTTON_STYLE}>
+                      <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND}>
+                        <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
+                      </ImageBackground>
+                    </Button>
+                  </View>
+                  {renderRow("getARateScreen.town", town, updateTown)}
+                </View>
+              </View>
+              <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.details'} />
+              <View style={[SEPERATOR_LINE, { width: '97%' }]} />
+
+              <FieldWrapper
+                label={"getARateScreen.unitOfMeasure"}
+                errors={touched.unitofMeasure && errors.unitofMeasure}
+              >
+                <DropdownPicker
+                  dropDownData={measurementUnitData}
+                  selectedValue={values.unitofMeasure}
+                  placeHolder={"getARateScreen.unitOfMeasure"}
+                  onValueChange={(value) => setFieldValue("unitofMeasure", value)}
+                />
+              </FieldWrapper>
+
+              <RenderUnits
+                keyValue={0}
+                handleChange={handleChange}
+                handleChangeKey={'quantity'}
+                errors={touched.quantity && errors.quantity}
+                values={values.quantity}
+                label={"getARateScreen.quantity"}
+              />
+              <RenderUnits
+                keyValue={1}
+                handleChange={handleChange}
+                handleChangeKey={'weight'}
+                values={values.weight}
+                errors={touched.weight && errors.weight}
+                label={"getARateScreen.totalWeight"}
+              />
+              <RenderUnits
+                keyValue={2}
+                handleChange={handleChange}
+                handleChangeKey={'length'}
+                values={values.length}
+                errors={touched.length && errors.length}
+                label={"getARateScreen.length"}
+              />
+              <RenderUnits
+                keyValue={3}
+                handleChange={handleChange}
+                handleChangeKey={'width'}
+                values={values.width}
+                errors={touched.width && errors.width}
+                label={"getARateScreen.width"}
+              />
+              <RenderUnits
+                keyValue={4}
+                handleChange={handleChange}
+                handleChangeKey={'height'}
+                values={values.height}
+                errors={touched.height && errors.height}
+                label={"getARateScreen.height"}
+              />
+              <RenderUnits
+                keyValue={5}
+                handleChange={handleChange}
+                handleChangeKey={'volume'}
+                values={values.volume}
+                errors={touched.volume && errors.volume}
+                blurOnSubmit={true}
+                label={"getARateScreen.volume"}
+              />
+              <View style={{ marginBottom: 55 }} />
+            </ScrollView>
+            <BottomButton
+              bottomViewstyle={BOTTOM_BUTTON}
+              leftImage={icons.blackButton2}
+              isLoadingLeft={getARateStore.isButtonLoading}
+              rightImage={icons.redButton2}
+              onLeftPress={handleSubmit}
+              onRightPress={gotoHomeScreen}
+              leftText={"getARateScreen.submit"}
+              rightText={"common.cancel"} />
+          </SafeAreaView>
+        )}
+      </Formik>
     </Screen >
   )
 })
