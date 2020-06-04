@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions } from "react-native";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, KeyboardTypeOptions, SafeAreaView, TextInput } from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
@@ -14,6 +14,7 @@ import { color, typography } from "../../theme";
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
+import { Formik } from "formik";
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 };
@@ -159,31 +160,80 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
 
+  const renderDetails = ({ }) => {
+    return (
+      <View style={ROW}>
+        <View style={{ flex: 1 }}>
+          <Text tx={"userSetting.mobile"} style={LABEL} extraText={':'} />
+        </View>
+        <View style={{ paddingHorizontal: 10, justifyContent: 'center', flex: 1, borderWidth: 1, borderColor: color.palette.lighterGrey, borderRadius: 4, height: 40, backgroundColor: color.palette.white }}>
+          <TextInput
+            onChangeText={handleChange('mobile')}
+            style={{
+              color: color.palette.link,
+              fontFamily: typography.secondary,
+              fontSize: 16,
+              fontWeight: 'bold'
+            }}
+            value={values.mobile}
+          />
+        </View>
+      </View>
+    )
+  }
+
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       <MenuButton
         title={"userSetting.header"}
         onPress={handleDrawer} />
-      <ScrollView style={SCROLLVIEW}>
-        <View style={EMAIL_VIEW}>
-          <Text extraText={":"} style={EMAIL_TEXT} tx={"userSetting.email"} />
-          <View >
-            <TextField mainStyle={TEXTINPUT_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
-          </View>
-        </View>
-        {renderRow(0, "userSetting.mobile", mobile, updateMobile, 'phone-pad', true)}
-        {renderRow(1, "userSetting.city", city, updateCity, 'default', true)}
-        {renderRow(2, "userSetting.state", state, updateState, 'default', true)}
-        {renderRow(3, "userSetting.licenceType", licenceType, updateLicenceType, 'default')}
-        {renderRow(4, "userSetting.licenceNumber", licenceNumber, updateLicenceNumber, 'decimal-pad')}
-        {renderRow(5, "userSetting.expiry", expiry, updateExpiry)}
-      </ScrollView>
-      <BottomButton
-        leftImage={icons.blackButton2}
-        rightImage={icons.redButton2}
-        onRightPress={() => gotoHome()}
-        leftText={"common.save"}
-        rightText={"common.cancel"} />
+      <Formik
+        initialValues={{ mobile: '0411 111 111' }}
+        onSubmit={values => console.log(values)}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values }) => (
+          <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView style={[SCROLLVIEW, { flex: 1 }]}>
+              <View style={EMAIL_VIEW}>
+                <Text extraText={":"} style={EMAIL_TEXT} tx={"userSetting.email"} />
+                <View >
+                  <TextField mainStyle={TEXTINPUT_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
+                </View>
+              </View>
+
+              {renderRow(0, "userSetting.mobile", mobile, updateMobile, 'phone-pad', true)}
+            </ScrollView>
+            {/* <Button onPress={handleSubmit} title="Submit" /> */}
+          </SafeAreaView>
+        )}
+      </Formik>
     </Screen>
   )
+  // return (
+  //   <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
+  //     <MenuButton
+  //       title={"userSetting.header"}
+  //       onPress={handleDrawer} />
+  //     <ScrollView style={SCROLLVIEW}>
+  //       <View style={EMAIL_VIEW}>
+  //         <Text extraText={":"} style={EMAIL_TEXT} tx={"userSetting.email"} />
+  //         <View >
+  //           <TextField mainStyle={TEXTINPUT_VIEW} inputStyle={VALUE} editable={false} value={"username@gmail.com"} />
+  //         </View>
+  //       </View>
+  //       {renderRow(0, "userSetting.mobile", mobile, updateMobile, 'phone-pad', true)}
+  //       {renderRow(1, "userSetting.city", city, updateCity, 'default', true)}
+  //       {renderRow(2, "userSetting.state", state, updateState, 'default', true)}
+  //       {renderRow(3, "userSetting.licenceType", licenceType, updateLicenceType, 'default')}
+  //       {renderRow(4, "userSetting.licenceNumber", licenceNumber, updateLicenceNumber, 'decimal-pad')}
+  //       {renderRow(5, "userSetting.expiry", expiry, updateExpiry)}
+  //     </ScrollView>
+  //     <BottomButton
+  //       leftImage={icons.blackButton2}
+  //       rightImage={icons.redButton2}
+  //       onRightPress={() => gotoHome()}
+  //       leftText={"common.save"}
+  //       rightText={"common.cancel"} />
+  //   </Screen>
+  // )
 })
