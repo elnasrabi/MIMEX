@@ -2,6 +2,8 @@ package com.moveit;
 
 import android.os.Bundle;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -28,11 +30,12 @@ public class MainActivity extends ReactActivity {
     intent.putExtra("newConfig", newConfig);
     this.sendBroadcast(intent);
   }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this);  // here
-        super.onCreate(savedInstanceState);
-    }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    SplashScreen.show(this); // here
+    super.onCreate(savedInstanceState);
+  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is
