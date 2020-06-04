@@ -66,7 +66,7 @@ const CONTAINER_AFS_LOGO: ImageStyle = {
 const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
-  const { consignmentStore, homeStore, authStore } = useStores()
+  const { consignmentStore, homeStore, authStore, getARateStore } = useStores()
   const [searchValue, onSearchValue] = useState("AMI000071")
   // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true)
@@ -132,13 +132,17 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   const onButtonPress = (item, index) => {
     switch (item) {
       case "landingScreen.myList":
-        return props.navigation.navigate('MyList')
+        return props.navigation.navigate('MyList');
       case "landingScreen.safetyCheck":
-        return props.navigation.navigate('SafetyStack')
+        return props.navigation.navigate('SafetyStack');
       case "landingScreen.getRate":
-        return props.navigation.navigate('GetARateStack')
+        return gotoGetARate();
       default: return true
     }
+  }
+  const gotoGetARate = () => {
+    getARateStore.updatePreventrefersh(true);
+    props.navigation.navigate('GetARateStack');
   }
 
   return (

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TextStyle, View, ViewStyle, Platform, Image } from "react-native";
+import { TextStyle, View, ViewStyle, Platform, Image, ImageStyle } from "react-native";
 import { color, typography } from "../../theme";
 
 import RNPickerSelect from 'react-native-picker-select';
@@ -41,6 +41,18 @@ export function DropdownPicker(props: dropdownPickerProps) {
     height: 40,
     justifyContent: 'center'
   }
+  const ICON_CONTAINER: ViewStyle = {
+    height: 35,
+    paddingStart: 5,
+    marginTop: Platform.OS == "android" ? 7 : -8,
+    justifyContent: "center",
+    paddingRight: 4
+  }
+  const ICON: ImageStyle = {
+    width: 15,
+    height: 18,
+    tintColor: color.palette.darkText
+  }
   const INPUT_STYLE_IOS: TextStyle = {
     color: color.palette.link,
     fontSize: 16,
@@ -74,8 +86,8 @@ export function DropdownPicker(props: dropdownPickerProps) {
           value={selectedValue}
           onValueChange={onValueChange}
           Icon={() =>
-            <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-              {icons.downArrow && <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />}
+            <View style={ICON_CONTAINER}>
+              <Image style={ICON} source={icons.downArrow} />
             </View>
           }
           items={dropDownData}
