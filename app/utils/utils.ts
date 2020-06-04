@@ -4,7 +4,7 @@ import { translate } from "../i18n"
 // import call from 'react-native-phone-call'
 import Moment from 'moment'
 import RNFetchBlob from 'rn-fetch-blob'
-import Sync from "./sync"
+import RNFS from 'react-native-fs'
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
@@ -29,11 +29,6 @@ export async function isInternetAvailable(alert = true) {
   }
 }
 
-export async function isInternetAlive(): Promise<boolean> {
-  return await NetInfo.addEventListener(state => {
-    return state.isConnected
-  })
-}
 export const ADMINISTRATION = "Administration"
 export const CARRIER = "Carrier"
 export const Customer = "Customer"
@@ -49,6 +44,7 @@ export function callApi(number) {
 export function getFormattedDate(date): string {
   Moment.locale('en')
   const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
+  console.log(newDate)
   return newDate
 }
 
@@ -76,4 +72,26 @@ export function getImageDir(): string {
   const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
   const dirs = DOCUMENT_DIRECTORY_PATH + "/images/"
   return dirs
+}
+
+export async function getJsonRequest(record): Promise<any> {
+  const signImageData = await RNFS.readFile(getSignaturePath(record.image), 'base64')
+  const request = {
+    consignmentStatusUpdate: {
+      consignment: {
+        consignmentNumber: record.consignmentNumber,
+        podData: {
+          signatory: record.signBy,
+          pod: signImageData
+        }
+      },
+      event: record.status,
+      carrierEvent: "DELV",
+      carrierSubEvent: "Successful",
+      location: "NCL",
+      condition: "All POD",
+      date: record.date
+    }
+  }
+  return request
 }

@@ -4,7 +4,7 @@
 
 import "./i18n"
 import React, { useState, useEffect, useRef } from "react"
-import { YellowBox, Text, TextInput, Alert } from "react-native"
+import { YellowBox, Text, TextInput } from "react-native"
 import { NavigationContainerRef } from "@react-navigation/native"
 import { contains } from "ramda"
 import { enableScreens } from "react-native-screens"
@@ -20,7 +20,6 @@ import { mySchema } from "./models/local-database/schema"
 import { dbModels } from "./models/local-database"
 import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
 import SplashScreen from 'react-native-splash-screen'
-import { isInternetAlive } from "./utils/utils"
 
 const adapter = new SQLiteAdapter({
   dbName: "MoveItDB",
@@ -102,12 +101,6 @@ const App: React.FunctionComponent<{}> = () => {
   useEffect(() => {
     ; (async () => {
       SplashScreen.hide()
-      const alive = await isInternetAlive()
-      // if (alive) {
-      //   Alert.alert("true")
-      // } else {
-      //   Alert.alert("false")
-      // }
       setupRootStore().then(setRootStore)
     })()
   }, [])

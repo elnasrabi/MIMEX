@@ -11,7 +11,9 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
-import { showAlert, isInternetAvailable } from "../utils/utils"
+import { showAlert, isInternetAvailable, getJsonRequest } from "../utils/utils"
+import NetInfo from "@react-native-community/netinfo"
+import ConsignmentModel from "../models/local-database/consignment-model";
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -77,6 +79,28 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     }
   }, [homeStore.barCodeData])
 
+  const getAllConsignment = async () => {
+    const modal = new ConsignmentModel()
+    const data = await modal.getAllSavedConsignment()
+    console.log(data)
+    data.forEach(async element => {
+      const request = await getJsonRequest(element)
+      consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
+    })
+  }
+  const initInternet = () => {
+    NetInfo.addEventListener(state => {
+      if (state.isConnected) {
+        getAllConsignment()
+      }
+    })
+  }
+
+  useEffect(() => {
+    consignmentStore.setConsignmentFalse()
+    consignmentStore.stopSyncing()
+    initInternet()
+  }, [])
   useEffect(() => {
     if (isGoPressed && consignmentStore.isEmptyList) {
       showAlert("common.noData")
@@ -131,7 +155,6 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
         return props.navigation.navigate('SafetyStack')
       case "landingScreen.getRate":
         return props.navigation.navigate('GetARateStack')
-        return true
       default: return true
     }
   }

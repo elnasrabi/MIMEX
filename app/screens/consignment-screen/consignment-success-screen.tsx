@@ -15,11 +15,12 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath } from "../../utils/utils"
+import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import ConsignmentModel from "../../models/local-database/consignment-model"
 import RNFS from 'react-native-fs'
 import UserModel from "../../models/local-database/user-modal"
+import Moment from 'moment'
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -173,11 +174,12 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getUserData()
     consignmentStore.onSigned(false)
+    consignmentStore.setConsignmentFalse()
   }, [])
 
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
-      console.log("called")
+      props.navigation.navigate("Home")
     }
   }, [consignmentStore.isConsignmentSaved])
 
@@ -231,10 +233,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     const isSaved = await getSavedData()
     console.log(isSaved)
     modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
+    props.navigation.navigate("Home")
   }
 
   const onSave = async () => {
-    consignmentStore.demo()
     const isConnected = await isInternetAvailable(false)
     if (!selectedValue) {
       onSetValidStatus(false)
@@ -256,28 +258,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         image: imageFileName,
         signBy: signText,
         signImage: imageFileName,
-        date: new Date().toDateString(),
+        date: Moment().toISOString(),
         synced: false
       }
       if (isConnected) {
-        const signImageData = await RNFS.readFile(getSignaturePath(imageFileName), 'base64')
-        const request = {
-          consignmentStatusUpdate: {
-            consignment: {
-              consignmentNumber: consNo,
-              podData: {
-                signatory: signText,
-                pod: signImageData
-              }
-            },
-            event: selectedValue,
-            carrierEvent: "DELV",
-            carrierSubEvent: "Successful",
-            location: "NCL",
-            condition: "All POD",
-            date: "2020-06-04T10:57:34+10:00"
-          }
-        }
+        const request = await getJsonRequest(record)
         consignmentStore.saveConsignment(authStore.authorization, request)
         // Call API
       } else {

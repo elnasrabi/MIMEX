@@ -2,6 +2,7 @@ import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
 import { Api } from '../../services/api'
 import { omit } from "ramda"
 import { showAlert } from "../../utils/utils"
+import ConsignmentModel from "../local-database/consignment-model"
 // const parseString = require('react-native-xml2js').parseString
 const parseString = require('react-native-xml2js').parseString
 
@@ -55,7 +56,7 @@ export const ConsignmentStoreModel = types
     }),
     saveConsignment: flow(function* saveConsignment(authorization: string, consignmentRequest: any) {
       self.isButtonLoading = true
-      self.sync = true
+      self.isConsignmentSaved = false
       try {
         const data = yield api.saveConsignment(authorization, consignmentRequest)
         if (data.kind === "ok") {
@@ -66,19 +67,41 @@ export const ConsignmentStoreModel = types
           showAlert("common.somethingWrong")
           self.isConsignmentSaved = false
         }
-        self.sync = true
         self.isButtonLoading = false
       } catch (erro) {
         // console.tron.log('erro', erro)
-        self.sync = true
         self.isButtonLoading = false
+      }
+    }),
+    saveConsignmentOffline: flow(function* saveConsignmentOffline(authorization: string, consignmentRequest: any, id: string) {
+      self.sync = true
+      try {
+        const data = yield api.saveConsignment(authorization, consignmentRequest)
+        if (data.kind === "ok") {
+          const modal = new ConsignmentModel()
+          modal.deleteConsignment(id)
+          parseString(data.consignment, { trim: true }, function (_error, result) {
+          })
+        } else {
+          showAlert("common.somethingWrong")
+        }
+        self.sync = false
+      } catch (erro) {
+        // console.tron.log('erro', erro)
+        self.sync = false
       }
     }),
     setConsignmentDetail(detail) {
       self.consignmentDetail = detail
     },
-    demo() {
-      self.isConsignmentSaved = true
+    setConsignmentFalse() {
+      self.isConsignmentSaved = false
+    },
+    startSyncing() {
+      self.sync = true
+    },
+    stopSyncing() {
+      self.sync = false
     }
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
