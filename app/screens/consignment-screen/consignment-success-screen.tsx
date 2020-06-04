@@ -149,7 +149,6 @@ RNFS.exists(dir).then(result => {
 })
 let userObj
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
@@ -175,6 +174,12 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     getUserData()
     consignmentStore.onSigned(false)
   }, [])
+
+  useEffect(() => {
+    if (consignmentStore.isConsignmentSaved) {
+      console.log("called")
+    }
+  }, [consignmentStore.isConsignmentSaved])
 
   const getUserData = async () => {
     const model = new UserModel()
@@ -221,21 +226,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     const isConsignmentSaved = await modal.getSavedConsignment(consignmentNumber, loginName)
     return isConsignmentSaved
   }
-  const addAndUpdateRecordOffline = async () => {
-    const record: recordProps = {
-      customerName: "John jacob",
-      eventNotes: "",
-      eventName: "Notes",
-      loginName: authStore.userData[0].loginName[0],
-      consignmentNumber: consignment.consignmentNumber[0],
-      itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
-      status: selectedValue,
-      image: imageFileName,
-      signBy: signText,
-      signImage: imageFileName,
-      date: new Date().toDateString(),
-      synced: false
-    }
+  const addAndUpdateRecordOffline = async (record) => {
     const modal = new ConsignmentModel()
     const isSaved = await getSavedData()
     console.log(isSaved)
@@ -243,8 +234,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   }
 
   const onSave = async () => {
+    consignmentStore.demo()
     const isConnected = await isInternetAvailable(false)
-
     if (!selectedValue) {
       onSetValidStatus(false)
     } else if (!fileName) {
@@ -253,10 +244,45 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       setValidSignText(false)
     } else if (!consignmentStore.signedSaved) {
       onSetValidSignImage(false)
-    } else if (!isConnected) {
-      // Call API
     } else {
-      addAndUpdateRecordOffline()
+      const record: recordProps = {
+        customerName: "John jacob",
+        eventNotes: "",
+        eventName: "Notes",
+        loginName: authStore.userData[0].loginName[0],
+        consignmentNumber: consignment.consignmentNumber[0],
+        itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
+        status: selectedValue,
+        image: imageFileName,
+        signBy: signText,
+        signImage: imageFileName,
+        date: new Date().toDateString(),
+        synced: false
+      }
+      if (isConnected) {
+        const signImageData = await RNFS.readFile(getSignaturePath(imageFileName), 'base64')
+        const request = {
+          consignmentStatusUpdate: {
+            consignment: {
+              consignmentNumber: consNo,
+              podData: {
+                signatory: signText,
+                pod: signImageData
+              }
+            },
+            event: selectedValue,
+            carrierEvent: "DELV",
+            carrierSubEvent: "Successful",
+            location: "NCL",
+            condition: "All POD",
+            date: "2020-06-04T10:57:34+10:00"
+          }
+        }
+        consignmentStore.saveConsignment(authStore.authorization, request)
+        // Call API
+      } else {
+        addAndUpdateRecordOffline(record)
+      }
     }
   }
 
@@ -341,6 +367,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         <BottomButton
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
+          isLoading={consignmentStore.isButtonLoading}
           leftText={"common.save"}
           rightText={"common.cancel"}
           onRightPress={goBack}

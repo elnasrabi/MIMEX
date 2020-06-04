@@ -1,5 +1,5 @@
 import * as React from "react"
-import { TouchableOpacity, ImageBackground, TextStyle, View, ViewStyle } from "react-native"
+import { TouchableOpacity, ImageBackground, TextStyle, View, ViewStyle, ActivityIndicator } from "react-native"
 import { Text } from "../text/text"
 import { color } from "../../theme"
 
@@ -15,6 +15,7 @@ interface bottomButtonProps {
   leftImage?: object,
   rightImage?: object,
   leftText?: string,
+  isLoading?: boolean,
   rightText?: string,
   onLeftPress?: () => void
   onRightPress?: () => void
@@ -62,7 +63,9 @@ export function BottomButton(props: bottomButtonProps) {
     <View style={[BOTTOM_VIEW, bottomViewstyle]}>
       <TouchableOpacity onPress={onLeftPress}>
         <ImageBackground source={leftImage} style={[LEFT_BUTTON_STYLE, leftButtonStyle]} >
-          <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
+          {props.isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
+            : <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
+          }
         </ImageBackground>
       </TouchableOpacity>
       <TouchableOpacity onPress={onRightPress}>

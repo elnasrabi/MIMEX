@@ -38,6 +38,14 @@ export default class ConsignmentModel extends Model {
     })
   }
 
+  async getAllSavedConsignment(): Promise<any> {
+    return await database.action(async (): Promise<any> => {
+      const consignmentSuccess = database.collections.get("consignment")
+      const offlineConsignment = await consignmentSuccess.query().fetch()
+      return offlineConsignment
+    })
+  }
+
   async addAndUpdateRecordOffline(isConsignmentSaved, offlineData, userObj) {
     database.action(async () => {
       const consignmentSuccess = database.collections.get("consignment")

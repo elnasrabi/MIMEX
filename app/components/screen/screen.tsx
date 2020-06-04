@@ -5,8 +5,22 @@ import { ScreenProps } from "./screen.props"
 import { isNonScrolling, presets } from "./screen.presets"
 import { icons } from "../icon/icons"
 import { color } from "../../theme"
+import { Text } from "../text/text"
 
 const IMAGE_BACKGROUND: ImageStyle = { height: "100%", width: "100%" }
+const SYNC_VIEW: ViewStyle = {
+  width: "100%",
+  height: 30,
+  backgroundColor: color.palette.green,
+  justifyContent: "center",
+  paddingStart: 15,
+  paddingEnd: 15
+}
+function getSyncView() {
+  return (<View style={SYNC_VIEW} >
+    <Text extraText={"..."} preset={"normal"} tx={"common.syncing"} />
+  </View>)
+}
 function ScreenWithoutScrolling(props: ScreenProps) {
   const insets = useSafeArea()
   const preset = presets.fixed
@@ -19,6 +33,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
       <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+      {props.sync && getSyncView()}
       <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
         <View style={[preset.inner, style, insetStyle]}>
           {props.children}
@@ -39,11 +54,12 @@ function ScreenWithScrolling(props: ScreenProps) {
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
       <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+      {props.sync && getSyncView()}
       <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
         <View style={[preset.outer, insetStyle]}>
           <ScrollView
             keyboardShouldPersistTaps='handled'
-            style={[preset.outer]}
+            style={preset.outer}
             contentContainerStyle={[preset.outer, style]}
           >
             {props.children}

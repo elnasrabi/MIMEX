@@ -20,8 +20,10 @@ export const ConsignmentStoreModel = types
     isButtonLoading: false,
     hasError: false,
     isEmptyList: true,
+    isConsignmentSaved: false,
     consignmentList: types.optional(types.frozen(), []),
-    consignmentDetail: types.optional(types.frozen(), {})
+    consignmentDetail: types.optional(types.frozen(), {}),
+    sync: false
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
@@ -51,8 +53,32 @@ export const ConsignmentStoreModel = types
         // console.tron.log('erro', erro)
       }
     }),
+    saveConsignment: flow(function* saveConsignment(authorization: string, consignmentRequest: any) {
+      self.isButtonLoading = true
+      self.sync = true
+      try {
+        const data = yield api.saveConsignment(authorization, consignmentRequest)
+        if (data.kind === "ok") {
+          parseString(data.consignment, { trim: true }, function (_error, result) {
+            self.isConsignmentSaved = true
+          })
+        } else {
+          showAlert("common.somethingWrong")
+          self.isConsignmentSaved = false
+        }
+        self.sync = true
+        self.isButtonLoading = false
+      } catch (erro) {
+        // console.tron.log('erro', erro)
+        self.sync = true
+        self.isButtonLoading = false
+      }
+    }),
     setConsignmentDetail(detail) {
       self.consignmentDetail = detail
+    },
+    demo() {
+      self.isConsignmentSaved = true
     }
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -62,7 +88,8 @@ export const ConsignmentStoreModel = types
   * Useful for sensitive data like passwords, or transitive state like whether a modal is open.
   * Note that you'll need to import `omit` from ramda, which is already included in the project!
   */
-  .postProcessSnapshot(omit(["signedSaved", "isButtonLoading", "hasError", "isEmptyList", "consignmentList", "consignmentDetail"]))
+  .postProcessSnapshot(omit(["signedSaved", "isButtonLoading",
+    "hasError", "isEmptyList", "consignmentList", "consignmentDetail", "isConsignmentSaved"]))
 
 type ConsignmentStoreType = Instance<typeof ConsignmentStoreModel>
 export interface ConsignmentStore extends ConsignmentStoreType { }

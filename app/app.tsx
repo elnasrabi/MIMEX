@@ -4,7 +4,7 @@
 
 import "./i18n"
 import React, { useState, useEffect, useRef } from "react"
-import { YellowBox, Text, TextInput } from "react-native"
+import { YellowBox, Text, TextInput, Alert } from "react-native"
 import { NavigationContainerRef } from "@react-navigation/native"
 import { contains } from "ramda"
 import { enableScreens } from "react-native-screens"
@@ -102,7 +102,12 @@ const App: React.FunctionComponent<{}> = () => {
   useEffect(() => {
     ; (async () => {
       SplashScreen.hide()
-      isInternetAlive()
+      const alive = await isInternetAlive()
+      // if (alive) {
+      //   Alert.alert("true")
+      // } else {
+      //   Alert.alert("false")
+      // }
       setupRootStore().then(setRootStore)
     })()
   }, [])

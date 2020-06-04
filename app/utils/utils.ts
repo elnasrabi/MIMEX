@@ -4,6 +4,7 @@ import { translate } from "../i18n"
 // import call from 'react-native-phone-call'
 import Moment from 'moment'
 import RNFetchBlob from 'rn-fetch-blob'
+import Sync from "./sync"
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
@@ -27,6 +28,12 @@ export async function isInternetAvailable(alert = true) {
     return false
   }
 }
+
+export async function isInternetAlive(): Promise<boolean> {
+  return await NetInfo.addEventListener(state => {
+    return state.isConnected
+  })
+}
 export const ADMINISTRATION = "Administration"
 export const CARRIER = "Carrier"
 export const Customer = "Customer"
@@ -43,14 +50,6 @@ export function getFormattedDate(date): string {
   Moment.locale('en')
   const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
   return newDate
-}
-
-export function isInternetAlive() {
-  NetInfo.addEventListener(state => {
-    // Alert.alert("d")
-    console.log("Connection type", state.type)
-    console.log("Is connected?", state.isConnected)
-  })
 }
 
 export function getSignaturePath(fileName): string {

@@ -137,7 +137,11 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   }
 
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="scroll">
+    <Screen style={ROOT}
+      statusBar={'dark-content'}
+      statusBarColor={color.palette.white}
+      sync={consignmentStore.sync}
+      wall={'whiteWall'} preset="scroll">
       <MenuButton
         hasBackground={false}
         onPress={handleDrawer} />
