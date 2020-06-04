@@ -9,8 +9,6 @@ import { NavigationContainerRef } from "@react-navigation/native"
 import { contains } from "ramda"
 import { enableScreens } from "react-native-screens"
 import { SafeAreaProvider, initialWindowSafeAreaInsets } from "react-native-safe-area-context"
-
-
 import { RootNavigator, exitRoutes, setRootNavigation } from "./navigation"
 import { useBackButtonHandler } from "./navigation/use-back-button-handler"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models/root-store"
@@ -21,6 +19,8 @@ import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 import { mySchema } from "./models/local-database/schema"
 import { dbModels } from "./models/local-database"
 import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
+import SplashScreen from 'react-native-splash-screen'
+import { isInternetAlive } from "./utils/utils"
 
 const adapter = new SQLiteAdapter({
   dbName: "MoveItDB",
@@ -101,6 +101,8 @@ const App: React.FunctionComponent<{}> = () => {
 
   useEffect(() => {
     ; (async () => {
+      SplashScreen.hide()
+      isInternetAlive()
       setupRootStore().then(setRootStore)
     })()
   }, [])

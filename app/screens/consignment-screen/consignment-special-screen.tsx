@@ -96,6 +96,7 @@ const DATE_TEXT: TextStyle = {
   alignSelf: "center",
   fontSize: 15
 }
+const currentDate = getFormattedDate(new Date().toLocaleString())
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
 
   const { consignmentStore } = useStores()
@@ -151,7 +152,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                   onValueChange={(value) => setSelectedValue(value)}
                 />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={getFormattedDate(new Date())} />
+              <Text preset={"normal"} style={DATE_TEXT} text={currentDate} />
             </View>
 
             <View style={CAMERA_VIEW}>

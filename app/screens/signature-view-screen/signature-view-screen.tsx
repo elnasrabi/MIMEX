@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React, { FunctionComponent } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, View, Platform } from "react-native"
@@ -11,6 +12,8 @@ import { Screen } from "../../components"
 import { BackButton } from "../../components/header/back-button"
 import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { icons } from "../../components/icon/icons"
+import RNFS from 'react-native-fs'
+import { getSignaturePath, getSignatureDir } from "../../utils/utils"
 
 export interface SignatureViewProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -33,7 +36,17 @@ const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
 
 export const SignatureView: FunctionComponent<SignatureViewProps> = observer(props => {
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
-  const { consignmentStore } = useStores()
+  const { consignmentStore, authStore } = useStores()
+  const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
+  const loginName = authStore.userData[0].loginName[0]
+  const dir = getSignatureDir()
+  RNFS.exists(dir).then(result => {
+    if (!result) {
+      RNFS.mkdir(dir)
+    }
+  })
+  const filePath = getSignaturePath(consNo + loginName)
+  console.log(dir)
   const saveSign = async () => {
     if (Platform.OS === 'android') {
       const result = await requestPermission(STORAGE_PERMISSION)
@@ -48,8 +61,12 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     refs.resetImage()
   }
   const onSaveEvent = (result: any) => {
-    consignmentStore.onSigned(true)
-    goBack()
+    RNFS.writeFile(filePath, result.encoded, 'base64').then(result => {
+      consignmentStore.onSigned(true)
+      goBack()
+    }).catch((error) => {
+      console.log(error)
+    })
   }
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">

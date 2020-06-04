@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image } from "react-native"
+import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image, Alert } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
@@ -14,29 +14,29 @@ import ImagePicker from 'react-native-image-picker'
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
-import RNFetchBlob from 'rn-fetch-blob'
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, showAlert, getCurrentDate, getFormattedDate } from "../../utils/utils"
-import { database } from "../../app"
-import { Q } from "@nozbe/watermelondb"
+import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
+import ConsignmentModel from "../../models/local-database/consignment-model"
+import RNFS from 'react-native-fs'
+import UserModel from "../../models/local-database/user-modal"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 }
 const statusFail = [
-  { label: 'Receiver Closed', value: 'receiverClosed' },
-  { label: 'Refused Delivery', value: 'refusedDelivery' },
-  { label: 'Incorrect Delivery Address', value: 'incorrectDeliveryAddress' },
-  { label: 'No One Home', value: 'noOneHome' },
-  { label: 'Unable to Deliver Long Wait Time', value: 'unableToDeliver' },
+  { label: 'Receiver Closed', value: 'Receiver Closed' },
+  { label: 'Refused Delivery', value: 'Refused Delivery' },
+  { label: 'Incorrect Delivery Address', value: 'Incorrect Delivery Address' },
+  { label: 'No One Home', value: 'No One Home' },
+  { label: 'Unable to Deliver Long Wait Time', value: 'Unable to Deliver Long Wait Time' },
 ]
 
 const statusSuccess = [
-  { label: 'Delivered', value: 'delivered' },
-  { label: 'Picked Up', value: 'pickedUp' },
-  { label: 'At Depot', value: 'atDepot' },
-  { label: 'Handed to On Forwarder', value: 'handed' },
+  { label: 'Delivered', value: 'Delivered' },
+  { label: 'Picked Up', value: 'Picked Up' },
+  { label: 'At Depot', value: 'At Depot' },
+  { label: 'Handed to On Forwarder', value: 'Handed to On Forwarder' },
 ]
 const ROOT: ViewStyle = {
   flex: 1,
@@ -125,16 +125,37 @@ const DATE_TEXT: TextStyle = {
 }
 let imageHash = Date.now()
 let randomNo = Math.random()
+interface recordProps {
+  customerName: string
+  loginName: string
+  eventName: string
+  eventNotes: string
+  consignmentNumber: string
+  itemsCount: string
+  status: string
+  image: string
+  signBy: string
+  signImage: string
+  date: string
+  synced: boolean
+}
 
-const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
+const currentDate = getFormattedDate(new Date().toLocaleString())
+const dir = getImageDir()
+RNFS.exists(dir).then(result => {
+  if (!result) {
+    RNFS.mkdir(dir)
+  }
+})
+let userObj
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
-  const SIGN_IMAGE_URI = Platform.OS === 'android' ? "file:///storage/emulated/0/saved_signature/signature.png" : DOCUMENT_DIRECTORY_PATH + "/signature.png"
 
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const [signUri, setSignUri] = useState(SIGN_IMAGE_URI)
   const [viewImage, onViewImage] = useState(false)
   const [isValidStatus, onSetValidStatus] = useState(true)
@@ -143,13 +164,22 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [signText, onSignText] = useState("")
   const [random, setRandom] = useState(0)
   const [isValidSignImage, onSetValidSignImage] = useState(true)
-  let isConsignmentSaved = false
   const { isSuccess } = props.route.params
+  const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
+  const loginName = authStore.userData[0].loginName[0]
+  const imageFileName = consNo + loginName
+  const SIGN_IMAGE_URI = getSignaturePath(imageFileName)
+  // console.log(SIGN_IMAGE_URI)
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    getSavedData()
+    getUserData()
     consignmentStore.onSigned(false)
   }, [])
+
+  const getUserData = async () => {
+    const model = new UserModel()
+    userObj = await model.getUserData(authStore.userData[0].loginName[0])
+  }
 
   useLayoutEffect(() => {
     props.navigation.addListener('focus', () => {
@@ -164,9 +194,17 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       if (!response.didCancel) {
-        setFileName('Consignment Photo')
-        setImageUri(response.uri)
-        onSetValidFile(true)
+        const filePath = getImagePath(imageFileName)
+        RNFS.writeFile(filePath, response.data, 'base64').then(result => {
+          setFileName('Consignment Photo')
+          imageHash = Date.now()
+          setImageUri(filePath)
+          // console.log(filePath)
+          // console.log(result)
+          onSetValidFile(true)
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     })
   }
@@ -176,53 +214,50 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
+  async function getSavedData(): Promise<boolean> {
+    const consignmentNumber = consignment.consignmentNumber.toString()
+    const loginName = authStore.userData[0].loginName[0]
+    const modal = new ConsignmentModel()
+    const isConsignmentSaved = await modal.getSavedConsignment(consignmentNumber, loginName)
+    return isConsignmentSaved
+  }
+  const addAndUpdateRecordOffline = async () => {
+    const record: recordProps = {
+      customerName: "John jacob",
+      eventNotes: "",
+      eventName: "Notes",
+      loginName: authStore.userData[0].loginName[0],
+      consignmentNumber: consignment.consignmentNumber[0],
+      itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
+      status: selectedValue,
+      image: imageFileName,
+      signBy: signText,
+      signImage: imageFileName,
+      date: new Date().toDateString(),
+      synced: false
+    }
+    const modal = new ConsignmentModel()
+    const isSaved = await getSavedData()
+    console.log(isSaved)
+    modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
+  }
 
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false)
-    if (!isConnected) {
+
+    if (!selectedValue) {
+      onSetValidStatus(false)
+    } else if (!fileName) {
+      onSetValidFile(false)
+    } else if (!signText) {
+      setValidSignText(false)
+    } else if (!consignmentStore.signedSaved) {
+      onSetValidSignImage(false)
+    } else if (!isConnected) {
       // Call API
     } else {
-      if (!selectedValue) {
-        onSetValidStatus(false)
-      } else if (!fileName) {
-        onSetValidFile(false)
-      } else if (!signText) {
-        setValidSignText(false)
-      } else if (!consignmentStore.signedSaved) {
-        onSetValidSignImage(false)
-      } else {
-        database.action(async () => {
-          const consignmentSuccess = database.collections.get("consignmentSuccess")
-          const data = await consignmentSuccess.create(consignmentSuccess => {
-            consignmentSuccess.customerName = "John jacob"
-            consignmentSuccess.userName = authStore.userData[0].loginName[0]
-            consignmentSuccess.consignmentNumber = consignment.consignmentNumber[0]
-            consignmentSuccess.itemsCount = consignment.consignmentItems[0].totalLineItemLabels[0]
-            consignmentSuccess.status = selectedValue
-            consignmentSuccess.image = imageUri
-            consignmentSuccess.signBy = signText
-            consignmentSuccess.signImage = signUri
-            consignmentSuccess.date = new Date().toDateString()
-            consignmentSuccess.synced = false
-            console.log(consignmentSuccess)
-          })
-          console.log(data)
-          showAlert("", "consignmentSuccess.offlineDataSaveMessage")
-        })
-      }
+      addAndUpdateRecordOffline()
     }
-  }
-  async function getSavedData() {
-    database.action(async () => {
-      const consignmentNumber = consignment.consignmentNumber.toString()
-      const consignmentSuccess = database.collections.get("consignmentSuccess")
-      // const post = await consignmentSuccess.query().fetch()
-      const post = await consignmentSuccess.query(Q.where("consignmentNumber", consignmentNumber)).fetch()
-      console.log(post)
-      if (post.length > 0 && post[0].consignmentNumber === consignmentNumber) {
-        isConsignmentSaved = true
-      }
-    })
   }
 
   const onChangeText = (text) => {
@@ -240,6 +275,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         <View>
           {/* Image View */}
           <ImageViewerModal
+            imageHash={imageHash}
             uri={imageUri}
             isViewImage={viewImage}
             onClose={onImageView} />
@@ -260,10 +296,13 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   dropDownData={isSuccess ? statusSuccess : statusFail}
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
-                  onValueChange={(value) => setSelectedValue(value)}
+                  onValueChange={(value) => {
+                    setSelectedValue(value)
+                    onSetValidStatus(true)
+                  }}
                 />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={getFormattedDate(new Date().toLocaleString())} />
+              <Text preset={"normal"} style={DATE_TEXT} text={currentDate} />
             </View>
             {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 

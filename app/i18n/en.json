@@ -6,6 +6,8 @@
     "success": "Success",
     "fail": "Fail",
     "save": "Save",
+    "milestone": "Milestone",
+    "exception": "Exception",
     "search": "Search",
     "consignment": "Consignment",
     "status": "Status",

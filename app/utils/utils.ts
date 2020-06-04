@@ -1,8 +1,9 @@
 import NetInfo from "@react-native-community/netinfo"
-import { Alert, Linking } from "react-native"
+import { Alert, Linking, Platform } from "react-native"
 import { translate } from "../i18n"
 // import call from 'react-native-phone-call'
 import Moment from 'moment'
+import RNFetchBlob from 'rn-fetch-blob'
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
@@ -40,6 +41,40 @@ export function callApi(number) {
 }
 export function getFormattedDate(date): string {
   Moment.locale('en')
-  const newDate = Moment(date).format('hh:mmA, DD MMM, yyyy')
+  const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
   return newDate
+}
+
+export function isInternetAlive() {
+  NetInfo.addEventListener(state => {
+    // Alert.alert("d")
+    console.log("Connection type", state.type)
+    console.log("Is connected?", state.isConnected)
+  })
+}
+
+export function getSignaturePath(fileName): string {
+  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
+  const dirs = DOCUMENT_DIRECTORY_PATH + "/signature/"
+  const prefix = Platform.OS === "android" ? "file:///" : ""
+  return prefix + dirs + fileName + ".png"
+}
+
+export function getSignatureDir(): string {
+  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
+  const dirs = DOCUMENT_DIRECTORY_PATH + "/signature/"
+  return dirs
+}
+
+export function getImagePath(fileName): string {
+  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
+  const dirs = DOCUMENT_DIRECTORY_PATH + "/images/"
+  const prefix = Platform.OS === "android" ? "file:///" : ""
+  return prefix + dirs + fileName + ".png"
+}
+
+export function getImageDir(): string {
+  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
+  const dirs = DOCUMENT_DIRECTORY_PATH + "/images/"
+  return dirs
 }
