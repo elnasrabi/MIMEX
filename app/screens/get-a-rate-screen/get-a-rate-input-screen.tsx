@@ -85,13 +85,6 @@ const SEPERATOR_LINE: ViewStyle = {
   marginBottom: 10,
   borderRadius: 5
 };
-const BOTTOM_BUTTON: ViewStyle = {
-  position: 'absolute',
-  bottom: 0,
-  alignSelf: 'center',
-  backgroundColor: 'white',
-  width: '100%'
-}
 const ERROR_TEXT: TextStyle = {
   color: color.palette.red,
   fontFamily: typography.secondary,
@@ -127,12 +120,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     }
     if (Platform.OS === 'ios') {
       KeyboardManager.setToolbarPreviousNextButtonEnable(true);
+      KeyboardManager.setKeyboardDistanceFromTextField(20);
     }
     getARateStore.updatePreventrefersh(false);
   }, [isFocused])
 
 
-  const getACalculatedRate = async (values) => {
+  const getACalculatedRate = async (values, actions) => {
     const isConnected = await isInternetAvailable();
     Keyboard.dismiss();
     if (isConnected) {
@@ -168,6 +162,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         }
       }
       await getARateStore.getARate(authStore.authorization, requestData);
+      actions.setSubmitting(false);
       if (getARateStore.responseSuccess) {
         gotoRateListScreen();
       }
@@ -286,7 +281,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   }
 
   const onsubmit = (values, actions) => {
-    getACalculatedRate(values);
+    getACalculatedRate(values, actions);
   }
 
   return (
@@ -310,8 +305,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         innerRef={formikRef}
         validationSchema={ValidationSchema}
       >
-        {({ handleChange, handleSubmit, setFieldValue, values, errors, touched }) => (
-          <SafeAreaView>
+        {({ handleChange, handleSubmit, setFieldValue, values, errors, touched, isSubmitting }) => (
+          <SafeAreaView style={FLEX}>
             <ScrollView contentContainerStyle={SCROLLVIEW_CONTAINER} style={SCROLLVIEW_STYLE}>
               <View style={UPPER_CONTAINER}>
                 <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
@@ -403,12 +398,11 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
                 blurOnSubmit={true}
                 label={"getARateScreen.volume"}
               />
-              <View style={{ marginBottom: 55 }} />
             </ScrollView>
             <BottomButton
-              bottomViewstyle={BOTTOM_BUTTON}
               leftImage={icons.blackButton2}
-              isLoadingLeft={getARateStore.isButtonLoading}
+              isLoadingLeft={isSubmitting}
+              isLoadingRight={isSubmitting}
               rightImage={icons.redButton2}
               onLeftPress={handleSubmit}
               onRightPress={gotoHomeScreen}

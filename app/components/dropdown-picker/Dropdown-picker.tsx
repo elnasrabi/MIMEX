@@ -1,10 +1,10 @@
-import * as React from "react"
-import { TextStyle, View, ViewStyle, Platform, Image } from "react-native"
-import { color, typography } from "../../theme"
+import * as React from "react";
+import { TextStyle, View, ViewStyle, Platform, Image } from "react-native";
+import { color, typography } from "../../theme";
 
-import RNPickerSelect from 'react-native-picker-select'
-import { icons } from "../icon/icons"
-import { translateText } from "../../utils/utils"
+import RNPickerSelect from 'react-native-picker-select';
+import { icons } from "../icon/icons";
+import { translateText } from "../../utils/utils";
 import { Text } from "../text/text";
 
 /**
@@ -75,7 +75,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
           onValueChange={onValueChange}
           Icon={() =>
             <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-              <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />
+              {icons.downArrow && <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />}
             </View>
           }
           items={dropDownData}
