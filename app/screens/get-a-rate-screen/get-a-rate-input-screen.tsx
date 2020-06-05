@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView } from "react-native";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import moment from 'moment';
 import KeyboardManager from "react-native-keyboard-manager";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -104,6 +105,15 @@ const TEXTINPUT_TEXT: TextStyle = {
   height: 40,
   justifyContent: 'center'
 }
+const DATE_VIEW: ViewStyle = {
+  backgroundColor: color.palette.white,
+  paddingHorizontal: 10,
+  justifyContent: 'center',
+  height: 40,
+  borderColor: color.palette.lightGrey,
+  borderWidth: 1,
+  borderRadius: 4
+}
 export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const { getARateStore, authStore } = useStores();
   const isFocused = useIsFocused();
@@ -111,6 +121,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const pickUpAddressData = [{ label: 'MELBCCS WEST FOOTSCRAY', value: 'MELBCCS WEST FOOTSCRAY' }];
   const [postCode, updatePostCode] = useState('');
   const [town, updateTown] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
   const currentRef: any[] = [];
   const formikRef = useRef();
 
@@ -125,6 +137,15 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     getARateStore.updatePreventrefersh(false);
   }, [isFocused])
 
+  const hideDatePicker = () => {
+    setShow(false);
+  };
+
+  const handleConfirm = (date) => {
+    setShow(Platform.OS === 'ios');
+    setDate(date);
+    hideDatePicker();
+  };
 
   const getACalculatedRate = async (values, actions) => {
     const isConnected = await isInternetAvailable();
@@ -133,7 +154,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       const requestData = {
         consignmentRateTimeRequest: {
           consignment: {
-            despatchDate: moment(new Date()).format("YYYY-MM-DD"),
+            despatchDate: moment(date).format("YYYY-MM-DD"),
             pickupAddress: {
               address: {
                 addressCode: "MELBCCS",
@@ -173,6 +194,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     return props.navigation.navigate('GetARateList');
   }
   const gotoHomeScreen = () => {
+    setDate(new Date());
     formikRef.current.resetForm();
     return props.navigation.navigate('Home');
   }
@@ -309,7 +331,21 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           <SafeAreaView style={FLEX}>
             <ScrollView contentContainerStyle={SCROLLVIEW_CONTAINER} style={SCROLLVIEW_STYLE}>
               <View style={UPPER_CONTAINER}>
-                <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.pickUpAddress'} />
+                <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.despatchDate'} />
+                <View style={SEPERATOR_LINE} />
+                <TouchableOpacity style={{}} onPress={() => setShow(true)}>
+                  <View style={DATE_VIEW} pointerEvents='none'>
+                    <Text style={VALUE}>{moment(date).format('YYYY-MM-DD')}</Text>
+                  </View>
+                  <DateTimePickerModal
+                    isVisible={show}
+                    onConfirm={handleConfirm}
+                    value={new Date()}
+                    mode="date"
+                    onCancel={hideDatePicker}
+                  />
+                </TouchableOpacity>
+                <Text style={[FONTFAMILY, { color: color.palette.black, marginTop: 10 }]} tx={'getARateScreen.pickUpAddress'} />
                 <View style={SEPERATOR_LINE} />
                 <DropdownPicker
                   dropDownData={pickUpAddressData}
