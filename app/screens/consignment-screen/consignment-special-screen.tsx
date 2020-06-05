@@ -56,7 +56,7 @@ const options = {
 
 const SIGN_INPUT: TextStyle = {
   textAlignVertical: "top",
-  borderColor: color.palette.link,
+  borderColor: color.palette.darkText,
   borderWidth: 2,
   height: 300,
   flex: 1

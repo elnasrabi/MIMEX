@@ -52,15 +52,28 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
     props.navigation.navigate("consignmentSuccess", { isSuccess: false })
   }
 
+  const canOpenUrl = async (url) => {
+    const supported = await Linking.canOpenURL(url)
+    return supported
+  }
+
   const openGoogleMap = () => {
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' })
     const latLng = `${37.78825},${-122.4324}`
-    const label = 'Custom Label'
+    const label = ''
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     })
-    Linking.openURL(url)
+    const wazeUrl = "https://www.waze.com/ul?ll=40.75889500%2C-73.98513100&navigate=yes&zoom=17"
+    const tomtom = "https://www.tomtom.com/ul?ll=40.75889500%2C-73.98513100"
+    if (canOpenUrl(url)) {
+      Linking.openURL(url)
+    } else if (canOpenUrl(wazeUrl)) {
+      Linking.openURL(wazeUrl)
+    } else if (canOpenUrl(tomtom)) {
+      Linking.openURL(tomtom)
+    }
   }
 
   return (

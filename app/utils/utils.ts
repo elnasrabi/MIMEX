@@ -84,7 +84,7 @@ export async function getJsonRequest(record): Promise<any> {
       consignment: {
         consignmentNumber: record.consignmentNumber,
         podData: {
-          signatory: record.signBy ? record.signBy : "",
+          signatory: record.signBy || "",
           pod: signImageData || ""
         }
       },
