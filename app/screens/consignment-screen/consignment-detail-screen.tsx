@@ -54,11 +54,11 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
 
   const canOpenUrl = async (url) => {
     const supported = await Linking.canOpenURL(url)
-    return supported
+    return supported ? 'Open' : undefined
   }
 
-  const openGoogleMap = () => {
-    const latitude = 37.78825;
+  const openGoogleMap = async () => {
+    const latitude = 37.78825
     const longitude = -122.4324
 
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' })
@@ -68,19 +68,19 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     })
-    const googleMap = "https://www.google.de/maps/@" + latitude + "," + longitude
+    const googleMap = "comgooglemaps://"
     const wazeUrl = "https://www.waze.com/ul?ll=" + latitude + "%2C-" + longitude + "&navigate=yes&zoom=17"
     const tomtom = "https://www.tomtom.com/ul?ll=" + latitude + "%2C-" + longitude
 
-    if (canOpenUrl(googleMap)) {
+    if (await canOpenUrl(googleMap)) {
       Linking.openURL(googleMap)
-    } else if (canOpenUrl(url)) {
+    } else if (await canOpenUrl(url)) {
       Linking.openURL(url)
-    } else if (canOpenUrl(wazeUrl)) {
+    } else if (await canOpenUrl(wazeUrl)) {
       Linking.openURL(wazeUrl)
-    } else if (canOpenUrl(wazeUrl)) {
+    } else if (await canOpenUrl(wazeUrl)) {
       Linking.openURL(wazeUrl)
-    } else if (canOpenUrl(tomtom)) {
+    } else if (await canOpenUrl(tomtom)) {
       Linking.openURL(tomtom)
     }
   }
