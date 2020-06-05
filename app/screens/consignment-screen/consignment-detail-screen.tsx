@@ -58,7 +58,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   }
 
   const openGoogleMap = () => {
-    const latitude = 37.78825
+    const latitude = 37.78825;
     const longitude = -122.4324
 
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' })
@@ -68,7 +68,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     })
-    const googleMap = "comgooglemaps://?center" + latitude + "," + longitude
+    const googleMap = "https://www.google.de/maps/@" + latitude + "," + longitude
     const wazeUrl = "https://www.waze.com/ul?ll=" + latitude + "%2C-" + longitude + "&navigate=yes&zoom=17"
     const tomtom = "https://www.tomtom.com/ul?ll=" + latitude + "%2C-" + longitude
 
