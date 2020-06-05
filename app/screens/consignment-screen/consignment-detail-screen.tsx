@@ -58,17 +58,26 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   }
 
   const openGoogleMap = () => {
+    const latitude = 37.78825
+    const longitude = -122.4324
+
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' })
-    const latLng = `${37.78825},${-122.4324}`
+    const latLng = `${latitude},${longitude}`
     const label = ''
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     })
-    const wazeUrl = "https://www.waze.com/ul?ll=40.75889500%2C-73.98513100&navigate=yes&zoom=17"
-    const tomtom = "https://www.tomtom.com/ul?ll=40.75889500%2C-73.98513100"
-    if (canOpenUrl(url)) {
+    const googleMap = "https://www.google.de/maps/@" + latitude + "," + longitude
+    const wazeUrl = "https://www.waze.com/ul?ll=" + latitude + "%2C-" + longitude + "&navigate=yes&zoom=17"
+    const tomtom = "https://www.tomtom.com/ul?ll=" + latitude + "%2C-" + longitude
+
+    if (canOpenUrl(googleMap)) {
+      Linking.openURL(googleMap)
+    } else if (canOpenUrl(url)) {
       Linking.openURL(url)
+    } else if (canOpenUrl(wazeUrl)) {
+      Linking.openURL(wazeUrl)
     } else if (canOpenUrl(wazeUrl)) {
       Linking.openURL(wazeUrl)
     } else if (canOpenUrl(tomtom)) {
