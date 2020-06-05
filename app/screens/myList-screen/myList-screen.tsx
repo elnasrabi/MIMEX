@@ -95,10 +95,12 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const { myListStore, authStore } = useStores();
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
   const [toggleAll, useToggleAll] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [mylist, updateMyList] = useState([]);
 
   useEffect(() => {
     const isConnected = isInternetAvailable();
+
     if (isFocused && isConnected) {
       getListApi();
     }
@@ -193,7 +195,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       {
-        !mylist.length &&
+        myListStore.isLoading &&
         <ActivityIndicator size='large' style={ACTIVITY_INDICATOR} color={color.palette.black} />
       }
       <MenuButton
