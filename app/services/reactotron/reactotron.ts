@@ -145,7 +145,6 @@ export class Reactotron {
         description: "Resets the MST store",
         command: "resetStore",
         handler: () => {
-          console.tron.log("resetting store")
           clear()
         },
       })
@@ -155,7 +154,6 @@ export class Reactotron {
         description: "Resets the navigation state",
         command: "resetNavigation",
         handler: () => {
-          console.tron.log("resetting navigation state")
           RootNavigation.resetRoot({ routes: [] })
         },
       })
@@ -165,7 +163,6 @@ export class Reactotron {
         description: "Goes back",
         command: "goBack",
         handler: () => {
-          console.tron.log("Going back")
           RootNavigation.goBack()
         },
       })
