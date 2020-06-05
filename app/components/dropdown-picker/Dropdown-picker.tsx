@@ -15,6 +15,7 @@ interface dropdownPickerProps {
   dropDownData: any[], selectedValue: any, onValueChange: (value: any) => void,
   inputStyleIOS?: TextStyle,
   inputStyleAndroid?: TextStyle,
+  disabled?: boolean,
   placeHolder?: string
 }
 
@@ -56,6 +57,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
   return (
     <View style={VALUE_CONTAINER_REGISTRATION}>
       <RNPickerSelect
+        disabled={props.disabled}
         style={{
           placeholder: {
             fontSize: 15,

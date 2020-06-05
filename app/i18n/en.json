@@ -224,6 +224,7 @@
   },
   "consignmentFail": {
     "consignment": "Consignment",
-    "notes": "Notes"
+    "notes": "Notes",
+    "enterNotes": "Enter Notes"
   }
 }

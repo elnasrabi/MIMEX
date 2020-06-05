@@ -68,7 +68,7 @@ const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingS
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore } = useStores()
-  const [searchValue, onSearchValue] = useState("AMI000071")
+  const [searchValue, onSearchValue] = useState("CCS0000002")
   // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true)
   const [isGoPressed, setIsOnGoPress] = useState(false)
@@ -91,7 +91,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   const initInternet = () => {
     NetInfo.addEventListener(state => {
       if (state.isConnected) {
-        getAllConsignment()
+        // getAllConsignment()
       }
     })
   }

@@ -59,8 +59,8 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   const [isValidUsername, setValidUsername] = useState(true)
   const [isValidPassword, setValidPassword] = useState(true)
 
-  const [username, onChangeUsername] = useState("services@afs")
-  const [password, onChangePassword] = useState("services092017")
+  const [username, onChangeUsername] = useState("manager@ccs")
+  const [password, onChangePassword] = useState("manager")
   let passwordRef: any
 
   useEffect(() => {

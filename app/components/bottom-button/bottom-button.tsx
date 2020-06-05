@@ -14,6 +14,7 @@ interface bottomButtonProps {
   rightButtonStyle?: object,
   leftImage?: object,
   rightImage?: object,
+  leftDisabled?: boolean,
   leftText?: string,
   isLoading?: boolean,
   rightText?: string,
@@ -30,6 +31,7 @@ export function BottomButton(props: bottomButtonProps) {
     leftButtonStyle,
     rightButtonStyle,
     leftImage,
+    leftDisabled,
     rightImage,
     leftText,
     rightText,
@@ -61,7 +63,7 @@ export function BottomButton(props: bottomButtonProps) {
 
   return (
     <View style={[BOTTOM_VIEW, bottomViewstyle]}>
-      <TouchableOpacity onPress={onLeftPress}>
+      <TouchableOpacity disabled={leftDisabled} onPress={onLeftPress}>
         <ImageBackground source={leftImage} style={[LEFT_BUTTON_STYLE, leftButtonStyle]} >
           {props.isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
             : <Text style={BUTTON_TEXT_STYLE} tx={leftText} />

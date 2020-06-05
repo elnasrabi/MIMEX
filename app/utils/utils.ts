@@ -41,9 +41,9 @@ export function callApi(number) {
   // call(args).catch(console.error)
   Linking.openURL(`tel:${number}`)
 }
-export function getFormattedDate(date): string {
+export const getFormattedDate = (date): string => {
   Moment.locale('en')
-  const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
+  const newDate = Moment().format('hh:mmA, DD MMM, yyyy')
   console.log(newDate)
   return newDate
 }
@@ -75,23 +75,32 @@ export function getImageDir(): string {
 }
 
 export async function getJsonRequest(record): Promise<any> {
-  const signImageData = await RNFS.readFile(getSignaturePath(record.image), 'base64')
+  let signImageData = ""
+  if (record.signImage) {
+    signImageData = await RNFS.readFile(getSignaturePath(record.signImage), 'base64')
+  }
   const request = {
     consignmentStatusUpdate: {
       consignment: {
         consignmentNumber: record.consignmentNumber,
         podData: {
-          signatory: record.signBy,
-          pod: signImageData
+          signatory: record.signBy ? record.signBy : "",
+          pod: signImageData || ""
         }
       },
       event: record.status,
-      carrierEvent: "DELV",
-      carrierSubEvent: "Successful",
+      carrierEvent: record.status,
+      carrierSubEvent: record.eventName,
       location: "NCL",
-      condition: "All POD",
+      condition: signImageData ? "All POD" : "Ok",
       date: record.date
     }
   }
   return request
+}
+
+export const consType = {
+  success: "success",
+  fail: "fail",
+  specialAction: "specialAction"
 }

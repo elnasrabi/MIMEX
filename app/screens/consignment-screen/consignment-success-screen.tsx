@@ -15,7 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest } from "../../utils/utils"
+import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest, consType } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import ConsignmentModel from "../../models/local-database/consignment-model"
 import RNFS from 'react-native-fs'
@@ -126,10 +126,13 @@ const DATE_TEXT: TextStyle = {
 }
 let imageHash = Date.now()
 let randomNo = Math.random()
+type consignmentType = keyof typeof consType
+
+// eslint-disable-next-line @typescript-eslint/class-name-casing
 interface recordProps {
   customerName: string
   loginName: string
-  eventName: string
+  eventName: consignmentType
   eventNotes: string
   consignmentNumber: string
   itemsCount: string
@@ -149,6 +152,7 @@ RNFS.exists(dir).then(result => {
   }
 })
 let userObj
+const isDelivered = false
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
@@ -242,22 +246,22 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       onSetValidStatus(false)
     } else if (!fileName) {
       onSetValidFile(false)
-    } else if (!signText) {
+    } else if (selectedValue === "Delivered" && !signText) {
       setValidSignText(false)
-    } else if (!consignmentStore.signedSaved) {
+    } else if (selectedValue === "Delivered" && !consignmentStore.signedSaved) {
       onSetValidSignImage(false)
     } else {
       const record: recordProps = {
         customerName: "John jacob",
         eventNotes: "",
-        eventName: "Notes",
+        eventName: isSuccess ? "success" : "fail",
         loginName: authStore.userData[0].loginName[0],
         consignmentNumber: consignment.consignmentNumber[0],
         itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
         status: selectedValue,
         image: imageFileName,
         signBy: signText,
-        signImage: imageFileName,
+        signImage: consignmentStore.signedSaved ? imageFileName : "",
         date: Moment().toISOString(),
         synced: false
       }
@@ -304,6 +308,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             <View style={PICKER_CONTAINER}>
               <View style={VALUE_CONTAINER_REGISTRATION}>
                 <DropdownPicker
+                  disabled={isDelivered}
                   dropDownData={isSuccess ? statusSuccess : statusFail}
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
@@ -337,7 +342,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
             <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
-            <TouchableOpacity onPress={onSignaturePress} style={SIGN_VIEW}>
+            <TouchableOpacity disabled={isDelivered} onPress={onSignaturePress} style={SIGN_VIEW}>
               {consignmentStore.signedSaved
                 ? <Image key={random} source={Platform.OS === 'android' ? { uri: `${signUri}?${imageHash}` } : { uri: `${signUri}` }}
                   style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
@@ -352,6 +357,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         <BottomButton
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
+          leftDisabled={isDelivered}
           isLoading={consignmentStore.isButtonLoading}
           leftText={"common.save"}
           rightText={"common.cancel"}

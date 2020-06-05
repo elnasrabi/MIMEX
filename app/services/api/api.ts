@@ -95,7 +95,7 @@ export class Api {
   }
 
   async saveConsignment(authorization: string, consignmentRequest: any): Promise<Types.ConsignmentResult> {
-    const response: ApiResponse<any> = await this.apisauce.post('http://uat.afs.moveitnetexpress.com.au/moveit/gateway/ccsLocal/statusUpdateXML', getOriginalRequest2(SAVE_CONSIGNMENT, consignmentRequest), { headers: { Authorization: "Basic " + authorization } })
+    const response: ApiResponse<any> = await this.apisauce.post('ccsLocal/statusUpdateXML', getOriginalRequest2(SAVE_CONSIGNMENT, consignmentRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
       console.log(response)
       const problem = getGeneralApiProblem(response)

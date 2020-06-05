@@ -56,6 +56,7 @@ const TITLE: TextStyle = {
   marginStart: 30,
 }
 const TEXT_VALUE: TextStyle = { color: color.palette.link, }
+const isDelivered = false
 export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> = observer(props => {
   const onFirePress = () => {
     props.navigation.navigate("pdfViewer")
@@ -146,6 +147,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
           </View>
         </View>
         {props.isFailView ? null : <MyButton
+          disabled={isDelivered}
           style={SPECIAL_ACTION_BUTTON}
           buttonSource={icons.blueButton}
           imageBackground={SPECIAL_ACTION}

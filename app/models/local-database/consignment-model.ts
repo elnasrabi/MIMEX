@@ -80,6 +80,8 @@ export default class ConsignmentModel extends Model {
     record.consignmentNumber = offlineData.consignmentNumber
     record.itemsCount = offlineData.itemsCount
     record.status = offlineData.status
+    record.eventName = offlineData.type
+    record.eventNotes = offlineData.eventNotes
     record.image = offlineData.image
     record.signBy = offlineData.signBy
     record.signImage = offlineData.signImage
