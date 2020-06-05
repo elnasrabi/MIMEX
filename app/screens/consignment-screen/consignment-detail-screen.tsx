@@ -68,7 +68,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     })
-    const googleMap = "comgooglemaps://?center" + latitude + "," + longitude
+    const googleMap = "comgooglemaps://?center=" + latitude + "," + longitude
     const wazeUrl = "https://www.waze.com/ul?ll=" + latitude + "%2C-" + longitude + "&navigate=yes&zoom=17"
     const tomtom = "https://www.tomtom.com/ul?ll=" + latitude + "%2C-" + longitude
 

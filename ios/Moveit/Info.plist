@@ -24,6 +24,13 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+      <string>comgooglemaps</string>
+      <string>comgooglemaps-x-callback</string>
+      <string>waze</string>
+      <string>tomtom</string>
+  </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
