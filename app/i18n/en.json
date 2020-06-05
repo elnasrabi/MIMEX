@@ -29,7 +29,8 @@
     "selectImage": "Select Image",
     "somethingWrong": "Something went wrong!!",
     "noInternet": "No Internet Connection",
-    "registrationId": "Registration-ID"
+    "registrationId": "Registration-ID",
+    "syncing": "Syncing"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -235,6 +236,7 @@
   },
   "consignmentFail": {
     "consignment": "Consignment",
-    "notes": "Notes"
+    "notes": "Notes",
+    "enterNotes": "Enter Notes"
   }
 }

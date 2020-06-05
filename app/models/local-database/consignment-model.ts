@@ -38,21 +38,39 @@ export default class ConsignmentModel extends Model {
     })
   }
 
-  async addAndUpdateRecordOffline(isConsignmentSaved, offlineData, userObj) {
-    database.action(async () => {
+  async getAllSavedConsignment(): Promise<any> {
+    return await database.action(async (): Promise<any> => {
+      const consignmentSuccess = database.collections.get("consignment")
+      const offlineConsignment = await consignmentSuccess.query().fetch()
+      return offlineConsignment
+    })
+  }
+
+  async addAndUpdateRecordOffline(isConsignmentSaved, offlineData, userObj): Promise<boolean> {
+    return database.action(async () => {
       const consignmentSuccess = database.collections.get("consignment")
       if (isConsignmentSaved) {
         const record = await consignmentSuccess.find(offlineConsignment[0].id)
         record.update(update => {
           this.addData(update, offlineData, userObj)
           showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+          return true
         })
       } else {
         await consignmentSuccess.create(create => {
           this.addData(create, offlineData, userObj)
           showAlert("", "consignmentSuccess.offlineDataSaveMessage")
+          return true
         })
       }
+    })
+  }
+
+  async deleteConsignment(id): Promise<boolean> {
+    return database.action(async () => {
+      const consignmentSuccess = database.collections.get("consignment")
+      const record = await consignmentSuccess.find(id)
+      record.destroyPermanently()
     })
   }
 
@@ -62,6 +80,8 @@ export default class ConsignmentModel extends Model {
     record.consignmentNumber = offlineData.consignmentNumber
     record.itemsCount = offlineData.itemsCount
     record.status = offlineData.status
+    record.eventName = offlineData.type
+    record.eventNotes = offlineData.eventNotes
     record.image = offlineData.image
     record.signBy = offlineData.signBy
     record.signImage = offlineData.signImage

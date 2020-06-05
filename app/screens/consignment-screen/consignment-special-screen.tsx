@@ -15,8 +15,12 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText, getCurrentDate, getFormattedDate } from "../../utils/utils"
+import { translateText, getCurrentDate, getFormattedDate, getImagePath, isInternetAvailable, consType, getJsonRequest } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
+import UserModel from "../../models/local-database/user-modal"
+import RNFS from 'react-native-fs'
+import ConsignmentModel from "../../models/local-database/consignment-model"
+import Moment from 'moment'
 
 export interface ConsignmentSpecialProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -51,7 +55,8 @@ const options = {
 }
 
 const SIGN_INPUT: TextStyle = {
-  borderColor: color.palette.link,
+  textAlignVertical: "top",
+  borderColor: color.palette.darkText,
   borderWidth: 2,
   height: 300,
   flex: 1
@@ -96,29 +101,129 @@ const DATE_TEXT: TextStyle = {
   alignSelf: "center",
   fontSize: 15
 }
+type consignmentType = keyof typeof consType
+// eslint-disable-next-line @typescript-eslint/class-name-casing
+interface recordProps {
+  customerName: string
+  loginName: string
+  eventName: consignmentType
+  eventNotes: string
+  consignmentNumber: string
+  itemsCount: string
+  status: string
+  image: string
+  signBy: string
+  signImage: string
+  date: string
+  synced: boolean
+}
+
+let imageHash = Date.now()
 const currentDate = getFormattedDate(new Date().toLocaleString())
+let userObj
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
 
-  const { consignmentStore } = useStores()
+  const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
   const [viewImage, onViewImage] = useState(false)
+  const [isValidStatus, onSetValidStatus] = useState(true)
+  const [isValidFile, onSetValidFile] = useState(true)
+  const [isValidNotes, setValidNotesText] = useState(true)
+  const [notes, onNotes] = useState("")
+  const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
+  const loginName = authStore.userData[0].loginName[0]
+  const imageFileName = consNo + loginName
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    getUserData()
+    consignmentStore.setConsignmentFalse()
   }, [])
-
+  useEffect(() => {
+    if (consignmentStore.isConsignmentSaved) {
+      props.navigation.navigate("Home")
+    }
+  }, [consignmentStore.isConsignmentSaved])
+  const getUserData = async () => {
+    const model = new UserModel()
+    userObj = await model.getUserData(authStore.userData[0].loginName[0])
+  }
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {
       if (!response.didCancel) {
-        setFileName(translateText("consignmentSuccess.consignmentPhoto"))
-        setImageUri(response.uri)
+        const filePath = getImagePath(imageFileName)
+        RNFS.writeFile(filePath, response.data, 'base64').then(result => {
+          setFileName('Consignment Photo')
+          imageHash = Date.now()
+          setImageUri(filePath)
+          // console.log(filePath)
+          // console.log(result)
+          onSetValidFile(true)
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     })
   }
   const onImageView = () => {
     onViewImage(!viewImage)
   }
+
+  async function getSavedData(): Promise<boolean> {
+    const consignmentNumber = consignment.consignmentNumber.toString()
+    const loginName = authStore.userData[0].loginName[0]
+    const modal = new ConsignmentModel()
+    const isConsignmentSaved = await modal.getSavedConsignment(consignmentNumber, loginName)
+    return isConsignmentSaved
+  }
+  const addAndUpdateRecordOffline = async (record) => {
+    const modal = new ConsignmentModel()
+    const isSaved = await getSavedData()
+    console.log(isSaved)
+    modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
+    props.navigation.navigate("Home")
+  }
+
+  const onSave = async () => {
+    const isConnected = await isInternetAvailable(false)
+    if (!selectedValue) {
+      onSetValidStatus(false)
+    } else if (!fileName) {
+      onSetValidFile(false)
+    } else if (!notes) {
+      setValidNotesText(false)
+    } else {
+      const record: recordProps = {
+        customerName: "John jacob",
+        eventNotes: notes,
+        eventName: "specialAction",
+        loginName: authStore.userData[0].loginName[0],
+        consignmentNumber: consignment.consignmentNumber[0],
+        itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
+        status: selectedValue,
+        image: imageFileName,
+        signBy: "",
+        signImage: "",
+        date: Moment().toISOString(),
+        synced: false
+      }
+      if (isConnected) {
+        const request = await getJsonRequest(record)
+        consignmentStore.saveConsignment(authStore.authorization, request)
+        // Call API
+      } else {
+        addAndUpdateRecordOffline(record)
+      }
+    }
+  }
+
+  const onChangeText = (text) => {
+    text ? setValidNotesText(true) : setValidNotesText(false)
+    onNotes(text)
+  }
+
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
   return (
     <Screen statusBarColor={color.palette.white} statusBar={"dark-content"} wall={"whiteWall"} style={ROOT} preset="fixed">
@@ -129,6 +234,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         <View>
           {/* Image View */}
           <ImageViewerModal
+            imageHash={imageHash}
             uri={imageUri}
             isViewImage={viewImage}
             onClose={onImageView} />
@@ -149,11 +255,15 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                   dropDownData={dropDownData}
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
-                  onValueChange={(value) => setSelectedValue(value)}
+                  onValueChange={(value) => {
+                    setSelectedValue(value)
+                    onSetValidStatus(true)
+                  }}
                 />
               </View>
               <Text preset={"normal"} style={DATE_TEXT} text={currentDate} />
             </View>
+            {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 
             <View style={CAMERA_VIEW}>
               <TouchableOpacity style={ROOT} onPress={onCameraPres}>
@@ -163,14 +273,16 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                 {fileName && <Text style={LINK_TEXT} preset={"normal"} text={fileName} />}
               </TouchableOpacity>
             </View>
+            {isValidFile ? null : <Text preset={"error"} tx={"consignmentSuccess.selectImage"} />}
+
             <Text tx={"consignmentFail.notes"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
             <TextField
               inputStyle={SIGN_INPUT}
               multiline
-            // errorTx={isValidPassword ? undefined : "loginScreen.errorPassword"}
-            // onChangeText={text => onChangeText(INPUT_PASSWORD, text)}
-            // value={password}
+              errorTx={isValidNotes ? undefined : "consignmentFail.enterNotes"}
+              onChangeText={text => onChangeText(text)}
+              value={notes}
             />
 
           </View>
@@ -181,9 +293,12 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         <BottomButton
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
+          isLoading={consignmentStore.isButtonLoading}
           leftText={"common.save"}
           rightText={"common.cancel"}
-          onRightPress={goBack} />
+          onRightPress={goBack}
+          // eslint-disable-next-line @typescript-eslint/no-use-before-define
+          onLeftPress={onSave} />
       </View>
     </Screen >
   )

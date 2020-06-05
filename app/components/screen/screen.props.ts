@@ -45,4 +45,6 @@ export interface ScreenProps {
 
   wall?: IconTypes
 
+  sync?: boolean
+
 }

@@ -4,7 +4,7 @@ class NetworkHelper {
     public isConnected = false
 
     unsubscribe = NetInfo.addEventListener(state => {
-        this.isConnected = state.isConnected ?? false
+      this.isConnected = state.isConnected ?? false
     })
 }
 

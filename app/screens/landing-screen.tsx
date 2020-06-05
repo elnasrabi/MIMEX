@@ -11,7 +11,9 @@ import { SearchView } from "../components/search-view/search-view"
 import { MyButton } from "../components/button/my-button"
 import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
-import { isInternetAvailable, showAlert } from "../utils/utils"
+import { showAlert, isInternetAvailable, getJsonRequest } from "../utils/utils"
+import NetInfo from "@react-native-community/netinfo"
+import ConsignmentModel from "../models/local-database/consignment-model";
 import Orientation from "react-native-orientation-locker";
 
 export interface LandingScreenProps {
@@ -67,7 +69,7 @@ const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingS
 
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore, getARateStore } = useStores()
-  const [searchValue, onSearchValue] = useState("AMI000071")
+  const [searchValue, onSearchValue] = useState("CCS0000002")
   // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true)
   const [isGoPressed, setIsOnGoPress] = useState(false)
@@ -82,6 +84,28 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     }
   }, [homeStore.barCodeData])
 
+  const getAllConsignment = async () => {
+    const modal = new ConsignmentModel()
+    const data = await modal.getAllSavedConsignment()
+    console.log(data)
+    data.forEach(async element => {
+      const request = await getJsonRequest(element)
+      consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
+    })
+  }
+  const initInternet = () => {
+    NetInfo.addEventListener(state => {
+      if (state.isConnected) {
+        // getAllConsignment()
+      }
+    })
+  }
+
+  useEffect(() => {
+    consignmentStore.setConsignmentFalse()
+    consignmentStore.stopSyncing()
+    initInternet()
+  }, [])
   useEffect(() => {
     if (isGoPressed && consignmentStore.isEmptyList) {
       showAlert("common.noData")
@@ -146,7 +170,11 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   }
 
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="scroll">
+    <Screen style={ROOT}
+      statusBar={'dark-content'}
+      statusBarColor={color.palette.white}
+      sync={consignmentStore.sync}
+      wall={'whiteWall'} preset="scroll">
       <MenuButton
         hasBackground={false}
         onPress={handleDrawer} />

@@ -1,6 +1,6 @@
 import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
-import { ApiConfig, DEFAULT_API_CONFIG, CONSIGNMENT_SEARCH } from "./api-config"
+import { ApiConfig, DEFAULT_API_CONFIG, CONSIGNMENT_SEARCH, SAVE_CONSIGNMENT } from "./api-config"
 import * as Types from "./api.types"
 import base64 from 'react-native-base64'
 const jsonxml = require('jsontoxml')
@@ -12,6 +12,15 @@ const getOriginalRequest: any = (api: string, requestData: any) => {
   xml = xml.replace("</requestData>", "")
   const newApi = "'" + api + "'"
   const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=" + newApi + ">\n" + xml + "\n</requests>"
+  return xmlData
+}
+const getOriginalRequest2: any = (api: string, requestData: any) => {
+  // const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\"><consignmentMatchingExportRequest><connoteNumber>AMI000071</connoteNumber></consignmentMatchingExportRequest></requests>"
+  let xml = jsonxml({ requestData })
+  xml = xml.replace("<requestData>", "")
+  xml = xml.replace("</requestData>", "")
+  const newApi = "'" + api + "'"
+  const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<statusUpdates xmlns:meta=" + newApi + ">\n" + xml + "\n</statusUpdates>"
   return xmlData
 }
 /**
@@ -85,6 +94,33 @@ export class Api {
     }
   }
 
+  async saveConsignment(authorization: string, consignmentRequest: any): Promise<Types.ConsignmentResult> {
+    const response: ApiResponse<any> = await this.apisauce.post('ccsLocal/statusUpdateXML', getOriginalRequest2(SAVE_CONSIGNMENT, consignmentRequest), { headers: { Authorization: "Basic " + authorization } })
+    if (!response.ok) {
+      console.log(response)
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const consignmentData = response.data
+      return { kind: "ok", consignment: consignmentData }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+  async getList(authorization: string, getListRequest: any): Promise<Types.GetListResult> {
+    const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getListRequest), { headers: { Authorization: "Basic " + authorization } })
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const getListData = response.data
+      return { kind: "ok", getList: getListData, Status: response.status }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
   async getACalculatedRate(authorization: string, getARateRequest: any): Promise<Types.GetARateResult> {
     const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getARateRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
@@ -99,19 +135,6 @@ export class Api {
     }
   }
 
-  async getList(authorization: string, getListRequest: any): Promise<Types.GetListResult> {
-    const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getListRequest), { headers: { Authorization: "Basic " + authorization } })
-    if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
-      if (problem) return problem
-    }
-    try {
-      const getListData = response.data
-      return { kind: "ok", getList: getListData, Status: response.status }
-    } catch {
-      return { kind: "bad-data" }
-    }
-  }
 
   async forgotPassword(email: string): Promise<Types.LoginUserResult> {
     const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"

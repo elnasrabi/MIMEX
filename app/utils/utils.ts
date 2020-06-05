@@ -4,6 +4,7 @@ import { translate } from "../i18n"
 // import call from 'react-native-phone-call'
 import Moment from 'moment'
 import RNFetchBlob from 'rn-fetch-blob'
+import RNFS from 'react-native-fs'
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
@@ -27,6 +28,7 @@ export async function isInternetAvailable(alert = true) {
     return false
   }
 }
+
 export const ADMINISTRATION = "Administration"
 export const CARRIER = "Carrier"
 export const Customer = "Customer"
@@ -39,18 +41,11 @@ export function callApi(number) {
   // call(args).catch(console.error)
   Linking.openURL(`tel:${number}`)
 }
-export function getFormattedDate(date): string {
+export const getFormattedDate = (date): string => {
   Moment.locale('en')
-  const newDate = Moment(date, "yyyy-m-d hh:mm:ss").format('hh:mmA, DD MMM, yyyy')
+  const newDate = Moment().format('hh:mmA, DD MMM, yyyy')
+  console.log(newDate)
   return newDate
-}
-
-export function isInternetAlive() {
-  NetInfo.addEventListener(state => {
-    // Alert.alert("d")
-    console.log("Connection type", state.type)
-    console.log("Is connected?", state.isConnected)
-  })
 }
 
 export function getSignaturePath(fileName): string {
@@ -77,4 +72,35 @@ export function getImageDir(): string {
   const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir
   const dirs = DOCUMENT_DIRECTORY_PATH + "/images/"
   return dirs
+}
+
+export async function getJsonRequest(record): Promise<any> {
+  let signImageData = ""
+  if (record.signImage) {
+    signImageData = await RNFS.readFile(getSignaturePath(record.signImage), 'base64')
+  }
+  const request = {
+    consignmentStatusUpdate: {
+      consignment: {
+        consignmentNumber: record.consignmentNumber,
+        podData: {
+          signatory: record.signBy || "",
+          pod: signImageData || ""
+        }
+      },
+      event: record.status,
+      carrierEvent: record.status,
+      carrierSubEvent: record.eventName,
+      location: "NCL",
+      condition: signImageData ? "All POD" : "Ok",
+      date: record.date
+    }
+  }
+  return request
+}
+
+export const consType = {
+  success: "success",
+  fail: "fail",
+  specialAction: "specialAction"
 }

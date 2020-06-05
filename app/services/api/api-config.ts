@@ -3,6 +3,7 @@
 // Or just specify it directly like this:
 export const API_URL = "http://uat.afs.moveitnetexpress.com.au/moveit/gateway/"
 export const CONSIGNMENT_SEARCH = "http://www.moveit.com.au/schema/consignments.xsd"
+export const SAVE_CONSIGNMENT = "http://www.moveit.com.au/schema/metadata.xsd"
 
 /**
  * The options used to configure the API.

@@ -16,6 +16,7 @@ interface dropdownPickerProps {
   dropDownData: any[], selectedValue: any, onValueChange: (value: any) => void,
   inputStyleIOS?: TextStyle,
   inputStyleAndroid?: TextStyle,
+  disabled?: boolean,
   placeHolder?: string,
   errorTx?: string
 }
@@ -75,6 +76,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
     <>
       <View style={VALUE_CONTAINER_REGISTRATION}>
         <RNPickerSelect
+          disabled={props.disabled}
           style={{
             placeholder: {
               fontSize: 15,
@@ -86,8 +88,8 @@ export function DropdownPicker(props: dropdownPickerProps) {
           value={selectedValue}
           onValueChange={onValueChange}
           Icon={() =>
-            <View style={ICON_CONTAINER}>
-              <Image style={ICON} source={icons.downArrow} />
+            <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
+              <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />
             </View>
           }
           items={dropDownData}
