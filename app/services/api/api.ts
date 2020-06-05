@@ -99,6 +99,20 @@ export class Api {
     }
   }
 
+  async getList(authorization: string, getListRequest: any): Promise<Types.GetListResult> {
+    const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getListRequest), { headers: { Authorization: "Basic " + authorization } })
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const getListData = response.data
+      return { kind: "ok", getList: getListData, Status: response.status }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
   async forgotPassword(email: string): Promise<Types.LoginUserResult> {
     const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"
     const response: ApiResponse<any> = await this.apisauce.post('', xmlData, { headers: { Authorization: "Basic " + base64.encode(username + ":" + password) } })
