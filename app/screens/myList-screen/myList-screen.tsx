@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, View, FlatList, Platform, TextStyle } from "react-native";
-import { ParamListBase } from "@react-navigation/native";
+import { ViewStyle, View, FlatList, Platform, TextStyle, ActivityIndicator } from "react-native";
+import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
@@ -11,6 +11,8 @@ import { color, typography } from "../../theme";
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
+import { useStores } from "../../models/root-store";
+import { isInternetAvailable } from "../../utils/utils";
 
 export interface MyListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -74,22 +76,51 @@ const textStyle: TextStyle = {
   color: color.palette.black,
   fontFamily: typography.secondary
 };
+const LIST_EMPTY_TEXT: TextStyle = {
+  alignSelf: 'center',
+  color: color.palette.darkText,
+  fontFamily: typography.secondary,
+  fontWeight: 'bold',
+  fontSize: 20
+};
+const ACTIVITY_INDICATOR: ViewStyle = {
+  position: 'absolute',
+  top: "50%",
+  alignSelf: "center"
+};
 
 export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
+  const isFocused = useIsFocused();
+  const { myListStore, authStore } = useStores();
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
   const [toggleAll, useToggleAll] = useState(false);
-  const [mylist, updateMyList] = useState([
-    { id: '1', check: false },
-    { id: '2', check: false },
-    { id: '3', check: false },
-    { id: '4', check: false },
-    { id: '5', check: false },
-    { id: '6', check: false },
-    { id: '7', check: false },
-    { id: '8', check: false },
-    { id: '9', check: false }
-  ]);
+  const [mylist, updateMyList] = useState([]);
+
+  useEffect(() => {
+    const isConnected = isInternetAvailable();
+    if (isFocused && isConnected) {
+      getListApi();
+    }
+  }, [isFocused])
+
+  const getListApi = async () => {
+    const getListRequest = {
+      consignmentMatchingExportRequest: {
+        // fromDespatchDate: "2020-06-05T00:00:00",     for future release if needed specific date response
+        // toDespatchDate: "2020-06-05T23:59:59",       for future release if needed specific date response
+        myList: "true"
+      }
+    }
+    await myListStore.getList(authStore.authorization, getListRequest);
+    if (myListStore.responseSuccess) {
+      let i = 0, arr = myListStore.getList;
+      for (i = 0; i < arr.length; i++) {
+        Object.assign(arr[i], { check: false })
+      }
+      updateMyList(arr);
+    }
+  }
 
   const updateCheckBox = (index) => {
     let newArr = [...mylist]
@@ -106,6 +137,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     else useToggleAll(false);
     updateMyList(newArr);
   }
+
   const updateAllCheckBox = (isSelect) => {
     let newArr = [...mylist];
     for (let i = 0; i < newArr.length; i++) {
@@ -115,7 +147,18 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     useToggleAll(!toggleAll);
   }
 
+  const renderEmptyComponent = () => {
+    return (
+      <View>
+        <Text style={LIST_EMPTY_TEXT} text={'No Data Found'} />
+      </View>
+    )
+  }
+
   const renderItem = ({ item, index }) => {
+    const freightState = item.currentFreightState[0];
+    const consignmentNumber = item.consignmentNumber[0];
+    const address = item.deliveryAddress[0].address[0];
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={CHECKBOX_VIEW}>
@@ -129,17 +172,18 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         <View style={SUB_CONTAINER}>
           <View style={CONSIGNMENT_DETAIL}>
             <View style={CONTINUE}>
-              <Text style={textStyle}>ABCD123456</Text>
+              <Text style={textStyle} text={consignmentNumber} />
             </View>
             <View style={[CONTINUE, { alignItems: "flex-end" }]}>
-              <Text style={DISPATCH_STYLE}>Despatched</Text>
+              <Text style={DISPATCH_STYLE} text={freightState} />
             </View>
           </View>
           <View style={ADDRESS_VIEW}>
-            <Text style={textStyle}>123 RED TREE STREET</Text>
+            <Text style={textStyle} text={address.line1[0]} />
+            <Text style={textStyle} text={address.line2[0]} />
           </View>
           <View style={ADDRESS_VIEW}>
-            <Text style={textStyle}>South Yarra</Text>
+            <Text style={textStyle} text={`${address.town[0]} ${address.state[0]}`} />
           </View>
         </View>
       </View>
@@ -148,12 +192,16 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
+      {
+        !mylist.length &&
+        <ActivityIndicator size='large' style={ACTIVITY_INDICATOR} color={color.palette.black} />
+      }
       <MenuButton
-        title={"MyList.header"}
+        title={"myList.header"}
         onPress={handleDrawer} />
       <View style={SELECTALL_CHECKBOX}>
         <Checkbox
-          tx='MyList.empty'
+          tx='myList.empty'
           outlineStyle={CHECKBOX}
           value={toggleAll}
           onToggle={() => updateAllCheckBox(!toggleAll)} />
@@ -162,15 +210,15 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       <FlatList
         data={mylist}
         style={FLATLIST_STYLE}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
+        ListEmptyComponent={renderEmptyComponent}
       />
       <BottomButton
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
-        leftText={"common.success"}
-        rightText={"common.fail"} />
-    </Screen >
-
+        leftText={"myList.milestone"}
+        rightText={"myList.exception"} />
+    </Screen>
   )
 })

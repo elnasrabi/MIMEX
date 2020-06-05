@@ -211,9 +211,11 @@
     "contact": "Contact",
     "special": "Special Instruction"
   },
-  "MyList": {
+  "myList": {
     "header": "My List",
-    "empty": " "
+    "empty": " ",
+    "milestone": "Milestone",
+    "exception": "Exception"
   },
   "consignmentSuccess": {
     "consignment": "Consignment",
