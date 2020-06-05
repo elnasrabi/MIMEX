@@ -128,6 +128,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   useEffect(() => {
     if (isFocused && !getARateStore.preventRefresh) {
+      setDate(new Date());
       formikRef.current.resetForm();
     }
     if (Platform.OS === 'ios') {
