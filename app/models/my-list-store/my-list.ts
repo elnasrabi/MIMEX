@@ -14,7 +14,7 @@ export const MyListModel = types
   .props({
     isLoading: types.optional(types.boolean, false),
     responseSuccess: types.optional(types.boolean, false),
-    getList: types.optional(types.frozen(), [])
+    getListData: types.optional(types.frozen(), [])
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
@@ -27,11 +27,11 @@ export const MyListModel = types
           parseString(data.getaRate, { trim: true }, function (_error, result) {
             let response = result.responses.consignmentMatchingServiceResponse[0].consignmentMatchingConsignment;
             if (response === '') {
-              self.getList = [];
+              self.getListData = [];
               self.responseSuccess = false;
             }
             else {
-              self.getList = response;
+              self.getListData = response;
               self.responseSuccess = true;
             }
           })
@@ -50,7 +50,7 @@ export const MyListModel = types
   
   * Note that you'll need to import `omit` from ramda, which is already included in the project!
   */
-  .postProcessSnapshot(omit(["isLoading", "responseSuccess"]))
+  .postProcessSnapshot(omit(["isLoading", "responseSuccess", "getListData"]))
 
 type MyListType = Instance<typeof MyListModel>
 export interface MyList extends MyListType { }

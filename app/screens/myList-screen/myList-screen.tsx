@@ -95,7 +95,6 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const { myListStore, authStore } = useStores();
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
   const [toggleAll, useToggleAll] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [mylist, updateMyList] = useState([]);
 
   useEffect(() => {
@@ -116,7 +115,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     }
     await myListStore.getList(authStore.authorization, getListRequest);
     if (myListStore.responseSuccess) {
-      let i = 0, arr = myListStore.getList;
+      let i = 0, arr = myListStore.getListData;
       for (i = 0; i < arr.length; i++) {
         Object.assign(arr[i], { check: false })
       }
