@@ -130,6 +130,7 @@
   },
   "getARateScreen": {
     "header": "Get a Rate",
+    "despatchDate": "Despatch Date",
     "getTowns": "Get Towns",
     "deliveryAddress": "Delivery Address",
     "postCode": "Post Code",
