@@ -218,7 +218,8 @@
     "header": "My List",
     "empty": " ",
     "milestone": "Milestone",
-    "exception": "Exception"
+    "exception": "Exception",
+    "duplicate": "Can't Add different addresses."
   },
   "consignmentSuccess": {
     "consignment": "Consignment",

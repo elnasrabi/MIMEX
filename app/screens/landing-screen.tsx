@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
-import { useFocusEffect } from '@react-navigation/native';
+import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
+import { useFocusEffect, ParamListBase } from '@react-navigation/native'
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, ImageStyle, BackHandler, Keyboard } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ViewStyle, View, ImageStyle, BackHandler, Keyboard, Alert } from "react-native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Icon } from "../components"
 import { color } from "../theme"
@@ -13,8 +12,8 @@ import { icons } from "../components/icon/icons"
 import { useStores } from "../models/root-store"
 import { showAlert, isInternetAvailable, getJsonRequest } from "../utils/utils"
 import NetInfo from "@react-native-community/netinfo"
-import ConsignmentModel from "../models/local-database/consignment-model";
-import Orientation from "react-native-orientation-locker";
+import ConsignmentModel from "../models/local-database/consignment-model"
+import Orientation from "react-native-orientation-locker"
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -66,7 +65,7 @@ const CONTAINER_AFS_LOGO: ImageStyle = {
 }
 
 const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
-
+let isConnected = true
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore, getARateStore } = useStores()
   const [searchValue, onSearchValue] = useState("CCS0000002")
@@ -86,17 +85,30 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
 
   const getAllConsignment = async () => {
     const modal = new ConsignmentModel()
-    const data = await modal.getAllSavedConsignment()
-    console.log(data)
-    data.forEach(async element => {
-      const request = await getJsonRequest(element)
-      consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
-    })
+    let shouldCall = true
+    if (shouldCall) {
+      shouldCall = false
+      const data = await modal.getAllSavedConsignment()
+      data.forEach(async element => {
+        const request = await getJsonRequest(element)
+        // console.log(request) 582300/1750
+        consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
+      })
+      shouldCall = true
+    }
   }
   const initInternet = () => {
-    NetInfo.addEventListener(state => {
+    NetInfo.addEventListener(async state => {
       if (state.isConnected) {
-        // getAllConsignment()
+        const isInternet = await isInternetAvailable()
+        if (isInternet && isConnected) {
+          // Alert.alert("connected")
+          isConnected = false
+          getAllConsignment()
+        } else if (!isInternet) {
+          isConnected = true
+        }
+        setTimeout(() => { isConnected = true }, 3000)
       }
     })
   }
@@ -156,17 +168,17 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   const onButtonPress = (item, index) => {
     switch (item) {
       case "landingScreen.myList":
-        return props.navigation.navigate('MyList');
+        return props.navigation.navigate('MyList')
       case "landingScreen.safetyCheck":
-        return props.navigation.navigate('SafetyStack');
+        return props.navigation.navigate('SafetyStack')
       case "landingScreen.getRate":
-        return gotoGetARate();
+        return gotoGetARate()
       default: return true
     }
   }
   const gotoGetARate = () => {
-    getARateStore.updatePreventrefersh(true);
-    props.navigation.navigate('GetARateStack');
+    getARateStore.updatePreventrefersh(true)
+    props.navigation.navigate('GetARateStack')
   }
 
   return (

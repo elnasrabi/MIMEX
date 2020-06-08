@@ -1,108 +1,107 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
-import { observer } from "mobx-react-lite";
-import { ViewStyle, View, FlatList, Platform, TextStyle, ActivityIndicator } from "react-native";
-import { ParamListBase, useIsFocused } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "react-native-screens/native-stack";
-import { isIphoneX } from 'react-native-iphone-x-helper';
+import React, { FunctionComponent, useState, useEffect } from "react"
+import { observer } from "mobx-react-lite"
+import { ViewStyle, View, FlatList, Platform, TextStyle, ActivityIndicator } from "react-native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "react-native-screens/native-stack"
+import { isIphoneX } from 'react-native-iphone-x-helper'
 
 // imports from components, themes and modals
-import { Screen, Text, Checkbox } from "../../components";
-import { color, typography } from "../../theme";
-import { MenuButton } from "../../components/header/menu-button";
-import { icons } from "../../components/icon/icons";
-import { BottomButton } from "../../components/bottom-button/bottom-button";
-import { useStores } from "../../models/root-store";
-import { isInternetAvailable } from "../../utils/utils";
+import { Screen, Text, Checkbox } from "../../components"
+import { color, typography } from "../../theme"
+import { MenuButton } from "../../components/header/menu-button"
+import { icons } from "../../components/icon/icons"
+import { BottomButton } from "../../components/bottom-button/bottom-button"
+import { useStores } from "../../models/root-store"
+import { isInternetAvailable, showAlert } from "../../utils/utils"
+import { boolean } from "mobx-state-tree/dist/internal"
 
 export interface MyListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 };
 const ROOT: ViewStyle = {
   paddingBottom: 10
-};
+}
 const CONTINUE: ViewStyle = {
   flex: 1
-};
+}
 const FLATLIST_STYLE: ViewStyle = {
   marginVertical: 10
-};
+}
 const MAIN_CONTAINER: ViewStyle = {
   flexDirection: 'row',
   marginBottom: 10
-};
+}
 const CONSIGNMENT_DETAIL: ViewStyle = {
   flex: 1,
   flexDirection: 'row',
   justifyContent: "space-between",
   marginVertical: 5
-};
+}
 const CHECKBOX_VIEW: ViewStyle = {
   justifyContent: "center",
   alignItems: 'center',
   marginLeft: 5
-};
+}
 const SUB_CONTAINER: ViewStyle = {
   flex: 1,
   marginRight: 2,
   borderWidth: 1,
   padding: 3,
   backgroundColor: color.palette.listBG
-};
+}
 const CHECKBOX: ViewStyle = {
   height: 25,
   width: 25,
   borderColor: color.palette.black
-};
+}
 const SEPERATOR_LINE: ViewStyle = {
   height: 5,
   backgroundColor: color.palette.black,
   width: '95%',
   marginLeft: 10,
   borderRadius: 5
-};
+}
 const SELECTALL_CHECKBOX: ViewStyle = {
   margin: 10,
   marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 10 : 33
-};
+}
 const ADDRESS_VIEW: ViewStyle = {
   flex: 1,
   marginVertical: 5
-};
+}
 const DISPATCH_STYLE: TextStyle = {
   color: color.palette.link,
   fontFamily: typography.secondary
-};
+}
 const textStyle: TextStyle = {
   color: color.palette.black,
   fontFamily: typography.secondary
-};
+}
 const LIST_EMPTY_TEXT: TextStyle = {
   alignSelf: 'center',
   color: color.palette.darkText,
   fontFamily: typography.secondary,
   fontWeight: 'bold',
   fontSize: 20
-};
+}
 const ACTIVITY_INDICATOR: ViewStyle = {
   position: 'absolute',
   top: "50%",
   alignSelf: "center"
-};
+}
 
 export const MyList: FunctionComponent<MyListProps> = observer((props) => {
-
-  const isFocused = useIsFocused();
-  const { myListStore, authStore } = useStores();
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
-  const [toggleAll, useToggleAll] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [mylist, updateMyList] = useState([]);
+  const isFocused = useIsFocused()
+  const { myListStore, authStore, consignmentStore } = useStores()
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const [toggleAll, useToggleAll] = useState(false)
+  const [mylist, updateMyList] = useState([])
 
   useEffect(() => {
-    const isConnected = isInternetAvailable();
+    const isConnected = isInternetAvailable()
 
     if (isFocused && isConnected) {
-      getListApi();
+      getListApi()
     }
   }, [isFocused])
 
@@ -114,39 +113,41 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         myList: "true"
       }
     }
-    await myListStore.getList(authStore.authorization, getListRequest);
+    await myListStore.getList(authStore.authorization, getListRequest)
     if (myListStore.responseSuccess) {
-      let i = 0, arr = myListStore.getList;
+      let i = 0; const arr = myListStore.getListData
       for (i = 0; i < arr.length; i++) {
         Object.assign(arr[i], { check: false })
       }
-      updateMyList(arr);
+      updateMyList(arr)
     }
   }
 
   const updateCheckBox = (index) => {
-    let newArr = [...mylist]
-    let i = 0, j;
-    newArr[index].check = !newArr[index].check;
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    const selectedList = getSelectedList()
+
+    const newArr = [...mylist]
+    let i = 0; let j
+    newArr[index].check = !newArr[index].check
     for (j = 0; j < newArr.length; j++) {
       if (newArr[j].check) {
-        i++;
+        i++
       }
     }
     if (i == newArr.length) {
-      useToggleAll(true);
-    }
-    else useToggleAll(false);
-    updateMyList(newArr);
+      useToggleAll(true)
+    } else useToggleAll(false)
+    updateMyList(newArr)
   }
 
   const updateAllCheckBox = (isSelect) => {
-    let newArr = [...mylist];
+    const newArr = [...mylist]
     for (let i = 0; i < newArr.length; i++) {
-      newArr[i].check = isSelect;
+      newArr[i].check = isSelect
     }
-    updateMyList(newArr);
-    useToggleAll(!toggleAll);
+    updateMyList(newArr)
+    useToggleAll(!toggleAll)
   }
 
   const renderEmptyComponent = () => {
@@ -157,10 +158,53 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     )
   }
 
+  const getSelectedList = (): any[] => {
+    const tempList = []
+    mylist.forEach(element => {
+      if (element.check) {
+        tempList.push(element)
+      }
+    })
+    return tempList
+  }
+
+  const isDuplicateRecord = (item): boolean => {
+    const address = item.deliveryAddress[0].address[0]
+    const selectedList = getSelectedList()
+    return selectedList.some(element => address === element.address)
+  }
+
+  const onSuccessPress = () => {
+    let consignmentNumber = ""
+    const selectedList = getSelectedList()
+    for (const item of selectedList) {
+      if (isDuplicateRecord(item)) {
+        showAlert("myList.duplicate")
+        return false
+      } else {
+        consignmentNumber = consignmentNumber + "," + item.consignmentNumber[0]
+      }
+    }
+
+    const consignmentDetail = selectedList[0]
+    consignmentDetail.consignmentNumber[0] = consignmentNumber.substring(1)
+    consignmentStore.setConsignmentDetail(consignmentDetail)
+
+    props.navigation.navigate("consignmentSuccess", { isSuccess: true })
+  }
+  const onFailPress = () => {
+    props.navigation.navigate("consignmentSuccess", { isSuccess: false })
+  }
+
+  const hasListData = (): boolean => {
+    const selectedList = getSelectedList()
+    return selectedList.length > 0
+  }
+
   const renderItem = ({ item, index }) => {
-    const freightState = item.currentFreightState[0];
-    const consignmentNumber = item.consignmentNumber[0];
-    const address = item.deliveryAddress[0].address[0];
+    const freightState = item.currentFreightState[0]
+    const consignmentNumber = item.consignmentNumber[0]
+    const address = item.deliveryAddress[0].address[0]
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={CHECKBOX_VIEW}>
@@ -220,7 +264,11 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         leftImage={icons.blackButton2}
         rightImage={icons.redButton2}
         leftText={"myList.milestone"}
-        rightText={"myList.exception"} />
+        rightText={"myList.exception"}
+        leftDisabled={!hasListData()}
+        rightDisabled={!hasListData()}
+        onLeftPress={onSuccessPress}
+        onRightPress={onFailPress} />
     </Screen>
   )
 })

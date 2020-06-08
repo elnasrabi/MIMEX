@@ -293,7 +293,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         <BottomButton
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
-          isLoading={consignmentStore.isButtonLoading}
+          isLoadingLeft={consignmentStore.isButtonLoading}
           leftText={"common.save"}
           rightText={"common.cancel"}
           onRightPress={goBack}
