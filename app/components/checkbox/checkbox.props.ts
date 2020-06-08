@@ -36,6 +36,8 @@ export interface CheckboxProps {
    */
   multiline?: boolean
 
+  disabled?: boolean
+
   /**
    * Fires when the user tabs to change the value.
    */

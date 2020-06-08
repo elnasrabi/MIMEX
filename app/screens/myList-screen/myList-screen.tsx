@@ -168,6 +168,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
             outlineStyle={[CHECKBOX, { marginLeft: 5 }]}
             value={item.check}
             onToggle={() => { updateCheckBox(index) }}
+            disabled={myListStore.isLoading ? true : false}
           />
         </View>
         <View style={SUB_CONTAINER}>
@@ -205,7 +206,9 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
           tx='myList.empty'
           outlineStyle={CHECKBOX}
           value={toggleAll}
-          onToggle={() => updateAllCheckBox(!toggleAll)} />
+          onToggle={() => updateAllCheckBox(!toggleAll)}
+          disabled={myListStore.isLoading ? true : false}
+        />
       </View>
       <View style={SEPERATOR_LINE} />
       <FlatList

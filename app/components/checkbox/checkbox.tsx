@@ -43,7 +43,7 @@ export function Checkbox(props: CheckboxProps) {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      disabled={!props.onToggle}
+      disabled={!props.onToggle || props.disabled}
       onPress={onPress}
       style={rootStyle}
     >
