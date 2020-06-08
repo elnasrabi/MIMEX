@@ -16,7 +16,9 @@ export const icons = {
   phone: require("./phone.png"),
   blueButton: require("./blue_button.png"),
   downArrow: require("./downArrow.png"),
-  demoVideo: require("./demo.mp4")
+  demoVideo: require("./demo.mp4"),
+  callLogo: require("./call.png"),
+  emailLogo: require("./email.png")
 }
 
 export type IconTypes = keyof typeof icons
