@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import moment from 'moment';
 import KeyboardManager from "react-native-keyboard-manager";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import RNGooglePlaces from "react-native-google-places";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -71,7 +72,7 @@ const CONTAINER: ViewStyle = {
   justifyContent: 'space-between'
 };
 const CONTAINER_TEXT: ViewStyle = {
-  marginTop: 25
+  justifyContent: "center"
 };
 const VALUE: TextStyle = {
   color: color.palette.link,
@@ -119,8 +120,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const isFocused = useIsFocused();
   const measurementUnitData = [{ label: 'PALLET', value: 'PALLET' }];
   const pickUpAddressData = [{ label: 'MELBCCS WEST FOOTSCRAY', value: 'MELBCCS WEST FOOTSCRAY' }];
-  const [postCode, updatePostCode] = useState('');
-  const [town, updateTown] = useState('');
+  const [townData, updateTownData] = useState([]);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const currentRef: any[] = [];
@@ -148,6 +148,15 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     hideDatePicker();
   };
 
+  const gettown = async () => {
+    await getARateStore.getTownApi(formikRef.current.values.postCode);
+    let i = 0, newArr = [];
+    for (i = 0; i < getARateStore.getTownData.length; i++) {
+      newArr[i] = Object.assign({ label: getARateStore.getTownData[i], value: getARateStore.getTownData[i] });
+    }
+    updateTownData(newArr);
+  }
+
   const getACalculatedRate = async (values, actions) => {
     const isConnected = await isInternetAvailable();
     Keyboard.dismiss();
@@ -165,10 +174,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             },
             deliveryAddress: {
               address: {
-                town: "CRAIGIE",
-                state: "WA",
-                postcode: "6025",
-                country: "AU"
+                town: values.town,
+                state: getARateStore.getState,
+                postcode: values.postCode,
+                country: getARateStore.getCountry
               }
             },
             container: {
@@ -200,23 +209,36 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     return props.navigation.navigate('Home');
   }
 
-  const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
+  const RenderRow = ({ label, values, handleChange, handleChangeKey, errors, setFieldValue }) => {
     return (
-      <View style={CONTAINER}>
-        <View style={CONTAINER_TEXT}>
-          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
+      <>
+        <View style={[CONTAINER, { marginTop: 10 }]}>
+          <View style={CONTAINER_TEXT}>
+            <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
+          </View>
+          <View style={TEXTFIELD_VIEW}>
+            {label == 'getARateScreen.town' ?
+              <DropdownPicker
+                dropDownData={townData}
+                selectedValue={values}
+                placeHolder={"getARateScreen.town"}
+                onValueChange={(value) => setFieldValue('town', value)}
+              />
+              :
+              <TextInput
+                keyboardType={'number-pad'}
+                style={TEXTINPUT_TEXT}
+                onChangeText={handleChange(handleChangeKey)}
+                value={values}
+                onSubmitEditing={gettown}
+              />
+            }
+          </View>
         </View>
-        <View style={TEXTFIELD_VIEW}>
-          <TextField
-            autoCorrect={false}
-            onChangeText={(text) => onUpdate(text)}
-            autoCapitalize={"none"}
-            mainStyle={{}}
-            keyboardType={keyboardType}
-            inputStyle={VALUE}
-            value={value} />
-        </View>
-      </View>
+        {errors &&
+          <Text style={ERROR_TEXT}>{errors}</Text>
+        }
+      </>
     )
   }
 
@@ -247,12 +269,18 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       .required()
       .integer('Volume must be an integer')
       .label('Volume'),
-    unitofMeasure: yup.string()
+    unitOfMeasure: yup.string()
       .required()
       .label('Unit of Measurement'),
     pickUpAddress: yup.string()
       .required()
-      .label('Pick Up Address')
+      .label('Pick Up Address'),
+    town: yup.string()
+      .required()
+      .label('Town'),
+    postCode: yup.string()
+      .required()
+      .label('Post Code')
   });
 
   const FieldWrapper = ({ children, label, errors }) => {
@@ -322,7 +350,9 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           width: '',
           height: '',
           volume: '',
-          unitofMeasure: ''
+          unitOfMeasure: '',
+          town: '',
+          postCode: ''
         }}
         onSubmit={onsubmit}
         innerRef={formikRef}
@@ -360,15 +390,32 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
                 <View style={UPPER_CONTAINER_SUBVIEW}>
                   <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
                   <View style={SEPERATOR_LINE} />
-                  {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
+                  <RenderRow
+                    label={'getARateScreen.postCode'}
+                    handleChange={handleChange}
+                    handleChangeKey={'postCode'}
+                    errors={touched.postCode && errors.postCode}
+                    values={values.postCode}
+                  />
                   <View style={BUTTON_VIEW}>
-                    <Button style={BUTTON_STYLE}>
+                    <Button style={BUTTON_STYLE} onPress={gettown} isLoading={getARateStore.isButtonLoading} >
                       <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND}>
-                        <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
+                        {getARateStore.isButtonLoading ?
+                          <ActivityIndicator size='large' color={color.palette.white} />
+                          :
+                          <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
+                        }
                       </ImageBackground>
                     </Button>
                   </View>
-                  {renderRow("getARateScreen.town", town, updateTown)}
+                  <RenderRow
+                    label={'getARateScreen.town'}
+                    handleChange={handleChange}
+                    handleChangeKey={'town'}
+                    setFieldValue={setFieldValue}
+                    errors={touched.town && errors.town}
+                    values={values.town}
+                  />
                 </View>
               </View>
               <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.details'} />
@@ -380,9 +427,9 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               >
                 <DropdownPicker
                   dropDownData={measurementUnitData}
-                  selectedValue={values.unitofMeasure}
+                  selectedValue={values.unitOfMeasure}
                   placeHolder={"getARateScreen.unitOfMeasure"}
-                  onValueChange={(value) => setFieldValue("unitofMeasure", value)}
+                  onValueChange={(value) => setFieldValue("unitOfMeasure", value)}
                 />
               </FieldWrapper>
 
