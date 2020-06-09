@@ -41,6 +41,9 @@ export const MyListModel = types
       } catch (erro) { }
       self.isLoading = false;
     }),
+    refreshList() {
+      self.getListData = []
+    }
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 

@@ -152,10 +152,16 @@ RNFS.exists(dir).then(result => {
   }
 })
 let userObj
-const isDelivered = false
+let isDelivered = false
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
+  const consignmentStatus = consignment.currentFreightState[0]
+  if (consignmentStatus === "Delivered") {
+    isDelivered = true
+  } else {
+    isDelivered = false
+  }
   const [selectedValue, setSelectedValue] = useState("")
   const [fileName, setFileName] = useState("")
   const [imageUri, setImageUri] = useState("")
@@ -323,7 +329,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             {isValidStatus ? null : <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />}
 
             <View style={CAMERA_VIEW}>
-              <TouchableOpacity style={ROOT} onPress={onCameraPres}>
+              <TouchableOpacity disabled={isDelivered} style={ROOT} onPress={onCameraPres}>
                 <EvilIcons color={color.palette.darkText} name="camera" size={60} />
               </TouchableOpacity>
               <TouchableOpacity onPress={onImageView} style={LINK_VIEW}>

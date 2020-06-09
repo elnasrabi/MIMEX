@@ -99,8 +99,8 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   useEffect(() => {
     const isConnected = isInternetAvailable()
-
     if (isFocused && isConnected) {
+      myListStore.refreshList()
       getListApi()
     }
   }, [isFocused])
@@ -125,8 +125,6 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const updateCheckBox = (index) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    const selectedList = getSelectedList()
-
     const newArr = [...mylist]
     let i = 0; let j
     newArr[index].check = !newArr[index].check
@@ -171,29 +169,49 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const isDuplicateRecord = (item): boolean => {
     const address = item.deliveryAddress[0].address[0]
     const selectedList = getSelectedList()
-    return selectedList.some(element => address === element.address)
+    let isDuplicate
+    for (const item of selectedList) {
+      const address1 = item.deliveryAddress[0].address[0]
+      if (address1.line1[0] === address.line1[0]) {
+        isDuplicate = true
+      } else {
+        return false
+      }
+    }
+    // const isDuplicate = selectedList.some(element => address === element.deliveryAddress[0].address[0])
+    return isDuplicate
   }
 
-  const onSuccessPress = () => {
+  const initNavigation = (): boolean => {
     let consignmentNumber = ""
+    let goAhead = false
     const selectedList = getSelectedList()
     for (const item of selectedList) {
       if (isDuplicateRecord(item)) {
-        showAlert("myList.duplicate")
-        return false
+        goAhead = true
+        consignmentNumber = consignmentNumber + ", " + item.consignmentNumber[0]
       } else {
-        consignmentNumber = consignmentNumber + "," + item.consignmentNumber[0]
+        showAlert("myList.duplicate")
+        goAhead = false
       }
     }
+    if (goAhead) {
+      const consignmentDetail = selectedList[0]
+      consignmentDetail.consignmentNumber[0] = consignmentNumber.substring(1)
+      consignmentStore.setConsignmentDetail(consignmentDetail)
+    }
+    return goAhead
+  }
 
-    const consignmentDetail = selectedList[0]
-    consignmentDetail.consignmentNumber[0] = consignmentNumber.substring(1)
-    consignmentStore.setConsignmentDetail(consignmentDetail)
-
-    props.navigation.navigate("consignmentSuccess", { isSuccess: true })
+  const onSuccessPress = () => {
+    if (initNavigation()) {
+      props.navigation.navigate("consignmentSuccess", { isSuccess: true })
+    }
   }
   const onFailPress = () => {
-    props.navigation.navigate("consignmentSuccess", { isSuccess: false })
+    if (initNavigation()) {
+      props.navigation.navigate("consignmentSuccess", { isSuccess: false })
+    }
   }
 
   const hasListData = (): boolean => {
