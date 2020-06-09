@@ -19,6 +19,7 @@ export function Button(props: ButtonProps) {
     style: styleOverride,
     textStyle: textStyleOverride,
     children,
+    isLoading,
     ...rest
   } = props
 
@@ -32,6 +33,7 @@ export function Button(props: ButtonProps) {
 
   return (
     <TouchableOpacity ref={(button) => { ref = button }}
+      disabled={isLoading}
       style={viewStyle} {...rest}>
       {content}
     </TouchableOpacity>
