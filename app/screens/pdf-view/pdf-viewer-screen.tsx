@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
+import React, { FunctionComponent, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, ActivityIndicator, Platform } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
@@ -24,8 +24,6 @@ const PROGRESS: ViewStyle = {
 const source = 'http://samples.leanpub.com/thereactnativebook-sample.pdf'
 export const PDFViewer: FunctionComponent<PDFViewerProps> = observer(props => {
   const [isLoading, setLoading] = useState(false)
-  useEffect(() => {
-  }, [])
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 

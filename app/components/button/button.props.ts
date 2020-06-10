@@ -44,4 +44,6 @@ export interface ButtonProps extends TouchableOpacityProps {
 
   isLoading?: boolean
 
+  isDisable?: boolean
+
 }

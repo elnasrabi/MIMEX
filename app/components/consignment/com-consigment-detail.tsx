@@ -56,8 +56,14 @@ const TITLE: TextStyle = {
   marginStart: 30,
 }
 const TEXT_VALUE: TextStyle = { color: color.palette.link, }
-const isDelivered = false
+let isDelivered = false
 export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> = observer(props => {
+  const consignmentStatus = props.data.currentFreightState[0]
+  if (consignmentStatus === "Delivered") {
+    isDelivered = true
+  } else {
+    isDelivered = false
+  }
   const onFirePress = () => {
     props.navigation.navigate("pdfViewer")
   }
@@ -76,13 +82,13 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
     if (props.view === viewType.consignment) {
       return (<View style={DETAIL_CONTAINER}>
         <View style={CONSIGNMENT_VIEW}>
-          <View style={DETAIL_VIEW}>
+          <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
             <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.freightStateHistory[0].status} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={consignmentStatus} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
@@ -136,9 +142,9 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
             <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
-          <View style={DETAIL_VIEW}>
+          <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.freightStateHistory[0].status} />
+            <Text style={TEXT_VALUE} preset={"normal"} text={consignmentStatus} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
@@ -147,7 +153,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
           </View>
         </View>
         {props.isFailView ? null : <MyButton
-          disabled={isDelivered}
+          isDisable={isDelivered}
           style={SPECIAL_ACTION_BUTTON}
           buttonSource={icons.blueButton}
           imageBackground={SPECIAL_ACTION}

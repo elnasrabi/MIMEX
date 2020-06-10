@@ -110,6 +110,9 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="ConsignmentStack" component={ConsignmentStack} />
       <Drawer.Screen name="HelpScreen" component={HelpScreen} />
+      <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
+      <Stack.Screen name="consignmentSpecial" component={ConsignmentSpecial} />
+      <Stack.Screen name="signatureView" component={SignatureView} />
     </Drawer.Navigator>
   )
 }
