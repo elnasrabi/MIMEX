@@ -132,8 +132,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   useEffect(() => {
     if (isFocused && !getARateStore.preventRefresh) {
-      clearData();
-      updateErrorTown('');
+      clear();
     }
     if (Platform.OS === 'ios') {
       KeyboardManager.setToolbarPreviousNextButtonEnable(true);
@@ -142,6 +141,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     getARateStore.updatePreventrefersh(false);
   }, [isFocused])
 
+  const clear = async () => {
+    await clearData();
+    updateErrorTown("");
+  }
   const hideDatePicker = () => {
     setShow(false);
   };
@@ -224,6 +227,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     updateTownData([]);
     setDate(new Date());
     formikRef.current.resetForm();
+    return true;
   }
 
   const renderRow = (label, values, errors) => {
