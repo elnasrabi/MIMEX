@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image, Alert } from "react-native"
@@ -181,10 +182,12 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const SIGN_IMAGE_URI = getSignaturePath(imageFileName)
   // console.log(SIGN_IMAGE_URI)
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getUserData()
     consignmentStore.onSigned(false)
     consignmentStore.setConsignmentFalse()
+    if (isDelivered) {
+      getOfflineConsignment()
+    }
   }, [])
 
   useEffect(() => {
@@ -192,11 +195,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       props.navigation.navigate("Home")
     }
   }, [consignmentStore.isConsignmentSaved])
-
-  const getUserData = async () => {
-    const model = new UserModel()
-    userObj = await model.getUserData(authStore.userData[0].loginName[0])
-  }
 
   useLayoutEffect(() => {
     props.navigation.addListener('focus', () => {
@@ -207,6 +205,17 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       onSetValidSignImage(true)
     })
   }, [])
+
+  const getUserData = async () => {
+    const model = new UserModel()
+    userObj = await model.getUserData(authStore.userData[0].loginName[0])
+  }
+
+  const getOfflineConsignment = async () => {
+    setSelectedValue(consignment.currentFreightState[0])
+    // onSignText(savedConsignment.signBy)
+    // setSignUri(getSignaturePath(savedConsignment.signImage))
+  }
 
   const onCameraPres = () => {
     ImagePicker.showImagePicker(options, (response) => {

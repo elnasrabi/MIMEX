@@ -98,9 +98,10 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const [mylist, updateMyList] = useState([])
 
   useEffect(() => {
+    myListStore.refreshList()
+    updateMyList(myListStore.getListData)
     const isConnected = isInternetAvailable()
     if (isFocused && isConnected) {
-      myListStore.refreshList()
       getListApi()
     }
   }, [isFocused])

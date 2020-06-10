@@ -59,7 +59,7 @@ export const ComConsignmentList: FunctionComponent<ComConsignmentListProps> = ob
         </View>
       </View>
 
-      <Text style={STATUS} preset={"normal"}>{cons.freightStateHistory[0].status}</Text>
+      <Text style={STATUS} preset={"normal"}>{cons.currentFreightState[0]}</Text>
 
     </View>
   )

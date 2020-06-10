@@ -83,41 +83,13 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     }
   }, [homeStore.barCodeData])
 
-  const getAllConsignment = async () => {
-    const modal = new ConsignmentModel()
-    let shouldCall = true
-    if (shouldCall) {
-      shouldCall = false
-      const data = await modal.getAllSavedConsignment()
-      data.forEach(async element => {
-        const request = await getJsonRequest(element)
-        // console.log(request) 582300/1750
-        consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
-      })
-      shouldCall = true
-    }
-  }
-  const initInternet = () => {
-    NetInfo.addEventListener(async state => {
-      if (state.isConnected) {
-        const isInternet = await isInternetAvailable()
-        if (isInternet && isConnected) {
-          // Alert.alert("connected")
-          isConnected = false
-          getAllConsignment()
-        } else if (!isInternet) {
-          isConnected = true
-        }
-        setTimeout(() => { isConnected = true }, 3000)
-      }
-    })
-  }
-
   useEffect(() => {
     consignmentStore.setConsignmentFalse()
     consignmentStore.stopSyncing()
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     initInternet()
   }, [])
+
   useEffect(() => {
     if (isGoPressed && consignmentStore.isEmptyList) {
       showAlert("common.noData")
@@ -137,6 +109,32 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
         BackHandler.removeEventListener('hardwareBackPress', onBackPress)
     }, [])
   )
+  const getAllConsignment = async () => {
+    const modal = new ConsignmentModel()
+    const data = await modal.getAllSavedConsignment()
+    data.forEach(async element => {
+      const request = await getJsonRequest(element)
+      // console.log(request) 582300/1750
+      consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
+    })
+  }
+  const initInternet = () => {
+    NetInfo.addEventListener(async state => {
+      if (state.isConnected) {
+        const isInternet = await isInternetAvailable()
+        if (isInternet && isConnected) {
+          // Alert.alert("connected")
+          isConnected = false
+          getAllConsignment()
+        } else if (!isInternet) {
+          isConnected = true
+        }
+        setTimeout(() => { isConnected = true }, 3000)
+      }
+    })
+  }
+
+
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
 
   const onCameraPress = () => {

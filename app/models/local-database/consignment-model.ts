@@ -38,6 +38,14 @@ export default class ConsignmentModel extends Model {
     })
   }
 
+  async getOfflineConsignment(consignmentNumber, loginName): Promise<any> {
+    return await database.action(async (): Promise<boolean> => {
+      const consignmentSuccess = database.collections.get("consignment")
+      offlineConsignment = await consignmentSuccess.query(Q.where("consignment_number", consignmentNumber)).fetch()
+      return offlineConsignment[0]
+    })
+  }
+
   async getAllSavedConsignment(): Promise<any> {
     return await database.action(async (): Promise<any> => {
       const consignmentSuccess = database.collections.get("consignment")

@@ -153,7 +153,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
           </View>
         </View>
         {props.isFailView ? null : <MyButton
-          disabled={isDelivered}
+          isDisable={isDelivered}
           style={SPECIAL_ACTION_BUTTON}
           buttonSource={icons.blueButton}
           imageBackground={SPECIAL_ACTION}

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { TouchableOpacity, ImageBackground, ImageStyle, TextStyle, ActivityIndicator } from "react-native"
+import { TouchableOpacity, ImageBackground, ImageStyle, TextStyle, ActivityIndicator, ViewStyle, View } from "react-native"
 import { Text } from "../text/text"
 import { ButtonProps } from "./button.props"
 import { icons } from "../icon/icons"
@@ -18,6 +18,7 @@ export function MyButton(props: ButtonProps) {
     style: styleOverride,
     myTextStyle,
     imageBackground,
+    isDisable,
     isLoading = false,
     ...rest
   } = props
@@ -35,17 +36,34 @@ export function MyButton(props: ButtonProps) {
     width: 150,
     flexDirection: "row"
   }
+  const LEFT_BUTTON_STYLE_DISABLE: ViewStyle = {
+    alignSelf: "center",
+    justifyContent: 'center',
+    borderRadius: 10,
+    height: 90,
+    width: 90,
+    flexDirection: "row",
+    backgroundColor: color.palette.textGray
+  }
   const image = buttonSource || icons.redButton
 
   return (
     <TouchableOpacity
+      disabled={isDisable}
       style={viewStyle} {...rest}>
-      <ImageBackground resizeMode={"contain"} style={[BACKGROUND_ICON, imageBackground]}
-        source={image}>
-        {isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
-          : <Text style={[TEXT, myTextStyle]} tx={tx} />
-        }
-      </ImageBackground>
+
+      {isDisable
+        ? <View style={LEFT_BUTTON_STYLE_DISABLE}>
+          <Text style={[TEXT, myTextStyle]} tx={tx} />
+        </View>
+        : <ImageBackground resizeMode={"contain"} style={[BACKGROUND_ICON, imageBackground]}
+          source={image}>
+          {isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
+            : <Text style={[TEXT, myTextStyle]} tx={tx} />
+          }
+        </ImageBackground>
+      }
+
     </TouchableOpacity>
   )
 }

@@ -104,3 +104,13 @@ export const consType = {
   fail: "fail",
   specialAction: "specialAction"
 }
+
+export const isAndroidDevice = (): boolean => {
+  let type = false
+  if (Platform.OS === "android") {
+    type = true
+  } else {
+    type = false
+  }
+  return type
+}
