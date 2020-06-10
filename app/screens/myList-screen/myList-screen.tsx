@@ -14,6 +14,7 @@ import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { useStores } from "../../models/root-store"
 import { isInternetAvailable, showAlert } from "../../utils/utils"
 import { boolean } from "mobx-state-tree/dist/internal"
+import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 
 export interface MyListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -63,7 +64,9 @@ const SEPERATOR_LINE: ViewStyle = {
 }
 const SELECTALL_CHECKBOX: ViewStyle = {
   margin: 10,
-  marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 10 : 33
+  marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 15 : 38,
+  flexDirection: 'row',
+  justifyContent: "space-between"
 }
 const ADDRESS_VIEW: ViewStyle = {
   flex: 1,
@@ -256,6 +259,17 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     )
   }
 
+  const statusData = [
+    { label: 'ALL', value: 'ALL' },
+    { label: 'DESPATCHED', value: 'DESPATCHED' },
+    { label: 'DELIVERED', value: 'DELIVERED' }
+  ]
+  const [selectedStatus, setStatus] = useState('ALL')
+  const dateOrderData = [
+    { label: 'ASCENDING', value: 'ASCENDING' },
+    { label: 'DECENDING', value: 'DECENDING' }
+  ]
+  const [selectedDateOrder, setDateOrder] = useState('ASCENDING')
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       {
@@ -266,13 +280,31 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         title={"myList.header"}
         onPress={handleDrawer} />
       <View style={SELECTALL_CHECKBOX}>
-        <Checkbox
-          tx='myList.empty'
-          outlineStyle={CHECKBOX}
-          value={toggleAll}
-          onToggle={() => updateAllCheckBox(!toggleAll)}
-          disabled={myListStore.isLoading ? true : false}
-        />
+        <View>
+          <Checkbox
+            tx='myList.empty'
+            outlineStyle={CHECKBOX}
+            value={toggleAll}
+            onToggle={() => updateAllCheckBox(!toggleAll)}
+            disabled={myListStore.isLoading ? true : false}
+          />
+        </View>
+        <View style={{ width: '40%' }}>
+          <DropdownPicker
+            dropDownData={statusData}
+            placeHolder={"common.registrationId"}
+            onValueChange={(value) => setStatus(value)}
+            selectedValue={selectedStatus}
+          />
+        </View>
+        <View style={{ width: '40%' }}>
+          <DropdownPicker
+            dropDownData={dateOrderData}
+            placeHolder={"common.registrationId"}
+            onValueChange={(value) => setDateOrder(value)}
+            selectedValue={selectedDateOrder}
+          />
+        </View>
       </View>
       <View style={SEPERATOR_LINE} />
       <FlatList
