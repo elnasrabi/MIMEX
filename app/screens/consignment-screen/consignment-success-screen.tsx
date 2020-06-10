@@ -22,6 +22,8 @@ import ConsignmentModel from "../../models/local-database/consignment-model"
 import RNFS from 'react-native-fs'
 import UserModel from "../../models/local-database/user-modal"
 import Moment from 'moment'
+import { PERMISSIONS } from "react-native-permissions"
+import { requestPermission, LOCATION_PERMISSION } from "../../utils/app-permission"
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -182,6 +184,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const SIGN_IMAGE_URI = getSignaturePath(imageFileName)
   // console.log(SIGN_IMAGE_URI)
   useEffect(() => {
+    getCurrentLocation()
     getUserData()
     consignmentStore.onSigned(false)
     consignmentStore.setConsignmentFalse()
@@ -293,6 +296,15 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onChangeText = (text) => {
     text ? setValidSignText(true) : setValidSignText(false)
     onSignText(text)
+  }
+
+  const getCurrentLocation = async () => {
+    if (Platform.OS === 'android') {
+      const result = await requestPermission(LOCATION_PERMISSION)
+      if (result) {
+        Alert.alert("allowed")
+      }
+    }
   }
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
