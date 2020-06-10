@@ -92,7 +92,8 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
   }
 
   const onResetPassword = () => {
-    props.navigation.navigate("forgotpassword")
+    props.navigation.navigate("HelpScreen")
+    // props.navigation.navigate("forgotpassword")
   }
   return (
     <Screen style={ROOT} preset="scroll" backgroundColor="black">

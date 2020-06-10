@@ -11,6 +11,8 @@ import { isIphoneX } from "react-native-iphone-x-helper";
 import VideoPlayer from 'react-native-video-controls';
 import Orientation from 'react-native-orientation-locker';
 import { callApi } from "../../utils/utils";
+import { useStores } from "../../models/root-store";
+import { BackButton } from "../../components/header/back-button";
 
 export interface HelpScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -69,6 +71,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
     { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' },
     { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' }
   ]
+  const { authStore } = useStores()
   // const [fullScreen, setFullScreen] = useState(false)
   const renderItem = (item, index) => {
     return (
@@ -138,12 +141,19 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
   }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
+  const goBack = React.useMemo(() => () => { props.navigation.goBack() }, [props.navigation]);
+
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed" >
-      <MenuButton
-        title={"helpScreen.header"}
-        onPress={handleDrawer} />
-
+      {authStore.isLoggedIn ?
+        <MenuButton
+          title={"helpScreen.header"}
+          onPress={handleDrawer} />
+        :
+        <BackButton
+          title={"helpScreen.header"}
+          onPress={goBack} />
+      }
       <FlatList
         ListHeaderComponent={renderFlatlistHeader}
         ListHeaderComponentStyle={ITEM_CONTAINER}
