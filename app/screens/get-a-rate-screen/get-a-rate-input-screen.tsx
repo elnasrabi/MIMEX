@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView, TouchableOpacity } from "react-native";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import moment from 'moment';
 import KeyboardManager from "react-native-keyboard-manager";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import RNGooglePlaces from "react-native-google-places";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -71,7 +72,7 @@ const CONTAINER: ViewStyle = {
   justifyContent: 'space-between'
 };
 const CONTAINER_TEXT: ViewStyle = {
-  marginTop: 25
+  justifyContent: "center"
 };
 const VALUE: TextStyle = {
   color: color.palette.link,
@@ -119,8 +120,11 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const isFocused = useIsFocused();
   const measurementUnitData = [{ label: 'PALLET', value: 'PALLET' }];
   const pickUpAddressData = [{ label: 'MELBCCS WEST FOOTSCRAY', value: 'MELBCCS WEST FOOTSCRAY' }];
+  const [townData, updateTownData] = useState([]);
   const [postCode, updatePostCode] = useState('');
+  const [errorPostCode, updateErrorPostCode] = useState('');
   const [town, updateTown] = useState('');
+  const [errorTown, updateErrorTown] = useState('');
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const currentRef: any[] = [];
@@ -128,8 +132,8 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
   useEffect(() => {
     if (isFocused && !getARateStore.preventRefresh) {
-      setDate(new Date());
-      formikRef.current.resetForm();
+      clearData();
+      updateErrorTown('');
     }
     if (Platform.OS === 'ios') {
       KeyboardManager.setToolbarPreviousNextButtonEnable(true);
@@ -148,6 +152,18 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
     hideDatePicker();
   };
 
+  const gettown = async () => {
+    let respond = await checkPostCodeValidation();
+    if (respond && isInternetAvailable()) {
+      await getARateStore.getTownApi(postCode);
+      let i = 0, newArr = [];
+      for (i = 0; i < getARateStore.getTownData.length; i++) {
+        newArr[i] = Object.assign({ label: getARateStore.getTownData[i], value: getARateStore.getTownData[i] });
+      }
+      updateTownData(newArr);
+    }
+  }
+
   const getACalculatedRate = async (values, actions) => {
     const isConnected = await isInternetAvailable();
     Keyboard.dismiss();
@@ -165,10 +181,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
             },
             deliveryAddress: {
               address: {
-                town: "CRAIGIE",
-                state: "WA",
-                postcode: "6025",
-                country: "AU"
+                town: town,
+                state: getARateStore.getState,
+                postcode: postCode,
+                country: getARateStore.getCountry
               }
             },
             container: {
@@ -194,30 +210,65 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   const gotoRateListScreen = () => {
     return props.navigation.navigate('GetARateList');
   }
-  const gotoHomeScreen = () => {
-    setDate(new Date());
-    formikRef.current.resetForm();
+
+  const gotoHomeScreen = async () => {
+    await clearData();
+    updateErrorTown('');
     return props.navigation.navigate('Home');
   }
 
-  const renderRow = (label, value, onUpdate, keyboardType: KeyboardTypeOptions = 'default') => {
+  const clearData = () => {
+    updateTown('');
+    updatePostCode('');
+    updateErrorPostCode('');
+    updateTownData([]);
+    setDate(new Date());
+    formikRef.current.resetForm();
+  }
+
+  const renderRow = (label, values, errors) => {
     return (
-      <View style={CONTAINER}>
-        <View style={CONTAINER_TEXT}>
-          <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
+      <>
+        <View style={[CONTAINER, { marginTop: 10 }]}>
+          <View style={CONTAINER_TEXT}>
+            <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={label} />
+          </View>
+          <View style={TEXTFIELD_VIEW}>
+            {label == 'getARateScreen.town' ?
+              <DropdownPicker
+                dropDownData={townData}
+                selectedValue={values}
+                placeHolder={"getARateScreen.town"}
+                onValueChange={(value) => onChangeText(label, value)}
+              />
+              :
+              <TextInput
+                keyboardType={'number-pad'}
+                style={TEXTINPUT_TEXT}
+                onChangeText={(text) => onChangeText(label, text)}
+                value={values}
+                onSubmitEditing={gettown}
+              />
+            }
+          </View>
         </View>
-        <View style={TEXTFIELD_VIEW}>
-          <TextField
-            autoCorrect={false}
-            onChangeText={(text) => onUpdate(text)}
-            autoCapitalize={"none"}
-            mainStyle={{}}
-            keyboardType={keyboardType}
-            inputStyle={VALUE}
-            value={value} />
-        </View>
-      </View>
+        {errors ?
+          <Text style={ERROR_TEXT}>{errors}</Text>
+          : null
+        }
+      </>
     )
+  }
+
+  const onChangeText = (label, text) => {
+    if (label == 'getARateScreen.town') {
+      updateTown(text);
+      text ? updateErrorTown('') : updateErrorTown('Town is a reqiured field');
+    }
+    else {
+      updatePostCode(text);
+      text ? updateErrorPostCode('') : updateErrorPostCode('Post Code is a required field');
+    }
   }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
@@ -247,7 +298,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
       .required()
       .integer('Volume must be an integer')
       .label('Volume'),
-    unitofMeasure: yup.string()
+    unitOfMeasure: yup.string()
       .required()
       .label('Unit of Measurement'),
     pickUpAddress: yup.string()
@@ -304,7 +355,41 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
   }
 
   const onsubmit = (values, actions) => {
-    getACalculatedRate(values, actions);
+    if (!errorPostCode && !errorTown) {
+      getACalculatedRate(values, actions);
+    }
+  }
+
+  const onLeftPress = () => {
+    checkPostCodeValidation();
+    checkTownValidation();
+    formikRef.current.handleSubmit();
+  }
+
+  const checkTownValidation = () => {
+    if (!town) {
+      updateErrorTown('Town is a required field');
+      return false;
+    }
+    else {
+      updateErrorTown('');
+      return true;
+    }
+  }
+
+  const checkPostCodeValidation = () => {
+    if (!postCode) {
+      updateErrorPostCode('Post Code is a required field');
+      return false;
+    }
+    else if (postCode.length != 4) {
+      updateErrorPostCode("post Code should be of 4 digits only");
+      return false;
+    }
+    else {
+      updateErrorPostCode('');
+      return true;
+    }
   }
 
   return (
@@ -322,13 +407,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
           width: '',
           height: '',
           volume: '',
-          unitofMeasure: ''
+          unitOfMeasure: '',
         }}
         onSubmit={onsubmit}
         innerRef={formikRef}
         validationSchema={ValidationSchema}
       >
-        {({ handleChange, handleSubmit, setFieldValue, values, errors, touched, isSubmitting }) => (
+        {({ handleChange, setFieldValue, values, errors, touched, isSubmitting }) => (
           <SafeAreaView style={FLEX}>
             <ScrollView contentContainerStyle={SCROLLVIEW_CONTAINER} style={SCROLLVIEW_STYLE}>
               <View style={UPPER_CONTAINER}>
@@ -360,15 +445,19 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
                 <View style={UPPER_CONTAINER_SUBVIEW}>
                   <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.deliveryAddress'} />
                   <View style={SEPERATOR_LINE} />
-                  {renderRow("getARateScreen.postCode", postCode, updatePostCode, 'decimal-pad')}
+                  {renderRow('getARateScreen.postCode', postCode, errorPostCode)}
                   <View style={BUTTON_VIEW}>
-                    <Button style={BUTTON_STYLE}>
+                    <Button style={BUTTON_STYLE} onPress={gettown} isLoading={getARateStore.isButtonLoading} >
                       <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND}>
-                        <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
+                        {getARateStore.isButtonLoading ?
+                          <ActivityIndicator size='large' color={color.palette.white} />
+                          :
+                          <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
+                        }
                       </ImageBackground>
                     </Button>
                   </View>
-                  {renderRow("getARateScreen.town", town, updateTown)}
+                  {renderRow('getARateScreen.town', town, errorTown)}
                 </View>
               </View>
               <Text style={[FONTFAMILY, { color: color.palette.black }]} tx={'getARateScreen.details'} />
@@ -376,13 +465,13 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
 
               <FieldWrapper
                 label={"getARateScreen.unitOfMeasure"}
-                errors={touched.unitofMeasure && errors.unitofMeasure}
+                errors={touched.unitOfMeasure && errors.unitOfMeasure}
               >
                 <DropdownPicker
                   dropDownData={measurementUnitData}
-                  selectedValue={values.unitofMeasure}
+                  selectedValue={values.unitOfMeasure}
                   placeHolder={"getARateScreen.unitOfMeasure"}
-                  onValueChange={(value) => setFieldValue("unitofMeasure", value)}
+                  onValueChange={(value) => setFieldValue("unitOfMeasure", value)}
                 />
               </FieldWrapper>
 
@@ -441,7 +530,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
               isLoadingLeft={isSubmitting}
               isLoadingRight={isSubmitting}
               rightImage={icons.redButton2}
-              onLeftPress={handleSubmit}
+              onLeftPress={onLeftPress}
               onRightPress={gotoHomeScreen}
               leftText={"getARateScreen.submit"}
               rightText={"common.cancel"} />

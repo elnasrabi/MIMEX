@@ -11,3 +11,4 @@ export type LoginUserResult = { kind: "ok"; user: any, authorization: any } | Ge
 export type ConsignmentResult = { kind: "ok"; consignment: any } | GeneralApiProblem
 export type GetARateResult = { kind: "ok"; getaRate: any; Status: number } | GeneralApiProblem
 export type GetListResult = { kind: "ok"; getList: any; Status: number } | GeneralApiProblem
+export type GetTownResult = { kind: "ok"; getTownData: any; Status: number } | GeneralApiProblem

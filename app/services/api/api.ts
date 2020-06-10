@@ -108,6 +108,21 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
+  async getTownAPI(townPostalCode: any): Promise<Types.GetTownResult> {
+    const response: ApiResponse<any> = await this.apisauce.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBFxYi9_fjIKVcmFOv00zejI8pks_TnzBw&address=${townPostalCode}&components=country:AU&sensor=true`)
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const getTownData = response.data
+      return { kind: "ok", getTownData: getTownData, Status: response.status }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
   async getList(authorization: string, getListRequest: any): Promise<Types.GetListResult> {
     const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getListRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
