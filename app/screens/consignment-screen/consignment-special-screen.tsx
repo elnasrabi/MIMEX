@@ -209,7 +209,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         date: Moment().toISOString(),
         synced: false
       }
-      if (!isConnected) {
+      if (isConnected) {
         const request = await getJsonRequest(record)
         consignmentStore.saveConsignment(authStore.authorization, request)
         // Call API
