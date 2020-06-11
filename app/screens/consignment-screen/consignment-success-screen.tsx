@@ -2,7 +2,7 @@
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, ImageStyle, Platform, Image, Alert } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
 import { color, typography } from "../../theme"
@@ -16,14 +16,14 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest, consType } from "../../utils/utils"
+import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest, consType, getCurrentLocation } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import ConsignmentModel from "../../models/local-database/consignment-model"
 import RNFS from 'react-native-fs'
 import UserModel from "../../models/local-database/user-modal"
 import Moment from 'moment'
-import { PERMISSIONS } from "react-native-permissions"
 import { requestPermission, LOCATION_PERMISSION } from "../../utils/app-permission"
+import Geolocation from '@react-native-community/geolocation';
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -142,12 +142,13 @@ interface recordProps {
   status: string
   image: string
   signBy: string
+  location: string
   signImage: string
   date: string
   synced: boolean
 }
 
-const currentDate = getFormattedDate(new Date().toLocaleString())
+let currentDate = getFormattedDate(new Date().toLocaleString())
 const dir = getImageDir()
 RNFS.exists(dir).then(result => {
   if (!result) {
@@ -157,10 +158,12 @@ RNFS.exists(dir).then(result => {
 let userObj
 let isDelivered = false
 export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = observer(props => {
+  const isFocused = useIsFocused()
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   const consignmentStatus = consignment.currentFreightState[0]
   if (consignmentStatus === "Delivered") {
+    statusFail.push({ label: "Delivered", value: "Delivered" })
     isDelivered = true
   } else {
     isDelivered = false
@@ -183,8 +186,18 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const imageFileName = consNo + loginName
   const SIGN_IMAGE_URI = getSignaturePath(imageFileName)
   // console.log(SIGN_IMAGE_URI)
+
   useEffect(() => {
-    getCurrentLocation()
+    getCurrentLocation().then(location => {
+      if (location) {
+        consignmentStore.getCurrentLocation(location.latitude, location.longitude)
+      }
+    }).catch(error => {
+      console.log("LOCATION_ERROR" + error)
+    })
+  }, [isFocused])
+
+  useEffect(() => {
     getUserData()
     consignmentStore.onSigned(false)
     consignmentStore.setConsignmentFalse()
@@ -262,8 +275,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     const isConnected = await isInternetAvailable(false)
     if (!selectedValue) {
       onSetValidStatus(false)
-    } else if (!fileName) {
-      onSetValidFile(false)
     } else if (selectedValue === "Delivered" && !signText) {
       setValidSignText(false)
     } else if (selectedValue === "Delivered" && !consignmentStore.signedSaved) {
@@ -279,6 +290,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         status: selectedValue,
         image: imageFileName,
         signBy: signText,
+        location: consignmentStore.city + ", " + consignmentStore.district,
         signImage: consignmentStore.signedSaved ? imageFileName : "",
         date: Moment().toISOString(),
         synced: false
@@ -296,15 +308,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onChangeText = (text) => {
     text ? setValidSignText(true) : setValidSignText(false)
     onSignText(text)
-  }
-
-  const getCurrentLocation = async () => {
-    if (Platform.OS === 'android') {
-      const result = await requestPermission(LOCATION_PERMISSION)
-      if (result) {
-        Alert.alert("allowed")
-      }
-    }
   }
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
@@ -340,6 +343,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
                   onValueChange={(value) => {
+                    currentDate = getFormattedDate(new Date().toLocaleString())
                     setSelectedValue(value)
                     onSetValidStatus(true)
                   }}
@@ -360,6 +364,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             {isValidFile ? null : <Text preset={"error"} tx={"consignmentSuccess.selectImage"} />}
 
             <TextField
+              editable={!isDelivered}
               labelTx={"consignmentSuccess.sign"}
               labelStyle={SIGN_LABEL}
               errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}

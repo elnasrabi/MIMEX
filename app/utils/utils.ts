@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import NetInfo from "@react-native-community/netinfo"
 import { Alert, Linking, Platform } from "react-native"
 import { translate } from "../i18n"
@@ -5,6 +6,9 @@ import { translate } from "../i18n"
 import Moment from 'moment'
 import RNFetchBlob from 'rn-fetch-blob'
 import RNFS from 'react-native-fs'
+import { requestPermission, LOCATION_PERMISSION } from "./app-permission"
+import { openSettings } from "react-native-permissions"
+import Geolocation from "@react-native-community/geolocation"
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0
@@ -113,4 +117,52 @@ export const isAndroidDevice = (): boolean => {
     type = false
   }
   return type
+}
+
+export const getCurrentLocation = async (): Promise<any> => {
+  const result = await requestPermission(LOCATION_PERMISSION)
+  let location;
+  if (result) {
+    // Geolocation.requestAuthorization()
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          location = position.coords
+          resolve(location)
+        },
+        (error) => {
+          // See error code charts below.
+          location = null
+          reject(location)
+          console.log(error.code, error.message)
+          locationSettingAlert()
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 10000
+        }
+      )
+    })
+  }
+}
+
+const locationSettingAlert = () => {
+  Alert.alert(
+    translateText("common.locationService"),
+    translateText("common.locationServiceMsg"),
+    [
+      {
+        text: translateText("common.setting"),
+        onPress: () => {
+          openSettings().catch(() => console.warn('cannot open settings'))
+        },
+        style: 'cancel'
+      },
+      {
+        text: translateText("common.cancel")
+      }
+    ],
+    { cancelable: false }
+  )
 }

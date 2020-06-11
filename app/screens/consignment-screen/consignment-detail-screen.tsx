@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, View, ScrollView, Platform, Linking, TouchableWithoutFeedback } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
 import { color } from "../../theme"
@@ -13,6 +13,7 @@ import { ComConsignmentDetail } from "../../components/consignment/com-consigmen
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
 import { ForceTouchGestureHandler } from "react-native-gesture-handler"
+import { getCurrentLocation } from "../../utils/utils"
 
 export interface ConsignmentDetailProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -37,12 +38,21 @@ const MAPS: ViewStyle = {
   alignSelf: "center",
 }
 const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
-
+let currentLocation = {
+  latitude: 0,
+  longitude: 0
+}
 export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = observer(props => {
+  const isFocused = useIsFocused()
   const { consignmentStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
   useEffect(() => {
-  }, [])
+    getCurrentLocation().then(location => {
+      currentLocation = location
+    }).catch(error => {
+      console.log("LOCATION_ERROR" + error)
+    })
+  }, [isFocused])
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 
@@ -101,8 +111,8 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
         >
           <View>
             <Marker coordinate={{
-              latitude: 37.78451,
-              longitude: -122.4324
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude
             }} />
             <Marker coordinate={{
               latitude: 37.78825,
