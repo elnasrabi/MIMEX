@@ -45,11 +45,11 @@ const CONTINUE: ViewStyle = {
 }
 
 const IMAGE_RED: ImageStyle = {
-  alignSelf: "center",
-  padding: 20,
-  flex: 1,
-  width: "100%",
-  height: "100%"
+  justifyContent: "center",
+  alignItems: 'center',
+  overflow: 'hidden',
+  height: 70,
+  borderRadius: 10,
 }
 
 const SEARCH_VIEW: ViewStyle = {
@@ -215,11 +215,10 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
           {dataList.map((data, index) => {
             return (
               <MyButton
-                // buttonSource={icons.redButton2}
+                buttonSource={icons.redButton2}
                 key={index}
                 imageBackground={IMAGE_RED}
-                style={{ width: "45%" }}
-                // style={CONTINUE}
+                style={CONTINUE}
                 tx={data}
                 onPress={() => onButtonPress(data, index)}
               />

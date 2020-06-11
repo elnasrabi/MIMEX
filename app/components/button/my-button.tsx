@@ -56,7 +56,7 @@ export function MyButton(props: ButtonProps) {
         ? <View style={LEFT_BUTTON_STYLE_DISABLE}>
           <Text style={[TEXT, myTextStyle]} tx={tx} />
         </View>
-        : <ImageBackground resizeMode={"contain"} style={[BACKGROUND_ICON, imageBackground]}
+        : <ImageBackground style={[BACKGROUND_ICON, imageBackground]}
           source={image}>
           {isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
             : <Text style={[TEXT, myTextStyle]} tx={tx} />
