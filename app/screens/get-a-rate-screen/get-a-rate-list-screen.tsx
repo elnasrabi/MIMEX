@@ -91,7 +91,7 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
         {renderSubRateRow('getARateListScreen.rateIncSurc', `$ ${parseInt(consignmentRate.rate[0]).toFixed(2)}`)}
         {renderSubRateRow('getARateListScreen.surcharge', consignmentRate.surcharge)}
         {renderSubRateRow('getARateListScreen.brokerRate', consignmentRate.brokerRate)}
-        {renderSubRateRow('getARateListScreen.deliveryDate', consignmentRate.deliveryDate[0])}
+        {renderSubRateRow('getARateListScreen.deliveryDate', consignmentRate.deliveryDate[0].slice(0, 10))}
         {renderSubRateRow('getARateListScreen.transitDays', consignmentRate.transitDays[0])}
       </View>
     )
