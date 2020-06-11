@@ -35,7 +35,8 @@ const BOTTOM_LIST: ViewStyle = {
   bottom: 60,
   left: 20,
   right: 20,
-  flexDirection: "row"
+  flexDirection: "row",
+  justifyContent: 'space-between'
 }
 const CONTINUE: ViewStyle = {
   alignSelf: "center",
@@ -64,7 +65,8 @@ const CONTAINER_AFS_LOGO: ImageStyle = {
   alignSelf: "center"
 }
 
-const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
+// const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
+const dataList = ["landingScreen.myList", "landingScreen.getRate"]
 let isConnected = true
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore, getARateStore } = useStores()
@@ -210,10 +212,11 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
           {dataList.map((data, index) => {
             return (
               <MyButton
-                buttonSource={icons.redButton2}
+                // buttonSource={icons.redButton2}
                 key={index}
                 imageBackground={IMAGE_RED}
-                style={CONTINUE}
+                style={{ width: "45%" }}
+                // style={CONTINUE}
                 tx={data}
                 onPress={() => onButtonPress(data, index)}
               />

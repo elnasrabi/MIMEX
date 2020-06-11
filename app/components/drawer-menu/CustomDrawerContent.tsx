@@ -34,11 +34,11 @@ export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = 
         label="My List"
         onPress={() => props.navigation.navigate("MyList")}
       />
-      <DrawerItem
+      {/* <DrawerItem
         labelStyle={LABEL}
         label="Safety Check"
         onPress={() => props.navigation.navigate("SafetyStack")}
-      />
+      /> */}
       <DrawerItem
         labelStyle={LABEL}
         label="Get a Rate"
@@ -54,11 +54,11 @@ export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = 
         label="User Setting"
         onPress={() => props.navigation.navigate("userSetting")}
       />
-      <DrawerItem
+      {/* <DrawerItem
         labelStyle={LABEL}
         label="Vehicle Setting"
         onPress={() => props.navigation.navigate("vehicleSetting")}
-      />
+      /> */}
       <DrawerItem
         labelStyle={LABEL}
         label="Logout"
