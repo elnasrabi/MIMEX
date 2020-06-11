@@ -100,7 +100,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const [toggleAll, useToggleAll] = useState(false);
   const [mylist, updateMyList] = useState([]);
   const [filterListData, updateFilterListData] = useState([]);
-  const [dummyList, updatedummyList] = useState([]);
+  const [copyOfMyList, updataCopyOfMyList] = useState([]);
   const [selectedStatus, setStatus] = useState('ALL');
   const statusData = [
     { label: 'ALL', value: 'ALL' },
@@ -124,27 +124,26 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
 
   const filterData = async (status) => {
     let todayDate = moment(new Date()).format('YYYY-MM-DD');
-    if (status == 'DELIVERED TODAY') {
-      updateFilterListData(dummyList);
-      const deliveredArray = filterListData.filter((value) => {
-        let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
-        return ((value.currentFreightState[0] === 'Delivered') && dateCondition)
-      })
-      updateMyList(deliveredArray)
-    }
-    else if (status == 'UNDELIVERED TODAY') {
-      updateFilterListData(dummyList);
-      const unDeliveredArray = filterListData.filter((value) => {
-        let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
-        return ((value.currentFreightState[0] != 'Delivered') && dateCondition)
-      })
-      updateMyList(unDeliveredArray);
-    }
+    updateFilterListData(copyOfMyList);
+    const deliveredArray = filterListData.filter((value) => {
+      let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
+      if (status == 'DELIVERED TODAY') {
+        return ((value.currentFreightState[0] === 'Delivered') && dateCondition);
+      }
+      else if (status == 'UNDELIVERED TODAY') {
+        return ((value.currentFreightState[0] != 'Delivered') && dateCondition);
+      }
+      else {
+        return updateMyList(copyOfMyList);
+      }
+    })
+    updateMyList(deliveredArray)
   }
+
   const filterList = async () => {
     switch (selectedStatus) {
       case 'ALL':
-        return updateMyList(dummyList);
+        return updateMyList(copyOfMyList);
       case 'DELIVERED TODAY':
         return filterData('DELIVERED TODAY');
       case 'UNDELIVERED TODAY':
@@ -167,7 +166,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         Object.assign(arr[i], { check: false });
       }
       updateMyList(arr);
-      updatedummyList(arr);
+      updataCopyOfMyList(arr);
       updateFilterListData(arr);
     }
   }
