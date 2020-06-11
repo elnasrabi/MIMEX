@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, View, ScrollView, Platform, Linking, TouchableWithoutFeedback } from "react-native"
 import { ParamListBase, useIsFocused } from "@react-navigation/native"
@@ -38,17 +38,17 @@ const MAPS: ViewStyle = {
   alignSelf: "center",
 }
 const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
-let currentLocation = {
-  latitude: 0,
-  longitude: 0
-}
 export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = observer(props => {
   const isFocused = useIsFocused()
   const { consignmentStore } = useStores()
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 0,
+    longitude: 0
+  })
   const consignment = consignmentStore.consignmentDetail
   useEffect(() => {
     getCurrentLocation().then(location => {
-      currentLocation = location
+      setCurrentLocation({ latitude: location.latitude, longitude: location.longitude })
     }).catch(error => {
       console.log("LOCATION_ERROR" + error)
     })
@@ -103,17 +103,18 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
           style={MAPS}
           provider={PROVIDER_GOOGLE}
           region={{
-            latitude: currentLocation.latitude,
-            longitude: currentLocation.longitude,
+            latitude: 37.78825,
+            longitude: -122.4324,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
         >
           <View>
-            <Marker coordinate={{
+            {currentLocation.latitude !== 0 && <Marker coordinate={{
               latitude: currentLocation.latitude,
               longitude: currentLocation.longitude
             }} />
+            }
             <Marker coordinate={{
               latitude: 37.78825,
               longitude: -122.4324
