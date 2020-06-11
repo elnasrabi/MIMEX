@@ -56,7 +56,7 @@ export const GetARateModel = types
             }
           }
           else {
-            Alert.alert('Incorrect Postal Code', 'Enter correct Postal Code');
+            Alert.alert('Incorrect Postal Code', 'Enter correct Postal Code.');
             self.getTownData = [];
           }
         } else {
@@ -71,13 +71,14 @@ export const GetARateModel = types
         const data = yield api.getACalculatedRate(authorization, getARateRequest);
         if (data.kind === "ok" && data.Status == 200) {
           parseString(data.getaRate, { trim: true }, function (_error, result) {
-            let response = result.responses.consignmentRateTimeServiceResponses[0];
+            let response = result.responses.consignmentRateTimeServiceResponses[0].consignmentRateTimeServiceResponse[0].consignmentRateTimeGroups[0];
             if (response === '') {
               self.geteARateList = [];
+              Alert.alert('', 'No Data Found.');
               self.responseSuccess = false;
             }
             else {
-              self.geteARateList = response.consignmentRateTimeServiceResponse[0].consignmentRateTimeGroups[0].consignmentRateTimes;
+              self.geteARateList = response.consignmentRateTimes;
               self.responseSuccess = true;
             }
           })
