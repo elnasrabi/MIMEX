@@ -33,10 +33,10 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
       <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      {props.sync && getSyncView()}
       <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
         <View style={[preset.inner, style, insetStyle]}>
-          {props.children}
+        {props.sync && getSyncView()}
+       {props.children}
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -53,11 +53,11 @@ function ScreenWithScrolling(props: ScreenProps) {
   const icon = icons[props.wall] || icons.wall
   return (
     <SafeAreaView style={[preset.outer, backgroundStyle]}>
-      <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
-      {props.sync && getSyncView()}
-      <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
+          <StatusBar backgroundColor={statusBarColor} barStyle={props.statusBar || "light-content"} />
+       <ImageBackground style={IMAGE_BACKGROUND} source={icon}>
         <View style={[preset.outer, insetStyle]}>
-          <ScrollView
+        {props.sync && getSyncView()}
+       <ScrollView
             keyboardShouldPersistTaps='handled'
             style={preset.outer}
             contentContainerStyle={[preset.outer, style]}

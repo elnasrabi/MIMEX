@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, TextStyle, View, ScrollView, Platform } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen, Text, TextField } from "../../components"
 import { color, typography } from "../../theme"
@@ -15,7 +15,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText, getCurrentDate, getFormattedDate, getImagePath, isInternetAvailable, consType, getJsonRequest } from "../../utils/utils"
+import { translateText, getCurrentDate, getFormattedDate, getImagePath, isInternetAvailable, consType, getJsonRequest, getCurrentLocation } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import UserModel from "../../models/local-database/user-modal"
 import RNFS from 'react-native-fs'
@@ -113,15 +113,17 @@ interface recordProps {
   status: string
   image: string
   signBy: string
+  location: string
   signImage: string
   date: string
   synced: boolean
 }
 
 let imageHash = Date.now()
-const currentDate = getFormattedDate(new Date().toLocaleString())
+let currentDate = getFormattedDate(new Date().toLocaleString())
 let userObj
 export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = observer(props => {
+  const isFocused = useIsFocused()
 
   const { consignmentStore, authStore } = useStores()
   const consignment = consignmentStore.consignmentDetail
@@ -136,6 +138,17 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   const consNo = consignmentStore.consignmentDetail.consignmentNumber[0]
   const loginName = authStore.userData[0].loginName[0]
   const imageFileName = consNo + loginName
+
+  useEffect(() => {
+    getCurrentLocation().then(location => {
+      if (location) {
+        consignmentStore.getCurrentLocation(location.latitude, location.longitude)
+      }
+    }).catch(error => {
+      console.log("LOCATION_ERROR" + error)
+    })
+  }, [isFocused])
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getUserData()
@@ -203,6 +216,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         consignmentNumber: consignment.consignmentNumber[0],
         itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
         status: selectedValue,
+        location: consignmentStore.city + ", " + consignmentStore.district,
         image: imageFileName,
         signBy: "",
         signImage: "",
@@ -256,6 +270,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
                   onValueChange={(value) => {
+                    currentDate = getFormattedDate(new Date().toLocaleString())
                     setSelectedValue(value)
                     onSetValidStatus(true)
                   }}

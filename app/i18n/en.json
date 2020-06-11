@@ -1,6 +1,7 @@
 {
   "common": {
     "ok": "Ok!",
+    "setting": "Setting",
     "cancel": "Cancel",
     "back": "Back",
     "success": "Success",
@@ -30,7 +31,9 @@
     "somethingWrong": "Something went wrong!!",
     "noInternet": "No Internet Connection",
     "registrationId": "Registration-ID",
-    "syncing": "Syncing"
+    "syncing": "Syncing",
+    "locationService": "Enable Location Service",
+    "locationServiceMsg": "Please enable the location service in order to get current location."
   },
   "errors": {
     "invalidEmail": "Invalid email address."

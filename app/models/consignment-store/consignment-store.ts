@@ -3,6 +3,7 @@ import { Api } from '../../services/api'
 import { omit } from "ramda"
 import { showAlert } from "../../utils/utils"
 import ConsignmentModel from "../local-database/consignment-model"
+import { string } from "mobx-state-tree/dist/internal"
 // const parseString = require('react-native-xml2js').parseString
 const parseString = require('react-native-xml2js').parseString
 
@@ -24,6 +25,8 @@ export const ConsignmentStoreModel = types
     isConsignmentSaved: false,
     consignmentList: types.optional(types.frozen(), []),
     consignmentDetail: types.optional(types.frozen(), {}),
+    city: "",
+    district: "",
     sync: false
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -88,6 +91,24 @@ export const ConsignmentStoreModel = types
         // console.tron.log('erro', erro)
         self.sync = false
       }
+    }),
+    getCurrentLocation: flow(function* getCurrentLocation(latitude: any, longitude: any) {
+      self.isButtonLoading = true
+      try {
+        const data = yield api.getCurrentLocation(latitude, longitude)
+        if (data.kind === 'ok' && data.Status === 200) {
+          const response = data.location.results[0]
+          if (data.location.status === 'OK') {
+            self.city = response.address_components[response.address_components.length - 5].long_name
+            self.district = response.address_components[response.address_components.length - 4].long_name
+          } else {
+            showAlert("common.somethingWrong")
+          }
+        } else {
+          showAlert("common.somethingWrong")
+        }
+        self.isButtonLoading = false
+      } catch (erro) { }
     }),
     setConsignmentDetail(detail) {
       self.consignmentDetail = detail

@@ -14,6 +14,7 @@ import { showAlert, isInternetAvailable, getJsonRequest } from "../utils/utils"
 import NetInfo from "@react-native-community/netinfo"
 import ConsignmentModel from "../models/local-database/consignment-model"
 import Orientation from "react-native-orientation-locker"
+import Moment from 'moment'
 
 export interface LandingScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -77,6 +78,8 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
 
   useEffect(() => {
     Orientation.lockToPortrait()
+    // Moment.locale('en')
+    // console.log(Moment().format("yyyy-MM-DDTHH:mm:ss.SSSSX"))
   })
   useEffect(() => {
     if (homeStore.barCodeData.data) {

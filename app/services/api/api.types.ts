@@ -12,3 +12,4 @@ export type ConsignmentResult = { kind: "ok"; consignment: any } | GeneralApiPro
 export type GetARateResult = { kind: "ok"; getaRate: any; Status: number } | GeneralApiProblem
 export type GetListResult = { kind: "ok"; getList: any; Status: number } | GeneralApiProblem
 export type GetTownResult = { kind: "ok"; getTownData: any; Status: number } | GeneralApiProblem
+export type GetLocationResult = { kind: "ok"; location: any; Status: number } | GeneralApiProblem

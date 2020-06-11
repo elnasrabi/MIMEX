@@ -195,8 +195,8 @@ android {
 }
 
 dependencies {
-    implementation project(':@mauron85_react-native-background-geolocation')
-    implementation project(':react-native-community-geolocation')
+    // implementation project(':@mauron85_react-native-background-geolocation')
+    // implementation project(':react-native-community-geolocation')
     implementation project(':react-native-orientation-locker')
     implementation project(':react-native-video')
     implementation project(':react-native-permissions')

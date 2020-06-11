@@ -123,6 +123,20 @@ export class Api {
     }
   }
 
+  async getCurrentLocation(latitude: any, longitude: any): Promise<Types.GetLocationResult> {
+    const response: ApiResponse<any> = await this.apisauce.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${latitude + "," + longitude}&key=AIzaSyBFxYi9_fjIKVcmFOv00zejI8pks_TnzBw`)
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+    try {
+      const location = response.data
+      return { kind: "ok", location: location, Status: response.status }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
   async getList(authorization: string, getListRequest: any): Promise<Types.GetListResult> {
     const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getListRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
@@ -136,6 +150,7 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
   async getACalculatedRate(authorization: string, getARateRequest: any): Promise<Types.GetARateResult> {
     const response: ApiResponse<any> = await this.apisauce.post('', getOriginalRequest(CONSIGNMENT_SEARCH, getARateRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
@@ -149,7 +164,6 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
-
 
   async forgotPassword(email: string): Promise<Types.LoginUserResult> {
     const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\">\n    <userRequest>\n  </userRequest>\n</requests>"
