@@ -2,6 +2,7 @@ import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 import { Api } from '../../services/api';
 import { omit } from "ramda";
 import { showAlert } from "../../utils/utils";
+import { Alert } from "react-native";
 const parseString = require('react-native-xml2js').parseString;
 
 const api = new Api();
@@ -33,14 +34,30 @@ export const GetARateModel = types
       try {
         const data = yield api.getTownAPI(townPostalCode);
         if (data.kind === 'ok' && data.Status == 200) {
-          let response = data.getTownData.results[0]
-          if (data.getTownData.status == 'OK') {
-            self.getTownData = response.postcode_localities
-            self.getState = response.address_components[response.address_components.length - 2].short_name
-            self.getCountry = response.address_components[response.address_components.length - 1].short_name
+          let response = data.getTownData.results[0];
+          if (data.getTownData.status == 'OK' && response) {
+            if (response.postcode_localities) {
+              self.getTownData = response.postcode_localities;
+            }
+            else {
+              for (let i = 0; i < response.address_components.length; i++) {
+                if (response.address_components[i].types[0] == 'locality') {
+                  self.getTownData = [response.address_components[i].long_name];
+                }
+              }
+            }
+            for (let i = 0; i < response.address_components.length; i++) {
+              if (response.address_components[i].types[0] == 'administrative_area_level_1') {
+                self.getState = response.address_components[i].short_name;
+              }
+              if (response.address_components[i].types[0] == 'country') {
+                self.getCountry = response.address_components[i].short_name;
+              }
+            }
           }
           else {
-            self.getTownData = []
+            Alert.alert('Incorrect Postal Code', 'Enter correct Postal Code');
+            self.getTownData = [];
           }
         } else {
           showAlert("common.somethingWrong");
