@@ -95,7 +95,7 @@ export async function getJsonRequest(record): Promise<any> {
       event: record.status,
       carrierEvent: record.status,
       carrierSubEvent: record.eventName,
-      location: "NCL",
+      location: record.location,
       condition: signImageData ? "All POD" : "Ok",
       date: record.date
     }

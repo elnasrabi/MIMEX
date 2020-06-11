@@ -103,8 +103,8 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
           style={MAPS}
           provider={PROVIDER_GOOGLE}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: currentLocation.latitude,
+            longitude: currentLocation.longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
