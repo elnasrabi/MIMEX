@@ -13,7 +13,7 @@ import { icons } from "../../components/icon/icons"
 import { BottomButton } from "../../components/bottom-button/bottom-button"
 import { useStores } from "../../models/root-store"
 import { isInternetAvailable, showAlert } from "../../utils/utils"
-import { boolean } from "mobx-state-tree/dist/internal"
+import moment from "moment";
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 
 export interface MyListProps {
@@ -94,20 +94,63 @@ const ACTIVITY_INDICATOR: ViewStyle = {
 }
 
 export const MyList: FunctionComponent<MyListProps> = observer((props) => {
-  const isFocused = useIsFocused()
-  const { myListStore, authStore, consignmentStore } = useStores()
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-  const [toggleAll, useToggleAll] = useState(false)
-  const [mylist, updateMyList] = useState([])
+  const isFocused = useIsFocused();
+  const { myListStore, authStore, consignmentStore } = useStores();
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
+  const [toggleAll, useToggleAll] = useState(false);
+  const [mylist, updateMyList] = useState([]);
+  const [filterListData, updateFilterListData] = useState([]);
+  const [dummyList, updatedummyList] = useState([]);
+  const [selectedStatus, setStatus] = useState('ALL');
+  const statusData = [
+    { label: 'ALL', value: 'ALL' },
+    { label: 'DELIVERED TODAY', value: 'DELIVERED TODAY' },
+    { label: 'UNDELIVERED TODAY', value: 'UNDELIVERED TODAY' }
+  ]
 
   useEffect(() => {
-    myListStore.refreshList()
-    updateMyList(myListStore.getListData)
-    const isConnected = isInternetAvailable()
+    myListStore.refreshList();
+    updateMyList(myListStore.getListData);
+    const isConnected = isInternetAvailable();
     if (isFocused && isConnected) {
-      getListApi()
+      setStatus('ALL')
+      getListApi();
     }
   }, [isFocused])
+
+  useEffect(() => {
+    filterList();
+  }, [selectedStatus])
+
+  const filterData = async (status) => {
+    let todayDate = moment(new Date()).format('YYYY-MM-DD');
+    if (status == 'DELIVERED TODAY') {
+      updateFilterListData(dummyList);
+      const deliveredArray = filterListData.filter((value) => {
+        let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
+        return ((value.currentFreightState[0] === 'Delivered') && dateCondition)
+      })
+      updateMyList(deliveredArray)
+    }
+    else if (status == 'UNDELIVERED TODAY') {
+      updateFilterListData(dummyList);
+      const unDeliveredArray = filterListData.filter((value) => {
+        let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
+        return ((value.currentFreightState[0] != 'Delivered') && dateCondition)
+      })
+      updateMyList(unDeliveredArray);
+    }
+  }
+  const filterList = async () => {
+    switch (selectedStatus) {
+      case 'ALL':
+        return updateMyList(dummyList);
+      case 'DELIVERED TODAY':
+        return filterData('DELIVERED TODAY');
+      case 'UNDELIVERED TODAY':
+        return filterData('UNDELIVERED TODAY');
+    }
+  }
 
   const getListApi = async () => {
     const getListRequest = {
@@ -119,22 +162,24 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     }
     await myListStore.getList(authStore.authorization, getListRequest)
     if (myListStore.responseSuccess) {
-      let i = 0; const arr = myListStore.getListData
+      let i = 0; const arr = myListStore.getListData;
       for (i = 0; i < arr.length; i++) {
-        Object.assign(arr[i], { check: false })
+        Object.assign(arr[i], { check: false });
       }
-      updateMyList(arr)
+      updateMyList(arr);
+      updatedummyList(arr);
+      updateFilterListData(arr);
     }
   }
 
   const updateCheckBox = (index) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    const newArr = [...mylist]
-    let i = 0; let j
-    newArr[index].check = !newArr[index].check
+    const newArr = [...mylist];
+    let i = 0; let j;
+    newArr[index].check = !newArr[index].check;
     for (j = 0; j < newArr.length; j++) {
       if (newArr[j].check) {
-        i++
+        i++;
       }
     }
     if (i == newArr.length) {
@@ -144,12 +189,12 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   }
 
   const updateAllCheckBox = (isSelect) => {
-    const newArr = [...mylist]
+    const newArr = [...mylist];
     for (let i = 0; i < newArr.length; i++) {
-      newArr[i].check = isSelect
+      newArr[i].check = isSelect;
     }
-    updateMyList(newArr)
-    useToggleAll(!toggleAll)
+    updateMyList(newArr);
+    useToggleAll(!toggleAll);
   }
 
   const renderEmptyComponent = () => {
@@ -161,72 +206,73 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   }
 
   const getSelectedList = (): any[] => {
-    const tempList = []
+    const tempList = [];
     mylist.forEach(element => {
       if (element.check) {
-        tempList.push(element)
+        tempList.push(element);
       }
     })
-    return tempList
+    return tempList;
   }
 
   const isDuplicateRecord = (item): boolean => {
-    const address = item.deliveryAddress[0].address[0]
-    const selectedList = getSelectedList()
-    let isDuplicate
+    const address = item.deliveryAddress[0].address[0];
+    const selectedList = getSelectedList();
+    let isDuplicate;
     for (const item of selectedList) {
-      const address1 = item.deliveryAddress[0].address[0]
+      const address1 = item.deliveryAddress[0].address[0];
       if (address1.line1[0] === address.line1[0]) {
-        isDuplicate = true
+        isDuplicate = true;
       } else {
-        return false
+        return false;
       }
     }
     // const isDuplicate = selectedList.some(element => address === element.deliveryAddress[0].address[0])
-    return isDuplicate
+    return isDuplicate;
   }
 
   const initNavigation = (): boolean => {
-    let consignmentNumber = ""
-    let goAhead = false
-    const selectedList = getSelectedList()
+    let consignmentNumber = "";
+    let goAhead = false;
+    const selectedList = getSelectedList();
     for (const item of selectedList) {
       if (isDuplicateRecord(item)) {
-        goAhead = true
-        consignmentNumber = consignmentNumber + ", " + item.consignmentNumber[0]
+        goAhead = true;
+        consignmentNumber = consignmentNumber + ", " + item.consignmentNumber[0];
       } else {
-        showAlert("myList.duplicate")
-        goAhead = false
+        showAlert("myList.duplicate");
+        goAhead = false;
       }
     }
     if (goAhead) {
-      const consignmentDetail = selectedList[0]
-      consignmentDetail.consignmentNumber[0] = consignmentNumber.substring(1)
-      consignmentStore.setConsignmentDetail(consignmentDetail)
+      const consignmentDetail = selectedList[0];
+      consignmentDetail.consignmentNumber[0] = consignmentNumber.substring(1);
+      consignmentStore.setConsignmentDetail(consignmentDetail);
     }
-    return goAhead
+    return goAhead;
   }
 
   const onSuccessPress = () => {
     if (initNavigation()) {
-      props.navigation.navigate("consignmentSuccess", { isSuccess: true })
+      props.navigation.navigate("consignmentSuccess", { isSuccess: true });
     }
   }
+
   const onFailPress = () => {
     if (initNavigation()) {
-      props.navigation.navigate("consignmentSuccess", { isSuccess: false })
+      props.navigation.navigate("consignmentSuccess", { isSuccess: false });
     }
   }
 
   const hasListData = (): boolean => {
-    const selectedList = getSelectedList()
-    return selectedList.length > 0
+    const selectedList = getSelectedList();
+    return selectedList.length > 0;
   }
 
   const renderItem = ({ item, index }) => {
-    const freightState = item.currentFreightState[0]
-    const consignmentNumber = item.consignmentNumber[0]
-    const address = item.deliveryAddress[0].address[0]
+    const freightState = item.currentFreightState[0];
+    const consignmentNumber = item.consignmentNumber[0];
+    const address = item.deliveryAddress[0].address[0];
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={CHECKBOX_VIEW}>
@@ -241,35 +287,24 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         <View style={SUB_CONTAINER}>
           <View style={CONSIGNMENT_DETAIL}>
             <View style={CONTINUE}>
-              <Text style={textStyle} text={consignmentNumber} />
+              <Text style={textStyle} text={consignmentNumber ? consignmentNumber : ' '} />
             </View>
             <View style={[CONTINUE, { alignItems: "flex-end" }]}>
-              <Text style={DISPATCH_STYLE} text={freightState} />
+              <Text style={DISPATCH_STYLE} text={freightState ? freightState : ' '} />
             </View>
           </View>
           <View style={ADDRESS_VIEW}>
-            <Text style={textStyle} text={address.line1[0]} />
-            <Text style={textStyle} text={address.line2[0]} />
+            <Text style={textStyle} text={address.line1 ? address.line1[0] : ' '} />
+            <Text style={textStyle} text={address.line2 ? address.line2[0] : ' '} />
           </View>
           <View style={ADDRESS_VIEW}>
-            <Text style={textStyle} text={`${address.town[0]} ${address.state[0]}`} />
+            <Text style={textStyle} text={`${address.town ? address.town[0] : ' '} ${address.state ? address.state[0] : ' '}`} />
           </View>
         </View>
       </View>
     )
   }
 
-  const statusData = [
-    { label: 'ALL', value: 'ALL' },
-    { label: 'DESPATCHED', value: 'DESPATCHED' },
-    { label: 'DELIVERED', value: 'DELIVERED' }
-  ]
-  const [selectedStatus, setStatus] = useState('ALL')
-  const dateOrderData = [
-    { label: 'ASCENDING', value: 'ASCENDING' },
-    { label: 'DECENDING', value: 'DECENDING' }
-  ]
-  const [selectedDateOrder, setDateOrder] = useState('ASCENDING')
   return (
     <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
       {
@@ -289,20 +324,13 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
             disabled={myListStore.isLoading ? true : false}
           />
         </View>
-        <View style={{ width: '40%' }}>
+        <View style={{ width: '80%' }}>
           <DropdownPicker
+            placeHolder={'myList.empty'}
+            disabled={myListStore.isLoading}
             dropDownData={statusData}
-            placeHolder={"common.registrationId"}
             onValueChange={(value) => setStatus(value)}
             selectedValue={selectedStatus}
-          />
-        </View>
-        <View style={{ width: '40%' }}>
-          <DropdownPicker
-            dropDownData={dateOrderData}
-            placeHolder={"common.registrationId"}
-            onValueChange={(value) => setDateOrder(value)}
-            selectedValue={selectedDateOrder}
           />
         </View>
       </View>
