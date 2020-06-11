@@ -61,7 +61,8 @@ const CALL_LOGO: ImageStyle = {
 const LOGO_TEXT: TextStyle = {
   color: color.palette.red,
   alignSelf: 'center',
-  fontFamily: typography.secondary
+  fontFamily: typography.secondary,
+  fontSize: 13
 }
 
 export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) => {
@@ -126,15 +127,15 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
     return (
       <View style={HEADER_STYLE} >
         <TouchableOpacity style={{ flex: 1 }}
-          onPress={() => Linking.openURL('mailto:support@moveit.com')}
+          onPress={() => Linking.openURL('mailto:support@moveit.com.au')}
         >
           <Image source={icons.emailLogo} resizeMode="contain" style={EMAIL_LOGO} />
-          <Text style={LOGO_TEXT} >{`support@moveit.com`}</Text>
+          <Text style={LOGO_TEXT} >{`support@moveit.com.au`}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1, }}
-          onPress={() => callApi('+611234123123')}>
+          onPress={() => callApi('+611300884294')}>
           <Image source={icons.callLogo} resizeMode="contain" style={CALL_LOGO} />
-          <Text style={[LOGO_TEXT, { marginTop: 20 }]} >{`+61 1234 123 123`}</Text>
+          <Text style={[LOGO_TEXT, { marginTop: 20 }]} >{`+61 1300 884 294`}</Text>
         </TouchableOpacity>
       </View>
     )
