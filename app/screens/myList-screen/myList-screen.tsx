@@ -15,7 +15,7 @@ import { useStores } from "../../models/root-store"
 import { isInternetAvailable, showAlert } from "../../utils/utils"
 import moment from "moment";
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
-
+import _ from "lodash";
 export interface MyListProps {
   navigation: NativeStackNavigationProp<ParamListBase>
 };
@@ -102,19 +102,15 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const [filterListData, updateFilterListData] = useState([]);
   const [copyOfMyList, updataCopyOfMyList] = useState([]);
   const [selectedStatus, setStatus] = useState('ALL');
-  const statusData = [
-    { label: 'ALL', value: 'ALL' },
-    { label: 'DELIVERED TODAY', value: 'DELIVERED TODAY' },
-    { label: 'UNDELIVERED TODAY', value: 'UNDELIVERED TODAY' }
-  ]
+  const [statusData, updateStatusData] = useState([])
 
   useEffect(() => {
     myListStore.refreshList();
     updateMyList(myListStore.getListData);
     const isConnected = isInternetAvailable();
     if (isFocused && isConnected) {
-      setStatus('ALL')
       getListApi();
+      setStatus('ALL');
     }
   }, [isFocused])
 
@@ -125,29 +121,24 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const filterData = async (status) => {
     let todayDate = moment(new Date()).format('YYYY-MM-DD');
     updateFilterListData(copyOfMyList);
-    const deliveredArray = filterListData.filter((value) => {
-      let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
-      if (status == 'DELIVERED TODAY') {
-        return ((value.currentFreightState[0] === 'Delivered') && dateCondition);
-      }
-      else if (status == 'UNDELIVERED TODAY') {
-        return ((value.currentFreightState[0] != 'Delivered') && dateCondition);
-      }
-      else {
-        return updateMyList(copyOfMyList);
-      }
-    })
-    updateMyList(deliveredArray)
+    if (status) {
+      const deliveredArray = filterListData.filter((value) => {
+        let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
+        return ((value.currentFreightState[0] === status) && dateCondition);
+      })
+      updateMyList(deliveredArray);
+    }
+    else {
+      setStatus('ALL');
+    }
   }
 
   const filterList = async () => {
     switch (selectedStatus) {
       case 'ALL':
         return updateMyList(copyOfMyList);
-      case 'DELIVERED TODAY':
-        return filterData('DELIVERED TODAY');
-      case 'UNDELIVERED TODAY':
-        return filterData('UNDELIVERED TODAY');
+      default:
+        return filterData(selectedStatus);
     }
   }
 
@@ -159,12 +150,22 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         myList: "true"
       }
     }
-    await myListStore.getList(authStore.authorization, getListRequest)
+    await myListStore.getList(authStore.authorization, getListRequest);
     if (myListStore.responseSuccess) {
       let i = 0; const arr = myListStore.getListData;
+      let statusDataArr = [{ label: 'ALL', value: 'ALL' }];
+      let tempArr = [];
       for (i = 0; i < arr.length; i++) {
         Object.assign(arr[i], { check: false });
+        let statusIsPresent = _.indexOf(tempArr, arr[i].currentFreightState[0], 0);
+        if (statusIsPresent == -1) {
+          tempArr.push(arr[i].currentFreightState[0]);
+        }
       }
+      for (let x = 0; x < tempArr.length; x++) {
+        statusDataArr.push({ label: `${tempArr[x].toUpperCase()} TODAY`, value: `${tempArr[x]}` });
+      }
+      updateStatusData(statusDataArr);
       updateMyList(arr);
       updataCopyOfMyList(arr);
       updateFilterListData(arr);

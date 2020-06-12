@@ -22,9 +22,9 @@ export const MyListModel = types
     getList: flow(function* getList(authorization: string, getListRequest: any) {
       self.isLoading = true;
       try {
-        const data = yield api.getACalculatedRate(authorization, getListRequest);
+        const data = yield api.getList(authorization, getListRequest);
         if (data.kind === "ok" && data.Status == 200) {
-          parseString(data.getaRate, { trim: true }, function (_error, result) {
+          parseString(data.getList, { trim: true }, function (_error, result) {
             let response = result.responses.consignmentMatchingServiceResponse[0].consignmentMatchingConsignment;
             if (response === '') {
               self.getListData = [];
