@@ -16,7 +16,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { ImageViewerModal } from "../../components/image-viewer/image-viewer-modal"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest, consType, getCurrentLocation } from "../../utils/utils"
+import { translateText, isInternetAvailable, getFormattedDate, getSignaturePath, getImageDir, getImagePath, getJsonRequest, consType } from "../../utils/utils"
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker"
 import ConsignmentModel from "../../models/local-database/consignment-model"
 import RNFS from 'react-native-fs'
@@ -304,7 +304,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   }
 
   const onChangeText = (text) => {
-    text ? setValidSignText(true) : setValidSignText(false)
     onSignText(text)
   }
 

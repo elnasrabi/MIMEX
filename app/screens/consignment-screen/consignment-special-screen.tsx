@@ -140,16 +140,6 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   const imageFileName = consNo + loginName
 
   useEffect(() => {
-    getCurrentLocation().then(location => {
-      if (location) {
-        consignmentStore.getCurrentLocation(location.latitude, location.longitude)
-      }
-    }).catch(error => {
-      console.log("LOCATION_ERROR" + error)
-    })
-  }, [isFocused])
-
-  useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     getUserData()
     consignmentStore.setConsignmentFalse()
@@ -202,10 +192,6 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
     const isConnected = await isInternetAvailable(false)
     if (!selectedValue) {
       onSetValidStatus(false)
-    } else if (!fileName) {
-      onSetValidFile(false)
-    } else if (!notes) {
-      setValidNotesText(false)
     } else {
       const record: recordProps = {
         customerName: "John jacob",
@@ -222,18 +208,21 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         date: Moment().toISOString(),
         synced: false
       }
-      if (isConnected) {
-        const request = await getJsonRequest(record)
-        consignmentStore.saveConsignment(authStore.authorization, request)
-        // Call API
-      } else {
-        addAndUpdateRecordOffline(record)
-      }
+      const numberArray: any[] = consNo.split(",")
+      numberArray.forEach(async number => {
+        record.consignmentNumber = number.replace(/ /g, '')
+        if (isConnected) {
+          const request = await getJsonRequest(record)
+          consignmentStore.saveConsignment(authStore.authorization, request)
+          // Call API
+        } else {
+          addAndUpdateRecordOffline(record)
+        }
+      })
     }
   }
 
   const onChangeText = (text) => {
-    text ? setValidNotesText(true) : setValidNotesText(false)
     onNotes(text)
   }
 
