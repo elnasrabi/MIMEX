@@ -216,10 +216,9 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         {renderRow("User Type", userData.userTypeName[0])}
       </ScrollView>
       <BottomButton
-        leftImage={icons.blackButton2}
+        hideLeftButton={true}
         rightImage={icons.redButton2}
         onRightPress={() => gotoHome()}
-        leftText={"common.save"}
         rightText={"common.cancel"} />
     </Screen>
   )
