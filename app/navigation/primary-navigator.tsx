@@ -74,6 +74,27 @@ const ConsignmentStack = () => {
     </Stack.Navigator>
   )
 }
+
+const MyListStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        stackPresentation: 'push'
+      }}
+    >
+      <Stack.Screen name="MyList" component={MyList} />
+      {/* <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} /> */}
+      <Stack.Screen name="pdfViewer" component={PDFViewer} />
+      <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
+      <Stack.Screen name="consignmentSpecial" component={ConsignmentSpecial} />
+      <Stack.Screen name="qrScanner" component={QRScanner} />
+      <Stack.Screen name="signatureView" component={SignatureView} />
+    </Stack.Navigator>
+  )
+}
+
 const LandingStack = () => {
   return (
     <Stack.Navigator
@@ -105,7 +126,7 @@ export function PrimaryNavigator() {
       <Drawer.Screen name="LandingStack" component={LandingStack} />
       <Drawer.Screen name="userSetting" component={UserSetting} />
       <Drawer.Screen name="GetARateStack" component={GetARateStack} />
-      <Drawer.Screen name="MyList" component={MyList} />
+      <Drawer.Screen name="MyListStack" component={MyListStack} />
       <Drawer.Screen name="SafetyStack" component={SafetyStack} />
       <Drawer.Screen name="vehicleSetting" component={VehicleSetting} />
       <Drawer.Screen name="ConsignmentStack" component={ConsignmentStack} />
