@@ -18,6 +18,7 @@ export type PrimaryParamList = {
   GetARateList: undefined
   GetARate: undefined
   Home: undefined
+  MyList: undefined
 }
 export type AuthParamList = {
   login: undefined
