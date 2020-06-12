@@ -124,7 +124,14 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     if (status) {
       const deliveredArray = filterListData.filter((value) => {
         let dateCondition = value.expectedDeliveryDate[0].slice(0, 10) === todayDate;
-        return ((value.currentFreightState[0] === status) && dateCondition);
+        if (status == 'UNDELIVERED') {
+          return ((value.currentFreightState[0] != 'Delivered') && dateCondition);
+        }
+        else {
+          let currentStatus = value.freightStateHistory[value.freightStateHistory.length - 1].status[0];
+          let currentStatusDate = value.freightStateHistory[value.freightStateHistory.length - 1].statusDateTime[0].slice(0, 10);
+          return ((currentStatus === status) && currentStatusDate == todayDate);
+        }
       })
       updateMyList(deliveredArray);
     }
@@ -153,7 +160,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     await myListStore.getList(authStore.authorization, getListRequest);
     if (myListStore.responseSuccess) {
       let i = 0; const arr = myListStore.getListData;
-      let statusDataArr = [{ label: 'ALL', value: 'ALL' }];
+      let statusDataArr = [{ label: 'ALL', value: 'ALL' }, { label: 'UNDELIVERED TODAY', value: 'UNDELIVERED' }];
       let tempArr = [];
       for (i = 0; i < arr.length; i++) {
         Object.assign(arr[i], { check: false });
@@ -162,8 +169,8 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
           tempArr.push(arr[i].currentFreightState[0]);
         }
       }
-      for (let x = 0; x < tempArr.length; x++) {
-        statusDataArr.push({ label: `${tempArr[x].toUpperCase()} TODAY`, value: `${tempArr[x]}` });
+      for (let i = 0; i < tempArr.length; i++) {
+        statusDataArr.push({ label: `${tempArr[i].toUpperCase()} TODAY`, value: `${tempArr[i]}` });
       }
       updateStatusData(statusDataArr);
       updateMyList(arr);
