@@ -169,7 +169,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   const onButtonPress = (item, index) => {
     switch (item) {
       case "landingScreen.myList":
-        return props.navigation.navigate('MyList')
+        return props.navigation.navigate('MyListStack')
       case "landingScreen.safetyCheck":
         return props.navigation.navigate('SafetyStack')
       case "landingScreen.getRate":
