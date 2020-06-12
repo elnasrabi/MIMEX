@@ -249,6 +249,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       } else {
         showAlert("myList.duplicate");
         goAhead = false;
+        return goAhead
       }
     }
     if (goAhead) {

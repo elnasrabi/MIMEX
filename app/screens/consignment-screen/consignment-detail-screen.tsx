@@ -152,7 +152,7 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
           {/* Customer */}
           <ComConsignmentDetail data={consignment} navigation={props.navigation} view={"customer"} />
           {ForceTouchGestureHandler.forceTouchAvailable
-            ? <ForceTouchGestureHandler onGestureEvent={openGoogleMap}>
+            ? <ForceTouchGestureHandler onHandlerStateChange="" onGestureEvent={openGoogleMap}>
               {getMapView()}
             </ForceTouchGestureHandler>
             : <TouchableWithoutFeedback onLongPress={openGoogleMap}>

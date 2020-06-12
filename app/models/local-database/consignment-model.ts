@@ -56,6 +56,7 @@ export default class ConsignmentModel extends Model {
   async addAndUpdateRecordOffline(isConsignmentSaved, offlineData, userObj): Promise<boolean> {
     return database.action(async () => {
       const consignmentSuccess = database.collections.get("consignment")
+      console.log(offlineData)
       if (isConsignmentSaved) {
         const record = await consignmentSuccess.find(offlineConsignment[0].id)
         record.update(update => {

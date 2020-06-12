@@ -249,18 +249,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const onSignaturePress = () => {
     props.navigation.navigate("signatureView")
   }
-  async function getSavedData(): Promise<boolean> {
-    const consignmentNumber = consignment.consignmentNumber.toString()
-    const loginName = authStore.userData[0].loginName[0]
+  async function getSavedData(record: any) {
     const modal = new ConsignmentModel()
-    const isConsignmentSaved = await modal.getSavedConsignment(consignmentNumber, loginName)
-    return isConsignmentSaved
-  }
-  const addAndUpdateRecordOffline = async (record) => {
-    const modal = new ConsignmentModel()
-    const isSaved = await getSavedData()
-    modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
-    props.navigation.navigate("Home")
+    modal.addAndUpdateRecordOffline(false, record, userObj[0])
+    return false
   }
 
   const onSave = async () => {
@@ -288,6 +280,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         synced: false
       }
       const numberArray: any[] = consNo.split(",")
+      let shouldGoHome = false
       numberArray.forEach(async number => {
         record.consignmentNumber = number.replace(/ /g, '')
         if (isConnected) {
@@ -295,13 +288,18 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           consignmentStore.saveConsignment(authStore.authorization, request)
           // Call API
         } else {
-          addAndUpdateRecordOffline(record)
+          shouldGoHome = true
+          getSavedData(record)
         }
       })
+      if (shouldGoHome) {
+        props.navigation.navigate("Home")
+      }
     }
   }
 
   const onChangeText = (text) => {
+    text ? setValidSignText(true) : setValidSignText(false)
     onSignText(text)
   }
 

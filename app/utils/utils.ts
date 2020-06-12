@@ -133,7 +133,7 @@ export const getCurrentLocation = async (onLocationEnableCanceled: any): Promise
           location = position.coords
           resolve(location)
         },
-        (error) => {
+        () => {
           // See error code charts below.
           location = null
           reject(location)

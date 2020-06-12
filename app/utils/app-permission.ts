@@ -30,7 +30,7 @@ export const requestPermission = async (type: any) => {
     Alert.alert(translateText("common.permissionBlocked"))
     return false
   } else {
-    Alert.alert(translateText("common.permissionUnavailable"))
+    // Alert.alert(translateText("common.permissionUnavailable"))
     return false
   }
 }

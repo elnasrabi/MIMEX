@@ -118,7 +118,6 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     const data = await modal.getAllSavedConsignment()
     data.forEach(async element => {
       const request = await getJsonRequest(element)
-      // console.log(request) 582300/1750
       consignmentStore.saveConsignmentOffline(authStore.authorization, request, element.id)
     })
   }
