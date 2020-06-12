@@ -21,7 +21,6 @@ const getOriginalRequest2: any = (api: string, requestData: any) => {
   xml = xml.replace("</requestData>", "")
   const newApi = "'" + api + "'"
   const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<statusUpdates xmlns:meta=" + newApi + ">\n" + xml + "\n</statusUpdates>"
-  console.log(xmlData)
   return xmlData
 }
 /**
@@ -98,7 +97,6 @@ export class Api {
   async saveConsignment(authorization: string, consignmentRequest: any): Promise<Types.ConsignmentResult> {
     const response: ApiResponse<any> = await this.apisauce.post('ccsLocal/statusUpdateXML', getOriginalRequest2(SAVE_CONSIGNMENT, consignmentRequest), { headers: { Authorization: "Basic " + authorization } })
     if (!response.ok) {
-      console.log(response)
       const problem = getGeneralApiProblem(response)
       if (problem) return problem
     }

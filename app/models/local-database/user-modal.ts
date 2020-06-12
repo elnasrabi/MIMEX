@@ -23,7 +23,6 @@ export default class UserModel extends Model {
     return await database.action(async (): Promise<boolean> => {
       const consignmentSuccess = database.collections.get("user")
       offlineConsignment = await consignmentSuccess.query(Q.where("login_name", loginName)).fetch()
-      console.log(offlineConsignment)
       return offlineConsignment
     })
   }
@@ -31,7 +30,6 @@ export default class UserModel extends Model {
   async getConsignment(userObj): Promise<any> {
     return await database.action(async (): Promise<boolean> => {
       const consignments = await userObj.consignments.fetch()
-      console.log(consignments)
       return false
     })
   }

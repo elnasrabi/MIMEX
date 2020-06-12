@@ -7,7 +7,6 @@ export default class Sync {
     const consignment = new ConsignmentModel()
     const savedConsignment = await consignment.getAllSavedConsignment()
     savedConsignment.forEach(element => {
-      console.log(element)
       consignmentStore.consignmentSearch(authStore.authorization, "")
     })
   }

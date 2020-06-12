@@ -186,7 +186,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   // console.log(SIGN_IMAGE_URI)
 
   useEffect(() => {
-    console.log(consNo)
     getUserData()
     consignmentStore.onSigned(false)
     consignmentStore.setConsignmentFalse()
@@ -262,7 +261,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const addAndUpdateRecordOffline = async (record) => {
     const modal = new ConsignmentModel()
     const isSaved = await getSavedData()
-    console.log(isSaved)
     modal.addAndUpdateRecordOffline(isSaved, record, userObj[0])
     props.navigation.navigate("Home")
   }

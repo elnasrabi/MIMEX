@@ -46,7 +46,6 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     }
   })
   const filePath = getSignaturePath(consNo + loginName)
-  console.log(dir)
   const saveSign = async () => {
     if (Platform.OS === 'android') {
       const result = await requestPermission(STORAGE_PERMISSION)

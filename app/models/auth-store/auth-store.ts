@@ -38,7 +38,6 @@ export const AuthStoreModel = types
             self.isLoggedIn = true
             const model = new UserModel()
             const offlineConsignment = await model.getUserData(self.userData[0].loginName[0])
-            console.log(offlineConsignment)
             if (offlineConsignment.length > 0 && offlineConsignment[0].loginName === self.userData[0].loginName[0]) {
               model.addUserData(true, self.userData)
             } else {

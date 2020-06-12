@@ -65,7 +65,6 @@ export const ConsignmentStoreModel = types
         if (data.kind === "ok") {
           parseString(data.consignment, { trim: true }, function (_error, result) {
             self.isConsignmentSaved = true
-            console.log(result)
           })
         } else {
           showAlert("common.somethingWrong")
@@ -104,7 +103,6 @@ export const ConsignmentStoreModel = types
           if (data.location.status === 'OK') {
             self.city = response.address_components[response.address_components.length - 5].long_name
             self.district = response.address_components[response.address_components.length - 4].long_name
-            console.log(self.city)
             self.locationEnableCanceled = true
           } else {
             showAlert("common.somethingWrong")

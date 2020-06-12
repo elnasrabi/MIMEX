@@ -31,7 +31,6 @@ export default class ConsignmentModel extends Model {
       const consignmentSuccess = database.collections.get("consignment")
       offlineConsignment = await consignmentSuccess.query(Q.where("consignment_number", consignmentNumber)).fetch()
       if (offlineConsignment.length > 0 && offlineConsignment[0].consignmentNumber === consignmentNumber) {
-        console.log(offlineConsignment)
         return true
       }
       return false

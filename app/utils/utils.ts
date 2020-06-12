@@ -48,7 +48,6 @@ export function callApi(number) {
 export const getFormattedDate = (date): string => {
   Moment.locale('en')
   const newDate = Moment().format('hh:mmA, DD MMM, yyyy')
-  console.log(newDate)
   return newDate
 }
 
@@ -138,7 +137,6 @@ export const getCurrentLocation = async (onLocationEnableCanceled: any): Promise
           // See error code charts below.
           location = null
           reject(location)
-          console.log(error.code, error.message)
           locationSettingAlert(onLocationEnableCanceled)
         },
         {
