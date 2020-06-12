@@ -157,8 +157,8 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       let tempArr = [];
       for (i = 0; i < arr.length; i++) {
         Object.assign(arr[i], { check: false });
-        let x = _.indexOf(tempArr, arr[i].currentFreightState[0], 0);
-        if (x == -1) {
+        let statusIsPresent = _.indexOf(tempArr, arr[i].currentFreightState[0], 0);
+        if (statusIsPresent == -1) {
           tempArr.push(arr[i].currentFreightState[0]);
         }
       }
