@@ -165,6 +165,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
         newArr[i] = Object.assign({ label: getARateStore.getTownData[i], value: getARateStore.getTownData[i] });
       }
       updateTownData(newArr);
+      updateTown(getARateStore.getTownData[0]);
     }
   }
 
