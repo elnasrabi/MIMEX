@@ -4,6 +4,7 @@ import { omit } from "ramda"
 import { showAlert } from "../../utils/utils"
 import ConsignmentModel from "../local-database/consignment-model"
 import { string } from "mobx-state-tree/dist/internal"
+import { Alert } from "react-native"
 // const parseString = require('react-native-xml2js').parseString
 const parseString = require('react-native-xml2js').parseString
 
@@ -27,7 +28,8 @@ export const ConsignmentStoreModel = types
     consignmentDetail: types.optional(types.frozen(), {}),
     city: "",
     district: "",
-    sync: false
+    sync: false,
+    locationEnableCanceled: false
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
@@ -63,6 +65,7 @@ export const ConsignmentStoreModel = types
         if (data.kind === "ok") {
           parseString(data.consignment, { trim: true }, function (_error, result) {
             self.isConsignmentSaved = true
+            console.log(result)
           })
         } else {
           showAlert("common.somethingWrong")
@@ -101,6 +104,8 @@ export const ConsignmentStoreModel = types
           if (data.location.status === 'OK') {
             self.city = response.address_components[response.address_components.length - 5].long_name
             self.district = response.address_components[response.address_components.length - 4].long_name
+            console.log(self.city)
+            self.locationEnableCanceled = true
           } else {
             showAlert("common.somethingWrong")
           }
@@ -121,6 +126,9 @@ export const ConsignmentStoreModel = types
     },
     stopSyncing() {
       self.sync = false
+    },
+    onLocationEnableCanceled(enable) {
+      self.locationEnableCanceled = enable
     }
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars

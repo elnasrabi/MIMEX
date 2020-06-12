@@ -96,11 +96,15 @@ export async function getJsonRequest(record): Promise<any> {
       carrierEvent: record.status,
       carrierSubEvent: record.eventName,
       location: record.location,
-      condition: signImageData ? "All POD" : "Ok",
-      date: record.date
+      condition: signImageData ? "All POD" : "All Ok",
+      date: getCurrentDate()
     }
   }
   return request
+}
+
+const getCurrentDate = (): string => {
+  return Moment().format("yyyy-MM-DDT") + Moment().format("HH:mm:ss")
 }
 
 export const consType = {
@@ -119,9 +123,9 @@ export const isAndroidDevice = (): boolean => {
   return type
 }
 
-export const getCurrentLocation = async (): Promise<any> => {
+export const getCurrentLocation = async (onLocationEnableCanceled: any): Promise<any> => {
   const result = await requestPermission(LOCATION_PERMISSION)
-  let location;
+  let location
   if (result) {
     // Geolocation.requestAuthorization()
     return new Promise((resolve, reject) => {
@@ -135,7 +139,7 @@ export const getCurrentLocation = async (): Promise<any> => {
           location = null
           reject(location)
           console.log(error.code, error.message)
-          locationSettingAlert()
+          locationSettingAlert(onLocationEnableCanceled)
         },
         {
           enableHighAccuracy: false,
@@ -147,7 +151,7 @@ export const getCurrentLocation = async (): Promise<any> => {
   }
 }
 
-const locationSettingAlert = () => {
+const locationSettingAlert = (onLocationEnableCanceled: any) => {
   Alert.alert(
     translateText("common.locationService"),
     translateText("common.locationServiceMsg"),
@@ -155,12 +159,16 @@ const locationSettingAlert = () => {
       {
         text: translateText("common.setting"),
         onPress: () => {
+          // onLocationEnableCanceled(false)
           openSettings().catch(() => console.warn('cannot open settings'))
         },
         style: 'cancel'
       },
       {
-        text: translateText("common.cancel")
+        text: translateText("common.cancel"),
+        onPress: () => {
+          onLocationEnableCanceled(true)
+        }
       }
     ],
     { cancelable: false }

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, ScrollView, Platform, Linking, TouchableWithoutFeedback } from "react-native"
-import { ParamListBase, useIsFocused } from "@react-navigation/native"
+import { ViewStyle, View, ScrollView, Platform, Linking, TouchableWithoutFeedback, AppState } from "react-native"
+import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
 import { color } from "../../theme"
@@ -39,20 +40,34 @@ const MAPS: ViewStyle = {
 }
 const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 }
 export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = observer(props => {
-  const isFocused = useIsFocused()
   const { consignmentStore } = useStores()
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 0,
     longitude: 0
   })
   const consignment = consignmentStore.consignmentDetail
+
   useEffect(() => {
-    getCurrentLocation().then(location => {
-      setCurrentLocation({ latitude: location.latitude, longitude: location.longitude })
+    consignmentStore.onLocationEnableCanceled(false)
+    getMyCurrentLocation()
+    AppState.addEventListener('change', state => {
+      if (state === 'active' && !consignmentStore.locationEnableCanceled) {
+        consignmentStore.onLocationEnableCanceled(true)
+        getMyCurrentLocation()
+      }
+    })
+  }, [])
+
+  const getMyCurrentLocation = () => {
+    getCurrentLocation(consignmentStore.onLocationEnableCanceled).then(location => {
+      if (location) {
+        consignmentStore.getCurrentLocation(location.latitude, location.longitude)
+        setCurrentLocation({ latitude: location.latitude, longitude: location.longitude })
+      }
     }).catch(error => {
       console.log("LOCATION_ERROR" + error)
     })
-  }, [isFocused])
+  }
 
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
 

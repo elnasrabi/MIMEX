@@ -22,8 +22,6 @@ import ConsignmentModel from "../../models/local-database/consignment-model"
 import RNFS from 'react-native-fs'
 import UserModel from "../../models/local-database/user-modal"
 import Moment from 'moment'
-import { requestPermission, LOCATION_PERMISSION } from "../../utils/app-permission"
-import Geolocation from '@react-native-community/geolocation';
 
 export interface ConsignmentSuccessProps {
   navigation: NativeStackNavigationProp<ParamListBase>
@@ -188,16 +186,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   // console.log(SIGN_IMAGE_URI)
 
   useEffect(() => {
-    getCurrentLocation().then(location => {
-      if (location) {
-        consignmentStore.getCurrentLocation(location.latitude, location.longitude)
-      }
-    }).catch(error => {
-      console.log("LOCATION_ERROR" + error)
-    })
-  }, [isFocused])
-
-  useEffect(() => {
+    console.log(consNo)
     getUserData()
     consignmentStore.onSigned(false)
     consignmentStore.setConsignmentFalse()
@@ -214,6 +203,13 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   useLayoutEffect(() => {
     props.navigation.addListener('focus', () => {
+      // getCurrentLocation().then(location => {
+      //   if (location) {
+      //     consignmentStore.getCurrentLocation(location.latitude, location.longitude)
+      //   }
+      // }).catch(error => {
+      //   console.log("LOCATION_ERROR" + error)
+      // })
       imageHash = Date.now()
       setSignUri(SIGN_IMAGE_URI)
       randomNo = Math.random()
@@ -295,13 +291,17 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         date: Moment().toISOString(),
         synced: false
       }
-      if (isConnected) {
-        const request = await getJsonRequest(record)
-        consignmentStore.saveConsignment(authStore.authorization, request)
-        // Call API
-      } else {
-        addAndUpdateRecordOffline(record)
-      }
+      const numberArray: any[] = consNo.split(",")
+      numberArray.forEach(async number => {
+        record.consignmentNumber = number.replace(/ /g, '')
+        if (isConnected) {
+          const request = await getJsonRequest(record)
+          consignmentStore.saveConsignment(authStore.authorization, request)
+          // Call API
+        } else {
+          addAndUpdateRecordOffline(record)
+        }
+      })
     }
   }
 

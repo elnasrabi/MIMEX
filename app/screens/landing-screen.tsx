@@ -67,7 +67,8 @@ const CONTAINER_AFS_LOGO: ImageStyle = {
 }
 
 // const dataList = ["landingScreen.myList", "landingScreen.safetyCheck", "landingScreen.getRate"]
-const dataList = ["landingScreen.myList", "landingScreen.getRate"]
+// const dataList = ["landingScreen.myList", "landingScreen.getRate"]
+const dataList = ["landingScreen.myList"]
 let isConnected = true
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore, getARateStore } = useStores()
@@ -78,8 +79,6 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
 
   useEffect(() => {
     Orientation.lockToPortrait()
-    // Moment.locale('en')
-    // console.log(Moment().format("yyyy-MM-DDTHH:mm:ss.SSSSX"))
   })
   useEffect(() => {
     if (homeStore.barCodeData.data) {
