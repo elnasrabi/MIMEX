@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { FunctionComponent, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, View, ScrollView, Platform, Linking, TouchableWithoutFeedback, AppState } from "react-native"
+import { ViewStyle, View, ScrollView, Platform, Linking, TouchableWithoutFeedback, AppState, Animated } from "react-native"
 import { ParamListBase } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "react-native-screens/native-stack"
 import { Screen } from "../../components"
@@ -13,7 +13,7 @@ import { icons } from "../../components/icon/icons"
 import { ComConsignmentDetail } from "../../components/consignment/com-consigment-detail"
 import { isIphoneX } from "react-native-iphone-x-helper"
 import { useStores } from "../../models/root-store"
-import { ForceTouchGestureHandler } from "react-native-gesture-handler"
+import { ForceTouchGestureHandler, State } from "react-native-gesture-handler"
 import { getCurrentLocation } from "../../utils/utils"
 
 export interface ConsignmentDetailProps {
@@ -82,6 +82,12 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
     const supported = await Linking.canOpenURL(url)
     return supported ? 'Open' : undefined
   }
+
+  const onHandlerStateChange = ({ nativeEvent }) => {
+    if (nativeEvent.state === State.ACTIVE) {
+      openGoogleMap();
+    }
+  };
 
   const openGoogleMap = async () => {
     const latitude = 37.78825
@@ -154,8 +160,14 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
           {/* Customer */}
           <ComConsignmentDetail data={consignment} navigation={props.navigation} view={"customer"} />
           {ForceTouchGestureHandler.forceTouchAvailable
-            ? <ForceTouchGestureHandler onGestureEvent={openGoogleMap}>
-              {getMapView()}
+            ? <ForceTouchGestureHandler
+              feedbackOnActivation
+              onHandlerStateChange={onHandlerStateChange}
+            // onGestureEvent={openGoogleMap}
+            >
+              <Animated.View>
+                {getMapView()}
+              </Animated.View>
             </ForceTouchGestureHandler>
             : <TouchableWithoutFeedback onLongPress={openGoogleMap}>
               {getMapView()}
