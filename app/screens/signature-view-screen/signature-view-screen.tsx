@@ -63,8 +63,6 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     RNFS.writeFile(filePath, result.encoded, 'base64').then(result => {
       consignmentStore.onSigned(true)
       goBack()
-    }).catch((error) => {
-      console.log(error)
     })
   }
   return (

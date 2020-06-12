@@ -65,7 +65,6 @@ export const ConsignmentStoreModel = types
         if (data.kind === "ok") {
           parseString(data.consignment, { trim: true }, function (_error, result) {
             self.isConsignmentSaved = true
-            console.log(result)
           })
         } else {
           showAlert("common.somethingWrong")

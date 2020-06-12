@@ -164,8 +164,6 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
           // console.log(filePath)
           // console.log(result)
           onSetValidFile(true)
-        }).catch((error) => {
-          console.log(error)
         })
       }
     })

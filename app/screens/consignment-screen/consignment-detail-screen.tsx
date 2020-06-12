@@ -64,8 +64,6 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
         consignmentStore.getCurrentLocation(location.latitude, location.longitude)
         setCurrentLocation({ latitude: location.latitude, longitude: location.longitude })
       }
-    }).catch(error => {
-      console.log("LOCATION_ERROR" + error)
     })
   }
 

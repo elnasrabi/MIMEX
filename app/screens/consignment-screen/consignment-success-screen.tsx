@@ -239,8 +239,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           // console.log(filePath)
           // console.log(result)
           onSetValidFile(true)
-        }).catch((error) => {
-          console.log(error)
         })
       }
     })

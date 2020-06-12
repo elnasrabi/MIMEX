@@ -21,7 +21,6 @@ const getOriginalRequest2: any = (api: string, requestData: any) => {
   xml = xml.replace("</requestData>", "")
   const newApi = "'" + api + "'"
   const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<statusUpdates xmlns:meta=" + newApi + ">\n" + xml + "\n</statusUpdates>"
-  console.log(xmlData)
   return xmlData
 }
 /**
