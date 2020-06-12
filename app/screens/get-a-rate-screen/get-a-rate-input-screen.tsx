@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, KeyboardTypeOptions, Keyboard, TextInput, SafeAreaView, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { ViewStyle, TextStyle, View, ScrollView, Platform, ImageBackground, Keyboard, TextInput, SafeAreaView, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import moment from 'moment';
 import KeyboardManager from "react-native-keyboard-manager";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import RNGooglePlaces from "react-native-google-places";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -16,7 +15,7 @@ import { isInternetAvailable } from "../../utils/utils";
 import { useStores } from "../../models/root-store";
 
 // iports from components
-import { Screen, Text, TextField, Button } from "../../components";
+import { Screen, Text } from "../../components";
 import { color, typography } from "../../theme";
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
@@ -52,7 +51,9 @@ const BUTTON_VIEW: ViewStyle = {
   paddingRight: '6%'
 };
 const BUTTON_STYLE: ViewStyle = {
-  backgroundColor: 'transparent'
+  marginRight: 8,
+  height: 40,
+  width: 145
 };
 const IMAGE_BACKGROUND: ViewStyle = {
   justifyContent: 'center',
@@ -451,7 +452,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
                   <View style={SEPERATOR_LINE} />
                   {renderRow('getARateScreen.postCode', postCode, errorPostCode)}
                   <View style={BUTTON_VIEW}>
-                    <Button style={BUTTON_STYLE} onPress={gettown} isLoading={getARateStore.isButtonLoading} >
+                    <TouchableOpacity style={BUTTON_STYLE} onPress={gettown} disabled={getARateStore.isButtonLoading}>
                       <ImageBackground source={icons.blueButton} style={IMAGE_BACKGROUND}>
                         {getARateStore.isButtonLoading ?
                           <ActivityIndicator size='large' color={color.palette.white} />
@@ -459,7 +460,7 @@ export const GetARate: FunctionComponent<GetARateProps> = observer((props) => {
                           <Text tx={'getARateScreen.getTowns'} style={{ color: color.palette.white }} />
                         }
                       </ImageBackground>
-                    </Button>
+                    </TouchableOpacity>
                   </View>
                   {renderRow('getARateScreen.town', town, errorTown)}
                 </View>
