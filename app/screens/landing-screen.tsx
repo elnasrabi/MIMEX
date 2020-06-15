@@ -81,6 +81,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
   });
   useEffect(() => {
     if (homeStore.barCodeData.data) {
+      onValidSearch(true);
       onSearchValue(homeStore.barCodeData.data);
       homeStore.onCodeScanned({});
     }
@@ -95,7 +96,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
 
   useEffect(() => {
     if (isGoPressed && consignmentStore.isEmptyList) {
-      showAlert("common.noData");
+      showAlert("", "common.noData");
     } else if (isGoPressed && !consignmentStore.isEmptyList) {
       consignmentStore.goingFromHome(true);
       props.navigation.navigate("consignmentList");

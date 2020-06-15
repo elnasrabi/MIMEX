@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { ViewStyle, View, Platform } from "react-native";
 import { color } from "../../theme";
@@ -13,7 +13,7 @@ import { BackButton } from "../../components/header/back-button";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { icons } from "../../components/icon/icons";
 import RNFS from "react-native-fs";
-import { getSignaturePath, getSignatureDir } from "../../utils/utils";
+import { getSignaturePath, getSignatureDir, showAlert } from "../../utils/utils";
 
 export interface SignatureViewProps {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -36,6 +36,7 @@ const BOTTOM_VIEW: ViewStyle = { marginTop: 20, marginBottom: 20 };
 export const SignatureView: FunctionComponent<SignatureViewProps> = observer(props => {
   const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation]);
   const { consignmentStore, authStore } = useStores();
+  const [isSigned, onSigned] = useState(false);
   const consNo = consignmentStore.consignmentDetail.consignmentNumber[0];
   const loginName = authStore.userData[0].loginName[0];
   const dir = getSignatureDir();
@@ -56,14 +57,24 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     }
   };
   const resetSign = () => {
+    onSigned(false);
     refs.resetImage();
   };
   const onSaveEvent = (result: any) => {
-    RNFS.writeFile(filePath, result.encoded, "base64").then(result => {
-      consignmentStore.onSigned(true);
-      goBack();
-    });
+    if (isSigned) {
+      RNFS.writeFile(filePath, result.encoded, "base64").then(result => {
+        consignmentStore.onSigned(true);
+        goBack();
+      });
+    } else {
+      showAlert("common.blankSign");
+    }
   };
+
+  const onDragEvent = (result: any) => {
+    onSigned(true);
+  };
+
   return (
     <Screen
       statusBarColor={color.palette.white}
@@ -79,6 +90,7 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
             refs = sign;
           }}
           style={signature}
+          onDragEvent={result => onDragEvent(result)}
           saveImageFileInExtStorage={true}
           showNativeButtons={false}
           showTitleLabel={false}

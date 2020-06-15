@@ -24,13 +24,13 @@ const RESET_PASSWORD: TextStyle = {
   color: color.palette.red,
   alignSelf: "center",
   marginTop: 25,
-  fontSize: 16,
+  fontSize: 20,
   padding: 10,
 };
 
 const TEXT_INVALID: TextStyle = {
   ...RESET_PASSWORD,
-  fontSize: 20,
+  fontSize: 24,
   textAlign: "center",
 };
 

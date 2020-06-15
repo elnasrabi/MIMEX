@@ -417,19 +417,21 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
           </View>
         </View>
       </ScrollView>
-      <View style={BOTTOM_VIEW}>
-        <BottomButton
-          leftImage={icons.blackButton2}
-          rightImage={icons.redButton2}
-          leftDisabled={isDelivered}
-          isLoadingLeft={consignmentStore.isButtonLoading}
-          leftText={"common.save"}
-          rightText={"common.cancel"}
-          onRightPress={goBack}
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          onLeftPress={onSave}
-        />
-      </View>
+      {!isDelivered && (
+        <View style={BOTTOM_VIEW}>
+          <BottomButton
+            leftImage={icons.blackButton2}
+            rightImage={icons.redButton2}
+            leftDisabled={isDelivered}
+            isLoadingLeft={consignmentStore.isButtonLoading}
+            leftText={"common.save"}
+            rightText={"common.cancel"}
+            onRightPress={goBack}
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            onLeftPress={onSave}
+          />
+        </View>
+      )}
     </Screen>
   );
 });
