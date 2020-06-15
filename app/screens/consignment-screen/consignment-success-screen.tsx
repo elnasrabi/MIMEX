@@ -196,7 +196,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
-      props.navigation.navigate("Home")
+      props.navigation.navigate(consignmentStore.fromHome ? "Home" : "MyList")
     }
   }, [consignmentStore.isConsignmentSaved])
 
@@ -293,7 +293,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         }
       })
       if (shouldGoHome) {
-        props.navigation.navigate("Home")
+        props.navigation.navigate(consignmentStore.fromHome ? "Home" : "MyList")
       }
     }
   }

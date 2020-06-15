@@ -98,6 +98,7 @@ export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(pro
     if (isGoPressed && consignmentStore.isEmptyList) {
       showAlert("common.noData")
     } else if (isGoPressed && !consignmentStore.isEmptyList) {
+      consignmentStore.goingFromHome(true)
       props.navigation.navigate("consignmentList")
     }
   }, [consignmentStore.consignmentList])

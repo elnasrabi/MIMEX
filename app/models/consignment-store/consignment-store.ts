@@ -29,7 +29,8 @@ export const ConsignmentStoreModel = types
     city: "",
     district: "",
     sync: false,
-    locationEnableCanceled: false
+    locationEnableCanceled: false,
+    fromHome: false
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
@@ -127,6 +128,9 @@ export const ConsignmentStoreModel = types
     },
     onLocationEnableCanceled(enable) {
       self.locationEnableCanceled = enable
+    },
+    goingFromHome(value) {
+      self.fromHome = value
     }
 
   })) // eslint-disable-line @typescript-eslint/no-unused-vars

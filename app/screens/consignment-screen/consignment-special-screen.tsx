@@ -146,7 +146,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
   }, [])
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
-      props.navigation.navigate("Home")
+      props.navigation.navigate(consignmentStore.fromHome ? "Home" : "MyList")
     }
   }, [consignmentStore.isConsignmentSaved])
   const getUserData = async () => {
@@ -212,7 +212,7 @@ export const ConsignmentSpecial: FunctionComponent<ConsignmentSpecialProps> = ob
         }
       })
       if (shouldGoHome) {
-        props.navigation.navigate("Home")
+        props.navigation.navigate(consignmentStore.fromHome ? "Home" : "MyList")
       }
     }
   }

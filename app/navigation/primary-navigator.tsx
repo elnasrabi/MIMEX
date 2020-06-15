@@ -87,6 +87,7 @@ const MyListStack = () => {
       <Stack.Screen name="MyList" component={MyList} />
       <Stack.Screen name="pdfViewer" component={PDFViewer} />
       <Stack.Screen name="consignmentSuccess" component={ConsignmentSuccess} />
+      <Stack.Screen name="consignmentDetail" component={ConsignmentDetail} />
       <Stack.Screen name="consignmentSpecial" component={ConsignmentSpecial} />
       <Stack.Screen name="signatureView" component={SignatureView} />
     </Stack.Navigator>
