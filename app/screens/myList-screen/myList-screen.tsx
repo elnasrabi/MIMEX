@@ -263,14 +263,14 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const onSuccessPress = () => {
     if (initNavigation()) {
       consignmentStore.goingFromHome(false)
-      props.navigation.navigate("consignmentDetail", { isSuccess: true });
+      props.navigation.navigate("consignmentSuccess", { isSuccess: true });
     }
   }
 
   const onFailPress = () => {
     if (initNavigation()) {
       consignmentStore.goingFromHome(false)
-      props.navigation.navigate("consignmentDetail", { isSuccess: false });
+      props.navigation.navigate("consignmentSuccess", { isSuccess: false });
     }
   }
 

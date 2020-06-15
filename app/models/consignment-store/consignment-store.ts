@@ -141,7 +141,7 @@ export const ConsignmentStoreModel = types
   * Note that you'll need to import `omit` from ramda, which is already included in the project!
   */
   .postProcessSnapshot(omit(["signedSaved", "isButtonLoading",
-    "hasError", "isEmptyList", "consignmentList", "consignmentDetail", "isConsignmentSaved"]))
+    "hasError", "isEmptyList", "consignmentList", "consignmentDetail", "isConsignmentSaved", "fromHome"]))
 
 type ConsignmentStoreType = Instance<typeof ConsignmentStoreModel>
 export interface ConsignmentStore extends ConsignmentStoreType { }
