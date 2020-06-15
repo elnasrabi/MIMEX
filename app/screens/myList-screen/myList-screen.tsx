@@ -115,8 +115,13 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   }, [isFocused])
 
   useEffect(() => {
+    const newArr = [...mylist];
+    for (let i = 0; i < newArr.length; i++) {
+      newArr[i].check = false;
+    }
+    useToggleAll(false);
     filterList();
-  }, [selectedStatus])
+  }, [selectedStatus]);
 
   const filterData = async (status) => {
     let todayDate = moment(new Date()).format('YYYY-MM-DD');
@@ -202,7 +207,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     }
     updateMyList(newArr);
     useToggleAll(!toggleAll);
-  }
+  };
 
   const renderEmptyComponent = () => {
     return (
@@ -331,7 +336,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
             outlineStyle={CHECKBOX}
             value={toggleAll}
             onToggle={() => updateAllCheckBox(!toggleAll)}
-            disabled={myListStore.isLoading ? true : false}
+            disabled={myListStore.isLoading}
           />
         </View>
         <View style={{ width: '80%' }}>
