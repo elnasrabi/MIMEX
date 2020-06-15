@@ -24,4 +24,5 @@ export type AuthParamList = {
   login: undefined
   HelpScreen: undefined
   forgotpassword: undefined
+  Home: undefined
 }
