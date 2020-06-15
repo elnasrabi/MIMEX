@@ -2,7 +2,7 @@ import * as React from "react";
 import { TextStyle, View, ViewStyle, Platform, Image, ImageStyle } from "react-native";
 import { color, typography } from "../../theme";
 
-import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from "react-native-picker-select";
 import { icons } from "../icon/icons";
 import { translateText } from "../../utils/utils";
 import { Text } from "../text/text";
@@ -13,12 +13,14 @@ import { Text } from "../text/text";
  * This component is a HOC over the built-in React Native one.
  */
 interface dropdownPickerProps {
-  dropDownData: any[], selectedValue: any, onValueChange: (value: any) => void,
-  inputStyleIOS?: TextStyle,
-  inputStyleAndroid?: TextStyle,
-  disabled?: boolean,
-  placeHolder?: string,
-  errorTx?: string
+  dropDownData: any[];
+  selectedValue: any;
+  onValueChange: (value: any) => void;
+  inputStyleIOS?: TextStyle;
+  inputStyleAndroid?: TextStyle;
+  disabled?: boolean;
+  placeHolder?: string;
+  errorTx?: string;
 }
 
 export function DropdownPicker(props: dropdownPickerProps) {
@@ -30,8 +32,8 @@ export function DropdownPicker(props: dropdownPickerProps) {
     inputStyleAndroid,
     inputStyleIOS,
     placeHolder,
-    errorTx
-  } = props
+    errorTx,
+  } = props;
 
   const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
     flex: 1,
@@ -40,37 +42,37 @@ export function DropdownPicker(props: dropdownPickerProps) {
     borderRadius: 4,
     backgroundColor: color.palette.white,
     height: 40,
-    justifyContent: 'center'
-  }
+    justifyContent: "center",
+  };
   const ICON_CONTAINER: ViewStyle = {
     height: 35,
     paddingStart: 5,
     marginTop: Platform.OS == "android" ? 7 : -8,
     justifyContent: "center",
-    paddingRight: 4
-  }
+    paddingRight: 4,
+  };
   const ICON: ImageStyle = {
     width: 15,
     height: 18,
-    tintColor: color.palette.darkText
-  }
+    tintColor: color.palette.darkText,
+  };
   const INPUT_STYLE_IOS: TextStyle = {
     color: color.palette.link,
     fontSize: 16,
     fontWeight: "bold",
     paddingLeft: 5,
-    fontFamily: typography.secondary
-  }
+    fontFamily: typography.secondary,
+  };
   const INPUT_STYLE_ANDROID: TextStyle = {
     color: color.palette.link,
     fontSize: 16,
     fontWeight: "bold",
     paddingLeft: 5,
-    fontFamily: typography.secondary
-  }
+    fontFamily: typography.secondary,
+  };
   const errorLabel: TextStyle = {
-    textAlign: "right"
-  }
+    textAlign: "right",
+  };
 
   return (
     <>
@@ -82,20 +84,31 @@ export function DropdownPicker(props: dropdownPickerProps) {
               fontSize: 15,
             },
             inputIOS: inputStyleIOS || INPUT_STYLE_IOS,
-            inputAndroid: inputStyleAndroid || INPUT_STYLE_ANDROID
+            inputAndroid: inputStyleAndroid || INPUT_STYLE_ANDROID,
           }}
-          placeholder={{ label: translateText(placeHolder), value: '' }}
+          placeholder={{ label: translateText(placeHolder), value: "" }}
           value={selectedValue}
           onValueChange={onValueChange}
-          Icon={() =>
-            <View style={{ height: 35, paddingStart: 5, marginTop: Platform.OS == "android" ? 7 : -8, justifyContent: "center", paddingRight: 4 }}>
-              <Image style={{ width: 15, height: 18, tintColor: color.palette.darkText }} source={icons.downArrow} />
+          Icon={() => (
+            <View
+              style={{
+                height: 35,
+                paddingStart: 5,
+                marginTop: Platform.OS == "android" ? 7 : -8,
+                justifyContent: "center",
+                paddingRight: 4,
+              }}
+            >
+              <Image
+                style={{ width: 15, height: 18, tintColor: color.palette.darkText }}
+                source={icons.downArrow}
+              />
             </View>
-          }
+          )}
           items={dropDownData}
         />
       </View>
       {errorTx && <Text style={errorLabel} preset={"error"} tx={errorTx} />}
     </>
-  )
+  );
 }

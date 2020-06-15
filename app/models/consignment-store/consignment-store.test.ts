@@ -1,6 +1,6 @@
-import { ConsignmentStoreModel, ConsignmentStore } from "./consignment-store"
+import { ConsignmentStoreModel, ConsignmentStore } from "./consignment-store";
 
 test("can be created", () => {
-  const instance: ConsignmentStore = ConsignmentStoreModel.create({})
-  expect(instance).toBeTruthy()
-})
+  const instance: ConsignmentStore = ConsignmentStoreModel.create({});
+  expect(instance).toBeTruthy();
+});

@@ -1,5 +1,5 @@
 // schema.js
-import { appSchema, tableSchema } from "@nozbe/watermelondb"
+import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export const mySchema = appSchema({
   version: 2,
@@ -18,8 +18,8 @@ export const mySchema = appSchema({
         { name: "sign_by", type: "string" },
         { name: "sign_image", type: "string" },
         { name: "date", type: "string" },
-        { name: "synced", type: "boolean" }
-      ]
+        { name: "synced", type: "boolean" },
+      ],
     }),
     tableSchema({
       name: "user",
@@ -29,8 +29,8 @@ export const mySchema = appSchema({
         { name: "first_name", type: "string" },
         { name: "last_name", type: "string" },
         { name: "password_updated", type: "string" },
-        { name: "user_type_name", type: "string" }
-      ]
+        { name: "user_type_name", type: "string" },
+      ],
     }),
-  ]
-})
+  ],
+});

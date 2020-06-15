@@ -1,50 +1,49 @@
-import { ViewStyle } from "react-native"
-import { KeyboardOffsets, ScreenPresets } from "./screen.presets"
-import { IconTypes } from "../icon/icons"
+import { ViewStyle } from "react-native";
+import { KeyboardOffsets, ScreenPresets } from "./screen.presets";
+import { IconTypes } from "../icon/icons";
 
 export interface ScreenProps {
   /**
    * Children components.
    */
-  children?: React.ReactNode
+  children?: React.ReactNode;
 
   /**
    * An optional style override useful for padding & margin.
    */
-  style?: ViewStyle
+  style?: ViewStyle;
 
   /**
    * One of the different types of presets.
    */
-  preset?: ScreenPresets
+  preset?: ScreenPresets;
 
   /**
    * An optional background color
    */
-  backgroundColor?: string
+  backgroundColor?: string;
 
   /**
    * An optional status color
    */
-  statusBarColor?: string
+  statusBarColor?: string;
 
   /**
    * An optional status bar setting. Defaults to light-content.
    */
-  statusBar?: "light-content" | "dark-content"
+  statusBar?: "light-content" | "dark-content";
 
   /**
    * Should we not wrap in SafeAreaView? Defaults to false.
    */
-  unsafe?: boolean
+  unsafe?: boolean;
 
   /**
    * By how much should we offset the keyboard? Defaults to none.
    */
-  keyboardOffset?: KeyboardOffsets
+  keyboardOffset?: KeyboardOffsets;
 
-  wall?: IconTypes
+  wall?: IconTypes;
 
-  sync?: boolean
-
+  sync?: boolean;
 }

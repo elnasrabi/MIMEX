@@ -1,1 +1,1 @@
-export * from "./get-a-rate-model"
+export * from "./get-a-rate-model";

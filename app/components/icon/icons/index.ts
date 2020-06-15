@@ -18,7 +18,7 @@ export const icons = {
   downArrow: require("./downArrow.png"),
   demoVideo: require("./demo.mp4"),
   callLogo: require("./call.png"),
-  emailLogo: require("./email.png")
-}
+  emailLogo: require("./email.png"),
+};
 
-export type IconTypes = keyof typeof icons
+export type IconTypes = keyof typeof icons;

@@ -1,22 +1,22 @@
-import { ImageStyle, ViewStyle } from "react-native"
+import { ImageStyle, ViewStyle } from "react-native";
 
 export interface QRProps {
-    /**
-     * Style overrides for the icon image
-     */
-    style?: ImageStyle
+  /**
+   * Style overrides for the icon image
+   */
+  style?: ImageStyle;
 
-    /**
-     * Style overrides for the icon container
-     */
+  /**
+   * Style overrides for the icon container
+   */
 
-    containerStyle?: ViewStyle
+  containerStyle?: ViewStyle;
 
-    /**
-     * The name of the icon
-     */
- 
-    onSuccess?(): void
+  /**
+   * The name of the icon
+   */
 
-    onGoPress?(): void
+  onSuccess?(): void;
+
+  onGoPress?(): void;
 }

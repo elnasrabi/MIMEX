@@ -142,7 +142,7 @@
   },
   "prettier": {
     "printWidth": 100,
-    "semi": false,
+    "semi": true,
     "singleQuote": false,
     "trailingComma": "all"
   },

@@ -16,5 +16,5 @@ export const palette = {
   green: "#009933",
   toolbar: "#b6afaf",
   transparent: "rgba(52, 52, 52, 1)",
-  listBG: "rgba(255,255,255,0.8)"
-}
+  listBG: "rgba(255,255,255,0.8)",
+};

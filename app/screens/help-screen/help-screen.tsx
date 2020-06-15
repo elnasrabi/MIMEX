@@ -1,45 +1,54 @@
-import React, { FunctionComponent, useState, useEffect } from "react"
-import { observer } from "mobx-react-lite"
-import { ViewStyle, Platform, FlatList, View, Text, TextStyle, Dimensions, Image, TouchableOpacity, ImageStyle, Linking } from "react-native"
-import { ParamListBase, useIsFocused } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen } from "../../components"
-import { color, typography } from "../../theme"
+import React, { FunctionComponent } from "react";
+import { observer } from "mobx-react-lite";
+import {
+  ViewStyle,
+  Platform,
+  FlatList,
+  View,
+  Text,
+  TextStyle,
+  Image,
+  TouchableOpacity,
+  ImageStyle,
+  Linking,
+} from "react-native";
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "react-native-screens/native-stack";
+import { Screen } from "../../components";
+import { color, typography } from "../../theme";
 import { icons } from "../../components/icon/icons";
 import { MenuButton } from "../../components/header/menu-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import VideoPlayer from 'react-native-video-controls';
-import Orientation from 'react-native-orientation-locker';
 import { callApi } from "../../utils/utils";
 import { useStores } from "../../models/root-store";
 import { BackButton } from "../../components/header/back-button";
 
 export interface HelpScreenProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
+  navigation: NativeStackNavigationProp<ParamListBase>;
 }
 
 const ROOT: ViewStyle = {
   // backgroundColor: 'black',
-  justifyContent: "center"
-}
+  justifyContent: "center",
+};
 
 const FLATLIST_STYLE: ViewStyle = {
   marginHorizontal: 10,
-  marginTop: Platform.OS == 'android' ? 60 : isIphoneX() ? 15 : 40
-}
+  marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 15 : 40,
+};
 const ITEM_CONTAINER: ViewStyle = {
-  marginBottom: 10
-}
+  marginBottom: 10,
+};
 const QUESTION_TEXT: TextStyle = {
   color: color.palette.black,
   fontSize: 22,
-  fontFamily: typography.secondary
-}
+  fontFamily: typography.secondary,
+};
 const ANSWER_TEXT: TextStyle = {
   color: color.palette.lightGrey,
   fontSize: 22,
-  fontFamily: typography.secondary
-}
+  fontFamily: typography.secondary,
+};
 const HEADER_STYLE: ViewStyle = {
   paddingHorizontal: 10,
   paddingBottom: 30,
@@ -47,32 +56,32 @@ const HEADER_STYLE: ViewStyle = {
   borderColor: color.palette.black,
   borderWidth: 1,
   borderRadius: 4,
-  flexDirection: 'row'
-}
+  flexDirection: "row",
+};
 const EMAIL_LOGO: ImageStyle = {
   height: 150,
-  width: '100%'
-}
+  width: "100%",
+};
 const CALL_LOGO: ImageStyle = {
   height: 110,
   marginTop: 20,
-  width: '100%'
-}
+  width: "100%",
+};
 const LOGO_TEXT: TextStyle = {
   color: color.palette.red,
-  alignSelf: 'center',
+  alignSelf: "center",
   fontFamily: typography.secondary,
-  fontSize: 13
-}
+  fontSize: 13,
+};
 
-export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) => {
+export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => {
   // const isFocusedOrientation = useIsFocused()
   const flatListdata = [
-    { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' },
-    { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' },
-    { question: 'How do you xxx?', answer: 'The quick brown fox jumps over a lazy dog' }
-  ]
-  const { authStore } = useStores()
+    { question: "How do you xxx?", answer: "The quick brown fox jumps over a lazy dog" },
+    { question: "How do you xxx?", answer: "The quick brown fox jumps over a lazy dog" },
+    { question: "How do you xxx?", answer: "The quick brown fox jumps over a lazy dog" },
+  ];
+  const { authStore } = useStores();
   // const [fullScreen, setFullScreen] = useState(false)
   const renderItem = (item, index) => {
     return (
@@ -86,8 +95,8 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
           <Text style={ANSWER_TEXT}>{item.answer}</Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
   // const onEnterFullScreen = () => {
   //   return setFullScreen(true)
   // }
@@ -125,36 +134,45 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
 
   const renderFlatlistHeader = () => {
     return (
-      <View style={HEADER_STYLE} >
-        <TouchableOpacity style={{ flex: 1 }}
-          onPress={() => Linking.openURL('mailto:support@moveit.com.au')}
+      <View style={HEADER_STYLE}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => Linking.openURL("mailto:support@moveit.com.au")}
         >
           <Image source={icons.emailLogo} resizeMode="contain" style={EMAIL_LOGO} />
-          <Text style={LOGO_TEXT} >{`support@moveit.com.au`}</Text>
+          <Text style={LOGO_TEXT}>{`support@moveit.com.au`}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1, }}
-          onPress={() => callApi('+611300884294')}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => callApi("+611300884294")}>
           <Image source={icons.callLogo} resizeMode="contain" style={CALL_LOGO} />
-          <Text style={[LOGO_TEXT, { marginTop: 20 }]} >{`+61 1300 884 294`}</Text>
+          <Text style={[LOGO_TEXT, { marginTop: 20 }]}>{`+61 1300 884 294`}</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation])
-  const goBack = React.useMemo(() => () => { props.navigation.goBack() }, [props.navigation]);
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [
+    props.navigation,
+  ]);
+  const goBack = React.useMemo(
+    () => () => {
+      props.navigation.goBack();
+    },
+    [props.navigation],
+  );
 
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed" >
-      {authStore.isLoggedIn ?
-        <MenuButton
-          title={"helpScreen.header"}
-          onPress={handleDrawer} />
-        :
-        <BackButton
-          title={"helpScreen.header"}
-          onPress={goBack} />
-      }
+    <Screen
+      style={ROOT}
+      statusBar={"dark-content"}
+      statusBarColor={color.palette.white}
+      wall={"whiteWall"}
+      preset="fixed"
+    >
+      {authStore.isLoggedIn ? (
+        <MenuButton title={"helpScreen.header"} onPress={handleDrawer} />
+      ) : (
+        <BackButton title={"helpScreen.header"} onPress={goBack} />
+      )}
       <FlatList
         ListHeaderComponent={renderFlatlistHeader}
         ListHeaderComponentStyle={ITEM_CONTAINER}
@@ -164,7 +182,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
         keyExtractor={(item, index) => index.toString()}
       />
     </Screen>
-  )
+  );
 
   // Video component
   // return (
@@ -183,4 +201,4 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer((props) =
   //       />}
   //   </Screen>
   // )
-})
+});

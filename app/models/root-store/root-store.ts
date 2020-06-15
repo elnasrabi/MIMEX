@@ -1,7 +1,7 @@
-import { AuthStoreModel } from "../../models/auth-store"
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { HomeStoreModel } from "../home-store"
-import { ConsignmentStoreModel } from "../consignment-store"
+import { AuthStoreModel } from "../../models/auth-store";
+import { Instance, SnapshotOut, types } from "mobx-state-tree";
+import { HomeStoreModel } from "../home-store";
+import { ConsignmentStoreModel } from "../consignment-store";
 import { GetARateModel } from "../get-a-rate-model";
 import { MyListModel } from "../my-list-store";
 
@@ -20,9 +20,9 @@ export const RootStoreModel = types.model("RootStore").props({
 /**
  * The RootStore instance.
  */
-export interface RootStore extends Instance<typeof RootStoreModel> { }
+export interface RootStore extends Instance<typeof RootStoreModel> {}
 
 /**
  * The data of a RootStore.
  */
-export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> { }
+export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}

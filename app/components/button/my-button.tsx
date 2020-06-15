@@ -1,9 +1,17 @@
-import * as React from "react"
-import { TouchableOpacity, ImageBackground, ImageStyle, TextStyle, ActivityIndicator, ViewStyle, View } from "react-native"
-import { Text } from "../text/text"
-import { ButtonProps } from "./button.props"
-import { icons } from "../icon/icons"
-import { color } from "../../theme"
+import * as React from "react";
+import {
+  TouchableOpacity,
+  ImageBackground,
+  ImageStyle,
+  TextStyle,
+  ActivityIndicator,
+  ViewStyle,
+  View,
+} from "react-native";
+import { Text } from "../text/text";
+import { ButtonProps } from "./button.props";
+import { icons } from "../icon/icons";
+import { color } from "../../theme";
 
 /**
  * For your text displaying needs.
@@ -21,49 +29,47 @@ export function MyButton(props: ButtonProps) {
     isDisable,
     isLoading = false,
     ...rest
-  } = props
+  } = props;
 
-  const viewStyle = styleOverride
+  const viewStyle = styleOverride;
   const TEXT: TextStyle = {
     color: color.palette.white,
     alignSelf: "center",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  };
   const BACKGROUND_ICON: ImageStyle = {
     alignSelf: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     height: 45,
     width: 150,
-    flexDirection: "row"
-  }
+    flexDirection: "row",
+  };
   const LEFT_BUTTON_STYLE_DISABLE: ViewStyle = {
     alignSelf: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     borderRadius: 10,
     height: 90,
     width: 90,
     flexDirection: "row",
-    backgroundColor: color.palette.textGray
-  }
-  const image = buttonSource || icons.redButton
+    backgroundColor: color.palette.textGray,
+  };
+  const image = buttonSource || icons.redButton;
 
   return (
-    <TouchableOpacity
-      disabled={isDisable}
-      style={viewStyle} {...rest}>
-
-      {isDisable
-        ? <View style={LEFT_BUTTON_STYLE_DISABLE}>
+    <TouchableOpacity disabled={isDisable} style={viewStyle} {...rest}>
+      {isDisable ? (
+        <View style={LEFT_BUTTON_STYLE_DISABLE}>
           <Text style={[TEXT, myTextStyle]} tx={tx} />
         </View>
-        : <ImageBackground style={[BACKGROUND_ICON, imageBackground]}
-          source={image}>
-          {isLoading ? <ActivityIndicator size="small" color={color.palette.white} />
-            : <Text style={[TEXT, myTextStyle]} tx={tx} />
-          }
+      ) : (
+        <ImageBackground style={[BACKGROUND_ICON, imageBackground]} source={image}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={color.palette.white} />
+          ) : (
+            <Text style={[TEXT, myTextStyle]} tx={tx} />
+          )}
         </ImageBackground>
-      }
-
+      )}
     </TouchableOpacity>
-  )
+  );
 }

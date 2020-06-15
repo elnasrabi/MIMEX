@@ -1,13 +1,13 @@
-import ConsignmentModel from "../models/local-database/consignment-model"
-import { useStores } from "../models/root-store"
+import ConsignmentModel from "../models/local-database/consignment-model";
+import { useStores } from "../models/root-store";
 
 export default class Sync {
   async initSync() {
-    const { consignmentStore, authStore } = useStores()
-    const consignment = new ConsignmentModel()
-    const savedConsignment = await consignment.getAllSavedConsignment()
+    const { consignmentStore, authStore } = useStores();
+    const consignment = new ConsignmentModel();
+    const savedConsignment = await consignment.getAllSavedConsignment();
     savedConsignment.forEach(element => {
-      consignmentStore.consignmentSearch(authStore.authorization, "")
-    })
+      consignmentStore.consignmentSearch(authStore.authorization, "");
+    });
   }
 }

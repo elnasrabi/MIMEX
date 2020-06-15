@@ -1,10 +1,19 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, View, ScrollView, Platform, TouchableOpacity, SafeAreaView, TextInput } from "react-native";
+import {
+  ViewStyle,
+  TextStyle,
+  View,
+  ScrollView,
+  Platform,
+  TouchableOpacity,
+  SafeAreaView,
+  TextInput,
+} from "react-native";
 import { ParamListBase, useIsFocused } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import moment from 'moment';
+import moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import KeyboardManager from "react-native-keyboard-manager";
 import { Formik } from "formik";
@@ -17,14 +26,14 @@ import { icons } from "../../components/icon/icons";
 import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { useStores } from "../../models/root-store";
 export interface UserSettingProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
-};
+  navigation: NativeStackNavigationProp<ParamListBase>;
+}
 // const TEXTINPUT_VIEW: ViewStyle = {
 //   flex: 1,
 //   width: "100%"
 // };
 const ROOT: ViewStyle = {
-  paddingBottom: 10
+  paddingBottom: 10,
 };
 // const LABEL: TextStyle = {
 //   color: color.palette.black,
@@ -37,14 +46,14 @@ const EMAIL_VALUE: TextStyle = {
   fontSize: 16,
   fontWeight: "bold",
   fontFamily: typography.secondary,
-  marginTop: 5
+  marginTop: 5,
 };
 const EMAIL_TEXT: TextStyle = {
   color: color.palette.black,
   flex: 1,
   fontSize: 16,
   fontWeight: "bold",
-  fontFamily: typography.secondary
+  fontFamily: typography.secondary,
 };
 // const SCROLLVIEW: ViewStyle = {
 //   marginBottom: 10,
@@ -53,7 +62,7 @@ const EMAIL_TEXT: TextStyle = {
 const EMAIL_VIEW: ViewStyle = {
   marginStart: 20,
   marginEnd: 20,
-  marginTop: 20
+  marginTop: 20,
 };
 // const FIELD_CONTAINER: ViewStyle = {
 //   flex: 1,
@@ -87,34 +96,34 @@ const LABEL: TextStyle = {
   flex: 1,
   fontSize: 16,
   fontWeight: "bold",
-  fontFamily: typography.secondary
+  fontFamily: typography.secondary,
 };
 const VALUE: TextStyle = {
   color: color.palette.link,
   fontSize: 16,
   fontWeight: "bold",
   textAlign: "right",
-  fontFamily: typography.secondary
+  fontFamily: typography.secondary,
 };
 const ROW: ViewStyle = {
   flexDirection: "row",
   marginStart: 20,
   marginEnd: 20,
-  marginTop: 20
+  marginTop: 20,
 };
 const SCROLLVIEW_STYLE: ViewStyle = {
   marginBottom: 10,
-  marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 0 : 23
+  marginTop: Platform.OS == "android" ? 40 : isIphoneX() ? 0 : 23,
 };
 
-export const UserSetting: FunctionComponent<UserSettingProps> = observer((props) => {
+export const UserSetting: FunctionComponent<UserSettingProps> = observer(props => {
   // const isFocused = useIsFocused();
   // const [date, setDate] = useState(new Date());
   // const [show, setShow] = useState(false);
   // const currentRef: any[] = [];
   // const formikRef = useRef();
-  const { authStore } = useStores()
-  const userData = authStore.userData[0]
+  const { authStore } = useStores();
+  const userData = authStore.userData[0];
   // useEffect(() => {
   //   if (isFocused) {
   //     if (Platform.OS === 'ios') {
@@ -136,10 +145,12 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   const gotoHome = () => {
     // formikRef.current.resetForm();
     // setDate(new Date());
-    return props.navigation.navigate('Home');
-  }
+    return props.navigation.navigate("Home");
+  };
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [
+    props.navigation,
+  ]);
 
   // const RenderDetails = ({ handleChange, handleKey, keyValue, values, errors, label, hasExtraText = false, ...rest }) => {
   //   return (
@@ -195,20 +206,24 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
       <View style={ROW}>
         <Text style={LABEL} text={label} />
         <View style={VALUE_CONTAINER}>
-          <Text style={VALUE} text={value ? value : '-'} />
+          <Text style={VALUE} text={value ? value : "-"} />
         </View>
       </View>
-    )
-  }
+    );
+  };
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <MenuButton
-        title={"userSetting.header"}
-        onPress={handleDrawer} />
+    <Screen
+      style={ROOT}
+      statusBar={"dark-content"}
+      statusBarColor={color.palette.white}
+      wall={"whiteWall"}
+      preset="fixed"
+    >
+      <MenuButton title={"userSetting.header"} onPress={handleDrawer} />
       <ScrollView style={SCROLLVIEW_STYLE}>
         <View style={EMAIL_VIEW}>
           <Text extraText={":"} style={EMAIL_TEXT} tx={"userSetting.email"} />
-          <Text style={EMAIL_VALUE} text={userData.email[0] ? userData.email[0] : '-'} />
+          <Text style={EMAIL_VALUE} text={userData.email[0] ? userData.email[0] : "-"} />
         </View>
         {renderRow("Login Name", userData.loginName[0])}
         {renderRow("First Name", userData.firstName[0])}
@@ -219,9 +234,10 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
         hideLeftButton={true}
         rightImage={icons.redButton2}
         onRightPress={() => gotoHome()}
-        rightText={"common.cancel"} />
+        rightText={"common.cancel"}
+      />
     </Screen>
-  )
+  );
 
   // return (
   //   <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
@@ -325,4 +341,4 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer((props)
   //     </Formik>
   //   </Screen>
   // )
-})
+});

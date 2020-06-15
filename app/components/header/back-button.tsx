@@ -1,21 +1,21 @@
 /* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
-import * as React from "react"
-import { ImageStyle, ViewStyle, View, TextStyle } from "react-native"
-import { Button } from "../button/button"
-import { Icon } from "../icon/icon"
-import { color } from "../../theme"
-import { IconProps } from "../icon/icon.props"
-import { Text } from "../text/text"
+import * as React from "react";
+import { ImageStyle, ViewStyle, View, TextStyle } from "react-native";
+import { Button } from "../button/button";
+import { Icon } from "../icon/icon";
+import { color } from "../../theme";
+import { IconProps } from "../icon/icon.props";
+import { Text } from "../text/text";
 
-const ICON: ImageStyle = { height: 32, width: 32, tintColor: color.palette.black }
+const ICON: ImageStyle = { height: 32, width: 32, tintColor: color.palette.black };
 
 const MENU_BUTTON: ViewStyle = {
   position: "absolute",
   left: 15,
   paddingEnd: 15,
-  justifyContent: "flex-end"
-}
+  justifyContent: "flex-end",
+};
 
 const MAIN_VIEW: ViewStyle = {
   width: "100%",
@@ -23,22 +23,17 @@ const MAIN_VIEW: ViewStyle = {
   top: 0,
   height: 50,
   justifyContent: "center",
-  zIndex: 2
-}
+  zIndex: 2,
+};
 
 const TITLE: TextStyle = {
   fontSize: 18,
   textAlign: "left",
   marginStart: 60,
-}
+};
 
 export const BackButton: React.FunctionComponent<IconProps> = props => {
-  const {
-    onPress,
-    style,
-    title,
-    hasBackground = true
-  } = props
+  const { onPress, style, title, hasBackground = true } = props;
 
   return (
     <View style={[MAIN_VIEW, { backgroundColor: hasBackground ? color.palette.toolbar : "" }]}>
@@ -49,5 +44,5 @@ export const BackButton: React.FunctionComponent<IconProps> = props => {
         </Button>
       </View>
     </View>
-  )
-}
+  );
+};

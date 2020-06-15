@@ -1,16 +1,16 @@
-import * as React from "react"
-import { View, TextInput, TextStyle, ViewStyle, Alert } from "react-native"
-import { color, typography } from "../../theme"
-import { translate } from "../../i18n"
-import { Text } from "../text/text"
-import { TextFieldProps } from "./text-field.props"
-import { mergeAll, flatten } from "ramda"
+import * as React from "react";
+import { View, TextInput, TextStyle, ViewStyle, Alert } from "react-native";
+import { color, typography } from "../../theme";
+import { translate } from "../../i18n";
+import { Text } from "../text/text";
+import { TextFieldProps } from "./text-field.props";
+import { mergeAll, flatten } from "ramda";
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
   flexDirection: "row",
-  alignItems: "center"
-}
+  alignItems: "center",
+};
 
 // the base styling for the TextInput
 const INPUT: TextStyle = {
@@ -26,23 +26,23 @@ const INPUT: TextStyle = {
   borderColor: color.palette.lighterGrey,
   borderWidth: 1,
   borderRadius: 4,
-}
+};
 
 // currently we have no presets, but that changes quickly when you build your app.
 const PRESETS: { [name: string]: ViewStyle } = {
   default: {},
-}
+};
 
 const LABEL: TextStyle = {
   color: color.palette.white,
   fontSize: 16,
   fontFamily: typography.primary,
-  flex: 0.6
-}
+  flex: 0.6,
+};
 
 const enhance = (style, styleOverride) => {
-  return mergeAll(flatten([style, styleOverride]))
-}
+  return mergeAll(flatten([style, styleOverride]));
+};
 
 /**
  * A component which has a label and an input together.
@@ -61,23 +61,25 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
     errorTx,
     mainStyle,
     ...rest
-  } = props
-  let containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset] }
-  containerStyle = enhance(containerStyle, styleOverride)
+  } = props;
+  let containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset] };
+  containerStyle = enhance(containerStyle, styleOverride);
 
-  let inputStyle: TextStyle = INPUT
-  const errorStyle: ViewStyle = { marginTop: 15 }
-  const errorLabel: TextStyle = { textAlign: "right" }
-  inputStyle = enhance(inputStyle, inputStyleOverride)
+  let inputStyle: TextStyle = INPUT;
+  const errorStyle: ViewStyle = { marginTop: 15 };
+  const errorLabel: TextStyle = { textAlign: "right" };
+  inputStyle = enhance(inputStyle, inputStyleOverride);
 
-  let labelStyle: TextStyle = LABEL
-  labelStyle = enhance(labelStyle, labelStyleOverride)
+  let labelStyle: TextStyle = LABEL;
+  labelStyle = enhance(labelStyle, labelStyleOverride);
 
-  const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
+  const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder;
   return (
     <View style={[errorStyle, mainStyle]}>
       <View style={containerStyle}>
-        {(label || labelTx) && <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />}
+        {(label || labelTx) && (
+          <Text style={labelStyle} preset="fieldLabel" tx={labelTx} text={label} />
+        )}
         <TextInput
           autoCorrect={false}
           autoCompleteType={"off"}
@@ -93,5 +95,5 @@ export const TextField: React.FunctionComponent<TextFieldProps> = props => {
       {/* <View style={BASE_LINE} /> */}
       {errorTx && <Text style={errorLabel} preset={"error"} tx={errorTx} />}
     </View>
-  )
-}
+  );
+};

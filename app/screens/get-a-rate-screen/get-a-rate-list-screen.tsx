@@ -13,30 +13,32 @@ import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { BackButton } from "../../components/header/back-button";
 import { useStores } from "../../models/root-store";
 export interface GetARateListProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
+  navigation: NativeStackNavigationProp<ParamListBase>;
 }
 const FONTFAMILY: TextStyle = {
-  fontFamily: typography.secondary
+  fontFamily: typography.secondary,
 };
 const ROOT: ViewStyle = {
-  paddingBottom: 10
+  paddingBottom: 10,
 };
 const FLATLIST_STYLE: ViewStyle = {
-  margin: 10, paddingRight: 8, marginRight: 3,
-  marginTop: Platform.OS == 'android' ? 50 : isIphoneX() ? 0 : 23,
+  margin: 10,
+  paddingRight: 8,
+  marginRight: 3,
+  marginTop: Platform.OS == "android" ? 50 : isIphoneX() ? 0 : 23,
 };
 const SUB_RATE_ROW_VIEW: ViewStyle = {
-  flex: 1
+  flex: 1,
 };
 const SUB_ROW_VALUE: ViewStyle = {
-  flex: 0.7
+  flex: 0.7,
 };
 const SUB_ROW_LABEL: ViewStyle = {
   flex: 0.3,
 };
 const SUB_ROW_CONTAINER: ViewStyle = {
   flexDirection: "row",
-  marginTop: 10
+  marginTop: 10,
 };
 const MAIN_CONTAINER: ViewStyle = {
   backgroundColor: color.palette.listBG,
@@ -44,13 +46,13 @@ const MAIN_CONTAINER: ViewStyle = {
   padding: 5,
   paddingTop: 10,
   borderRadius: 5,
-  marginTop: 15
+  marginTop: 15,
 };
 const SUB_CONTAINER: ViewStyle = {
-  marginBottom: 20
+  marginBottom: 20,
 };
 
-export const GetARateList: FunctionComponent<GetARateListProps> = observer((props) => {
+export const GetARateList: FunctionComponent<GetARateListProps> = observer(props => {
   const { getARateStore } = useStores();
   const flatListData = getARateStore.geteARateList;
   const renderSubRow = (tx, value) => {
@@ -63,8 +65,8 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
           <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value}</Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   const renderSubRateRow = (tx, value) => {
     return (
@@ -73,11 +75,11 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
           <Text tx={tx} style={[FONTFAMILY, { color: color.palette.black }]} />
         </View>
         <View style={SUB_RATE_ROW_VIEW}>
-          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value ? value : '-'}</Text>
+          <Text style={[FONTFAMILY, { color: color.palette.link }]}>{value ? value : "-"}</Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   const renderItem = (item, index) => {
     const consignmentRate = item.consignmentRateTime[0];
@@ -88,29 +90,42 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
         </View>
         {renderSubRow("getARateListScreen.carrier", consignmentRate.carrier[0])}
         {renderSubRow("getARateListScreen.service", consignmentRate.service[0])}
-        {renderSubRateRow('getARateListScreen.rateIncSurc', `$ ${parseInt(consignmentRate.rate[0]).toFixed(2)}`)}
-        {renderSubRateRow('getARateListScreen.surcharge', consignmentRate.surcharge)}
-        {renderSubRateRow('getARateListScreen.brokerRate', consignmentRate.brokerRate)}
-        {renderSubRateRow('getARateListScreen.deliveryDate', consignmentRate.deliveryDate[0].slice(0, 10))}
-        {renderSubRateRow('getARateListScreen.transitDays', consignmentRate.transitDays[0])}
+        {renderSubRateRow(
+          "getARateListScreen.rateIncSurc",
+          `$ ${parseInt(consignmentRate.rate[0]).toFixed(2)}`,
+        )}
+        {renderSubRateRow("getARateListScreen.surcharge", consignmentRate.surcharge)}
+        {renderSubRateRow("getARateListScreen.brokerRate", consignmentRate.brokerRate)}
+        {renderSubRateRow(
+          "getARateListScreen.deliveryDate",
+          consignmentRate.deliveryDate[0].slice(0, 10),
+        )}
+        {renderSubRateRow("getARateListScreen.transitDays", consignmentRate.transitDays[0])}
       </View>
-    )
-  }
+    );
+  };
 
   const goToGetARate = () => {
     return props.navigation.navigate("GetARate");
-  }
+  };
 
-  const goBack = React.useMemo(() => () => {
-    getARateStore.updatePreventrefersh(true);
-    props.navigation.goBack();
-  }, [props.navigation]);
+  const goBack = React.useMemo(
+    () => () => {
+      getARateStore.updatePreventrefersh(true);
+      props.navigation.goBack();
+    },
+    [props.navigation],
+  );
 
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <BackButton
-        title={"getARateListScreen.header"}
-        onPress={goBack} />
+    <Screen
+      style={ROOT}
+      statusBar={"dark-content"}
+      statusBarColor={color.palette.white}
+      wall={"whiteWall"}
+      preset="fixed"
+    >
+      <BackButton title={"getARateListScreen.header"} onPress={goBack} />
       <FlatList
         data={flatListData}
         renderItem={({ item, index }) => renderItem(item, index)}
@@ -123,7 +138,8 @@ export const GetARateList: FunctionComponent<GetARateListProps> = observer((prop
         onLeftPress={() => goToGetARate()}
         onRightPress={goBack}
         leftText={"getARateListScreen.new"}
-        rightText={"common.cancel"} />
-    </Screen >
-  )
-})
+        rightText={"common.cancel"}
+      />
+    </Screen>
+  );
+});

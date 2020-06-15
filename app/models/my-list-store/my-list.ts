@@ -1,8 +1,8 @@
-import { Instance, SnapshotOut, types, flow } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, flow } from "mobx-state-tree";
 import { Api } from "../../services/api";
 import { showAlert } from "../../utils/utils";
 import { omit } from "ramda";
-const parseString = require('react-native-xml2js').parseString;
+const parseString = require("react-native-xml2js").parseString;
 
 const api = new Api();
 api.setup();
@@ -14,37 +14,35 @@ export const MyListModel = types
   .props({
     isLoading: types.optional(types.boolean, false),
     responseSuccess: types.optional(types.boolean, false),
-    getListData: types.optional(types.frozen(), [])
+    getListData: types.optional(types.frozen(), []),
   })
   .views(self => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions(self => ({
-
     getList: flow(function* getList(authorization: string, getListRequest: any) {
       self.isLoading = true;
       try {
         const data = yield api.getList(authorization, getListRequest);
         if (data.kind === "ok" && data.Status == 200) {
-          parseString(data.getList, { trim: true }, function (_error, result) {
-            let response = result.responses.consignmentMatchingServiceResponse[0].consignmentMatchingConsignment;
-            if (response === '') {
+          parseString(data.getList, { trim: true }, function(_error, result) {
+            let response =
+              result.responses.consignmentMatchingServiceResponse[0].consignmentMatchingConsignment;
+            if (response === "") {
               self.getListData = [];
               self.responseSuccess = false;
-            }
-            else {
+            } else {
               self.getListData = response;
               self.responseSuccess = true;
             }
-          })
+          });
         } else {
           showAlert("common.somethingWrong");
         }
-      } catch (erro) { }
+      } catch (erro) {}
       self.isLoading = false;
     }),
     refreshList() {
-      self.getListData = []
-    }
-
+      self.getListData = [];
+    },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
   /**
@@ -53,9 +51,9 @@ export const MyListModel = types
   
   * Note that you'll need to import `omit` from ramda, which is already included in the project!
   */
-  .postProcessSnapshot(omit(["isLoading", "responseSuccess", "getListData"]))
+  .postProcessSnapshot(omit(["isLoading", "responseSuccess", "getListData"]));
 
-type MyListType = Instance<typeof MyListModel>
-export interface MyList extends MyListType { }
-type MyListSnapshotType = SnapshotOut<typeof MyListModel>
-export interface MyListSnapshot extends MyListSnapshotType { }
+type MyListType = Instance<typeof MyListModel>;
+export interface MyList extends MyListType {}
+type MyListSnapshotType = SnapshotOut<typeof MyListModel>;
+export interface MyListSnapshot extends MyListSnapshotType {}

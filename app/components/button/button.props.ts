@@ -1,49 +1,54 @@
-import { ViewStyle, TextStyle, TouchableOpacityProps, ImageStyle, ImageSourcePropType } from "react-native"
-import { ButtonPresetNames } from "./button.presets"
+import {
+  ViewStyle,
+  TextStyle,
+  TouchableOpacityProps,
+  ImageStyle,
+  ImageSourcePropType,
+} from "react-native";
+import { ButtonPresetNames } from "./button.presets";
 
 export interface ButtonProps extends TouchableOpacityProps {
   /**
    * Text which is looked up via i18n.
    */
-  tx?: string
+  tx?: string;
 
   /**
    * The text to display if not using `tx` or nested components.
    */
-  text?: string
+  text?: string;
 
   /**
    * An optional style override useful for padding & margin.
    */
-  style?: ViewStyle | ViewStyle[]
+  style?: ViewStyle | ViewStyle[];
 
   /**
    * An optional style override useful for the button text.
    */
-  textStyle?: TextStyle | TextStyle[]
+  textStyle?: TextStyle | TextStyle[];
 
   /**
    * One of the different types of text presets.
    */
-  preset?: ButtonPresetNames
+  preset?: ButtonPresetNames;
 
   /**
    * One of the different types of text presets.
    */
-  children?: React.ReactNode
+  children?: React.ReactNode;
   /**
-  * One of the different types of reference.
-  */
-  ref?: any,
+   * One of the different types of reference.
+   */
+  ref?: any;
 
-  imageBackground?: ImageStyle
+  imageBackground?: ImageStyle;
 
-  myTextStyle?: TextStyle,
+  myTextStyle?: TextStyle;
 
-  buttonSource?: ImageSourcePropType,
+  buttonSource?: ImageSourcePropType;
 
-  isLoading?: boolean
+  isLoading?: boolean;
 
-  isDisable?: boolean
-
+  isDisable?: boolean;
 }

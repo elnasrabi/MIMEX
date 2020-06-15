@@ -1,31 +1,31 @@
-import React, { FunctionComponent, useEffect, useState } from "react"
-import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, ImageStyle, ScrollView } from "react-native"
-import { ParamListBase } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text, TextField, Icon } from "../../components"
-import { color, typography } from "../../theme"
-import { BackButton } from "../../components/header/back-button"
-import { MyButton } from "../../components/button/my-button"
-import { isInternetAvailable } from "../../utils/utils"
-import { useStores } from "../../models/root-store"
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { ViewStyle, TextStyle, ImageStyle, ScrollView } from "react-native";
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "react-native-screens/native-stack";
+import { Screen, Text, TextField, Icon } from "../../components";
+import { color, typography } from "../../theme";
+import { BackButton } from "../../components/header/back-button";
+import { MyButton } from "../../components/button/my-button";
+import { isInternetAvailable } from "../../utils/utils";
+import { useStores } from "../../models/root-store";
 
 export interface ForgotpasswordScreenProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
+  navigation: NativeStackNavigationProp<ParamListBase>;
 }
 
 const CONTAINER: ViewStyle = {
   flex: 1,
   paddingStart: 25,
-  paddingEnd: 25
-}
+  paddingEnd: 25,
+};
 const ROOT: ViewStyle = {
   flex: 1,
-}
+};
 const TEXT: TextStyle = {
   color: color.palette.white,
-  fontFamily: typography.primary
-}
+  fontFamily: typography.primary,
+};
 
 const HEADER: TextStyle = {
   ...TEXT,
@@ -33,8 +33,8 @@ const HEADER: TextStyle = {
   fontSize: 25,
   textAlign: "center",
   marginTop: 40,
-  alignSelf: "flex-start"
-}
+  alignSelf: "flex-start",
+};
 
 const LABEL: TextStyle = {
   ...TEXT,
@@ -42,7 +42,7 @@ const LABEL: TextStyle = {
   fontSize: 20,
   marginTop: 30,
   textAlign: "center",
-}
+};
 
 const DESC: TextStyle = {
   ...TEXT,
@@ -50,95 +50,93 @@ const DESC: TextStyle = {
   fontSize: 16,
   marginTop: 40,
   alignSelf: "center",
-  textAlign: "center"
-}
+  textAlign: "center",
+};
 
 const CONTINUE: ViewStyle = {
   alignSelf: "center",
   position: "absolute",
-  bottom: 30
-}
+  bottom: 30,
+};
 
 const EMAIL: TextStyle = {
   marginTop: 10,
-  fontSize: 14
-}
+  fontSize: 14,
+};
 
 const BACK_BUTTON: ImageStyle = {
-  tintColor: color.palette.white
-}
+  tintColor: color.palette.white,
+};
 
 const AFS_LOGO: ImageStyle = {
   height: 100,
   width: 200,
   alignSelf: "center",
-  marginTop: 80
-}
+  marginTop: 80,
+};
 
-export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> = observer((props) => {
-  // const { someStore } = useStores()
-  const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation])
-  const { authStore } = useStores()
+export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> = observer(
+  props => {
+    // const { someStore } = useStores()
+    const goBack = React.useMemo(() => () => props.navigation.goBack(), [props.navigation]);
+    const { authStore } = useStores();
 
-  const [isValidEmail, setValidEmail] = useState(true)
+    const [isValidEmail, setValidEmail] = useState(true);
 
-  const [email, onChangeEmail] = useState("")
+    const [email, onChangeEmail] = useState("");
 
-  useEffect(() => {
-    // authStore.resetForgotAuth()
-  }, [])
+    useEffect(() => {
+      // authStore.resetForgotAuth()
+    }, []);
 
-  const onChangeText = (text) => {
-    onChangeEmail(text)
-    text ? setValidEmail(true) : setValidEmail(false)
-  }
-  const onSubmit = () => {
-    const isConnected = isInternetAvailable()
-    if (!email) {
-      setValidEmail(false)
-    } else if (isConnected) {
-      authStore.forgotPassword(email)
-    }
-  }
+    const onChangeText = text => {
+      onChangeEmail(text);
+      text ? setValidEmail(true) : setValidEmail(false);
+    };
+    const onSubmit = () => {
+      const isConnected = isInternetAvailable();
+      if (!email) {
+        setValidEmail(false);
+      } else if (isConnected) {
+        authStore.forgotPassword(email);
+      }
+    };
 
-  return (
-    <Screen style={ROOT} preset="fixed" backgroundColor="black">
-      <BackButton
-        style={BACK_BUTTON}
-        hasBackground={false}
-        onPress={goBack} />
+    return (
+      <Screen style={ROOT} preset="fixed" backgroundColor="black">
+        <BackButton style={BACK_BUTTON} hasBackground={false} onPress={goBack} />
 
-      <ScrollView contentContainerStyle={CONTAINER}>
+        <ScrollView contentContainerStyle={CONTAINER}>
+          <Icon style={AFS_LOGO} icon={"afsLogo"} />
 
-        <Icon style={AFS_LOGO} icon={"afsLogo"} />
+          {authStore.hasForgotError ? (
+            <Text style={HEADER} preset="button" tx="forgotpasswordScreen.invalidError" />
+          ) : (
+            <Text style={HEADER} preset="button" tx="forgotpasswordScreen.title" />
+          )}
+          <Text style={LABEL} preset="button" tx="forgotpasswordScreen.label" />
 
-        {authStore.hasForgotError ? <Text style={HEADER} preset="button" tx="forgotpasswordScreen.invalidError" />
-          : <Text style={HEADER} preset="button" tx="forgotpasswordScreen.title" />
-        }
-        <Text style={LABEL} preset="button" tx="forgotpasswordScreen.label" />
+          <TextField
+            onChangeText={text => onChangeText(text)}
+            style={EMAIL}
+            placeholder={"Enter Email"}
+            value={email}
+            returnKeyType={"done"}
+            errorTx={isValidEmail ? undefined : "forgotpasswordScreen.enterEmail"}
+            onSubmitEditing={onSubmit}
+            autoCorrect={false}
+            autoCapitalize={"none"}
+          />
+          <Text style={DESC} preset="button" tx="forgotpasswordScreen.desc" />
 
-        <TextField
-          onChangeText={text => onChangeText(text)}
-          style={EMAIL}
-          placeholder={"Enter Email"}
-          value={email}
-          returnKeyType={"done"}
-          errorTx={isValidEmail ? undefined : "forgotpasswordScreen.enterEmail"}
-          onSubmitEditing={onSubmit}
-          autoCorrect={false}
-          autoCapitalize={"none"}
-        />
-        <Text style={DESC} preset="button" tx="forgotpasswordScreen.desc" />
-
-        <MyButton
-          style={CONTINUE}
-          isLoading={authStore.isForgotLoading}
-          tx="forgotpasswordScreen.submit"
-          onPress={onSubmit}
-        />
-      </ScrollView>
-
-    </Screen>
-
-  )
-})
+          <MyButton
+            style={CONTINUE}
+            isLoading={authStore.isForgotLoading}
+            tx="forgotpasswordScreen.submit"
+            onPress={onSubmit}
+          />
+        </ScrollView>
+      </Screen>
+    );
+  },
+);

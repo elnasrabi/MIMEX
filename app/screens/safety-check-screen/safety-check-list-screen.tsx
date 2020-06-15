@@ -14,118 +14,123 @@ import { icons } from "../../components/icon/icons";
 import { SearchView } from "../../components/search-view/search-view";
 
 export interface SafetyCheckProps {
-  navigation: NativeStackNavigationProp<ParamListBase>
+  navigation: NativeStackNavigationProp<ParamListBase>;
 }
 
-export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props) => {
+export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer(props => {
   const ROOT: ViewStyle = {
-    paddingBottom: 10
+    paddingBottom: 10,
   };
   const FLATLIST_STYLE: ViewStyle = {
     width: "90%",
-    marginLeft: '4%',
+    marginLeft: "4%",
     marginTop: 20,
   };
   const BOTTOM_BUTTON: ViewStyle = {
-    marginTop: 10
+    marginTop: 10,
   };
   const MAIN_VIEW: ViewStyle = {
-    marginTop: Platform.OS == 'android' ? 40 : isIphoneX() ? 10 : 33
+    marginTop: Platform.OS == "android" ? 40 : isIphoneX() ? 10 : 33,
   };
   const SEARCH_VIEW: ViewStyle = {
-    marginTop: "10%"
+    marginTop: "10%",
   };
   const SEARCH_INPUT: ViewStyle = {
-    width: '50%',
+    width: "50%",
     marginVertical: 20,
-    alignSelf: "center"
+    alignSelf: "center",
   };
   const BUTTON_VIEW: ViewStyle = {
-    height: 50
+    height: 50,
   };
   const SUB_CONTAINER: ViewStyle = {
     marginBottom: 10,
     flexDirection: "row",
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   };
   const DATE_STYLE: ViewStyle = {
-    flex: 0.4
+    flex: 0.4,
   };
   const LINK_STYLE: ViewStyle = {
     flex: 0.7,
-    alignItems: 'flex-end',
-    paddingRight: 5
+    alignItems: "flex-end",
+    paddingRight: 5,
   };
   const RESULT_TEXT: TextStyle = {
     color: color.palette.darkText,
     fontSize: 22,
     alignSelf: "center",
-    marginTop: 35
+    marginTop: 35,
   };
   const FONT_STYLE: TextStyle = {
     fontSize: 15,
-    fontFamily: typography.secondary
+    fontFamily: typography.secondary,
   };
   const FLEX_VIEW: ViewStyle = {
-    flex: 1
+    flex: 1,
   };
 
-  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [props.navigation]);
+  const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [
+    props.navigation,
+  ]);
   const isFocused = useIsFocused();
-  const [searchBox, updateSearchBox] = useState('');
+  const [searchBox, updateSearchBox] = useState("");
   const [resultlist, updateResultList] = useState([
-    { id: '1', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '2', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '3', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '4', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '5', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '6', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '7', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '8', date: '12-Nov-2020', link: 'Vehicle Safety Check' },
-    { id: '9', date: '12-Nov-2020', link: 'Vehicle Safety Check' }
+    { id: "1", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "2", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "3", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "4", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "5", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "6", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "7", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "8", date: "12-Nov-2020", link: "Vehicle Safety Check" },
+    { id: "9", date: "12-Nov-2020", link: "Vehicle Safety Check" },
   ]);
 
   useEffect(() => {
     if (isFocused) {
-      updateSearchBox('');
+      updateSearchBox("");
     }
-  }, [isFocused])
+  }, [isFocused]);
 
   const renderItem = ({ item, index }) => {
     return (
-      <View key={index} style={SUB_CONTAINER} >
+      <View key={index} style={SUB_CONTAINER}>
         <View style={DATE_STYLE}>
-          <Text style={[FONT_STYLE, { color: color.palette.darkText }]} >{item.date}</Text>
+          <Text style={[FONT_STYLE, { color: color.palette.darkText }]}>{item.date}</Text>
         </View>
-        <TouchableOpacity
-          style={LINK_STYLE}
-          onPress={() => gotoSafetyDetail()}>
-          <Text style={[FONT_STYLE, { color: color.palette.link }]} >{item.link}</Text>
+        <TouchableOpacity style={LINK_STYLE} onPress={() => gotoSafetyDetail()}>
+          <Text style={[FONT_STYLE, { color: color.palette.link }]}>{item.link}</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   const gotoSafetyDetail = () => {
-    return props.navigation.navigate('SafetyCheckDetail');
-  }
+    return props.navigation.navigate("SafetyCheckDetail");
+  };
   const gotoHomeScreen = () => {
-    return props.navigation.navigate('Home');
-  }
+    return props.navigation.navigate("Home");
+  };
 
   return (
-    <Screen style={ROOT} statusBar={'dark-content'} statusBarColor={color.palette.white} wall={'whiteWall'} preset="fixed">
-      <MenuButton
-        title={"safetyCheckScreen.header"}
-        onPress={handleDrawer} />
+    <Screen
+      style={ROOT}
+      statusBar={"dark-content"}
+      statusBarColor={color.palette.white}
+      wall={"whiteWall"}
+      preset="fixed"
+    >
+      <MenuButton title={"safetyCheckScreen.header"} onPress={handleDrawer} />
       <View style={[MAIN_VIEW, FLEX_VIEW]}>
         <SearchView
           value={searchBox}
-          onChangeText={(text) => updateSearchBox(text)}
+          onChangeText={text => updateSearchBox(text)}
           containerStyle={SEARCH_VIEW}
           searchInputViewStyle={SEARCH_INPUT}
           cameraIcon={false}
-          buttonStyle={BUTTON_VIEW} />
+          buttonStyle={BUTTON_VIEW}
+        />
 
         <Text style={RESULT_TEXT} tx={"safetyCheckScreen.results"} />
         <View style={FLEX_VIEW}>
@@ -144,8 +149,9 @@ export const SafetyCheck: FunctionComponent<SafetyCheckProps> = observer((props)
           leftImage={icons.blackButton2}
           rightImage={icons.redButton2}
           leftText={"safetyCheckScreen.new"}
-          rightText={"common.cancel"} />
+          rightText={"common.cancel"}
+        />
       </View>
     </Screen>
-  )
-})
+  );
+});
