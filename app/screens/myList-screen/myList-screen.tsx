@@ -65,8 +65,7 @@ const SEPERATOR_LINE: ViewStyle = {
 const SELECTALL_CHECKBOX: ViewStyle = {
   margin: 10,
   marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 15 : 38,
-  flexDirection: 'row',
-  justifyContent: "space-between"
+  flexDirection: 'row'
 }
 const ADDRESS_VIEW: ViewStyle = {
   flex: 1,
@@ -339,7 +338,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
             disabled={myListStore.isLoading}
           />
         </View>
-        <View style={{ width: '80%' }}>
+        <View style={CONTINUE}>
           <DropdownPicker
             placeHolder={'myList.empty'}
             disabled={myListStore.isLoading}
