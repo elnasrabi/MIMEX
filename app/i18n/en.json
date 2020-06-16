@@ -219,7 +219,7 @@
   },
   "myList": {
     "header": "My List",
-    "filter": "Select Filter",
+    "filter": "SELECT FILTER",
     "empty": " ",
     "milestone": "Milestone",
     "exception": "Exception",
