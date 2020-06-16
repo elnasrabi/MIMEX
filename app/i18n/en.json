@@ -224,7 +224,7 @@
     "empty": " ",
     "milestone": "Milestone",
     "exception": "Exception",
-    "duplicate": "Can't Add different addresses."
+    "duplicate": "Please select consignment(s) with similar address and status."
   },
   "consignmentSuccess": {
     "consignment": "Consignment",
