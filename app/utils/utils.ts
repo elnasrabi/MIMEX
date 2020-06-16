@@ -17,8 +17,19 @@ export function translateText(text): string {
   const i18nText = text && translate(text);
   return i18nText;
 }
-export function showAlert(title, desc = "") {
-  Alert.alert(translateText(title), translateText(desc));
+export function showAlert(title, desc = "", buttonName = "common.ok", onPress = () => {}) {
+  Alert.alert(
+    translateText(title),
+    translateText(desc),
+    [
+      {
+        text: translateText(buttonName),
+        onPress: onPress,
+        style: "cancel",
+      },
+    ],
+    { cancelable: false },
+  );
 }
 
 export async function isInternetAvailable(alert = true) {

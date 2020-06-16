@@ -31,7 +31,7 @@ const CENTERED_VIEW: ViewStyle = {
 };
 
 const IMAGE_VIEW: ImageStyle = {
-  height: 350,
+  height: 600,
   width: "100%",
   borderRadius: 2,
   borderColor: color.palette.darkText,
@@ -47,7 +47,8 @@ export const ImageViewerModal: FunctionComponent<ImageViewerModalProps> = observ
     <Modal animationType="slide" transparent={true} visible={props.isViewImage}>
       <View style={CENTERED_VIEW}>
         <Image
-          resizeMode={"center"}
+          resizeMethod={"resize"}
+          resizeMode={"cover"}
           style={IMAGE_VIEW}
           source={
             Platform.OS === "android"

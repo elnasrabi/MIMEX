@@ -37,7 +37,7 @@ const CUSTOMER_CONTAINER: ViewStyle = {
 const DETAIL_VIEW: ViewStyle = { flexDirection: "row" };
 const FIRE_BUTTON: ViewStyle = {
   alignSelf: "flex-start",
-  marginTop: 25,
+  marginTop: 15,
 };
 const CONSIGNMENT_VIEW: TextStyle = { flex: 1, color: color.palette.link };
 const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10, alignSelf: "flex-end" };
@@ -199,7 +199,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
               </View>
               <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
-              <View style={DETAIL_VIEW}>
+              <View style={[DETAIL_VIEW, { marginEnd: 15 }]}>
                 <Text
                   style={CONSIGNMENT_VIEW}
                   text={renderAddress(props.data.deliveryAddress[0].address[0])}

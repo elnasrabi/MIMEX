@@ -108,12 +108,16 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
   useEffect(() => {
     myListStore.refreshList();
     updateMyList(myListStore.getListData);
-    const isConnected = isInternetAvailable();
+    callMyListAPI();
+  }, [isFocused]);
+
+  const callMyListAPI = async () => {
+    const isConnected = await isInternetAvailable();
     if (isFocused && isConnected) {
       getListApi();
       setStatus("ALL");
     }
-  }, [isFocused]);
+  };
 
   useEffect(() => {
     const newArr = [...mylist];
@@ -237,11 +241,12 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
 
   const isDuplicateRecord = (item): boolean => {
     const address = item.deliveryAddress[0].address[0];
+    const status = item.currentFreightState[0];
     const selectedList = getSelectedList();
     let isDuplicate;
     for (const item of selectedList) {
       const address1 = item.deliveryAddress[0].address[0];
-      if (address1.line1[0] === address.line1[0]) {
+      if (address1.line1[0] === address.line1[0] && status === item.currentFreightState[0]) {
         isDuplicate = true;
       } else {
         return false;

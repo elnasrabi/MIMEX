@@ -33,7 +33,9 @@
     "registrationId": "Registration-ID",
     "syncing": "Syncing",
     "locationService": "Enable Location Service",
-    "locationServiceMsg": "Please enable the location service in order to get current location."
+    "locationServiceMsg": "Please enable the location service in order to get current location.",
+    "blankSign": "Signature can not be blank.",
+    "successUpdated": "Consignment(s) updated successfully."
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -223,7 +225,7 @@
     "empty": " ",
     "milestone": "Milestone",
     "exception": "Exception",
-    "duplicate": "Can't Add different addresses."
+    "duplicate": "Please select consignment(s) with similar address and status."
   },
   "consignmentSuccess": {
     "consignment": "Consignment",
@@ -234,7 +236,7 @@
     "status": "Status",
     "selectStatus": "Select Status",
     "selectImage": "Select Image",
-    "enterSignBy": "Enter Sign By Name",
+    "enterSignBy": "Enter Signed By Name",
     "doSign": "Do Sign",
     "consignmentPhoto": "Consignment Photo",
     "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
