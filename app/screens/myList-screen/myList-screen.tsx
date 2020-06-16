@@ -287,6 +287,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     const freightState = item.currentFreightState[0];
     const consignmentNumber = item.consignmentNumber[0];
     const address = item.deliveryAddress[0].address[0];
+    let currentStatusDate = item.freightStateHistory[item.freightStateHistory.length - 1].statusDateTime[0].slice(0, 10);
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={CHECKBOX_VIEW}>
@@ -311,8 +312,9 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
             <Text style={textStyle} text={address.line1 ? address.line1[0] : ' '} />
             <Text style={textStyle} text={address.line2 ? address.line2[0] : ' '} />
           </View>
-          <View style={ADDRESS_VIEW}>
+          <View style={[ADDRESS_VIEW, { flexDirection: 'row', justifyContent: 'space-between' }]}>
             <Text style={textStyle} text={`${address.town ? address.town[0] : ' '} ${address.state ? address.state[0] : ' '}`} />
+            <Text style={DISPATCH_STYLE} text={currentStatusDate} />
           </View>
         </View>
       </View>
