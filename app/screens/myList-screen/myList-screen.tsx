@@ -146,8 +146,6 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
         }
       });
       updateMyList(deliveredArray);
-    } else {
-      setStatus("ALL");
     }
   }
 
