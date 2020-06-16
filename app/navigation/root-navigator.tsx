@@ -17,6 +17,7 @@ const RootStack = observer(() => {
         headerShown: false,
         gestureEnabled: true,
         stackPresentation: "push",
+        stackAnimation: "none"
       }}
     >
       {authStore.isLoggedIn ? (
@@ -28,14 +29,14 @@ const RootStack = observer(() => {
           }}
         />
       ) : (
-        <Stack.Screen
-          name="authStack"
-          component={AuthNavigator}
-          options={{
-            headerShown: false,
-          }}
-        />
-      )}
+          <Stack.Screen
+            name="authStack"
+            component={AuthNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+        )}
     </Stack.Navigator>
   );
 });
