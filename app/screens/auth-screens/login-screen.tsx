@@ -79,7 +79,6 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     }
     if (username && password && isConnected) {
       authStore.login(username, password)
-      props.navigation.navigate("Home")
       // authStore.resetAuth()
     }
   }
