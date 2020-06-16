@@ -139,9 +139,6 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
       })
       updateMyList(deliveredArray);
     }
-    else {
-      setStatus('ALL');
-    }
   }
 
   const filterList = async () => {
@@ -343,7 +340,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         </View>
         <View style={CONTINUE}>
           <DropdownPicker
-            placeHolder={'myList.empty'}
+            placeHolder={'myList.filter'}
             disabled={myListStore.isLoading}
             dropDownData={statusData}
             onValueChange={(value) => setStatus(value)}
