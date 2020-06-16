@@ -21,6 +21,9 @@ export const CustomDrawerContent: FunctionComponent<CustomDrawerContentProps> = 
 
   const onLogout = () => {
     authStore.logout()
+    if (!authStore.isLoggedIn) {
+      props.navigation.navigate("RootStack")
+    }
   }
   return (
     <DrawerContentScrollView {...props}>

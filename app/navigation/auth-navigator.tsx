@@ -1,9 +1,10 @@
 import React from "react"
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { LoginScreen, ForgotpasswordScreen, LandingScreen } from "../screens"
+import { LoginScreen, ForgotpasswordScreen } from "../screens"
 import { AuthParamList } from "./types"
 import { HelpScreen } from "../screens/help-screen/help-screen";
+import { PrimaryNavigator } from "./primary-navigator";
 
 const Stack = createNativeStackNavigator<AuthParamList>()
 
@@ -17,7 +18,7 @@ export function AuthNavigator() {
       }}
     >
       <Stack.Screen name="login" component={LoginScreen} />
-      <Stack.Screen name="Home" component={LandingScreen} />
+      <Stack.Screen name="PrimaryNavigator" component={PrimaryNavigator} />
       <Stack.Screen name="HelpScreen" component={HelpScreen} />
       <Stack.Screen name="forgotpassword" component={ForgotpasswordScreen} />
     </Stack.Navigator>
@@ -31,4 +32,4 @@ export function AuthNavigator() {
  * Anything not on this list will be a standard `back` action in
  * react-navigation.
  */
-export const exitRoutes: string[] = ["login", "Home"]
+export const exitRoutes: string[] = ["login", "PrimaryNavigator"]

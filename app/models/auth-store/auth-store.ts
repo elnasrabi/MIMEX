@@ -25,7 +25,6 @@ export const AuthStoreModel = types
   .actions(self => ({
     logout() {
       self.isLoggedIn = false
-      self.userData = types.optional(types.frozen(), {})
     },
     login: flow(function* login(username: string, password: string) {
       self.isLoginLoading = true

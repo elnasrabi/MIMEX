@@ -18,23 +18,29 @@ const RootStack = observer(() => {
         gestureEnabled: true,
         stackPresentation: 'push'
       }}
+      initialRouteName={authStore.isLoggedIn ? 'primaryStack' : 'AuthNavigator'}
     >
-      {authStore.isLoggedIn
-        ? <Stack.Screen
-          name="primaryStack"
-          component={PrimaryNavigator}
-          options={{
-            headerShown: false,
-          }}
-        />
-        : <Stack.Screen
-          name="authStack"
-          component={AuthNavigator}
-          options={{
-            headerShown: false,
-          }}
-        />}
-
+      <Stack.Screen
+        name="RootStack"
+        component={RootStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="primaryStack"
+        component={PrimaryNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AuthNavigator"
+        component={AuthNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   )
 })

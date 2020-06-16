@@ -70,7 +70,7 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
     Orientation.lockToPortrait()
   }, [])
 
-  const onLogin = () => {
+  const onLogin = async () => {
     const isConnected = isInternetAvailable()
     if (!username) {
       setValidUsername(false)
@@ -78,9 +78,10 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer((props)
       setValidPassword(false)
     }
     if (username && password && isConnected) {
-      authStore.login(username, password)
-      props.navigation.navigate("Home")
-      // authStore.resetAuth()
+      await authStore.login(username, password)
+      if (authStore.isLoggedIn) {
+        props.navigation.navigate("PrimaryNavigator")
+      }
     }
   }
 
