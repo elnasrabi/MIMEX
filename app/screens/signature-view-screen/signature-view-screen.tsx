@@ -47,20 +47,17 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
   });
   const filePath = getSignaturePath(consNo + loginName);
   const saveSign = async () => {
-    if (Platform.OS === "android") {
-      const result = await requestPermission(STORAGE_PERMISSION);
-      if (result && isSigned) {
+    if(isSigned){
+      if (Platform.OS === "android") {
+        const result = await requestPermission(STORAGE_PERMISSION);
+        if (result) {
+            refs.saveImage();
+          }
+      } else {
           refs.saveImage();
-        }else{
-          showAlert("common.blankSign");
-        }
-    } else {
-      if(isSigned){
-        refs.saveImage();
-      }else{
-        showAlert("common.blankSign");
-      }
-     
+       }
+    }else{
+      showAlert("common.blankSign");
     }
   };
   const resetSign = () => {

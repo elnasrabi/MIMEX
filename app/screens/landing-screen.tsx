@@ -71,7 +71,7 @@ const dataList = ["landingScreen.myList"];
 let isConnected = true;
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore, getARateStore } = useStores();
-  const [searchValue, onSearchValue] = useState("CCS0033411");
+  const [searchValue, onSearchValue] = useState("CCS0000006");
   // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true);
   const [isGoPressed, setIsOnGoPress] = useState(false);
