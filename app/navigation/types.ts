@@ -1,7 +1,6 @@
 export type RootParamList = {
-  RootStack: undefined
   primaryStack: undefined
-  AuthNavigator: undefined
+  authStack: undefined
 }
 
 export type PrimaryParamList = {
@@ -25,5 +24,5 @@ export type AuthParamList = {
   login: undefined
   HelpScreen: undefined
   forgotpassword: undefined
-  PrimaryNavigator: undefined
+  Home: undefined
 }
