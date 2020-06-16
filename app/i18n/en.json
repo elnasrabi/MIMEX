@@ -34,7 +34,8 @@
     "syncing": "Syncing",
     "locationService": "Enable Location Service",
     "locationServiceMsg": "Please enable the location service in order to get current location.",
-    "blankSign": "Signature can not be blank."
+    "blankSign": "Signature can not be blank.",
+    "successUpdated": "Consignment(s) updated successfully."
   },
   "errors": {
     "invalidEmail": "Invalid email address."

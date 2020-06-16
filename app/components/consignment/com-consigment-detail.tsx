@@ -199,7 +199,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
               </View>
               <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
-              <View style={DETAIL_VIEW}>
+              <View style={[DETAIL_VIEW, { marginEnd: 15 }]}>
                 <Text
                   style={CONSIGNMENT_VIEW}
                   text={renderAddress(props.data.deliveryAddress[0].address[0])}

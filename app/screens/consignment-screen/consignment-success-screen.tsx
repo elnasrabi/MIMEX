@@ -34,6 +34,7 @@ import {
   getImagePath,
   getJsonRequest,
   consType,
+  showAlert,
 } from "../../utils/utils";
 import { DropdownPicker } from "../../components/dropdown-picker/Dropdown-picker";
 import ConsignmentModel from "../../models/local-database/consignment-model";
@@ -145,6 +146,7 @@ const DATE_TEXT: TextStyle = {
   textAlign: "right",
   alignSelf: "center",
   fontSize: 15,
+  marginStart: 10,
 };
 let imageHash = Date.now();
 let randomNo = Math.random();
@@ -217,7 +219,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
-      props.navigation.navigate(consignmentStore.fromHome ? "Home" : "MyList");
+      showAlert("", "common.successUpdated", "common.ok", onOkayPress);
     }
   }, [consignmentStore.isConsignmentSaved]);
 
@@ -276,6 +278,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     return false;
   }
 
+  const onOkayPress = () => {
+    props.navigation.navigate(consignmentStore.fromHome ? "Home" : "MyList");
+  };
   const onSave = async () => {
     const isConnected = await isInternetAvailable(false);
     if (!selectedValue) {
