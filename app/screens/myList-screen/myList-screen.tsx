@@ -154,11 +154,12 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   }
 
   const getListApi = async () => {
+    const currentDate = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+    const aMonthBeforeDate = moment(new Date()).subtract(1, "months").format("YYYY-MM-DDTHH:mm:ss");
     const getListRequest = {
       consignmentMatchingExportRequest: {
-        // fromDespatchDate: "2020-06-05T00:00:00",     for future release if needed specific date response
-        // toDespatchDate: "2020-06-05T23:59:59",       for future release if needed specific date response
-        myList: "true"
+        fromDespatchDate: aMonthBeforeDate,
+        toDespatchDate: currentDate,
       }
     }
     await myListStore.getList(authStore.authorization, getListRequest);
