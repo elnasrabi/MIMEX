@@ -90,7 +90,7 @@ export function BottomButton(props: bottomButtonProps) {
       {hideLeftButton ?
         null :
         <TouchableOpacity disabled={isLoadingLeft || leftDisabled} onPress={onLeftPress}>
-          {leftDisabled ? (
+          {leftDisabled ?
             <View style={LEFT_BUTTON_STYLE_DISABLE}>
               <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
             </View>
