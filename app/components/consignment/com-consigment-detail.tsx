@@ -82,13 +82,13 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
     if (props.view === viewType.consignment) {
       return (<View style={DETAIL_CONTAINER}>
         <View style={CONSIGNMENT_VIEW}>
-          <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
+          <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={consignmentStatus} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={consignmentStatus} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
@@ -98,7 +98,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} text={props.data.consignmentItems[0].totalLineItemLabels[0]} preset={"normal"} />
+                <Text style={[TEXT_VALUE, { flex: 1 }]} text={props.data.consignmentItems[0].totalLineItemLabels[0]} preset={"normal"} />
               </View>
               <View style={DETAIL_VIEW}>
                 <Text tx={"common.weight"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
@@ -120,14 +120,14 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
           <View style={CONSIGNMENT_VIEW}>
             <View style={DETAIL_VIEW}>
               <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-              <Text style={TEXT_VALUE} preset={"normal"}>{"Mark belo"}</Text>
+              <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>{"Mark belo"}</Text>
             </View>
             <View style={DETAIL_VIEW}>
               <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
-              <Text style={TEXT_VALUE} preset={"normal"}>{"856126555"}</Text>
+              <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>{"856126555"}</Text>
             </View>
             <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
-            <Text style={TEXT_VALUE} text={"Line 1 \nLine 2"} preset={"normal"} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} text={"Line 1 \nLine 2"} preset={"normal"} />
           </View>
           <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
             <Icon icon={"phone"} />
@@ -140,11 +140,11 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         <View style={CONSIGNMENT_VIEW}>
           <View style={DETAIL_VIEW}>
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
           <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-            <Text style={TEXT_VALUE} preset={"normal"} text={consignmentStatus} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={consignmentStatus} />
           </View>
           <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
