@@ -190,6 +190,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   } else {
     isDelivered = false;
   }
+  const consNo = consignmentStore.consignmentDetail.consignmentNumber[0];
+  const loginName = authStore.userData[0].loginName[0];
+  const imageFileName = consNo + loginName;
   const SIGN_IMAGE_URI = getSignaturePath(imageFileName);
   const [selectedValue, setSelectedValue] = useState("");
   const [fileName, setFileName] = useState("");
@@ -204,11 +207,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [random, setRandom] = useState(0);
   const [isValidSignImage, onSetValidSignImage] = useState(true);
   const { isSuccess } = props.route.params;
-  const consNo = consignmentStore.consignmentDetail.consignmentNumber[0];
-  const loginName = authStore.userData[0].loginName[0];
-  const imageFileName = consNo + loginName;
 
-  // console.log(SIGN_IMAGE_URI)
+  console.log(signUri);
   const [currentDate, updateCurrentDate] = useState(getFormattedDate(new Date().toLocaleString()));
   useEffect(() => {
     getUserData();
