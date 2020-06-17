@@ -39,11 +39,15 @@ const FIRE_BUTTON: ViewStyle = {
   alignSelf: "flex-start",
   marginTop: 25
 }
+const SPECIAL_ACTION_BUTTON: ViewStyle = {
+  marginLeft: 5,
+  justifyContent: 'center',
+  alignItems: 'flex-end'
+}
 const CONSIGNMENT_VIEW: TextStyle = { flex: 1, color: color.palette.link }
 const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10, alignSelf: "flex-end" }
 const SPECIAL_ACTION: ImageStyle = { height: 100, width: 100 }
-const SPECIAL_ACTION_BUTTON: ViewStyle = { alignSelf: "flex-end" }
-const ITEM_LABEL: TextStyle = { color: color.palette.darkText, marginEnd: 15 }
+const ITEM_LABEL: TextStyle = { color: color.palette.darkText, marginEnd: 10 }
 const CUSTOMER_VIEW: ViewStyle = {
   height: 50,
   backgroundColor: color.palette.toolbar,
@@ -142,7 +146,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
             <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={props.data.consignmentNumber} />
           </View>
-          <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
+          <View style={DETAIL_VIEW}>
             <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
             <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={consignmentStatus} />
           </View>
@@ -152,15 +156,16 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             <Text style={CONSIGNMENT_VIEW} text={renderAddress(props.data.deliveryAddress[0].address[0])} preset={"normal"} />
           </View>
         </View>
-        {props.isFailView ? null : <MyButton
-          isDisable={isDelivered}
-          style={SPECIAL_ACTION_BUTTON}
-          buttonSource={icons.blueButton}
-          imageBackground={SPECIAL_ACTION}
-          // isLoading={authStore.isLoginLoading}
-          tx="common.specialAction"
-          onPress={onActionPress}
-        />}
+        <View style={SPECIAL_ACTION_BUTTON}>
+          {props.isFailView ? null : <MyButton
+            isDisable={isDelivered}
+            buttonSource={icons.blueButton}
+            imageBackground={SPECIAL_ACTION}
+            // isLoading={authStore.isLoginLoading}
+            tx="common.specialAction"
+            onPress={onActionPress}
+          />}
+        </View>
       </View>)
     }
   }
