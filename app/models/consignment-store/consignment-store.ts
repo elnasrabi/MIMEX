@@ -116,10 +116,10 @@ export const ConsignmentStoreModel = types
               response.address_components[response.address_components.length - 4].long_name;
             self.locationEnableCanceled = true;
           } else {
-            showAlert("common.somethingWrong");
+            // showAlert("common.somethingWrong");
           }
         } else {
-          showAlert("common.somethingWrong");
+          // showAlert("common.somethingWrong");
         }
       } catch (erro) {}
     }),

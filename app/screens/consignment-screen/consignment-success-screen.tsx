@@ -161,6 +161,7 @@ interface recordProps {
   consignmentNumber: string;
   itemsCount: string;
   status: string;
+  subStatus: string;
   image: string;
   signBy: string;
   location: string;
@@ -303,7 +304,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         loginName: authStore.userData[0].loginName[0],
         consignmentNumber: consignment.consignmentNumber[0],
         itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
-        status: selectedValue,
+        status: "Undeliverable",
+        subStatus: selectedValue,
         image: imageFileName,
         signBy: signText,
         location: consignmentStore.city + ", " + consignmentStore.district,

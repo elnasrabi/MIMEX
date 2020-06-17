@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState, useLayoutEffect } from "react";
-import { useFocusEffect, ParamListBase } from "@react-navigation/native";
+import { useFocusEffect, ParamListBase, useIsFocused } from "@react-navigation/native";
 import { observer } from "mobx-react-lite";
 import { ViewStyle, View, ImageStyle, BackHandler, Keyboard, Alert } from "react-native";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
@@ -71,10 +71,14 @@ const dataList = ["landingScreen.myList"];
 let isConnected = true;
 export const LandingScreen: FunctionComponent<LandingScreenProps> = observer(props => {
   const { consignmentStore, homeStore, authStore, getARateStore } = useStores();
-  const [searchValue, onSearchValue] = useState("CCS0000006");
+  const [searchValue, onSearchValue] = useState("CCS0033411");
   // const [searchValue, onSearchValue] = useState("")
   const [isValidSearch, onValidSearch] = useState(true);
   const [isGoPressed, setIsOnGoPress] = useState(false);
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    onValidSearch(true);
+  }, [isFocused]);
 
   useEffect(() => {
     Orientation.lockToPortrait();

@@ -47,16 +47,16 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
   });
   const filePath = getSignaturePath(consNo + loginName);
   const saveSign = async () => {
-    if(isSigned){
+    if (isSigned) {
       if (Platform.OS === "android") {
         const result = await requestPermission(STORAGE_PERMISSION);
         if (result) {
-            refs.saveImage();
-          }
-      } else {
           refs.saveImage();
-       }
-    }else{
+        }
+      } else {
+        refs.saveImage();
+      }
+    } else {
       showAlert("common.blankSign");
     }
   };
@@ -65,11 +65,11 @@ export const SignatureView: FunctionComponent<SignatureViewProps> = observer(pro
     refs.resetImage();
   };
   const onSaveEvent = (result: any) => {
-      RNFS.writeFile(filePath, result.encoded, "base64").then(result => {
-        consignmentStore.onSigned(true);
-        goBack();
-      });
-   };
+    RNFS.writeFile(filePath, result.encoded, "base64").then(result => {
+      consignmentStore.onSigned(true);
+      goBack();
+    });
+  };
 
   const onDragEvent = (result: any) => {
     onSigned(true);
