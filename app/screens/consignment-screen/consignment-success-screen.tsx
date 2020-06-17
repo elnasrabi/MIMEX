@@ -304,7 +304,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
         loginName: authStore.userData[0].loginName[0],
         consignmentNumber: consignment.consignmentNumber[0],
         itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
-        status: "Undeliverable",
+        status: isSuccess ? selectedValue : "Undeliverable",
         subStatus: selectedValue,
         image: imageFileName,
         signBy: signText,
