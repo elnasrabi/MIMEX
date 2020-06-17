@@ -208,7 +208,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignImage, onSetValidSignImage] = useState(true);
   const { isSuccess } = props.route.params;
 
-  console.log(signUri);
   const [currentDate, updateCurrentDate] = useState(getFormattedDate(new Date().toLocaleString()));
   useEffect(() => {
     getUserData();
