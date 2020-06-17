@@ -171,7 +171,7 @@ interface recordProps {
 }
 
 // let currentDate = getFormattedDate(new Date().toLocaleString())
-const dir = getImageDir()
+const dir = getImageDir();
 RNFS.exists(dir).then(result => {
   if (!result) {
     RNFS.mkdir(dir);
@@ -209,7 +209,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const imageFileName = consNo + loginName;
 
   // console.log(SIGN_IMAGE_URI)
-  const [currentDate, updateCurrentDate] = useState(getFormattedDate(new Date().toLocaleString()))
+  const [currentDate, updateCurrentDate] = useState(getFormattedDate(new Date().toLocaleString()));
   useEffect(() => {
     getUserData();
     consignmentStore.onSigned(false);
@@ -221,8 +221,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
   useEffect(() => {
     let newDate = getFormattedDate(new Date().toLocaleString());
-    updateCurrentDate(newDate)
-  }, [isFocused])
+    updateCurrentDate(newDate);
+  }, [isFocused]);
 
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
@@ -378,7 +378,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
                   onValueChange={value => {
-                    currentDate = getFormattedDate(new Date().toLocaleString());
+                    updateCurrentDate(getFormattedDate(new Date().toLocaleString()));
                     setSelectedValue(value);
                     onSetValidStatus(true);
                   }}
@@ -423,8 +423,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   style={SIGN_VIEW_IMAGE}
                 />
               ) : (
-                  <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
-                )}
+                <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
+              )}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
           </View>

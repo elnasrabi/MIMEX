@@ -87,31 +87,33 @@ export function BottomButton(props: bottomButtonProps) {
 
   return (
     <View style={[BOTTOM_VIEW, bottomViewstyle]}>
-      {hideLeftButton ?
-        null :
+      {hideLeftButton ? null : (
         <TouchableOpacity disabled={isLoadingLeft || leftDisabled} onPress={onLeftPress}>
           {leftDisabled ? (
             <View style={LEFT_BUTTON_STYLE_DISABLE}>
               <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
             </View>
-            : <ImageBackground source={leftImage} style={[LEFT_BUTTON_STYLE, leftButtonStyle]} >
-              {isLoadingLeft ? <ActivityIndicator size="small" color={color.palette.white} />
-                : <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
-              }
+          ) : (
+            <ImageBackground source={leftImage} style={[LEFT_BUTTON_STYLE, leftButtonStyle]}>
+              {isLoadingLeft ? (
+                <ActivityIndicator size="small" color={color.palette.white} />
+              ) : (
+                <Text style={BUTTON_TEXT_STYLE} tx={leftText} />
+              )}
             </ImageBackground>
-          }
+          )}
         </TouchableOpacity>
-      }
+      )}
       <TouchableOpacity disabled={isLoadingRight || rightDisabled} onPress={onRightPress}>
-        {rightDisabled
-          ? <View style={LEFT_BUTTON_STYLE_DISABLE}>
+        {rightDisabled ? (
+          <View style={LEFT_BUTTON_STYLE_DISABLE}>
             <Text style={BUTTON_TEXT_STYLE} tx={rightText} />
           </View>
-          :
+        ) : (
           <ImageBackground source={rightImage} style={[RIGHT_BUTTON_STYLE, rightButtonStyle]}>
             <Text style={BUTTON_TEXT_STYLE} tx={rightText} />
           </ImageBackground>
-        }
+        )}
       </TouchableOpacity>
     </View>
   );
