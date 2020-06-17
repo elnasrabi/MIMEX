@@ -36,16 +36,18 @@ const CUSTOMER_CONTAINER: ViewStyle = {
 };
 const DETAIL_VIEW: ViewStyle = { flexDirection: "row" };
 const FIRE_BUTTON: ViewStyle = {
-  alignSelf: "flex-start",
-  marginTop: 18,
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  marginTop: 15,
 };
+const CALL_BUTTON: ViewStyle = { alignSelf: "flex-start", marginTop: 25 };
 const SPECIAL_ACTION_BUTTON: ViewStyle = {
   marginLeft: 5,
   justifyContent: "center",
   alignItems: "flex-end",
 };
 const CONSIGNMENT_VIEW: TextStyle = { flex: 1, color: color.palette.link };
-const ITEMS_VIEW: ViewStyle = { flex: 0.5, marginStart: 10, alignSelf: "flex-end" };
+const ITEMS_VIEW: ViewStyle = { justifyContent: "flex-end", marginLeft: 5 };
 const SPECIAL_ACTION: ImageStyle = { height: 100, width: 100 };
 const ITEM_LABEL: TextStyle = { color: color.palette.darkText, marginEnd: 10 };
 const CUSTOMER_VIEW: ViewStyle = {
@@ -127,7 +129,6 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                   text={renderAddress(props.data.deliveryAddress[0].address[0])}
                   preset={"normal"}
                 />
-
                 <View style={ITEMS_VIEW}>
                   <View style={DETAIL_VIEW}>
                     <Text
@@ -142,24 +143,23 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                       preset={"normal"}
                     />
                   </View>
-
-                  <View style={ITEMS_VIEW}>
-                    <View style={DETAIL_VIEW}>
-                      <Text
-                        tx={"common.weight"}
-                        extraText={":"}
-                        style={ITEM_LABEL}
-                        preset={"normal"}
-                      />
-                      <Text style={TEXT_VALUE} preset={"normal"} text={props.data.totalWeight} />
-                    </View>
+                  <View style={DETAIL_VIEW}>
+                    <Text
+                      tx={"common.weight"}
+                      extraText={":"}
+                      style={ITEM_LABEL}
+                      preset={"normal"}
+                    />
+                    <Text style={TEXT_VALUE} preset={"normal"} text={props.data.totalWeight} />
                   </View>
                 </View>
               </View>
             </View>
-            <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
-              <Icon icon={"fire"} />
-            </Button>
+            <View style={FIRE_BUTTON}>
+              <Button preset="link" onPress={onFirePress}>
+                <Icon icon={"fire"} />
+              </Button>
+            </View>
           </View>
         );
       } else if (props.view === viewType.customer) {
@@ -193,7 +193,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                   preset={"normal"}
                 />
               </View>
-              <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
+              <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
                 <Icon icon={"phone"} />
               </Button>
             </View>
