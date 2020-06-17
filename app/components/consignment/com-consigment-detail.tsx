@@ -54,58 +54,51 @@ const TITLE: TextStyle = {
   fontSize: 18,
   textAlign: "left",
   marginStart: 30,
-};
-const TEXT_VALUE: TextStyle = { color: color.palette.link };
-let isDelivered = false;
-export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> = observer(
-  props => {
-    const consignmentStatus = props.data.currentFreightState[0];
-    if (consignmentStatus === "Delivered") {
-      isDelivered = true;
-    } else {
-      isDelivered = false;
-    }
-    const onFirePress = () => {
-      props.navigation.navigate("pdfViewer");
-    };
-    const onActionPress = () => {
-      props.navigation.navigate("consignmentSpecial");
-    };
-    const onPhonePress = () => {
-      callApi("645456456456");
-    };
-    const renderAddress = (data): string => {
-      const address =
-        data.line1 +
-        ", " +
-        data.line2 +
-        ", " +
-        data.town +
-        ", " +
-        data.state +
-        ", " +
-        data.country +
-        " - " +
-        data.postcode;
-      return address;
-    };
-    const renderView = () => {
-      if (props.view === viewType.consignment) {
-        return (
-          <View style={DETAIL_CONTAINER}>
-            <View style={CONSIGNMENT_VIEW}>
-              <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
-                <Text
-                  tx={"common.consignment"}
-                  extraText={":"}
-                  style={ITEM_LABEL}
-                  preset={"normal"}
-                />
-                <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
-              </View>
+}
+const TEXT_VALUE: TextStyle = { color: color.palette.link, }
+let isDelivered = false
+export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> = observer(props => {
+  const consignmentStatus = props.data.currentFreightState[0]
+  if (consignmentStatus === "Delivered") {
+    isDelivered = true
+  } else {
+    isDelivered = false
+  }
+  const onFirePress = () => {
+    props.navigation.navigate("pdfViewer")
+  }
+  const onActionPress = () => {
+    props.navigation.navigate("consignmentSpecial")
+  }
+  const onPhonePress = () => {
+    callApi("645456456456")
+  }
+  const renderAddress = (data): string => {
+    const address = data.line1 + ", " + data.line2 + ", " + data.town + ", " +
+      data.state + ", " + data.country + " - " + data.postcode
+    return address
+  }
+  const renderView = () => {
+    if (props.view === viewType.consignment) {
+      return (<View style={DETAIL_CONTAINER}>
+        <View style={CONSIGNMENT_VIEW}>
+          <View style={DETAIL_VIEW}>
+            <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={props.data.consignmentNumber} />
+          </View>
+          <View style={DETAIL_VIEW}>
+            <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={consignmentStatus} />
+          </View>
+          <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+
+          <View style={DETAIL_VIEW}>
+            <Text style={CONSIGNMENT_VIEW} text={renderAddress(props.data.deliveryAddress[0].address[0])} preset={"normal"} />
+
+            <View style={ITEMS_VIEW}>
               <View style={DETAIL_VIEW}>
-                <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} preset={"normal"} text={consignmentStatus} />
+                <Text tx={"common.items"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+                <Text style={[TEXT_VALUE, { flex: 1 }]} text={props.data.consignmentItems[0].totalLineItemLabels[0]} preset={"normal"} />
               </View>
               <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
@@ -146,82 +139,71 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
               <Icon icon={"fire"} />
             </Button>
           </View>
-        );
-      } else if (props.view === viewType.customer) {
-        return (
-          <View>
-            <View style={CUSTOMER_VIEW}>
-              <Text style={TITLE} tx={"common.customer"} />
+        </View>
+        <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
+          <Icon icon={"fire"} />
+        </Button>
+      </View>)
+    } else if (props.view === viewType.customer) {
+      return (<View>
+        <View style={CUSTOMER_VIEW}>
+          <Text style={TITLE} tx={"common.customer"} />
+        </View>
+        <View style={CUSTOMER_CONTAINER}>
+          <View style={CONSIGNMENT_VIEW}>
+            <View style={DETAIL_VIEW}>
+              <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+              <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>{"Mark belo"}</Text>
             </View>
-            <View style={CUSTOMER_CONTAINER}>
-              <View style={CONSIGNMENT_VIEW}>
-                <View style={DETAIL_VIEW}>
-                  <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                  <Text style={TEXT_VALUE} preset={"normal"}>
-                    {"Mark belo"}
-                  </Text>
-                </View>
-                <View style={DETAIL_VIEW}>
-                  <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
-                    Items:
-                  </Text>
-                  <Text style={TEXT_VALUE} preset={"normal"}>
-                    {"856126555"}
-                  </Text>
-                </View>
-                <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
-                  Items:
-                </Text>
-                <Text style={TEXT_VALUE} text={"Line 1 \nLine 2"} preset={"normal"} />
-              </View>
-              <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
-                <Icon icon={"phone"} />
-              </Button>
+            <View style={DETAIL_VIEW}>
+              <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
+              <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>{"856126555"}</Text>
             </View>
+            <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>Items:</Text>
+            <Text style={[TEXT_VALUE, { flex: 1 }]} text={"Line 1 \nLine 2"} preset={"normal"} />
           </View>
-        );
-      } else if (props.view === viewType.specialAction) {
-        return (
-          <View style={DETAIL_CONTAINER}>
-            <View style={CONSIGNMENT_VIEW}>
-              <View style={DETAIL_VIEW}>
-                <Text
-                  tx={"common.consignment"}
-                  extraText={":"}
-                  style={ITEM_LABEL}
-                  preset={"normal"}
-                />
-                <Text style={TEXT_VALUE} preset={"normal"} text={props.data.consignmentNumber} />
-              </View>
-              <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
-                <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text style={TEXT_VALUE} preset={"normal"} text={consignmentStatus} />
-              </View>
-              <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+          <Button style={FIRE_BUTTON} preset="link" onPress={onPhonePress}>
+            <Icon icon={"phone"} />
+          </Button>
+        </View>
+      </View>
+      )
+    } else if (props.view === viewType.specialAction) {
+      return (<View style={DETAIL_CONTAINER}>
+        <View style={CONSIGNMENT_VIEW}>
+          <View style={DETAIL_VIEW}>
+            <Text tx={"common.consignment"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={props.data.consignmentNumber} />
+          </View>
+          <View style={[DETAIL_VIEW, { marginEnd: 20 }]}>
+            <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+            <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"} text={consignmentStatus} />
+          </View>
+          <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
 
-              <View style={[DETAIL_VIEW, { marginEnd: 15 }]}>
-                <Text
-                  style={CONSIGNMENT_VIEW}
-                  text={renderAddress(props.data.deliveryAddress[0].address[0])}
-                  preset={"normal"}
-                />
-              </View>
-            </View>
-            {props.isFailView ? null : (
-              <MyButton
-                isDisable={isDelivered}
-                style={SPECIAL_ACTION_BUTTON}
-                buttonSource={icons.blueButton}
-                imageBackground={SPECIAL_ACTION}
-                // isLoading={authStore.isLoginLoading}
-                tx="common.specialAction"
-                onPress={onActionPress}
-              />
-            )}
+          <View style={[DETAIL_VIEW, { marginEnd: 15 }]}>
+            <Text
+              style={CONSIGNMENT_VIEW}
+              text={renderAddress(props.data.deliveryAddress[0].address[0])}
+              preset={"normal"}
+            />
           </View>
-        );
-      }
-    };
-    return <View>{renderView()}</View>;
-  },
+        </View>
+        {props.isFailView ? null : (
+          <MyButton
+            isDisable={isDelivered}
+            style={SPECIAL_ACTION_BUTTON}
+            buttonSource={icons.blueButton}
+            imageBackground={SPECIAL_ACTION}
+            // isLoading={authStore.isLoginLoading}
+            tx="common.specialAction"
+            onPress={onActionPress}
+          />
+        )}
+      </View>
+      );
+    }
+  };
+  return <View>{renderView()}</View>;
+},
 );

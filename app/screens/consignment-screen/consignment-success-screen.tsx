@@ -169,8 +169,8 @@ interface recordProps {
   synced: boolean;
 }
 
-let currentDate = getFormattedDate(new Date().toLocaleString());
-const dir = getImageDir();
+// let currentDate = getFormattedDate(new Date().toLocaleString())
+const dir = getImageDir()
 RNFS.exists(dir).then(result => {
   if (!result) {
     RNFS.mkdir(dir);
@@ -189,6 +189,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   } else {
     isDelivered = false;
   }
+  const SIGN_IMAGE_URI = getSignaturePath(imageFileName);
   const [selectedValue, setSelectedValue] = useState("");
   const [fileName, setFileName] = useState("");
   const [imageUri, setImageUri] = useState("");
@@ -205,9 +206,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const consNo = consignmentStore.consignmentDetail.consignmentNumber[0];
   const loginName = authStore.userData[0].loginName[0];
   const imageFileName = consNo + loginName;
-  const SIGN_IMAGE_URI = getSignaturePath(imageFileName);
-  // console.log(SIGN_IMAGE_URI)
 
+  // console.log(SIGN_IMAGE_URI)
+  const [currentDate, updateCurrentDate] = useState(getFormattedDate(new Date().toLocaleString()))
   useEffect(() => {
     getUserData();
     consignmentStore.onSigned(false);
@@ -216,6 +217,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       getOfflineConsignment();
     }
   }, []);
+
+  useEffect(() => {
+    let newDate = getFormattedDate(new Date().toLocaleString());
+    updateCurrentDate(newDate)
+  }, [isFocused])
 
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
@@ -415,8 +421,8 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   style={SIGN_VIEW_IMAGE}
                 />
               ) : (
-                <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
-              )}
+                  <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
+                )}
             </TouchableOpacity>
             {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
           </View>
