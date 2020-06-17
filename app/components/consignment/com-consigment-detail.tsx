@@ -168,6 +168,9 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
         </View>
       </View>)
     }
+    else {
+      return true
+    }
   }
   return (
     <View>
