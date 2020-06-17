@@ -65,8 +65,8 @@ const SEPERATOR_LINE: ViewStyle = {
 const SELECTALL_CHECKBOX: ViewStyle = {
   margin: 10,
   marginTop: Platform.OS == "android" ? 60 : isIphoneX() ? 15 : 38,
-  flexDirection: 'row'
-}
+  flexDirection: "row",
+};
 const ADDRESS_VIEW: ViewStyle = {
   flex: 1,
   marginVertical: 5,
@@ -147,7 +147,7 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
       });
       updateMyList(deliveredArray);
     }
-  }
+  };
 
   const filterList = async () => {
     switch (selectedStatus) {
@@ -160,13 +160,15 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
 
   const getListApi = async () => {
     const currentDate = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
-    const aMonthBeforeDate = moment(new Date()).subtract(1, "months").format("YYYY-MM-DDTHH:mm:ss");
+    const aMonthBeforeDate = moment(new Date())
+      .subtract(1, "months")
+      .format("YYYY-MM-DDTHH:mm:ss");
     const getListRequest = {
       consignmentMatchingExportRequest: {
         fromDespatchDate: aMonthBeforeDate,
         toDespatchDate: currentDate,
-      }
-    }
+      },
+    };
     await myListStore.getList(authStore.authorization, getListRequest);
     if (myListStore.responseSuccess) {
       let i = 0;
@@ -299,7 +301,9 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
     const freightState = item.currentFreightState[0];
     const consignmentNumber = item.consignmentNumber[0];
     const address = item.deliveryAddress[0].address[0];
-    let currentStatusDate = item.freightStateHistory[item.freightStateHistory.length - 1].statusDateTime[0].slice(0, 10);
+    let currentStatusDate = item.freightStateHistory[
+      item.freightStateHistory.length - 1
+    ].statusDateTime[0].slice(0, 10);
     return (
       <View key={index} style={MAIN_CONTAINER}>
         <View style={CHECKBOX_VIEW}>
@@ -326,8 +330,13 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
             <Text style={textStyle} text={address.line1 ? address.line1[0] : " "} />
             <Text style={textStyle} text={address.line2 ? address.line2[0] : " "} />
           </View>
-          <View style={[ADDRESS_VIEW, { flexDirection: 'row', justifyContent: 'space-between' }]}>
-            <Text style={textStyle} text={`${address.town ? address.town[0] : ' '} ${address.state ? address.state[0] : ' '}`} />
+          <View style={[ADDRESS_VIEW, { flexDirection: "row", justifyContent: "space-between" }]}>
+            <Text
+              style={textStyle}
+              text={`${address.town ? address.town[0] : " "} ${
+                address.state ? address.state[0] : " "
+              }`}
+            />
             <Text style={DISPATCH_STYLE} text={currentStatusDate} />
           </View>
         </View>
@@ -357,9 +366,9 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
             disabled={myListStore.isLoading}
           />
         </View>
-        <View style={CONTINUE}>
+        <View style={[CONTINUE, { height: 40 }]}>
           <DropdownPicker
-            placeHolder={'myList.filter'}
+            placeHolder={"myList.filter"}
             disabled={myListStore.isLoading}
             dropDownData={statusData}
             onValueChange={value => setStatus(value)}

@@ -62,16 +62,13 @@ export function DropdownPicker(props: dropdownPickerProps) {
     fontWeight: "bold",
     paddingLeft: 5,
     fontFamily: typography.secondary,
-    paddingRight: 30
-  }
+  };
   const INPUT_STYLE_ANDROID: TextStyle = {
     color: color.palette.link,
     fontSize: 16,
     fontWeight: "bold",
     paddingLeft: 5,
     fontFamily: typography.secondary,
-    paddingBottom: 8,
-    paddingRight: 30
   };
   const errorLabel: TextStyle = {
     textAlign: "right",
@@ -84,6 +81,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
           useNativeAndroidPickerStyle={false}
           disabled={props.disabled}
           style={{
+            viewContainer: { marginEnd: 15 },
             placeholder: {
               fontSize: 15,
             },
@@ -98,7 +96,6 @@ export function DropdownPicker(props: dropdownPickerProps) {
               style={{
                 height: 35,
                 paddingStart: 5,
-                marginTop: Platform.OS == "android" ? 3 : -8,
                 justifyContent: "center",
                 paddingRight: 4,
               }}

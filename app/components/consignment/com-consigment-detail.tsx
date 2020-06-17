@@ -37,7 +37,7 @@ const CUSTOMER_CONTAINER: ViewStyle = {
 const DETAIL_VIEW: ViewStyle = { flexDirection: "row" };
 const FIRE_BUTTON: ViewStyle = {
   alignSelf: "flex-start",
-  marginTop: 25,
+  marginTop: 18,
 };
 const SPECIAL_ACTION_BUTTON: ViewStyle = {
   marginLeft: 5,
@@ -142,12 +142,18 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                       preset={"normal"}
                     />
                   </View>
-                  <Text
-                    tx={"common.address"}
-                    extraText={":"}
-                    style={ITEM_LABEL}
-                    preset={"normal"}
-                  />
+
+                  <View style={ITEMS_VIEW}>
+                    <View style={DETAIL_VIEW}>
+                      <Text
+                        tx={"common.weight"}
+                        extraText={":"}
+                        style={ITEM_LABEL}
+                        preset={"normal"}
+                      />
+                      <Text style={TEXT_VALUE} preset={"normal"} text={props.data.totalWeight} />
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
