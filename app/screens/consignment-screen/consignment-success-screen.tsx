@@ -146,7 +146,7 @@ interface recordProps {
   synced: boolean
 }
 
-let currentDate = getFormattedDate(new Date().toLocaleString())
+// let currentDate = getFormattedDate(new Date().toLocaleString())
 const dir = getImageDir()
 RNFS.exists(dir).then(result => {
   if (!result) {
@@ -184,7 +184,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const imageFileName = consNo + loginName
   const SIGN_IMAGE_URI = getSignaturePath(imageFileName)
   // console.log(SIGN_IMAGE_URI)
-
+  const [currentDate, updateCurrentDate] = useState(getFormattedDate(new Date().toLocaleString()))
   useEffect(() => {
     getUserData()
     consignmentStore.onSigned(false)
@@ -193,6 +193,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       getOfflineConsignment()
     }
   }, [])
+
+  useEffect(() => {
+    let newDate = getFormattedDate(new Date().toLocaleString());
+    updateCurrentDate(newDate)
+  }, [isFocused])
 
   useEffect(() => {
     if (consignmentStore.isConsignmentSaved) {
