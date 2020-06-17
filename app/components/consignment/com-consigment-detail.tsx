@@ -193,35 +193,25 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             />
           </View>
         </View>
-<<<<<<< HEAD
-      {
-        props.isFailView ? null : (
-          <MyButton
-            isDisable={isDelivered}
-            style={SPECIAL_ACTION_BUTTON}
-=======
         <View style={SPECIAL_ACTION_BUTTON}>
           {props.isFailView ? null : <MyButton
             isDisable={isDelivered}
->>>>>>> QA-fixes-neel
             buttonSource={icons.blueButton}
             imageBackground={SPECIAL_ACTION}
             // isLoading={authStore.isLoginLoading}
             tx="common.specialAction"
             onPress={onActionPress}
-<<<<<<< HEAD
-          />
-        )
-      }
-      </View >
-      );
-=======
           />}
         </View>
       </View>)
->>>>>>> QA-fixes-neel
     }
-  };
-return <View>{renderView()}</View>;
-},
-);
+    else {
+      return true
+    }
+  }
+  return (
+    <View>
+      {renderView()}
+    </View>
+  )
+})
