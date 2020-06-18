@@ -161,92 +161,101 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
               </Button>
             </View>
           </View>
-        );
-      } else if (props.view === viewType.customer) {
-        return (
-          <View>
-            <View style={CUSTOMER_VIEW}>
-              <Text style={TITLE} tx={"common.customer"} />
+        </View >
+{/* <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
+          <Icon icon={"fire"} />
+        </Button> */}
+      </View >)
+    } else if (props.view === viewType.customer) {
+  return (<View>
+    <View style={CUSTOMER_VIEW}>
+      <Text style={TITLE} tx={"common.customer"} />
+    </View>
+    <View style={CUSTOMER_CONTAINER}>
+      <View style={CONSIGNMENT_VIEW}>
+        <View style={DETAIL_VIEW}>
+          <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+          <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>{"Mark belo"}</Text>
+        </View>
+        <View style={CUSTOMER_CONTAINER}>
+          <View style={CONSIGNMENT_VIEW}>
+            <View style={DETAIL_VIEW}>
+              <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+              <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
+                {"Mark belo"}
+              </Text>
             </View>
-            <View style={CUSTOMER_CONTAINER}>
-              <View style={CONSIGNMENT_VIEW}>
-                <View style={DETAIL_VIEW}>
-                  <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                  <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
-                    {"Mark belo"}
+            <View style={DETAIL_VIEW}>
+              <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
+                Items:
                   </Text>
-                </View>
-                <View style={DETAIL_VIEW}>
-                  <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
-                    Items:
-                  </Text>
-                  <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
-                    {"856126555"}
-                  </Text>
-                </View>
-                <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
-                  Items:
+              <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
+                {"856126555"}
+              </Text>
+            </View>
+            <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
+              Items:
                 </Text>
-                <Text
-                  style={[TEXT_VALUE, { flex: 1 }]}
-                  text={"Line 1 \nLine 2"}
-                  preset={"normal"}
-                />
-              </View>
-              <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
-                <Icon icon={"phone"} />
-              </Button>
-            </View>
+            <Text
+              style={[TEXT_VALUE, { flex: 1 }]}
+              text={"Line 1 \nLine 2"}
+              preset={"normal"}
+            />
           </View>
+          <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
+            <Icon icon={"phone"} />
+          </Button>
+        </View>
+      </View>
         );
       } else if (props.view === viewType.specialAction) {
         return (
           <View style={DETAIL_CONTAINER}>
-            <View style={CONSIGNMENT_VIEW}>
-              <View style={DETAIL_VIEW}>
-                <Text
-                  tx={"common.consignment"}
-                  extraText={":"}
-                  style={ITEM_LABEL}
-                  preset={"normal"}
-                />
-                <Text
-                  style={[TEXT_VALUE, { flex: 1 }]}
-                  preset={"normal"}
-                  text={props.data.consignmentNumber}
-                />
-              </View>
-              <View style={DETAIL_VIEW}>
-                <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                <Text
-                  style={[TEXT_VALUE, { flex: 1 }]}
-                  preset={"normal"}
-                  text={consignmentStatus}
-                />
-              </View>
-              <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-
-              <View style={[DETAIL_VIEW, { marginEnd: 15 }]}>
-                <Text
-                  style={CONSIGNMENT_VIEW}
-                  text={renderAddress(props.data.deliveryAddress[0].address[0])}
-                  preset={"normal"}
-                />
-              </View>
-            </View>
-            <View style={SPECIAL_ACTION_BUTTON}>
-              {props.isFailView ? null : (
-                <MyButton
-                  isDisable={isDelivered}
-                  buttonSource={icons.blueButton}
-                  imageBackground={SPECIAL_ACTION}
-                  // isLoading={authStore.isLoginLoading}
-                  tx="common.specialAction"
-                  onPress={onActionPress}
-                />
-              )}
-            </View>
+        <View style={CONSIGNMENT_VIEW}>
+          <View style={DETAIL_VIEW}>
+            <Text
+              tx={"common.consignment"}
+              extraText={":"}
+              style={ITEM_LABEL}
+              preset={"normal"}
+            />
+            <Text
+              style={[TEXT_VALUE, { flex: 1 }]}
+              preset={"normal"}
+              text={props.data.consignmentNumber}
+            />
           </View>
+          <View style={DETAIL_VIEW}>
+            <Text tx={"common.status"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+            <Text
+              style={[TEXT_VALUE, { flex: 1 }]}
+              preset={"normal"}
+              text={consignmentStatus}
+            />
+          </View>
+          <Text tx={"common.address"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
+
+          <View style={[DETAIL_VIEW, { marginEnd: 15 }]}>
+            <Text
+              style={CONSIGNMENT_VIEW}
+              text={renderAddress(props.data.deliveryAddress[0].address[0])}
+              preset={"normal"}
+            />
+          </View>
+        </View>
+        <View style={SPECIAL_ACTION_BUTTON}>
+          {props.isFailView ? null : (
+            <MyButton
+              isDisable={isDelivered}
+              buttonSource={icons.blueButton}
+              imageBackground={SPECIAL_ACTION}
+              // isLoading={authStore.isLoginLoading}
+              tx="common.specialAction"
+              onPress={onActionPress}
+            />
+          )}
+        </View>
+      </View>
         );
       } else {
         return true;

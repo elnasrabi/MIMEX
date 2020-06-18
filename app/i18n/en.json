@@ -1,6 +1,6 @@
 {
   "common": {
-    "ok": "Ok!",
+    "ok": "Ok",
     "setting": "Setting",
     "cancel": "Cancel",
     "back": "Back",
@@ -236,8 +236,8 @@
     "status": "Status",
     "selectStatus": "Select Status",
     "selectImage": "Select Image",
-    "enterSignBy": "Enter Signed By Name",
-    "doSign": "Do Sign",
+    "enterSignBy": "Enter Sign By Name",
+    "addSignature": "Add Signaturue",
     "consignmentPhoto": "Consignment Photo",
     "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
   },

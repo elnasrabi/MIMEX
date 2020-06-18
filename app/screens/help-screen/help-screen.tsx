@@ -1,21 +1,10 @@
-import React, { FunctionComponent } from "react";
-import { observer } from "mobx-react-lite";
-import {
-  ViewStyle,
-  Platform,
-  FlatList,
-  View,
-  Text,
-  TextStyle,
-  Image,
-  TouchableOpacity,
-  ImageStyle,
-  Linking,
-} from "react-native";
-import { ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "react-native-screens/native-stack";
-import { Screen } from "../../components";
-import { color, typography } from "../../theme";
+import React, { FunctionComponent, useState, useEffect } from "react"
+import { observer } from "mobx-react-lite"
+import { ViewStyle, Platform, FlatList, View, TextStyle, Dimensions, Image, TouchableOpacity, ImageStyle, Linking } from "react-native"
+import { ParamListBase, useIsFocused } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "react-native-screens/native-stack"
+import { Screen, Text } from "../../components"
+import { color, typography } from "../../theme"
 import { icons } from "../../components/icon/icons";
 import { MenuButton } from "../../components/header/menu-button";
 import { isIphoneX } from "react-native-iphone-x-helper";
@@ -47,17 +36,27 @@ const QUESTION_TEXT: TextStyle = {
 const ANSWER_TEXT: TextStyle = {
   color: color.palette.lightGrey,
   fontSize: 22,
+  fontFamily: typography.secondary
+}
+const TECHNICAL_SUPPORT: TextStyle = {
   fontFamily: typography.secondary,
-};
-const HEADER_STYLE: ViewStyle = {
+  fontSize: 16,
+  fontWeight: 'bold',
+  paddingTop: 10,
+  color: color.palette.black
+}
+const HEADER_CONTAINER: ViewStyle = {
   paddingHorizontal: 10,
+  marginRight: 5,
   paddingBottom: 30,
   backgroundColor: color.palette.white,
   borderColor: color.palette.black,
   borderWidth: 1,
   borderRadius: 4,
-  flexDirection: "row",
-};
+}
+const HEADER_STYLE: ViewStyle = {
+  flexDirection: 'row'
+}
 const EMAIL_LOGO: ImageStyle = {
   height: 150,
   width: "100%",
@@ -77,11 +76,36 @@ const LOGO_TEXT: TextStyle = {
 export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => {
   // const isFocusedOrientation = useIsFocused()
   const flatListdata = [
-    { question: "How do you xxx?", answer: "The quick brown fox jumps over a lazy dog" },
-    { question: "How do you xxx?", answer: "The quick brown fox jumps over a lazy dog" },
-    { question: "How do you xxx?", answer: "The quick brown fox jumps over a lazy dog" },
-  ];
-  const { authStore } = useStores();
+    {
+      question: 'How do I reset my password ?',
+      answer: 'Please contact our technical support via phone on 1300 884 294 or via email to support@moveit.com.au.'
+    },
+    {
+      question: 'How do I scan a consignment number ?',
+      answer: 'From the home page, use the camera icon to scan a barcode which will prepopulate the search box.'
+    },
+    {
+      question: 'How do I see all my consignments ?',
+      answer: 'Use the My List Screen in combination with the drop down filters.'
+    },
+    {
+      question: 'How do I find my consignments for delivery ?',
+      answer: 'Use the My List screen filter and select “Undelivered today”.'
+    },
+    {
+      question: 'How do I add a Milestone ?',
+      answer: 'Use the My List menu to select multiple consignments then tap Milestone.'
+    },
+    {
+      question: 'How do I receive a sign on glass ?',
+      answer: ' Use the Milestone screen, select “Delivered” as the status and tap the signature box to capture a signature.Once signed tap on Save then hit the submit button to finalise'
+    },
+    {
+      question: 'How do I add multiple Milestones ?',
+      answer: 'Use the My List menu to select multiple consignments then tap Milestone.'
+    }
+  ]
+  const { authStore } = useStores()
   // const [fullScreen, setFullScreen] = useState(false)
   const renderItem = (item, index) => {
     return (
@@ -90,8 +114,6 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
           <Text style={QUESTION_TEXT}>{item.question}</Text>
         </View>
         <View>
-          <Text style={ANSWER_TEXT}>{item.answer}</Text>
-          <Text style={ANSWER_TEXT}>{item.answer}</Text>
           <Text style={ANSWER_TEXT}>{item.answer}</Text>
         </View>
       </View>
@@ -134,21 +156,25 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
 
   const renderFlatlistHeader = () => {
     return (
-      <View style={HEADER_STYLE}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          onPress={() => Linking.openURL("mailto:support@moveit.com.au")}
-        >
-          <Image source={icons.emailLogo} resizeMode="contain" style={EMAIL_LOGO} />
-          <Text style={LOGO_TEXT}>{`support@moveit.com.au`}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1 }} onPress={() => callApi("+611300884294")}>
-          <Image source={icons.callLogo} resizeMode="contain" style={CALL_LOGO} />
-          <Text style={[LOGO_TEXT, { marginTop: 20 }]}>{`+61 1300 884 294`}</Text>
-        </TouchableOpacity>
+      <View style={HEADER_CONTAINER} >
+        <Text style={TECHNICAL_SUPPORT} text={'Technical Support.'} />
+        <View style={HEADER_STYLE} >
+          <TouchableOpacity style={{ flex: 1 }}
+            onPress={() => Linking.openURL('mailto:support@moveit.com.au')}
+          >
+            <Image source={icons.emailLogo} resizeMode="contain" style={EMAIL_LOGO} />
+            <Text style={LOGO_TEXT} >{`support@moveit.com.au`}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ flex: 1, }}
+            onPress={() => callApi('+611300884294')}>
+            <Image source={icons.callLogo} resizeMode="contain" style={CALL_LOGO} />
+            <Text style={[LOGO_TEXT, { marginTop: 20 }]} >{`+61 1300 884 294`}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    );
-  };
+
+    )
+  }
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [
     props.navigation,
@@ -171,8 +197,8 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
       {authStore.isLoggedIn ? (
         <MenuButton title={"helpScreen.header"} onPress={handleDrawer} />
       ) : (
-        <BackButton title={"helpScreen.header"} onPress={goBack} />
-      )}
+          <BackButton title={"helpScreen.header"} onPress={goBack} />
+        )}
       <FlatList
         ListHeaderComponent={renderFlatlistHeader}
         ListHeaderComponentStyle={ITEM_CONTAINER}

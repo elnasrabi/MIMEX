@@ -376,10 +376,10 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   dropDownData={isSuccess ? statusSuccess : statusFail}
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
-                  onValueChange={value => {
-                    updateCurrentDate(getFormattedDate(new Date().toLocaleString()));
-                    setSelectedValue(value);
-                    onSetValidStatus(true);
+                  onValueChange={(value) => {
+                    updateCurrentDate(getFormattedDate(new Date().toLocaleString()))
+                    setSelectedValue(value)
+                    onSetValidStatus(true)
                   }}
                 />
               </View>
@@ -422,10 +422,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   style={SIGN_VIEW_IMAGE}
                 />
               ) : (
-                <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
-              )}
+                  <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
+                )}
             </TouchableOpacity>
-            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
+            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.addSignature"} />}
+
           </View>
         </View>
       </ScrollView>

@@ -102,8 +102,8 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
   const [mylist, updateMyList] = useState([]);
   const [filterListData, updateFilterListData] = useState([]);
   const [copyOfMyList, updataCopyOfMyList] = useState([]);
-  const [selectedStatus, setStatus] = useState("ALL");
-  const [statusData, updateStatusData] = useState([]);
+  const [selectedStatus, setStatus] = useState('');
+  const [statusData, updateStatusData] = useState([])
 
   useEffect(() => {
     myListStore.refreshList();
@@ -115,7 +115,6 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
     const isConnected = await isInternetAvailable();
     if (isFocused && isConnected) {
       getListApi();
-      setStatus("ALL");
     }
   };
 
@@ -152,6 +151,8 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
   const filterList = async () => {
     switch (selectedStatus) {
       case "ALL":
+        return updateMyList(copyOfMyList);
+      case 'SELECT FILTER':
         return updateMyList(copyOfMyList);
       default:
         return filterData(selectedStatus);
@@ -335,7 +336,7 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
               style={textStyle}
               text={`${address.town ? address.town[0] : " "} ${
                 address.state ? address.state[0] : " "
-              }`}
+                }`}
             />
             <Text style={DISPATCH_STYLE} text={currentStatusDate} />
           </View>
@@ -368,7 +369,8 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
         </View>
         <View style={[CONTINUE, { height: 40 }]}>
           <DropdownPicker
-            placeHolder={"myList.filter"}
+            placeHolder={'myList.filter'}
+            placeHolderValue={'SELECT FILTER'}
             disabled={myListStore.isLoading}
             dropDownData={statusData}
             onValueChange={value => setStatus(value)}
