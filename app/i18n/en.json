@@ -235,7 +235,7 @@
     "selectStatus": "Select Status",
     "selectImage": "Select Image",
     "enterSignBy": "Enter Sign By Name",
-    "doSign": "Do Sign",
+    "addSignature": "Add Signaturue",
     "consignmentPhoto": "Consignment Photo",
     "offlineDataSaveMessage": "No Internet!! \n Your request has been save offline, Data will be saved to server once you will Online."
   },

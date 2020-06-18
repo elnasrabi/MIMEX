@@ -341,7 +341,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
                   onValueChange={(value) => {
-                    currentDate = getFormattedDate(new Date().toLocaleString())
+                    updateCurrentDate(getFormattedDate(new Date().toLocaleString()))
                     setSelectedValue(value)
                     onSetValidStatus(true)
                   }}
@@ -377,7 +377,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
                 ? <Image key={random} source={Platform.OS === 'android' ? { uri: `${signUri}?${imageHash}` } : { uri: `${signUri}` }}
                   style={SIGN_VIEW_IMAGE} /> : <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />}
             </TouchableOpacity>
-            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.doSign"} />}
+            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.addSignature"} />}
 
           </View>
 
