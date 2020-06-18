@@ -95,7 +95,7 @@ export async function getJsonRequest(record): Promise<any> {
       carrierEvent: record.status,
       carrierSubEvent: record.eventName,
       location: record.location,
-      condition: signImageData ? "All POD" : "All Ok",
+      condition: record.status == 'Delivered' ? "All POD" : "All Ok",
       date: getCurrentDate()
     }
   }
