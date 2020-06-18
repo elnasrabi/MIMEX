@@ -213,14 +213,19 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     getUserData();
     consignmentStore.onSigned(false);
     consignmentStore.setConsignmentFalse();
-    if (isDelivered) {
-      getOfflineConsignment();
-    }
+    // if (isDelivered) {
+    //   console.tron.log('delivered')
+    //   setSelectedValue('Delivered')
+    //   // getOfflineConsignment();
+    // }
   }, []);
 
   useEffect(() => {
     let newDate = getFormattedDate(new Date().toLocaleString());
     updateCurrentDate(newDate);
+    if (isDelivered) {
+      setSelectedValue('Delivered')
+    }
   }, [isFocused]);
 
   useEffect(() => {
