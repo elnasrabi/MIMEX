@@ -18,6 +18,7 @@ interface dropdownPickerProps {
   inputStyleAndroid?: TextStyle,
   disabled?: boolean,
   placeHolder?: string,
+  placeHolderValue?: string,
   errorTx?: string
 }
 
@@ -30,8 +31,10 @@ export function DropdownPicker(props: dropdownPickerProps) {
     inputStyleAndroid,
     inputStyleIOS,
     placeHolder,
-    errorTx
-  } = props
+    errorTx,
+    placeHolderValue,
+    ...rest
+  } = props;
 
   const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
     flex: 1,
@@ -88,7 +91,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
             inputIOS: inputStyleIOS || INPUT_STYLE_IOS,
             inputAndroid: inputStyleAndroid || INPUT_STYLE_ANDROID
           }}
-          placeholder={{ label: translateText(placeHolder), value: '' }}
+          placeholder={{ label: translateText(placeHolder), value: placeHolderValue ? placeHolderValue : '' }}
           value={selectedValue}
           onValueChange={onValueChange}
           Icon={() => (
@@ -108,6 +111,7 @@ export function DropdownPicker(props: dropdownPickerProps) {
             </View>
           )}
           items={dropDownData}
+          {...rest}
         />
       </View>
       {errorTx && <Text style={errorLabel} preset={"error"} tx={errorTx} />}

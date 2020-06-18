@@ -100,7 +100,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const [mylist, updateMyList] = useState([]);
   const [filterListData, updateFilterListData] = useState([]);
   const [copyOfMyList, updataCopyOfMyList] = useState([]);
-  const [selectedStatus, setStatus] = useState('ALL');
+  const [selectedStatus, setStatus] = useState('');
   const [statusData, updateStatusData] = useState([])
 
   useEffect(() => {
@@ -109,7 +109,6 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
     const isConnected = isInternetAvailable();
     if (isFocused && isConnected) {
       getListApi();
-      setStatus('ALL');
     }
   }, [isFocused])
 
@@ -144,6 +143,8 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
   const filterList = async () => {
     switch (selectedStatus) {
       case 'ALL':
+        return updateMyList(copyOfMyList);
+      case 'SELECT FILTER':
         return updateMyList(copyOfMyList);
       default:
         return filterData(selectedStatus);
@@ -341,6 +342,7 @@ export const MyList: FunctionComponent<MyListProps> = observer((props) => {
         <View style={CONTINUE}>
           <DropdownPicker
             placeHolder={'myList.filter'}
+            placeHolderValue={'SELECT FILTER'}
             disabled={myListStore.isLoading}
             dropDownData={statusData}
             onValueChange={(value) => setStatus(value)}
