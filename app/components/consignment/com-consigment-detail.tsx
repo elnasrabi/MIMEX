@@ -111,9 +111,9 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             </View>
           </View>
         </View>
-        <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
+        {/* <Button style={FIRE_BUTTON} preset="link" onPress={onFirePress}>
           <Icon icon={"fire"} />
-        </Button>
+        </Button> */}
       </View>)
     } else if (props.view === viewType.customer) {
       return (<View>
