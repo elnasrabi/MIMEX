@@ -108,6 +108,7 @@ export const MyList: FunctionComponent<MyListProps> = observer(props => {
   useEffect(() => {
     myListStore.refreshList();
     updateMyList(myListStore.getListData);
+    setStatus('SELECT FILTER');
     callMyListAPI();
   }, [isFocused]);
 
