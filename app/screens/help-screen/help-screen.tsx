@@ -17,8 +17,8 @@ export interface HelpScreenProps {
 }
 
 const ROOT: ViewStyle = {
-  // backgroundColor: 'black',
   justifyContent: "center",
+  backgroundColor: color.palette.listBG,
 };
 
 const FLATLIST_STYLE: ViewStyle = {
@@ -98,7 +98,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
     },
     {
       question: 'How do I receive a sign on glass ?',
-      answer: ' Use the Milestone screen, select “Delivered” as the status and tap the signature box to capture a signature.Once signed tap on Save then hit the submit button to finalise'
+      answer: 'Use the Milestone screen, select “Delivered” as the status and tap the signature box to capture a signature.Once signed tap on Save then hit the submit button to finalise'
     },
     {
       question: 'How do I add multiple Milestones ?',
