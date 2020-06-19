@@ -171,38 +171,30 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
               <View style={CONSIGNMENT_VIEW}>
                 <View style={DETAIL_VIEW}>
                   <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                  <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>{"Mark belo"}</Text>
-                </View>
-                <View style={CUSTOMER_CONTAINER}>
-                  <View style={CONSIGNMENT_VIEW}>
-                    <View style={DETAIL_VIEW}>
-                      <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
-                      <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
-                        {"Mark belo"}
-                      </Text>
-                    </View>
-                    <View style={DETAIL_VIEW}>
-                      <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
-                        Items:
+                  <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
+                    {"Mark belo"}
                   </Text>
-                      <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
-                        {"856126555"}
-                      </Text>
-                    </View>
-                    <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
-                      Items:
-                </Text>
-                    <Text
-                      style={[TEXT_VALUE, { flex: 1 }]}
-                      text={"Line 1 \nLine 2"}
-                      preset={"normal"}
-                    />
-                  </View>
-                  <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
-                    <Icon icon={"phone"} />
-                  </Button>
                 </View>
+                <View style={DETAIL_VIEW}>
+                  <Text tx={"common.contact"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
+                    Items:
+                  </Text>
+                  <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
+                    {"856126555"}
+                  </Text>
+                </View>
+                <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
+                  Items:
+                </Text>
+                <Text
+                  style={[TEXT_VALUE, { flex: 1 }]}
+                  text={"Line 1 \nLine 2"}
+                  preset={"normal"}
+                />
               </View>
+              <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
+                <Icon icon={"phone"} />
+              </Button>
             </View>
           </View>
         );
