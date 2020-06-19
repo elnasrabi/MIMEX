@@ -170,7 +170,6 @@ interface recordProps {
   synced: boolean;
 }
 
-// let currentDate = getFormattedDate(new Date().toLocaleString())
 const dir = getImageDir();
 RNFS.exists(dir).then(result => {
   if (!result) {
@@ -185,7 +184,6 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const consignment = consignmentStore.consignmentDetail;
   const consignmentStatus = consignment.currentFreightState[0];
   if (consignmentStatus === "Delivered") {
-    statusFail.push({ label: "Delivered", value: "Delivered" });
     isDelivered = true;
   } else {
     isDelivered = false;
@@ -205,6 +203,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignText, setValidSignText] = useState(true);
   const [signText, onSignText] = useState("");
   const [random, setRandom] = useState(0);
+  const [dropDownStatus, setDropDownStatus] = useState([{ label: "Delivered", value: "Delivered" }]);
   const [isValidSignImage, onSetValidSignImage] = useState(true);
   const { isSuccess } = props.route.params;
 
@@ -225,6 +224,15 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
     updateCurrentDate(newDate);
     if (isDelivered) {
       setSelectedValue('Delivered')
+    }
+    else {
+      if (isSuccess) {
+
+        setDropDownStatus(statusSuccess)
+      }
+      else {
+        setDropDownStatus(statusFail)
+      }
     }
   }, [isFocused]);
 
@@ -378,7 +386,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
               <View style={VALUE_CONTAINER_REGISTRATION}>
                 <DropdownPicker
                   disabled={isDelivered}
-                  dropDownData={isSuccess ? statusSuccess : statusFail}
+                  dropDownData={dropDownStatus}
                   selectedValue={selectedValue}
                   placeHolder={"common.status"}
                   onValueChange={(value) => {
@@ -403,35 +411,39 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
               </TouchableOpacity>
             </View>
             {isValidFile ? null : <Text preset={"error"} tx={"consignmentSuccess.selectImage"} />}
+            {
+              selectedValue == 'Delivered' ?
+                <View>
+                  <TextField
+                    editable={!isDelivered}
+                    labelTx={"consignmentSuccess.sign"}
+                    labelStyle={SIGN_LABEL}
+                    errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
+                    onChangeText={text => onChangeText(text)}
+                    value={signText}
+                  />
 
-            <TextField
-              editable={!isDelivered}
-              labelTx={"consignmentSuccess.sign"}
-              labelStyle={SIGN_LABEL}
-              errorTx={isValidSignText ? undefined : "consignmentSuccess.enterSignBy"}
-              onChangeText={text => onChangeText(text)}
-              value={signText}
-            />
+                  <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
 
-            <Text tx={"consignmentSuccess.signature"} style={[SIGN_LABEL, SIGNATURE_TEXT]} />
-
-            <TouchableOpacity disabled={isDelivered} onPress={onSignaturePress} style={SIGN_VIEW}>
-              {consignmentStore.signedSaved ? (
-                <Image
-                  key={random}
-                  source={
-                    Platform.OS === "android"
-                      ? { uri: `${signUri}?${imageHash}` }
-                      : { uri: `${signUri}` }
-                  }
-                  style={SIGN_VIEW_IMAGE}
-                />
-              ) : (
-                  <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
-                )}
-            </TouchableOpacity>
-            {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.addSignature"} />}
-
+                  <TouchableOpacity disabled={isDelivered} onPress={onSignaturePress} style={SIGN_VIEW}>
+                    {consignmentStore.signedSaved ? (
+                      <Image
+                        key={random}
+                        source={
+                          Platform.OS === "android"
+                            ? { uri: `${signUri}?${imageHash}` }
+                            : { uri: `${signUri}` }
+                        }
+                        style={SIGN_VIEW_IMAGE}
+                      />
+                    ) : (
+                        <Text style={PRESS_HERE} tx={"consignmentSuccess.pressHere"} />
+                      )}
+                  </TouchableOpacity>
+                  {isValidSignImage ? null : <Text preset={"error"} tx={"consignmentSuccess.addSignature"} />}
+                </View>
+                : null
+            }
           </View>
         </View>
       </ScrollView>
