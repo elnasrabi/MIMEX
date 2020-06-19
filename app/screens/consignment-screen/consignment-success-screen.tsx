@@ -150,13 +150,13 @@ const DATE_TEXT: TextStyle = {
 };
 let imageHash = Date.now();
 let randomNo = Math.random();
-type consignmentType = keyof typeof consType;
+// type consignmentType = keyof typeof consType;
 
 // eslint-disable-next-line @typescript-eslint/class-name-casing
 interface recordProps {
   customerName: string;
   loginName: string;
-  eventName: consignmentType;
+  eventName: string;
   eventNotes: string;
   consignmentNumber: string;
   itemsCount: string;
@@ -312,7 +312,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
       const record: recordProps = {
         customerName: "John jacob",
         eventNotes: "",
-        eventName: isSuccess ? "success" : "fail",
+        eventName: isSuccess ? "success" : selectedValue,
         loginName: authStore.userData[0].loginName[0],
         consignmentNumber: consignment.consignmentNumber[0],
         itemsCount: consignment.consignmentItems[0].totalLineItemLabels[0],
