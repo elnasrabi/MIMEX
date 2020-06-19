@@ -94,7 +94,7 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
     },
     {
       question: 'How do I add a Milestone ?',
-      answer: 'Use the My List menu to select multiple consignments then tap Milestone.'
+      answer: 'Use the Milestone button on the consignment then tap Milestone.'
     },
     {
       question: 'How do I receive a sign on glass ?',
