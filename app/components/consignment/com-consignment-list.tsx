@@ -49,7 +49,7 @@ export const ComConsignmentList: FunctionComponent<ComConsignmentListProps> = ob
         </Text>
         <Text extraText={":"} tx={"consignmentList.items"} style={ITEM_LABEL} preset={"normal"} />
         <Text style={TEXT_VALUE} preset={"normal"}>
-          {cons.consignmentItems[0].totalLineItemLabels}
+          {cons.consignmentItems.length}
         </Text>
       </View>
 

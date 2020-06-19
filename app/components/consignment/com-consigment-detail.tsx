@@ -139,7 +139,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                     />
                     <Text
                       style={[TEXT_VALUE, { flex: 1 }]}
-                      text={props.data.consignmentItems[0].totalLineItemLabels[0]}
+                      text={props.data.consignmentItems.length}
                       preset={"normal"}
                     />
                   </View>
