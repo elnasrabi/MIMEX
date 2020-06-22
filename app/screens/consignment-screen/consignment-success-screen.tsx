@@ -192,7 +192,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const loginName = authStore.userData[0].loginName[0];
   const imageFileName = consNo + loginName;
   const SIGN_IMAGE_URI = getSignaturePath(imageFileName);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("Delivered");
   const [fileName, setFileName] = useState("");
   const [imageUri, setImageUri] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -222,12 +222,9 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   useEffect(() => {
     let newDate = getFormattedDate(new Date().toLocaleString());
     updateCurrentDate(newDate);
-    if (isDelivered) {
-      setSelectedValue('Delivered')
-    }
-    else {
+    if (!isDelivered) {
+      setSelectedValue('')
       if (isSuccess) {
-
         setDropDownStatus(statusSuccess)
       }
       else {

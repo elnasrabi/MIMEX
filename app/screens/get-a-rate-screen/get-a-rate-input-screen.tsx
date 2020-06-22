@@ -152,6 +152,10 @@ export const GetARate: FunctionComponent<GetARateProps> = observer(props => {
       KeyboardManager.setKeyboardDistanceFromTextField(20);
     }
     getARateStore.updatePreventrefersh(false);
+    if (!isFocused) {
+      formikRef.current.setFieldValue("pickUpAddress", '')
+    }
+    formikRef.current.setFieldValue("pickUpAddress", 'MELBCCS WEST FOOTSCRAY')
   }, [isFocused]);
 
   const clear = async () => {
@@ -264,14 +268,14 @@ export const GetARate: FunctionComponent<GetARateProps> = observer(props => {
                 onValueChange={value => onChangeText(label, value)}
               />
             ) : (
-              <TextInput
-                keyboardType={"number-pad"}
-                style={TEXTINPUT_TEXT}
-                onChangeText={text => onChangeText(label, text)}
-                value={values}
-                onSubmitEditing={gettown}
-              />
-            )}
+                <TextInput
+                  keyboardType={"number-pad"}
+                  style={TEXTINPUT_TEXT}
+                  onChangeText={text => onChangeText(label, text)}
+                  value={values}
+                  onSubmitEditing={gettown}
+                />
+              )}
           </View>
         </View>
         {errors ? <Text style={ERROR_TEXT}>{errors}</Text> : null}
@@ -496,11 +500,11 @@ export const GetARate: FunctionComponent<GetARateProps> = observer(props => {
                         {getARateStore.isButtonLoading ? (
                           <ActivityIndicator size="large" color={color.palette.white} />
                         ) : (
-                          <Text
-                            tx={"getARateScreen.getTowns"}
-                            style={{ color: color.palette.white }}
-                          />
-                        )}
+                            <Text
+                              tx={"getARateScreen.getTowns"}
+                              style={{ color: color.palette.white }}
+                            />
+                          )}
                       </ImageBackground>
                     </TouchableOpacity>
                   </View>
