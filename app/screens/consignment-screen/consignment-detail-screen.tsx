@@ -129,14 +129,18 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   };
 
   const getMapView = () => {
+    const latitude = consignmentStore.consignmentDetail.deliveryAddressLatitude
+      ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLatitude[0]) : 0;
+    const longitude = consignmentStore.consignmentDetail.deliveryAddressLongitude
+      ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0]) : 0;
     return (
       <View style={MAP_VIEW}>
         <MapView
           style={MAPS}
           provider={PROVIDER_GOOGLE}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: latitude,
+            longitude: longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
@@ -152,8 +156,8 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
             )}
             <Marker
               coordinate={{
-                latitude: 37.78825,
-                longitude: -122.4324,
+                latitude: latitude,
+                longitude: longitude,
               }}
             />
           </View>
@@ -190,15 +194,15 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
             <ForceTouchGestureHandler
               feedbackOnActivation
               onHandlerStateChange={onHandlerStateChange}
-              // onGestureEvent={openGoogleMap}
+            // onGestureEvent={openGoogleMap}
             >
               <Animated.View>{getMapView()}</Animated.View>
             </ForceTouchGestureHandler>
           ) : (
-            <TouchableWithoutFeedback onLongPress={openGoogleMap}>
-              {getMapView()}
-            </TouchableWithoutFeedback>
-          )}
+              <TouchableWithoutFeedback onLongPress={openGoogleMap}>
+                {getMapView()}
+              </TouchableWithoutFeedback>
+            )}
         </View>
       </ScrollView>
       <View style={BOTTOM_VIEW}>

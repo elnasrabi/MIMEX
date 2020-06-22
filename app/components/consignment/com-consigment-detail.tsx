@@ -162,6 +162,21 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             </View> */}
           </View >)
       } else if (props.view === viewType.customer) {
+        const contactPhone = props.data.deliveryAddressContactPhone
+          ? props.data.deliveryAddressContactPhone[0]
+            ? props.data.deliveryAddressContactPhone[0]
+            : 'N/A'
+          : 'N/A';
+        const contactName = props.data.deliveryAddressContactName
+          ? props.data.deliveryAddressContactName[0]
+            ? props.data.deliveryAddressContactName[0]
+            : 'N/A'
+          : 'N/A';
+        const specialInstructions = props.data.specialInstructions
+          ? props.data.specialInstructions[0]
+            ? props.data.specialInstructions[0]
+            : 'N/A'
+          : 'N/A';
         return (
           <View>
             <View style={CUSTOMER_VIEW}>
@@ -172,7 +187,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                 <View style={DETAIL_VIEW}>
                   <Text tx={"common.name"} extraText={":"} style={ITEM_LABEL} preset={"normal"} />
                   <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
-                    {"Mark belo"}
+                    {contactName}
                   </Text>
                 </View>
                 <View style={DETAIL_VIEW}>
@@ -180,7 +195,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                     Items:
                   </Text>
                   <Text style={[TEXT_VALUE, { flex: 1 }]} preset={"normal"}>
-                    {"856126555"}
+                    {contactPhone}
                   </Text>
                 </View>
                 <Text tx={"common.special"} extraText={":"} style={ITEM_LABEL} preset={"normal"}>
@@ -188,7 +203,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                 </Text>
                 <Text
                   style={[TEXT_VALUE, { flex: 1 }]}
-                  text={"Line 1 \nLine 2"}
+                  text={specialInstructions}
                   preset={"normal"}
                 />
               </View>
