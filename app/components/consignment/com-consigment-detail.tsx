@@ -177,6 +177,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
             ? props.data.specialInstructions[0]
             : 'N/A'
           : 'N/A';
+        const isContactPhone = props.data.deliveryAddressContactPhone && props.data.deliveryAddressContactPhone[0];
         return (
           <View>
             <View style={CUSTOMER_VIEW}>
@@ -207,9 +208,10 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
                   preset={"normal"}
                 />
               </View>
-              <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
-                <Icon icon={"phone"} />
-              </Button>
+              {isContactPhone &&
+                <Button style={CALL_BUTTON} preset="link" onPress={onPhonePress}>
+                  <Icon icon={"phone"} />
+                </Button>}
             </View>
           </View>
         );
