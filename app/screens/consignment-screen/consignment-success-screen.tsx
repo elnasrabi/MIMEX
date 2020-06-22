@@ -92,6 +92,11 @@ const SIGN_LABEL: TextStyle = {
 const SIGNATURE_TEXT: TextStyle = {
   marginTop: 10,
 };
+const DESPATCH_TEXT: TextStyle = {
+  color: color.palette.link,
+  fontFamily: typography.secondary,
+  fontWeight: 'bold'
+};
 
 const CONSIGNMENT_VIEW: ViewStyle = {
   flex: 1,
@@ -127,6 +132,18 @@ const VALUE_CONTAINER_REGISTRATION: ViewStyle = {
   height: 40,
   justifyContent: "center",
 };
+const DESPATCH_BOX: ViewStyle = {
+  flex: 1,
+  flexDirection: "row",
+  borderColor: color.palette.lightGrey,
+  borderWidth: 1,
+  borderRadius: 4,
+  backgroundColor: color.palette.white,
+  height: 40,
+  alignItems: "center",
+  paddingHorizontal: 5,
+  justifyContent: 'space-between'
+};
 const SIGN_VIEW: ViewStyle = {
   borderColor: color.palette.darkText,
   borderWidth: 2,
@@ -140,6 +157,11 @@ const SIGN_VIEW: ViewStyle = {
 const SIGN_VIEW_IMAGE: ImageStyle = {
   width: "100%",
   height: 296,
+};
+const DOWNARROW: ImageStyle = {
+  width: 15,
+  height: 18,
+  tintColor: color.palette.darkText
 };
 const DATE_TEXT: TextStyle = {
   flex: 1,
@@ -203,7 +225,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   const [isValidSignText, setValidSignText] = useState(true);
   const [signText, onSignText] = useState("");
   const [random, setRandom] = useState(0);
-  const [dropDownStatus, setDropDownStatus] = useState([{ label: "Delivered", value: "Delivered" }]);
+  const [dropDownStatus, setDropDownStatus] = useState([]);
   const [isValidSignImage, onSetValidSignImage] = useState(true);
   const { isSuccess } = props.route.params;
 
@@ -222,17 +244,11 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
   useEffect(() => {
     let newDate = getFormattedDate(new Date().toLocaleString());
     updateCurrentDate(newDate);
-    if (isDelivered) {
-      setSelectedValue('Delivered')
+    if (isSuccess) {
+      setDropDownStatus(statusSuccess)
     }
     else {
-      if (isSuccess) {
-
-        setDropDownStatus(statusSuccess)
-      }
-      else {
-        setDropDownStatus(statusFail)
-      }
+      setDropDownStatus(statusFail)
     }
   }, [isFocused]);
 
@@ -382,23 +398,12 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
           {/* Status */}
           <View style={STATUS_CONTAINER}>
-            {consignment.currentFreightState[0] == 'Delivered' ?
+            {isDelivered ?
               <View style={PICKER_CONTAINER}>
-                <View style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  borderColor: color.palette.lightGrey,
-                  borderWidth: 1,
-                  borderRadius: 4,
-                  backgroundColor: color.palette.white,
-                  height: 40,
-                  alignItems: "center",
-                  paddingHorizontal: 5,
-                  justifyContent: 'space-between'
-                }}>
-                  <Text style={{ color: color.palette.link, fontFamily: typography.secondary, fontWeight: 'bold' }} text={'Delivered'} />
+                <View style={DESPATCH_BOX}>
+                  <Text style={DESPATCH_TEXT} text={'Delivered'} />
                   <Image
-                    style={{ width: 15, height: 18, tintColor: color.palette.darkText }}
+                    style={DOWNARROW}
                     source={icons.downArrow}
                   />
                 </View>
@@ -437,7 +442,7 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
             </View>
             {isValidFile ? null : <Text preset={"error"} tx={"consignmentSuccess.selectImage"} />}
             {
-              selectedValue == 'Delivered' ?
+              (isDelivered || selectedValue == 'Delivered') ?
                 <View>
                   <TextField
                     editable={!isDelivered}
