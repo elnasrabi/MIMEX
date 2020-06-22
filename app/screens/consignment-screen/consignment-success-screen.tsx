@@ -379,25 +379,50 @@ export const ConsignmentSuccess: FunctionComponent<ConsignmentSuccessProps> = ob
 
           {/* Status */}
           <View style={STATUS_CONTAINER}>
-            <View style={PICKER_CONTAINER}>
-              <View style={VALUE_CONTAINER_REGISTRATION}>
-                <DropdownPicker
-                  disabled={isDelivered}
-                  dropDownData={dropDownStatus}
-                  selectedValue={selectedValue}
-                  placeHolder={"common.status"}
-                  onValueChange={(value) => {
-                    updateCurrentDate(getFormattedDate(new Date().toLocaleString()))
-                    setSelectedValue(value)
-                    onSetValidStatus(true)
-                  }}
-                />
+            {consignment.currentFreightState[0] == 'Delivered' ?
+              <View style={PICKER_CONTAINER}>
+                <View style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  borderColor: color.palette.lightGrey,
+                  borderWidth: 1,
+                  borderRadius: 4,
+                  backgroundColor: color.palette.white,
+                  height: 40,
+                  alignItems: "center",
+                  paddingHorizontal: 5,
+                  justifyContent: 'space-between'
+                }}>
+                  <Text style={{ color: color.palette.link, fontFamily: typography.secondary, fontWeight: 'bold' }} text={'Delivered'} />
+                  <Image
+                    style={{ width: 15, height: 18, tintColor: color.palette.darkText }}
+                    source={icons.downArrow}
+                  />
+                </View>
+                <Text preset={"normal"} style={DATE_TEXT} text={currentDate} />
               </View>
-              <Text preset={"normal"} style={DATE_TEXT} text={currentDate} />
-            </View>
-            {isValidStatus ? null : (
-              <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />
-            )}
+              : <>
+                <View style={PICKER_CONTAINER}>
+                  <View style={VALUE_CONTAINER_REGISTRATION}>
+                    <DropdownPicker
+                      disabled={isDelivered}
+                      dropDownData={dropDownStatus}
+                      selectedValue={selectedValue}
+                      placeHolder={"common.status"}
+                      onValueChange={(value) => {
+                        updateCurrentDate(getFormattedDate(new Date().toLocaleString()))
+                        setSelectedValue(value)
+                        onSetValidStatus(true)
+                      }}
+                    />
+                  </View>
+                  <Text preset={"normal"} style={DATE_TEXT} text={currentDate} />
+                </View>
+                {isValidStatus ? null : (
+                  <Text preset={"error"} tx={"consignmentSuccess.selectStatus"} />
+                )}
+              </>
+            }
 
             <View style={CAMERA_VIEW}>
               <TouchableOpacity disabled={isDelivered} style={ROOT} onPress={onCameraPres}>
