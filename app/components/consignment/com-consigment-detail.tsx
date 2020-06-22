@@ -78,7 +78,7 @@ export const ComConsignmentDetail: FunctionComponent<ComConsignmentDetailProps> 
       props.navigation.navigate("consignmentSpecial");
     };
     const onPhonePress = () => {
-      callApi("645456456456");
+      callApi(props.data.deliveryAddressContactPhone[0]);
     };
     const renderAddress = (data): string => {
       const address =
