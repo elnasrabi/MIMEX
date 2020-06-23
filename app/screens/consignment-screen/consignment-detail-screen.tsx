@@ -138,24 +138,19 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
 
   const getMapView = () => {
     const latitude = consignmentStore.consignmentDetail.deliveryAddressLatitude
-      ? consignmentStore.consignmentDetail.deliveryAddressLatitude[0]
-        ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLatitude[0])
-        : currentLocation.latitude
-      : currentLocation.latitude;
+      ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLatitude[0])
+      : 0;
     const longitude = consignmentStore.consignmentDetail.deliveryAddressLongitude
-      ? consignmentStore.consignmentDetail.deliveryAddressLongitude[0]
-        ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0])
-        : currentLocation.longitude
-      : currentLocation.longitude;
-
+      ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0])
+      : 0;
     return (
       <View style={MAP_VIEW}>
         <MapView
           style={MAPS}
           provider={PROVIDER_GOOGLE}
           region={{
-            latitude: latitude,
-            longitude: longitude,
+            latitude: latitude ? latitude : currentLocation.latitude,
+            longitude: longitude ? longitude : currentLocation.longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
@@ -169,12 +164,12 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
                 }}
               />
             )}
-            <Marker
+            {latitude != 0 && (<Marker
               coordinate={{
                 latitude: latitude,
                 longitude: longitude,
               }}
-            />
+            />)}
           </View>
         </MapView>
       </View>
