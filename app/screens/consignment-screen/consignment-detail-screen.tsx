@@ -100,8 +100,16 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
   };
 
   const openGoogleMap = async () => {
-    const latitude = 37.78825;
-    const longitude = -122.4324;
+    const latitude = consignmentStore.consignmentDetail.deliveryAddressLatitude
+      ? consignmentStore.consignmentDetail.deliveryAddressLatitude[0]
+        ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLatitude[0])
+        : currentLocation.latitude
+      : currentLocation.latitude;
+    const longitude = consignmentStore.consignmentDetail.deliveryAddressLongitude
+      ? consignmentStore.consignmentDetail.deliveryAddressLongitude[0]
+        ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0])
+        : currentLocation.longitude
+      : currentLocation.longitude;
 
     const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
     const latLng = `${latitude},${longitude}`;
@@ -130,9 +138,16 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
 
   const getMapView = () => {
     const latitude = consignmentStore.consignmentDetail.deliveryAddressLatitude
-      ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLatitude[0]) : 0;
+      ? consignmentStore.consignmentDetail.deliveryAddressLatitude[0]
+        ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLatitude[0])
+        : currentLocation.latitude
+      : currentLocation.latitude;
     const longitude = consignmentStore.consignmentDetail.deliveryAddressLongitude
-      ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0]) : 0;
+      ? consignmentStore.consignmentDetail.deliveryAddressLongitude[0]
+        ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0])
+        : currentLocation.longitude
+      : currentLocation.longitude;
+
     return (
       <View style={MAP_VIEW}>
         <MapView
