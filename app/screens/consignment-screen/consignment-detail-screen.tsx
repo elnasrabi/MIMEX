@@ -110,7 +110,6 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
         ? parseFloat(consignmentStore.consignmentDetail.deliveryAddressLongitude[0])
         : currentLocation.longitude
       : currentLocation.longitude;
-
     const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
     const latLng = `${latitude},${longitude}`;
     const label = "";
@@ -119,16 +118,14 @@ export const ConsignmentDetail: FunctionComponent<ConsignmentDetailProps> = obse
       android: `${scheme}${latLng}(${label})`,
     });
     const googleMap = "comgooglemaps://";
-    const wazeUrl =
-      "https://www.waze.com/ul?ll=" + latitude + "%2C-" + longitude + "&navigate=yes&zoom=17";
-    const tomtom = "https://www.tomtom.com/ul?ll=" + latitude + "%2C-" + longitude;
+    const wazeUrl = "https://www.waze.com/ul?ll=" + latitude + "%2C" + longitude + "&navigate=yes&zoom=17";
+    const tomtom = "https://www.tomtom.com/ul?ll=" + latitude + "%2C" + longitude;
 
     if (await canOpenUrl(googleMap)) {
-      Linking.openURL(googleMap);
+      const googleMapsLocation = `comgooglemaps://?center=${latitude},${longitude}&zoom=14`;
+      Linking.openURL(googleMapsLocation);
     } else if (await canOpenUrl(url)) {
       Linking.openURL(url);
-    } else if (await canOpenUrl(wazeUrl)) {
-      Linking.openURL(wazeUrl);
     } else if (await canOpenUrl(wazeUrl)) {
       Linking.openURL(wazeUrl);
     } else if (await canOpenUrl(tomtom)) {
