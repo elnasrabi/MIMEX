@@ -68,6 +68,7 @@ export const ComConsignmentList: FunctionComponent<ComConsignmentListProps> = ob
       </View>
 
       <View style={FROM_TO_VIEW}>
+        
         <View style={WEIGHT_VIEW}>
           <Text extraText={":"} tx={"consignmentList.wgt"} style={WEIGHT_LABEL} preset={"normal"} />
           <Text style={TEXT_VALUE} preset={"normal"}>
@@ -82,10 +83,12 @@ export const ComConsignmentList: FunctionComponent<ComConsignmentListProps> = ob
           </Text>
         </View>
       </View>
-
+      <View style={WEIGHT_VIEW}>
+      <Text extraText={":"} tx={"consignmentList.status"} style={WEIGHT_LABEL} preset={"normal"} />
       <Text style={STATUS} preset={"normal"}>
         {cons.currentFreightState[0]}
       </Text>
+      </View>
     </View>
   );
 });

@@ -206,7 +206,8 @@
     "from": "From",
     "to": "To",
     "wgt": "Wgt",
-    "vol": "Vol"
+    "vol": "Vol",
+    "status":"Status"
   },
   "consignmentDetail": {
     "consignment": "Consignment",
