@@ -1,4 +1,4 @@
-package com.moveit;
+package com.imex;
 
 import android.app.Application;
 import android.content.Context;

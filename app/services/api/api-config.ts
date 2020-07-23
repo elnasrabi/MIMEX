@@ -1,9 +1,9 @@
 // Use this import if you want to use "env.js" file
 // const { API_URL } = require("../../config/env")
 // Or just specify it directly like this:
-export const API_URL = "http://uat2.afs.moveitnetexpress.com.au/moveit/gateway/"
-export const CONSIGNMENT_SEARCH = "http://www.moveit.com.au/schema/consignments.xsd"
-export const SAVE_CONSIGNMENT = "http://www.moveit.com.au/schema/metadata.xsd"
+export const API_URL = "http://uat2.afs.moveitnetexpress.com.au/imex/gateway/"
+export const CONSIGNMENT_SEARCH = "http://www.imex.com.au/schema/consignments.xsd"
+export const SAVE_CONSIGNMENT = "http://www.imex.com.au/schema/metadata.xsd"
 
 /**
  * The options used to configure the API.

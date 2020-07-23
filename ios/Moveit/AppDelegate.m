@@ -20,7 +20,7 @@
   [GMSServices provideAPIKey:@"AIzaSyBFxYi9_fjIKVcmFOv00zejI8pks_TnzBw"];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"Moveit"
+                                                   moduleName:@"IMEX"
                                             initialProperties:nil];
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];

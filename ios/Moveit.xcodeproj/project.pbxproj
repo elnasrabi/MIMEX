@@ -16,9 +16,9 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1C16BFB198E5BC1B1CE9561E /* libPods-Moveit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8EB1A8342B5E89966DB999 /* libPods-Moveit.a */; };
-		1E2D28B3247F7B760067F156 /* Moveit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2D28B2247F7B760067F156 /* Moveit.swift */; };
-		1E2D28B5247F7B760067F156 /* Moveit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2D28B2247F7B760067F156 /* Moveit.swift */; };
+		1C16BFB198E5BC1B1CE9561E /* libPods-IMEX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8EB1A8342B5E89966DB999 /* libPods-IMEX.a */; };
+		1E2D28B3247F7B760067F156 /* IMEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2D28B2247F7B760067F156 /* IMEX.swift */; };
+		1E2D28B5247F7B760067F156 /* IMEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2D28B2247F7B760067F156 /* IMEX.swift */; };
 		1E3FBF8A2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
 		1E3FBF8B2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
 		1E3FBF8C2477C8AB00C36348 /* ZektonExHv Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */; };
@@ -70,12 +70,12 @@
 		366CEAE060DF44EB869FF259 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFD84C3AF70B4095BE9B6BC8 /* Montserrat-BoldItalic.ttf */; };
 		3773328AC93348408648401D /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78A0EC539E1A4456BA587555 /* Montserrat-ExtraLight.ttf */; };
 		3D88A839527B42AD84D1696E /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61E942AECD314531B4EFC0F8 /* Montserrat-ExtraBold.ttf */; };
-		51567FAEBD457F0ED8E4E80F /* libPods-Moveit-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 786F044DCB0341155014FF24 /* libPods-Moveit-tvOS.a */; };
+		51567FAEBD457F0ED8E4E80F /* libPods-IMEX-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 786F044DCB0341155014FF24 /* libPods-IMEX-tvOS.a */; };
 		5FFE80C2D9754AA99E673F96 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F59C4E7C88444DEBFE664E2 /* Montserrat-Bold.ttf */; };
 		6B2321768A0F48B8B1DA65DD /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F519592CD49E4250A06D8CD2 /* Montserrat-Italic.ttf */; };
 		7941941B03BD4BE597405456 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F82B564017F44F18A787B05 /* Montserrat-Thin.ttf */; };
 		854DC05CE07DB9B2E7336DDB /* libPods-MoveitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836EB16A7F267FBA56AEB21B /* libPods-MoveitTests.a */; };
-		8BEF8B6D9033943915E79F7C /* libPods-Moveit-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E10DC63DE6D398B4C731E46 /* libPods-Moveit-tvOSTests.a */; };
+		8BEF8B6D9033943915E79F7C /* libPods-IMEX-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E10DC63DE6D398B4C731E46 /* libPods-IMEX-tvOSTests.a */; };
 		9A59535447C34805A333D898 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2956BB168B3E422C8B3A541F /* Montserrat-Medium.ttf */; };
 		B36AADAA578A40A187E22AD8 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7010C4D70DBC4755BBE5958A /* Montserrat-Regular.ttf */; };
 		BAB5F9699D88466599AE3840 /* Montserrat-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93593AE5DC0F46CABDF343D4 /* Montserrat-BlackItalic.ttf */; };
@@ -93,7 +93,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = Moveit;
+			remoteInfo = IMEX;
 		};
 		1E2D28A7247F782D0067F156 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -107,7 +107,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "Moveit-tvOS";
+			remoteInfo = "IMEX-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -117,21 +117,21 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MoveitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoveitTests.m; sourceTree = "<group>"; };
 		02CF0A66087348A154006014 /* Pods-MoveitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoveitTests.release.xcconfig"; path = "Target Support Files/Pods-MoveitTests/Pods-MoveitTests.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Moveit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moveit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Moveit/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Moveit/AppDelegate.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* IMEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IMEX/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = IMEX/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Moveit/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Moveit/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Moveit/main.m; sourceTree = "<group>"; };
-		1767919B5CD4347BD3297B3E /* Pods-Moveit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit.release.xcconfig"; path = "Target Support Files/Pods-Moveit/Pods-Moveit.release.xcconfig"; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IMEX/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IMEX/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IMEX/main.m; sourceTree = "<group>"; };
+		1767919B5CD4347BD3297B3E /* Pods-IMEX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMEX.release.xcconfig"; path = "Target Support Files/Pods-IMEX/Pods-IMEX.release.xcconfig"; sourceTree = "<group>"; };
 		1BEC2B7A29144F47890A62CC /* libWatermelonDB.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libWatermelonDB.a; sourceTree = "<group>"; };
 		1E0CABFEBE6A4F228D0671CA /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../app/theme/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
-		1E2D28B2247F7B760067F156 /* Moveit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moveit.swift; sourceTree = "<group>"; };
-		1E2D28B7247F7B9C0067F156 /* Moveit-tvOSTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Moveit-tvOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		1E2D28B2247F7B760067F156 /* IMEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMEX.swift; sourceTree = "<group>"; };
+		1E2D28B7247F7B9C0067F156 /* IMEX-tvOSTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IMEX-tvOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		1E2D28B8247F7B9C0067F156 /* MoveitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MoveitTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		1E2D28B9247F7B9D0067F156 /* Moveit-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Moveit-Bridging-Header.h"; sourceTree = "<group>"; };
-		1E2D28BA247F7B9D0067F156 /* Moveit-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Moveit-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		1E2D28B9247F7B9D0067F156 /* IMEX-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IMEX-Bridging-Header.h"; sourceTree = "<group>"; };
+		1E2D28BA247F7B9D0067F156 /* IMEX-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IMEX-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		1E3FBF892477C8AB00C36348 /* ZektonExHv Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ZektonExHv Regular.ttf"; path = "../app/theme/fonts/ZektonExHv Regular.ttf"; sourceTree = "<group>"; };
 		1E815C5D246E67CE00058207 /* ARIALNI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARIALNI.TTF; path = ../app/theme/fonts/ARIALNI.TTF; sourceTree = "<group>"; };
 		1E815C5E246E67CE00058207 /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = arial.ttf; path = ../app/theme/fonts/arial.ttf; sourceTree = "<group>"; };
@@ -145,19 +145,19 @@
 		1E815C66246E67CF00058207 /* arialbd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = arialbd.ttf; path = ../app/theme/fonts/arialbd.ttf; sourceTree = "<group>"; };
 		28BF774262AE4D01956A20AC /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../app/theme/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		2956BB168B3E422C8B3A541F /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../app/theme/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* Moveit-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moveit-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* Moveit-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moveit-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D8EB1A8342B5E89966DB999 /* libPods-Moveit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Moveit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		37FA0A828A672373C858E02A /* Pods-Moveit-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Moveit-tvOS/Pods-Moveit-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* IMEX-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IMEX-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* IMEX-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IMEX-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D8EB1A8342B5E89966DB999 /* libPods-IMEX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IMEX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		37FA0A828A672373C858E02A /* Pods-IMEX-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMEX-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-IMEX-tvOS/Pods-IMEX-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		38D2C22E46FA44629C0D69D3 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Light.ttf"; path = "../app/theme/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; };
-		3A5AD62557C822E5F6DFF599 /* Pods-Moveit-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Moveit-tvOS/Pods-Moveit-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		44598B32B27206926409AB4D /* Pods-Moveit-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Moveit-tvOSTests/Pods-Moveit-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		3A5AD62557C822E5F6DFF599 /* Pods-IMEX-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMEX-tvOS.release.xcconfig"; path = "Target Support Files/Pods-IMEX-tvOS/Pods-IMEX-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		44598B32B27206926409AB4D /* Pods-IMEX-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMEX-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-IMEX-tvOSTests/Pods-IMEX-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		539DD5400BF34CD1B0656777 /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ThinItalic.ttf"; path = "../app/theme/fonts/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
-		5E10DC63DE6D398B4C731E46 /* libPods-Moveit-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Moveit-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E10DC63DE6D398B4C731E46 /* libPods-IMEX-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IMEX-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E942AECD314531B4EFC0F8 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBold.ttf"; path = "../app/theme/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
 		7010C4D70DBC4755BBE5958A /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../app/theme/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		7269E464D275EE5094F8DF0C /* Pods-Moveit-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Moveit-tvOSTests/Pods-Moveit-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		786F044DCB0341155014FF24 /* libPods-Moveit-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Moveit-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7269E464D275EE5094F8DF0C /* Pods-IMEX-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMEX-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-IMEX-tvOSTests/Pods-IMEX-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		786F044DCB0341155014FF24 /* libPods-IMEX-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IMEX-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78A0EC539E1A4456BA587555 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLight.ttf"; path = "../app/theme/fonts/Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		7F82B564017F44F18A787B05 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Thin.ttf"; path = "../app/theme/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; };
 		836EB16A7F267FBA56AEB21B /* libPods-MoveitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoveitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,7 +168,7 @@
 		A32CD6E2584801BFBCBB35A6 /* Pods-MoveitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoveitTests.debug.xcconfig"; path = "Target Support Files/Pods-MoveitTests/Pods-MoveitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B9F7251405A249468A916CA8 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-MediumItalic.ttf"; path = "../app/theme/fonts/Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
 		C808EDD36249468592BEFF8C /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraBoldItalic.ttf"; path = "../app/theme/fonts/Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		D5C6A08B32747535387C5385 /* Pods-Moveit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moveit.debug.xcconfig"; path = "Target Support Files/Pods-Moveit/Pods-Moveit.debug.xcconfig"; sourceTree = "<group>"; };
+		D5C6A08B32747535387C5385 /* Pods-IMEX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMEX.debug.xcconfig"; path = "Target Support Files/Pods-IMEX/Pods-IMEX.debug.xcconfig"; sourceTree = "<group>"; };
 		E7C719C0EAF64F338D05AF47 /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-LightItalic.ttf"; path = "../app/theme/fonts/Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
 		EBF471DA244141C280F28B76 /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../app/theme/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -190,7 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C16BFB198E5BC1B1CE9561E /* libPods-Moveit.a in Frameworks */,
+				1C16BFB198E5BC1B1CE9561E /* libPods-IMEX.a in Frameworks */,
 				FD28D0705C4446FAB29E0FCE /* libWatermelonDB.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51567FAEBD457F0ED8E4E80F /* libPods-Moveit-tvOS.a in Frameworks */,
+				51567FAEBD457F0ED8E4E80F /* libPods-IMEX-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,7 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BEF8B6D9033943915E79F7C /* libPods-Moveit-tvOSTests.a in Frameworks */,
+				8BEF8B6D9033943915E79F7C /* libPods-IMEX-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,14 +231,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Moveit */ = {
+		13B07FAE1A68108700A75B9A /* IMEX */ = {
 			isa = PBXGroup;
 			children = (
-				1E2D28B9247F7B9D0067F156 /* Moveit-Bridging-Header.h */,
-				1E2D28BA247F7B9D0067F156 /* Moveit-tvOS-Bridging-Header.h */,
-				1E2D28B7247F7B9C0067F156 /* Moveit-tvOSTests-Bridging-Header.h */,
+				1E2D28B9247F7B9D0067F156 /* IMEX-Bridging-Header.h */,
+				1E2D28BA247F7B9D0067F156 /* IMEX-tvOS-Bridging-Header.h */,
+				1E2D28B7247F7B9C0067F156 /* IMEX-tvOSTests-Bridging-Header.h */,
 				1E2D28B8247F7B9C0067F156 /* MoveitTests-Bridging-Header.h */,
-				1E2D28B2247F7B760067F156 /* Moveit.swift */,
+				1E2D28B2247F7B760067F156 /* IMEX.swift */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -247,7 +247,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = Moveit;
+			name = IMEX;
 			sourceTree = "<group>";
 		};
 		1E2D28A3247F782C0067F156 /* Recovered References */ = {
@@ -271,9 +271,9 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				2D8EB1A8342B5E89966DB999 /* libPods-Moveit.a */,
-				786F044DCB0341155014FF24 /* libPods-Moveit-tvOS.a */,
-				5E10DC63DE6D398B4C731E46 /* libPods-Moveit-tvOSTests.a */,
+				2D8EB1A8342B5E89966DB999 /* libPods-IMEX.a */,
+				786F044DCB0341155014FF24 /* libPods-IMEX-tvOS.a */,
+				5E10DC63DE6D398B4C731E46 /* libPods-IMEX-tvOSTests.a */,
 				836EB16A7F267FBA56AEB21B /* libPods-MoveitTests.a */,
 			);
 			name = Frameworks;
@@ -326,7 +326,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* Moveit */,
+				13B07FAE1A68108700A75B9A /* IMEX */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MoveitTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -343,10 +343,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Moveit.app */,
+				13B07F961A680F5B00A75B9A /* IMEX.app */,
 				00E356EE1AD99517003FC87E /* MoveitTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* Moveit-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* Moveit-tvOSTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* IMEX-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* IMEX-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,12 +354,12 @@
 		E2E4D6D91A1E6C4227F1D822 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D5C6A08B32747535387C5385 /* Pods-Moveit.debug.xcconfig */,
-				1767919B5CD4347BD3297B3E /* Pods-Moveit.release.xcconfig */,
-				37FA0A828A672373C858E02A /* Pods-Moveit-tvOS.debug.xcconfig */,
-				3A5AD62557C822E5F6DFF599 /* Pods-Moveit-tvOS.release.xcconfig */,
-				7269E464D275EE5094F8DF0C /* Pods-Moveit-tvOSTests.debug.xcconfig */,
-				44598B32B27206926409AB4D /* Pods-Moveit-tvOSTests.release.xcconfig */,
+				D5C6A08B32747535387C5385 /* Pods-IMEX.debug.xcconfig */,
+				1767919B5CD4347BD3297B3E /* Pods-IMEX.release.xcconfig */,
+				37FA0A828A672373C858E02A /* Pods-IMEX-tvOS.debug.xcconfig */,
+				3A5AD62557C822E5F6DFF599 /* Pods-IMEX-tvOS.release.xcconfig */,
+				7269E464D275EE5094F8DF0C /* Pods-IMEX-tvOSTests.debug.xcconfig */,
+				44598B32B27206926409AB4D /* Pods-IMEX-tvOSTests.release.xcconfig */,
 				A32CD6E2584801BFBCBB35A6 /* Pods-MoveitTests.debug.xcconfig */,
 				02CF0A66087348A154006014 /* Pods-MoveitTests.release.xcconfig */,
 			);
@@ -388,9 +388,9 @@
 			productReference = 00E356EE1AD99517003FC87E /* MoveitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Moveit */ = {
+		13B07F861A680F5B00A75B9A /* IMEX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Moveit" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "IMEX" */;
 			buildPhases = (
 				CA195144637DF533F0A273B7 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -404,14 +404,14 @@
 			);
 			dependencies = (
 			);
-			name = Moveit;
-			productName = Moveit;
-			productReference = 13B07F961A680F5B00A75B9A /* Moveit.app */;
+			name = IMEX;
+			productName = IMEX;
+			productReference = 13B07F961A680F5B00A75B9A /* IMEX.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* Moveit-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* IMEX-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Moveit-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "IMEX-tvOS" */;
 			buildPhases = (
 				0A2509FF02E1001F441AD491 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -424,14 +424,14 @@
 			);
 			dependencies = (
 			);
-			name = "Moveit-tvOS";
-			productName = "Moveit-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* Moveit-tvOS.app */;
+			name = "IMEX-tvOS";
+			productName = "IMEX-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* IMEX-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* Moveit-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* IMEX-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Moveit-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "IMEX-tvOSTests" */;
 			buildPhases = (
 				C1F98C5AEB6A600F52CB2D61 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -443,9 +443,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "Moveit-tvOSTests";
-			productName = "Moveit-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* Moveit-tvOSTests.xctest */;
+			name = "IMEX-tvOSTests";
+			productName = "IMEX-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* IMEX-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -480,7 +480,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Moveit" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IMEX" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -500,10 +500,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Moveit */,
+				13B07F861A680F5B00A75B9A /* IMEX */,
 				00E356ED1AD99517003FC87E /* MoveitTests */,
-				2D02E47A1E0B4A5D006451C7 /* Moveit-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* Moveit-tvOSTests */,
+				2D02E47A1E0B4A5D006451C7 /* IMEX-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* IMEX-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -644,7 +644,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Moveit-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-IMEX-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -671,7 +671,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Moveit/Pods-Moveit-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-IMEX/Pods-IMEX-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
@@ -714,7 +714,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Moveit/Pods-Moveit-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IMEX/Pods-IMEX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		566596F162C9A4D65FEC5947 /* [CP] Check Pods Manifest.lock */ = {
@@ -754,7 +754,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Moveit-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-IMEX-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -776,7 +776,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Moveit-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-IMEX-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -838,7 +838,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				1E2D28B3247F7B760067F156 /* Moveit.swift in Sources */,
+				1E2D28B3247F7B760067F156 /* IMEX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,7 +848,7 @@
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
-				1E2D28B5247F7B760067F156 /* Moveit.swift in Sources */,
+				1E2D28B5247F7B760067F156 /* IMEX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,12 +865,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Moveit */;
+			target = 13B07F861A680F5B00A75B9A /* IMEX */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* Moveit-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* IMEX-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -882,7 +882,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = Moveit;
+			path = IMEX;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -920,7 +920,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "MoveitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moveit.app/Moveit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IMEX.app/IMEX";
 			};
 			name = Debug;
 		};
@@ -952,13 +952,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoveitTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moveit.app/Moveit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IMEX.app/IMEX";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5C6A08B32747535387C5385 /* Pods-Moveit.debug.xcconfig */;
+			baseConfigurationReference = D5C6A08B32747535387C5385 /* Pods-IMEX.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -971,7 +971,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/**",
 				);
-				INFOPLIST_FILE = Moveit/Info.plist;
+				INFOPLIST_FILE = IMEX/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -979,10 +979,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tatva.moveit;
-				PRODUCT_NAME = Moveit;
-				PROVISIONING_PROFILE_SPECIFIER = "Moveit-Dev";
-				SWIFT_OBJC_BRIDGING_HEADER = "Moveit-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tatva.imex;
+				PRODUCT_NAME = IMEX;
+				PROVISIONING_PROFILE_SPECIFIER = "IMEX-Dev";
+				SWIFT_OBJC_BRIDGING_HEADER = "IMEX-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -991,7 +991,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1767919B5CD4347BD3297B3E /* Pods-Moveit.release.xcconfig */;
+			baseConfigurationReference = 1767919B5CD4347BD3297B3E /* Pods-IMEX.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1003,7 +1003,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/**",
 				);
-				INFOPLIST_FILE = Moveit/Info.plist;
+				INFOPLIST_FILE = IMEX/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1011,10 +1011,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tatva.moveit;
-				PRODUCT_NAME = Moveit;
-				PROVISIONING_PROFILE_SPECIFIER = "Moveit-Dev";
-				SWIFT_OBJC_BRIDGING_HEADER = "Moveit-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tatva.imex;
+				PRODUCT_NAME = IMEX;
+				PROVISIONING_PROFILE_SPECIFIER = "IMEX-Dev";
+				SWIFT_OBJC_BRIDGING_HEADER = "IMEX-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1022,7 +1022,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37FA0A828A672373C858E02A /* Pods-Moveit-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 37FA0A828A672373C858E02A /* Pods-IMEX-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1038,7 +1038,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/**",
 				);
-				INFOPLIST_FILE = "Moveit-tvOS/Info.plist";
+				INFOPLIST_FILE = "IMEX-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1049,10 +1049,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Moveit-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.IMEX-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Moveit-tvOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IMEX-tvOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1062,7 +1062,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A5AD62557C822E5F6DFF599 /* Pods-Moveit-tvOS.release.xcconfig */;
+			baseConfigurationReference = 3A5AD62557C822E5F6DFF599 /* Pods-IMEX-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1078,7 +1078,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/**",
 				);
-				INFOPLIST_FILE = "Moveit-tvOS/Info.plist";
+				INFOPLIST_FILE = "IMEX-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1089,10 +1089,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Moveit-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.IMEX-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Moveit-tvOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IMEX-tvOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
@@ -1101,7 +1101,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7269E464D275EE5094F8DF0C /* Pods-Moveit-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 7269E464D275EE5094F8DF0C /* Pods-IMEX-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1117,7 +1117,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/**",
 				);
-				INFOPLIST_FILE = "Moveit-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "IMEX-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1128,20 +1128,20 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Moveit-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.IMEX-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Moveit-tvOSTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IMEX-tvOSTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moveit-tvOS.app/Moveit-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IMEX-tvOS.app/IMEX-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 44598B32B27206926409AB4D /* Pods-Moveit-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 44598B32B27206926409AB4D /* Pods-IMEX-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1157,7 +1157,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/**",
 				);
-				INFOPLIST_FILE = "Moveit-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "IMEX-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1168,12 +1168,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Moveit-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.IMEX-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Moveit-tvOSTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "IMEX-tvOSTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moveit-tvOS.app/Moveit-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IMEX-tvOS.app/IMEX-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1289,7 +1289,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Moveit" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "IMEX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1298,7 +1298,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Moveit-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "IMEX-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1307,7 +1307,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Moveit-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "IMEX-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1316,7 +1316,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Moveit" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IMEX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

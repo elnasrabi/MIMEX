@@ -6,7 +6,7 @@ import base64 from "react-native-base64";
 const jsonxml = require("jsontoxml");
 
 const convertToXMLRequest: any = (api: string, requestData: any, requestType: any) => {
-  // const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><requests xmlns=\"http://www.moveit.com.au/schema/consignments.xsd\"><consignmentMatchingExportRequest><connoteNumber>AMI000071</connoteNumber></consignmentMatchingExportRequest></requests>"
+  // const xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><requests xmlns=\"http://www.imex.com.au/schema/consignments.xsd\"><consignmentMatchingExportRequest><connoteNumber>AMI000071</connoteNumber></consignmentMatchingExportRequest></requests>"
   let xml = jsonxml({ requestData });
   xml = xml.replace("<requestData>", "");
   xml = xml.replace("</requestData>", "");
@@ -65,7 +65,7 @@ export class Api {
 
   async login(username: string, password: string): Promise<Types.LoginUserResult> {
     const xmlData =
-      '<?xml version="1.0" encoding="UTF-8"?>\n<requests xmlns="http://www.moveit.com.au/schema/consignments.xsd">\n    <userRequest>\n  </userRequest>\n</requests>';
+      '<?xml version="1.0" encoding="UTF-8"?>\n<requests xmlns="http://www.imex.com.au/schema/consignments.xsd">\n    <userRequest>\n  </userRequest>\n</requests>';
     const Authorization = base64.encode(username + ":" + password);
     const response: ApiResponse<any> = await this.apisauce.post("", xmlData, {
       headers: { Authorization: "Basic " + Authorization },
@@ -199,7 +199,7 @@ export class Api {
 
   async forgotPassword(email: string): Promise<Types.LoginUserResult> {
     const xmlData =
-      '<?xml version="1.0" encoding="UTF-8"?>\n<requests xmlns="http://www.moveit.com.au/schema/consignments.xsd">\n    <userRequest>\n  </userRequest>\n</requests>';
+      '<?xml version="1.0" encoding="UTF-8"?>\n<requests xmlns="http://www.imex.com.au/schema/consignments.xsd">\n    <userRequest>\n  </userRequest>\n</requests>';
     const response: ApiResponse<any> = await this.apisauce.post("", xmlData, {
       headers: { Authorization: "Basic " + base64.encode(username + ":" + password) },
     });
