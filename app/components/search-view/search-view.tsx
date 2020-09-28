@@ -20,6 +20,7 @@ import EvilIcons from "react-native-vector-icons/dist/EvilIcons";
 import { icons } from "../icon/icons";
 import { useStores } from "../../models/root-store";
 import { observer } from "mobx-react-lite";
+import { ImFormModel } from "../../models/my-list-store/ImForm-Store";
 
 const SEARCH_VIEW: ViewStyle = { flexDirection: "row" };
 const ERROR_TEXT: TextStyle = {};
@@ -65,7 +66,7 @@ const INPUT_STYLE: TextStyle = { borderColor: color.palette.darkText, borderWidt
 const MAIN_STYLE: ViewStyle = { flex: 1 };
 
 export const SearchView: React.FunctionComponent<SearchProps> = observer(props => {
-  const { consignmentStore } = useStores();
+  const { ImFormStore } = useStores();
   const {
     onCameraPress,
     onGoPress,
@@ -76,7 +77,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = observer(props =
     onChangeText,
     value,
     isValidSearch = true,
-    cameraIcon = true,
+    cameraIcon = false,
   } = props;
 
   return (
@@ -107,7 +108,7 @@ export const SearchView: React.FunctionComponent<SearchProps> = observer(props =
       {/* GO */}
       <TouchableOpacity style={GO_BUTTON} onPress={onGoPress}>
         <ImageBackground style={[BACKGROUND_ICON, buttonStyle]} source={icons.blackButton}>
-          {consignmentStore.isButtonLoading ? (
+          {ImFormStore.isButtonLoading? (
             <ActivityIndicator size="large" color={color.palette.white} />
           ) : (
             <Text preset="button" style={GO} tx={"searchView.go"} />

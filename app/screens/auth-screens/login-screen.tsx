@@ -1,14 +1,17 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
-import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, TouchableOpacity, Alert, ImageStyle } from "react-native";
 import { ParamListBase } from "@react-navigation/native";
+import { NONE } from "apisauce";
+import { observer } from "mobx-react-lite";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { ImageStyle, TextStyle, TouchableOpacity, ViewStyle } from "react-native";
+import SmsAndroid from "react-native-get-sms-android";
+import Orientation from "react-native-orientation-locker";
 import { NativeStackNavigationProp } from "react-native-screens/native-stack";
-import { Screen, Text, TextField, Icon } from "../../components";
+import { Icon, Screen, Text, TextField } from "../../components";
+import { MyButton } from "../../components/button/my-button";
 import { useStores } from "../../models/root-store";
 import { color } from "../../theme";
-import { MyButton } from "../../components/button/my-button";
-import { isInternetAvailable } from "../../utils/utils";
-import Orientation from "react-native-orientation-locker";
+import { requestPermission, SMS_PERMISSION } from "../../utils/app-permission";
+import { isInternetAvailable, showAlert } from "../../utils/utils";
 
 export interface LoginScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -30,7 +33,7 @@ const RESET_PASSWORD: TextStyle = {
 
 const TEXT_INVALID: TextStyle = {
   ...RESET_PASSWORD,
-  fontSize: 24,
+  fontSize: 15,
   textAlign: "center",
 };
 
@@ -41,8 +44,8 @@ const CONTINUE: ViewStyle = {
 };
 
 const AFS_LOGO: ImageStyle = {
-  height: 100,
-  width: 200,
+  height: 120,
+  width: 220,
   alignSelf: "center",
 };
 const TRUCK_LOGO: ImageStyle = {
@@ -60,10 +63,15 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer(props =
   const [isValidUsername, setValidUsername] = useState(true);
   const [isValidPassword, setValidPassword] = useState(true);
 
-  const [username, onChangeUsername] = useState("manager@ccs");
-  const [password, onChangePassword] = useState("manager");
-  // const [username, onChangeUsername] = useState("services@afs")
-  // const [password, onChangePassword] = useState("services092017")
+  const [username, onChangeUsername] = useState("225943521729");
+  const [password, onChangePassword] = useState("225943521729");
+
+  // const [username, onChangeUsername] = useState("Buhga.Homoudi@BOK");
+  // const [password, onChangePassword] = useState("123A123a");
+
+  // const [username, onChangeUsername] = useState("Nazim.Ahmed@CBOS");
+  // const [password, onChangePassword] = useState("123A123a");
+
   let passwordRef: any;
 
   useEffect(() => {
@@ -71,41 +79,84 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer(props =
   }, []);
 
   const onLogin = () => {
-    const isConnected = isInternetAvailable();
-    if (!username) {
-      setValidUsername(false);
-    }
-    if (!password) {
-      setValidPassword(false);
-    }
-    if (username && password && isConnected) {
-      authStore.login(username, password);
-      // authStore.resetAuth()
+    try {
+      const isConnected = isInternetAvailable();
+
+      if (!username) {
+        setValidUsername(false);
+      }
+      if (!password) {
+        setValidPassword(false);
+      }
+      if (username && password && isConnected) {
+        // console.log(JSON.stringify(isConnected, null, 2));
+        authStore.login(username, password);
+
+        if (!authStore.isBank && authStore.HasData) {
+          if (authStore.IsFirstLogin && authStore.IsMobileVerified) {
+            //authStore.SetIsFirstLogin(true);
+
+            var seedrandom = require("seedrandom");
+            var prng = new seedrandom();
+            const code = prng()
+              .toString()
+              .substring(3, 9);
+
+            let MobileNo = authStore.userData[0].MobileNo[0];
+
+            authStore.SetMobileNo(MobileNo[0]);
+            authStore.SetOTPCode(code);
+            const result = requestPermission(SMS_PERMISSION);
+            if (result) {
+              SmsAndroid.autoSend(
+                MobileNo[0],
+                "Your OTP Code is : " + code.toString() + "sent to " + MobileNo[0],
+                fail => {
+                  console.log("Failed with this error: " + fail);
+                },
+                success => {
+                  console.log("SMS sent successfully sent to " + MobileNo[0]);
+                  console.log("code is", authStore.OTPCode);
+                },
+              );
+            }
+          }
+        }
+      }
+    } catch (error) {
+      showAlert("common.generalerror");
     }
   };
 
   const onChangeText = (type, text) => {
-    if (type === INPUT_USERNAME) {
-      onChangeUsername(text);
-      text ? setValidUsername(true) : setValidUsername(false);
-    } else {
-      onChangePassword(text);
-      text ? setValidPassword(true) : setValidPassword(false);
+    try {
+      if (type === INPUT_USERNAME) {
+        onChangeUsername(text);
+        text ? setValidUsername(true) : setValidUsername(false);
+      } else {
+        onChangePassword(text);
+        text ? setValidPassword(true) : setValidPassword(false);
+      }
+    } catch (error) {
+      showAlert("common.generalerror");
     }
   };
 
   const onResetPassword = () => {
-    props.navigation.navigate("HelpScreen");
+    try {
+      if (authStore.IsMobileVerified) {
+        props.navigation.navigate("OTPForgotPassword");
+      }
+    } catch (error) {
+      showAlert("common.generalerror");
+    }
+
     // props.navigation.navigate("forgotpassword")
   };
   return (
     <Screen style={ROOT} preset="scroll" backgroundColor="black">
-      <Icon style={AFS_LOGO} icon={"afsLogo"} />
-      {authStore.hasLoginError ? (
-        <Text style={TEXT_INVALID} tx={"loginScreen.invalidUsernamePassword"} />
-      ) : (
-        <Icon style={TRUCK_LOGO} icon={"loginLogo"} />
-      )}
+      <Icon style={AFS_LOGO} icon={"cbosLogo"} />
+      <Icon style={TRUCK_LOGO} icon={"imexLogo"} />
 
       <TextField
         labelTx={"loginScreen.username"}
@@ -146,6 +197,13 @@ export const LoginScreen: FunctionComponent<LoginScreenProps> = observer(props =
         tx="loginScreen.login"
         onPress={onLogin}
       />
+      {authStore.hasLoginError ? (
+        <Text style={TEXT_INVALID} tx="common.loginerror" />
+      ) : !authStore.IsMobileVerified ? (
+        <Text style={TEXT_INVALID} tx="errors.checkmobile" />
+      ) : (
+        NONE
+      )}
     </Screen>
   );
 });

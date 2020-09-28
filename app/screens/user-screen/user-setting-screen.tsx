@@ -1,30 +1,20 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from "react";
+import { ParamListBase } from "@react-navigation/native";
 import { observer } from "mobx-react-lite";
+import React, { FunctionComponent } from "react";
 import {
-  ViewStyle,
-  TextStyle,
-  View,
-  ScrollView,
-  Platform,
-  TouchableOpacity,
-  SafeAreaView,
-  TextInput,
+  Platform, ScrollView, TextStyle,
+  View, ViewStyle
 } from "react-native";
-import { ParamListBase, useIsFocused } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import moment from "moment";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import KeyboardManager from "react-native-keyboard-manager";
-import { Formik } from "formik";
-
+import { NativeStackNavigationProp } from "react-native-screens/native-stack";
 // imports from components, themes and modals
-import { Screen, Text, TextField } from "../../components";
-import { color, typography } from "../../theme";
+import { Screen, Text } from "../../components";
+import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { MenuButton } from "../../components/header/menu-button";
 import { icons } from "../../components/icon/icons";
-import { BottomButton } from "../../components/bottom-button/bottom-button";
 import { useStores } from "../../models/root-store";
+import { color, typography } from "../../theme";
+
 export interface UserSettingProps {
   navigation: NativeStackNavigationProp<ParamListBase>;
 }
@@ -116,6 +106,81 @@ const SCROLLVIEW_STYLE: ViewStyle = {
   marginTop: Platform.OS == "android" ? 40 : isIphoneX() ? 0 : 23,
 };
 
+
+// const FIELD_CONTAINER: ViewStyle = {
+//   flex: 1,
+//   justifyContent: 'center'
+// };
+// const CHILDREN: ViewStyle = {
+//   paddingHorizontal: 10,
+//   justifyContent: 'center',
+//   flex: 1,
+//   borderWidth: 1,
+//   borderColor: color.palette.lighterGrey,
+//   borderRadius: 4,
+//   height: 40,
+//   backgroundColor: color.palette.white
+// };
+// const FIELD_MAIN_CONTAINER: ViewStyle = {
+//   flexDirection: 'row',
+//   paddingHorizontal: 20,
+//   marginTop: 15
+// };
+// const ERROR_TEXT: TextStyle = {
+//   color: color.palette.red,
+//   fontFamily: typography.secondary,
+//   alignSelf: 'flex-end',
+//   paddingRight: 20
+// }
+
+
+const FLAT_LIST: ViewStyle = {
+  padding: 25,
+  borderColor: color.palette.darkText,
+  borderWidth: 2,
+  margin: 5,
+  marginTop:20,
+  borderRadius: 3,
+  backgroundColor: color.palette.listBG,
+};
+const FLAT_LIST_VIEW: ViewStyle = { flex:1};
+const IssueId_View: ViewStyle = { flexDirection: "row"  , justifyContent:"space-evenly"};
+const IssueID: ViewStyle = { flex: 1 };
+const IssueDesc: ViewStyle = { flex: 1 };
+const IssueDesc_Value: TextStyle = { flex: 1, color: color.palette.red }
+const IssueID_Value: TextStyle = { flex: 1, color: color.palette.red }
+const Form_Date_VIEW: ViewStyle = { flexDirection: "row" };
+const Form_Date_LABEL: TextStyle = { marginEnd: 5, color: color.palette.darkText, flex: 1 };
+const Form_Date_VALUE: TextStyle = { marginEnd: 5, flex: 1, color: color.palette.link };
+const Bank_Branch_VIEW: ViewStyle = { flexDirection: "row" };
+const Bank_Branch_LABEL: TextStyle = { marginEnd: 15, color: color.palette.darkText, flex: 1 };
+const Bank_Branch_VALUE: TextStyle = { marginEnd: 15, flex: 1, color: color.palette.link };
+const ITEM_LABEL: TextStyle = { color: color.palette.darkText, marginEnd: 5 };
+const ClientStatustatus_View: ViewStyle = { flexDirection: "row", flex: 1 };
+const ClientStatustatus_LABEL: TextStyle = { marginEnd: 10, color: color.palette.darkText, flex: 1 };
+const ClientStatustatus_VALUE: TextStyle = { marginEnd: 10, flex: 1, color: color.palette.red };
+const VOLUME_VIEW: ViewStyle = {
+  flexDirection: "row",
+  flex: 1,
+  marginStart: 10,
+  justifyContent: "flex-end",
+};
+const SEPERATOR_LINE: ViewStyle = {
+  height: 5,
+  backgroundColor: color.palette.black,
+  width: "95%",
+  marginLeft: 10,
+  borderRadius: 5,
+};
+const WEIGHT_LABEL: TextStyle = { marginEnd: 10, color: color.palette.darkText };
+const STATUS: TextStyle = { color: color.palette.link };
+const TEXT_VIEW: ViewStyle = {flex:1, marginBottom:10,flexDirection: "row",justifyContent:"space-between" };
+const FullNameArabicStyle: ViewStyle = {flex:1,marginBottom:10,justifyContent:"space-between" };
+
+const TEXT_VALUE: TextStyle = { color: color.palette.link };
+const TEXT_LABEL: TextStyle = { marginEnd: 15, color: color.palette.darkText, flex: 1 };
+
+
 export const UserSetting: FunctionComponent<UserSettingProps> = observer(props => {
   // const isFocused = useIsFocused();
   // const [date, setDate] = useState(new Date());
@@ -123,7 +188,9 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer(props =
   // const currentRef: any[] = [];
   // const formikRef = useRef();
   const { authStore } = useStores();
+  
   const userData = authStore.userData[0];
+ 
   // useEffect(() => {
   //   if (isFocused) {
   //     if (Platform.OS === 'ios') {
@@ -221,14 +288,55 @@ export const UserSetting: FunctionComponent<UserSettingProps> = observer(props =
     >
       <MenuButton title={"userSetting.header"} onPress={handleDrawer} />
       <ScrollView style={SCROLLVIEW_STYLE}>
-        <View style={EMAIL_VIEW}>
+        {/* <View style={EMAIL_VIEW}>
           <Text extraText={":"} style={EMAIL_TEXT} tx={"userSetting.email"} />
           <Text style={EMAIL_VALUE} text={userData.email[0] ? userData.email[0] : "-"} />
+        </View> */}
+      
+        <View  style={FLAT_LIST}>
+      <View style={FullNameArabicStyle}>
+        <View style={TEXT_VIEW}> 
+      <Text extraText={":"} tx={"userSetting.name"} style={Form_Date_LABEL} preset={"normal"} />
         </View>
-        {renderRow("Login Name", userData.loginName[0])}
-        {renderRow("First Name", userData.firstName[0])}
-        {renderRow("Last Name", userData.lastName[0])}
-        {renderRow("User Type", userData.userTypeName[0])}
+        <View style={TEXT_VIEW}> 
+        <Text style={Form_Date_VALUE} preset={"normal"}>
+          {userData.FullName[0]}
+        </Text>
+        </View>
+        {/* <View style={SEPERATOR_LINE} /> */}
+        </View>
+
+        <View style={FullNameArabicStyle}>
+        <View style={TEXT_VIEW}> 
+        <Text extraText={":"} tx={"userSetting.loginname"} style={ClientStatustatus_LABEL} preset={"normal"} />
+        </View>
+        <View style={TEXT_VIEW}> 
+        <Text style={Form_Date_VALUE} preset={"normal"}>
+          {userData.LoginName[0]}
+        </Text>
+        </View>
+        {/* <View style={SEPERATOR_LINE} /> */}
+        </View>
+   
+     
+     <View style={TEXT_VIEW}> 
+        <Text extraText={":"} tx={"userSetting.mobile"} style={Form_Date_LABEL} preset={"normal"} />
+      
+        <Text style={Form_Date_VALUE} preset={"normal"}>
+          {userData.MobileNo[0]}
+        </Text>
+       </View>
+
+       <View style={TEXT_VIEW}> 
+        <Text extraText={":"} tx={"userSetting.usertype"} style={Form_Date_LABEL} preset={"normal"} />
+        <Text style={IssueID_Value} preset={"normal"}>
+        {userData.UserType[0]}
+        </Text>
+        </View>
+
+       
+    </View>
+
       </ScrollView>
       <BottomButton
         hideLeftButton={true}

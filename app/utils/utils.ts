@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
+import Geolocation from "@react-native-community/geolocation";
 import NetInfo from "@react-native-community/netinfo";
-import { Alert, Linking, Platform } from "react-native";
-import { translate } from "../i18n";
 // import call from 'react-native-phone-call'
 import Moment from "moment";
-import RNFetchBlob from "rn-fetch-blob";
-import RNFS from "react-native-fs";
-import { requestPermission, LOCATION_PERMISSION } from "./app-permission";
+import { Alert, Linking, Platform } from "react-native";
 import { openSettings } from "react-native-permissions";
-import Geolocation from "@react-native-community/geolocation";
+import { translate } from "../i18n";
+import { LOCATION_PERMISSION, requestPermission } from "./app-permission";
 
 export function isEmpty(obj) {
   return !obj || Object.keys(obj).length === 0;
@@ -44,6 +42,15 @@ export async function isInternetAvailable(alert = true) {
   }
 }
 
+
+export function currencyFormatUSD(num) {
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+export function currencyFormat(num) {
+  return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
 export const ADMINISTRATION = "Administration";
 export const CARRIER = "Carrier";
 export const Customer = "Customer";
@@ -62,53 +69,19 @@ export const getFormattedDate = (date): string => {
   return newDate;
 };
 
-export function getSignaturePath(fileName): string {
-  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir;
-  const dirs = DOCUMENT_DIRECTORY_PATH + "/signature/";
-  const prefix = Platform.OS === "android" ? "file:///" : "";
-  return prefix + dirs + fileName + ".png";
-}
 
-export function getSignatureDir(): string {
-  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir;
-  const dirs = DOCUMENT_DIRECTORY_PATH + "/signature/";
-  return dirs;
-}
 
-export function getImagePath(fileName): string {
-  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir;
-  const dirs = DOCUMENT_DIRECTORY_PATH + "/images/";
-  const prefix = Platform.OS === "android" ? "file:///" : "";
-  return prefix + dirs + fileName + ".png";
-}
-
-export function getImageDir(): string {
-  const DOCUMENT_DIRECTORY_PATH = RNFetchBlob.fs.dirs.DocumentDir;
-  const dirs = DOCUMENT_DIRECTORY_PATH + "/images/";
-  return dirs;
-}
 
 export async function getJsonRequest(record): Promise<any> {
-  let signImageData = "";
-  if (record.signImage) {
-    signImageData = await RNFS.readFile(getSignaturePath(record.signImage), "base64");
-  }
+ 
   const request = {
-    consignmentStatusUpdate: {
-      consignment: {
-        consignmentNumber: record.consignmentNumber,
-        podData: {
-          signatory: record.signBy || "",
-          pod: signImageData || "",
-        },
-      },
-      event: record.status,
-      carrierEvent: record.status,
-      carrierSubEvent: record.eventName,
-      location: record.location,
-      condition: record.status == 'Delivered' ? "All POD" : "All Ok",
-      date: getCurrentDate()
-    }
+    
+    
+      IssueDesc: record.IssueDesc,
+      Type: record.Type,
+      IssueObject:record.IssueObject,
+      LoginName: record.LoginName,
+      FormNo: record.FormNo
   }
   return request
 }

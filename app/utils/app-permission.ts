@@ -1,5 +1,5 @@
+import { Alert, Platform } from "react-native";
 import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
-import { Platform, Alert } from "react-native";
 import { translate } from "../i18n";
 
 const LOCATION_GRANTED = RESULTS.GRANTED;
@@ -10,7 +10,9 @@ export const LOCATION_PERMISSION = {
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
   ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
 };
-
+export const SMS_PERMISSION = {
+  android: PERMISSIONS.ANDROID.SEND_SMS,
+};
 export const STORAGE_PERMISSION = {
   android: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE && PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
   ios: PERMISSIONS.IOS.STOREKIT,

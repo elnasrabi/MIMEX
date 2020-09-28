@@ -22,7 +22,7 @@ import DatabaseProvider from "@nozbe/watermelondb/DatabaseProvider";
 import SplashScreen from "react-native-splash-screen";
 
 const adapter = new SQLiteAdapter({
-  dbName: "MoveItDB",
+  dbName: "IMEXDB",
   schema: mySchema,
 });
 export const database = new Database({

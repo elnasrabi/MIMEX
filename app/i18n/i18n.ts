@@ -2,10 +2,10 @@ import * as RNLocalize from "react-native-localize";
 import i18n from "i18n-js";
 
 const en = require("./en");
-const ja = require("./ja");
+const ar = require("./ar");
 
 i18n.fallbacks = true;
-i18n.translations = { en, ja };
+i18n.translations = { en, ar };
 
 const fallback = { languageTag: "en", isRTL: false };
 

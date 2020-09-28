@@ -98,7 +98,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
       if (!email) {
         setValidEmail(false);
       } else if (isConnected) {
-        authStore.forgotPassword(email);
+       /// authStore.forgotPassword(email);
       }
     };
 
@@ -107,7 +107,7 @@ export const ForgotpasswordScreen: FunctionComponent<ForgotpasswordScreenProps> 
         <BackButton style={BACK_BUTTON} hasBackground={false} onPress={goBack} />
 
         <ScrollView contentContainerStyle={CONTAINER}>
-          <Icon style={AFS_LOGO} icon={"afsLogo"} />
+          <Icon style={AFS_LOGO} icon={"imexLogo"} />
 
           {authStore.hasForgotError ? (
             <Text style={HEADER} preset="button" tx="forgotpasswordScreen.invalidError" />

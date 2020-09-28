@@ -5,12 +5,15 @@ import { createNativeStackNavigator } from "react-native-screens/native-stack";
 import { RootParamList } from "./types";
 import { PrimaryNavigator } from "./primary-navigator";
 import { AuthNavigator } from "./auth-navigator";
+import { VerifyNavigator } from "./verify-navigator";
 import { useStores } from "../models/root-store";
 
 const Stack = createNativeStackNavigator<RootParamList>();
 
 const RootStack = observer(() => {
   const { authStore } = useStores();
+
+// console.log('login condition',authStore.isLoggedIn && !authStore.IsFirstLogin && authStore.IsMobileVerified)
   return (
     <Stack.Navigator
       screenOptions={{
@@ -20,7 +23,7 @@ const RootStack = observer(() => {
         stackAnimation: "none"
       }}
     >
-      {authStore.isLoggedIn ? (
+      {(authStore.isLoggedIn && !authStore.IsFirstLogin && authStore.IsMobileVerified)  ? (
         <Stack.Screen
           name="primaryStack"
           component={PrimaryNavigator}
@@ -28,7 +31,8 @@ const RootStack = observer(() => {
             headerShown: false,
           }}
         />
-      ) : (
+       )
+        :  (
           <Stack.Screen
             name="authStack"
             component={AuthNavigator}
@@ -36,7 +40,9 @@ const RootStack = observer(() => {
               headerShown: false,
             }}
           />
-        )}
+        ) }
+
+        
     </Stack.Navigator>
   );
 });

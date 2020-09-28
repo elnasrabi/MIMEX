@@ -1,10 +1,12 @@
 // Use this import if you want to use "env.js" file
 // const { API_URL } = require("../../config/env")
 // Or just specify it directly like this:
-export const API_URL = "http://uat2.afs.moveitnetexpress.com.au/imex/gateway/"
-export const CONSIGNMENT_SEARCH = "http://www.imex.com.au/schema/consignments.xsd"
-export const SAVE_CONSIGNMENT = "http://www.imex.com.au/schema/metadata.xsd"
+export const API_URL = "http://afs-sql01-dev/MobileAppDev/api/"
 
+export const IMFORM_SEARCH = "http://www.imex.com.au/schema/consignments.xsd"
+export const SAVE_CONSIGNMENT = "http://www.imex.com.au/schema/metadata.xsd"
+let testurl='https://mobileappservices20200924204033.azurewebsites.net';
+let azureurl='https://mobileappservices20200924204033.azurewebsites.net'
 /**
  * The options used to configure the API.
  */

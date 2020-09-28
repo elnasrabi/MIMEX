@@ -1,16 +1,29 @@
-import React, { FunctionComponent, useState, useEffect } from "react"
-import { observer } from "mobx-react-lite"
-import { ViewStyle, Platform, FlatList, View, TextStyle, Dimensions, Image, TouchableOpacity, ImageStyle, Linking } from "react-native"
-import { ParamListBase, useIsFocused } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "react-native-screens/native-stack"
-import { Screen, Text } from "../../components"
-import { color, typography } from "../../theme"
-import { icons } from "../../components/icon/icons";
-import { MenuButton } from "../../components/header/menu-button";
+import { ParamListBase } from "@react-navigation/native";
+import { observer } from "mobx-react-lite";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import {
+  FlatList,
+  Image,
+  ImageStyle,
+  Linking,
+  Platform,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import { callApi } from "../../utils/utils";
-import { useStores } from "../../models/root-store";
+import { NativeStackNavigationProp } from "react-native-screens/native-stack";
+// imports from components, themes and modals
+import { Screen, Text } from "../../components";
+import { MyButton } from "../../components/button/my-button";
 import { BackButton } from "../../components/header/back-button";
+import { MenuButton } from "../../components/header/menu-button";
+import { icons } from "../../components/icon/icons";
+import { useStores } from "../../models/root-store";
+import { color, typography } from "../../theme";
+import { callApi, isInternetAvailable } from "../../utils/utils";
 
 export interface HelpScreenProps {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -36,15 +49,15 @@ const QUESTION_TEXT: TextStyle = {
 const ANSWER_TEXT: TextStyle = {
   color: color.palette.lightGrey,
   fontSize: 22,
-  fontFamily: typography.secondary
-}
+  fontFamily: typography.secondary,
+};
 const TECHNICAL_SUPPORT: TextStyle = {
   fontFamily: typography.secondary,
   fontSize: 16,
-  fontWeight: 'bold',
+  fontWeight: "bold",
   paddingTop: 10,
-  color: color.palette.black
-}
+  color: color.palette.black,
+};
 const HEADER_CONTAINER: ViewStyle = {
   paddingHorizontal: 10,
   marginRight: 5,
@@ -53,10 +66,10 @@ const HEADER_CONTAINER: ViewStyle = {
   borderColor: color.palette.black,
   borderWidth: 1,
   borderRadius: 4,
-}
+};
 const HEADER_STYLE: ViewStyle = {
-  flexDirection: 'row'
-}
+  flexDirection: "row",
+};
 const EMAIL_LOGO: ImageStyle = {
   height: 150,
   width: "100%",
@@ -74,47 +87,96 @@ const LOGO_TEXT: TextStyle = {
 };
 
 export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => {
+  const { authStore } = useStores();
+  const [Help, updateHelp] = useState([]);
+
+  const UserType = authStore.userData[0].UserType;
+
+  const { IssueStore } = useStores();
+
+  if (UserType === "Bank") {
+    authStore.IsBank(true);
+  } else if (UserType === "Trader") {
+    authStore.IsBank(false);
+  }
+
+  console.log("UserType", UserType);
+  console.log("Is Bank", authStore.isBank);
+
+  const onHomePress = () => {
+    props.navigation.navigate("Home");
+  };
+  let uType;
+
+  useEffect(() => {
+    IssueStore.refreshHelpList();
+    callHelpAPI();
+  }, [authStore.isBank]);
+
+  const callHelpAPI = async () => {
+    const isConnected = await isInternetAvailable();
+    if (isConnected) {
+      getListApi();
+    }
+  };
+
+  const getListApi = async () => {
+    if (authStore.isBank) {
+      uType = 1;
+    } else if (!authStore.isBank) {
+      uType = 2;
+    }
+    await IssueStore.getHelpList(UserType);
+
+    if (IssueStore.responseHelpSuccess) {
+      const arr = IssueStore.getHelpListData;
+
+      updateHelp(arr);
+    }
+  };
   // const isFocusedOrientation = useIsFocused()
   const flatListdata = [
     {
-      question: 'How do I reset my password ?',
-      answer: 'Please contact our technical support via phone on 1300 884 294 or via email to support@moveit.com.au.'
+      question: "helpScreen.resetpassword_q",
+      answer: "helpScreen.resetpassword_a",
     },
     {
-      question: 'How do I scan a consignment number ?',
-      answer: 'From the home page, use the camera icon to scan a barcode which will prepopulate the search box.'
+      question: "How do I scan a consignment number ?",
+      answer:
+        "From the home page, use the camera icon to scan a barcode which will prepopulate the search box.",
     },
     {
-      question: 'How do I see all my consignments ?',
-      answer: 'Use the My List Screen in combination with the drop down filters.'
+      question: "How do I see all my consignments ?",
+      answer: "Use the My List Screen in combination with the drop down filters.",
     },
     {
-      question: 'How do I find my consignments for delivery ?',
-      answer: 'Use the My List screen filter and select “Undelivered today”.'
+      question: "How do I find my consignments for delivery ?",
+      answer: "Use the My List screen filter and select “Undelivered today”.",
     },
     {
-      question: 'How do I add a Milestone ?',
-      answer: 'Use the Milestone button on the consignment then tap Milestone.'
+      question: "How do I add a Milestone ?",
+      answer: "Use the Milestone button on the consignment then tap Milestone.",
     },
     {
-      question: 'How do I receive a sign on glass ?',
-      answer: 'Use the Milestone screen, select “Delivered” as the status and tap the signature box to capture a signature.Once signed tap on Save then hit the submit button to finalise'
+      question: "How do I receive a sign on glass ?",
+      answer:
+        "Use the Milestone screen, select “Delivered” as the status and tap the signature box to capture a signature.Once signed tap on Save then hit the submit button to finalise",
     },
     {
-      question: 'How do I add multiple Milestones ?',
-      answer: 'Use the My List menu to select multiple consignments then tap Milestone.'
-    }
-  ]
-  const { authStore } = useStores()
+      question: "How do I add multiple Milestones ?",
+      answer: "Use the My List menu to select multiple consignments then tap Milestone.",
+    },
+  ];
+
   // const [fullScreen, setFullScreen] = useState(false)
   const renderItem = (item, index) => {
     return (
       <View style={ITEM_CONTAINER} key={index}>
         <View>
-          <Text style={QUESTION_TEXT}>{item.question}</Text>
+          <Text style={QUESTION_TEXT}>{item.Question}</Text>
         </View>
         <View>
-          <Text style={ANSWER_TEXT}>{item.answer}</Text>
+          <Text style={ANSWER_TEXT}>{item.Answer}</Text>
         </View>
       </View>
     );
@@ -156,25 +218,24 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
 
   const renderFlatlistHeader = () => {
     return (
-      <View style={HEADER_CONTAINER} >
-        <Text style={TECHNICAL_SUPPORT} text={'Technical Support.'} />
-        <View style={HEADER_STYLE} >
-          <TouchableOpacity style={{ flex: 1 }}
-            onPress={() => Linking.openURL('mailto:support@moveit.com.au')}
+      <View style={HEADER_CONTAINER}>
+        <Text style={TECHNICAL_SUPPORT} text={"Technical Support."} />
+        <View style={HEADER_STYLE}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => Linking.openURL("mailto:support@CBOS.com.au")}
           >
             <Image source={icons.emailLogo} resizeMode="contain" style={EMAIL_LOGO} />
-            <Text style={LOGO_TEXT} >{`support@moveit.com.au`}</Text>
+            <Text style={LOGO_TEXT}>{`support@CBOS.gov.sd`}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ flex: 1, }}
-            onPress={() => callApi('+611300884294')}>
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => callApi("+249187056222")}>
             <Image source={icons.callLogo} resizeMode="contain" style={CALL_LOGO} />
-            <Text style={[LOGO_TEXT, { marginTop: 20 }]} >{`+61 1300 884 294`}</Text>
+            <Text style={[LOGO_TEXT, { marginTop: 20 }]}>{`+249187056222`}</Text>
           </TouchableOpacity>
         </View>
       </View>
-
-    )
-  }
+    );
+  };
 
   const handleDrawer = React.useMemo(() => () => props.navigation.toggleDrawer(), [
     props.navigation,
@@ -197,16 +258,39 @@ export const HelpScreen: FunctionComponent<HelpScreenProps> = observer(props => 
       {authStore.isLoggedIn ? (
         <MenuButton title={"helpScreen.header"} onPress={handleDrawer} />
       ) : (
-          <BackButton title={"helpScreen.header"} onPress={goBack} />
-        )}
-      <FlatList
-        ListHeaderComponent={renderFlatlistHeader}
-        ListHeaderComponentStyle={ITEM_CONTAINER}
-        data={flatListdata}
-        renderItem={({ item, index }) => renderItem(item, index)}
-        style={FLATLIST_STYLE}
-        keyExtractor={(item, index) => index.toString()}
-      />
+        <BackButton title={"helpScreen.header"} onPress={goBack} />
+      )}
+
+      <View style={HEADER_CONTAINER}>
+        <Text style={TECHNICAL_SUPPORT} text={"Technical Support."} />
+        <View style={HEADER_STYLE}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => Linking.openURL("mailto:support@CBOS.com.au")}
+          >
+            <Image source={icons.emailLogo} resizeMode="contain" style={EMAIL_LOGO} />
+            <Text style={LOGO_TEXT}>{`support@CBOS.gov.sd`}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => callApi("+249187056222")}>
+            <Image source={icons.callLogo} resizeMode="contain" style={CALL_LOGO} />
+            <Text style={[LOGO_TEXT, { marginTop: 20 }]}>{`+249187056222`}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ScrollView>
+        <FlatList
+          //ListHeaderComponent={renderFlatlistHeader}
+          ListHeaderComponentStyle={ITEM_CONTAINER}
+          data={Help}
+          renderItem={({ item, index }) => renderItem(item, index)}
+          style={FLATLIST_STYLE}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </ScrollView>
+
+      {authStore.isLoggedIn && !authStore.IsFirstLogin && authStore.IsMobileVerified ? (
+        <MyButton imageBackground={icons.redButton2} tx={"common.home"} onPress={onHomePress} />
+      ) : null}
     </Screen>
   );
 
