@@ -267,6 +267,7 @@
     "searchHere": "Search Here...",
     "searchValue": "Enter Search Value"
   },
+<<<<<<< HEAD
   "ImFormList": {
     "imforms": "ImForms",
     "FormCode": "FormCode",
@@ -277,6 +278,16 @@
     "LoadingPortNameAr": "Custom Unit",
     "formstatus": "Form Status",
     "noData": "No Data Found For This Form"
+=======
+  "consignmentList": {
+    "consignments": "Consignments",
+    "items": "Items",
+    "from": "From",
+    "to": "To",
+    "wgt": "Wgt",
+    "vol": "Vol",
+    "status":"Status"
+>>>>>>> 0a6055cb99000ca0ba00d097313a62cbb28177cd
   },
 
   "DocumentList": {
